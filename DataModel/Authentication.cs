@@ -9,12 +9,10 @@ public class Authentication {
     
 
     public Authentication() {
-        currentUser  = new User(0,"Padawan","Jeroen","den","Otter",DateTime.Now,"Female","s1165707@student.windesheim.nl","MysecretPassword1@","Male", new Bitmap(0,0));
-        _loggedState = new LoggedState();
-        _accountState = new  AccountState();
-
+        currentUser = new User();
         _loggedState = LoggedState.signedOut;
         _accountState = AccountState.inactive;
+
     }
     
     

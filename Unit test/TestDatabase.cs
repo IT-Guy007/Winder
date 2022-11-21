@@ -1,3 +1,5 @@
+using System.Data.SqlClient;
+
 namespace Unit_test;
 using DataModel;
 public class TestDatabase {
@@ -8,11 +10,21 @@ public class TestDatabase {
         Database database = new Database();
         try {
             database.generateConnection();
-            database.openConnection();
-            database.closeConnection();
             Assert.Pass();
-        } catch(Exception e) {
-
+        } catch(SqlException e) {
+            Assert.Fail(e.Message);
+        }
+        
+    }
+    
+    [Test]
+    public void TestOpenDatabaseConnection() {
+        
+        Database database = new Database();
+        try {
+            database.openConnection();
+            Assert.Pass();
+        } catch(SqlException e) {
             Assert.Fail(e.Message);
         }
         

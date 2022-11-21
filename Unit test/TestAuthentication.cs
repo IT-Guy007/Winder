@@ -1,12 +1,12 @@
 namespace Unit_test;
-
+using DataModel;
 
 public class TestAuthentication {
     
-    [SetUp]
-    public void Setup() {
+    [Test]
+    public void AuthenticationInitialize() {
+        var auth = new Authentication();
+        Assert.IsNotNull(auth);
     }
-    
-    
-    
+
 }
