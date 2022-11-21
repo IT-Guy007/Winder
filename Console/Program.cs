@@ -1,3 +1,15 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using DataModel;
 
-Console.WriteLine("Hello, World!");
+RegisterCheck registerCheck = new RegisterCheck();
+bool resultaat;
+
+Console.WriteLine("Voer Email in: ");
+string email = Console.ReadLine();
+resultaat = registerCheck.CheckEmail(email);
+Console.WriteLine("Je Email is" + resultaat);
+
+
+Console.WriteLine("Voer wachtwoord in:");
+string wachtwoord = Console.ReadLine();
+resultaat = registerCheck.CheckPassword(wachtwoord);
+Console.WriteLine("Je wachtwoord is " + resultaat);
