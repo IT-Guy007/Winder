@@ -1,6 +1,6 @@
 ﻿using DataModel;
 
-RegisterCheck registerCheck = new RegisterCheck();
+Authentication registerCheck = new Authentication();
 bool resultaat;
 
 Console.WriteLine("Voer Email in: ");
