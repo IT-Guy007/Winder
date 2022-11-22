@@ -29,6 +29,5 @@ namespace DataModel {
             return password.Any(char.IsUpper);
         }
 
-
     }
 }
