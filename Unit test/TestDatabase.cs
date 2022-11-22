@@ -5,7 +5,7 @@ using DataModel;
 public class TestDatabase {
     
     [Test]
-    public void TestDatabaseConnection() {
+    public void TestCreateDatabaseConnection() {
         
         Database database = new Database();
         try {
@@ -18,12 +18,13 @@ public class TestDatabase {
     }
     
     [Test]
-    public void TestOpenDatabaseConnection() {
+    public void TestDatabaseConnection() {
         
         Database database = new Database();
         try {
             database.openConnection();
             Assert.Pass();
+            database.closeConnection();
         } catch(SqlException e) {
             Assert.Fail(e.Message);
         }

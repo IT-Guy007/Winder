@@ -3,19 +3,19 @@ using System.Drawing;
 
 public class Authentication {
     
-    private User currentUser { get; set; }
+    public static User _currentUser { get; set; }
     private LoggedState _loggedState { get; set; }
     private AccountState _accountState { get; set; }
     
 
     public Authentication() {
-        currentUser = new User();
+        _currentUser = new User();
         _loggedState = LoggedState.signedOut;
         _accountState = AccountState.inactive;
 
     }
-    
-    
+
+
     //Defining state
     enum LoggedState {
         signedIn,
@@ -25,5 +25,10 @@ public class Authentication {
     enum  AccountState {
         active,
         inactive,
+    }
+    
+    public bool SignIn(string username, string password)
+    {
+        return false;
     }
 }
