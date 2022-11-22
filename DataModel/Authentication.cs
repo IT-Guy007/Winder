@@ -1,4 +1,5 @@
 namespace DataModel;
+using System.Drawing;
 
 public class Authentication {
     
@@ -7,14 +8,11 @@ public class Authentication {
     private AccountState _accountState { get; set; }
     
 
-    public Authentication()
-    {
+    public Authentication() {
         currentUser = new User();
-        _loggedState = new LoggedState();
-        _accountState = new  AccountState();
-
         _loggedState = LoggedState.signedOut;
         _accountState = AccountState.inactive;
+
     }
     
     
