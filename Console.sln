@@ -1,19 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-<<<<<<< HEAD
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Console", "Console\Console.csproj", "{677043BE-8198-4B3D-8ACE-BD26ECA9EF7E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MAUI", "MAUI\MAUI.csproj", "{F554A086-806E-4B94-BC03-FF9560089E0F}"
-=======
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MAUI", "MAUI\MAUI.csproj", "{F554A086-806E-4B94-BC03-FF9560089E0F}"
->>>>>>> 6a3c463664508c4baee16c0d7bc2d192d6cfbf91
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModel", "DataModel\DataModel.csproj", "{65961550-E5D6-4D3F-AB34-23CCB8DE3080}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit test", "Unit test\Unit test.csproj", "{F7D0E35A-9A31-4BD1-B01E-01C251484D09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unit test", "Unit test\Unit test.csproj", "{F7D0E35A-9A31-4BD1-B01E-01C251484D09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
