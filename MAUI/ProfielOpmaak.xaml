@@ -8,26 +8,53 @@
             Text="Voornaam"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry Placeholder="Wessel"
+        <Entry x:Name="Voornaam"
+               Placeholder="Wessel"
+               HorizontalOptions="Center"/>
+        <Label 
+            Text="tussenvoegsel"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry x:Name="Tussenvoegsel"
+               Placeholder="de"
+               HorizontalOptions="Center"/>
+        <Label 
+            Text="Achternaam"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry x:Name="Achternaam"
+               Placeholder="Notulist"
                HorizontalOptions="Center"/>
         <Label 
             Text="Geboortedatum"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry Placeholder="10-12-2003"
+        <Entry x:Name="Geboortedatum"
+               Placeholder="10-12-2003"
                HorizontalOptions="Center"/>
         <Label 
             Text="Omschrijving"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry Placeholder="Hallo, mijn naam is Wessel"
+        <Entry x:Name="Omschrijving"
+            Placeholder="Hallo, mijn naam is Wessel"
                HorizontalOptions="Center"/>
         <Label 
-            Text="Locatie"
+            Text="Voorkeur"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry Placeholder="Enschede"
+        <Entry x:Name="Voorkeur"
+               Placeholder="Enschede"
+               HorizontalOptions="Center"/>        
+        <Label 
+            Text="Interesses"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry x:Name="Interesses"
+               Placeholder="Voetbal, Gamen"
                HorizontalOptions="Center"/>
-        <Button Text="Opslaan" />
+        <Button x:Name="wijzigProfielKnop"
+                Text="Opslaan"
+                Clicked="wijzigProfielGegevens"/>
     </VerticalStackLayout>
 </ContentPage>
