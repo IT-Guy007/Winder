@@ -5,6 +5,7 @@
              Title="ProfielOpmaak">
     <VerticalStackLayout>
         <Label 
+            x:Name="lblVoornaam"
             Text="Voornaam"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
@@ -14,6 +15,7 @@
                HorizontalOptions="Center"
                TextChanged="Voornaam_TextChanged" />
         <Label 
+            x:Name="lblTussenvoegsel"
             Text="tussenvoegsel"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
@@ -23,6 +25,7 @@
                HorizontalOptions="Center"
                TextChanged="Tussenvoegsel_TextChanged" />
         <Label 
+            x:Name="lblAchternaam"
             Text="Achternaam"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
@@ -45,6 +48,7 @@
                 ValueChanged="LeeftijdSlider_ValueChanged"
                 />
         <Label 
+            x:Name="lblOmschrijving"
             Text="Omschrijving"
             VerticalOptions="Center" 
             HorizontalOptions="Center"

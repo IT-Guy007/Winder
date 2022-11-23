@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace MAUI;
@@ -18,14 +19,15 @@ public partial class ProfielOpmaak : ContentPage
         if (Voornaam.Text != "")
         {
             if (!checkIfTextIsOnlyLetters(Voornaam.Text))
-            {
+            {          
                 Color colorRed = new Color(238, 75, 43);
-                Voornaam.Text = "";
-                Voornaam.Placeholder = "Voornaam mag alleen letters bevatten";
-                Voornaam.PlaceholderColor = colorRed;
+                lblVoornaam.Text = "Voornaam mag alleen letters bevatten";
+                lblVoornaam.BackgroundColor = colorRed;
             }
             else
             {
+                lblVoornaam.Text = "Voornaam";
+                lblVoornaam.BackgroundColor = default;
                 Voornaam.Text = Voornaam.Text.First().ToString().ToUpper() + Voornaam.Text[1..].ToLower();
             }
         }
@@ -37,12 +39,13 @@ public partial class ProfielOpmaak : ContentPage
             if (!checkIfTextIsOnlyLetters(Tussenvoegsel.Text))
             {
                 Color colorRed = new Color(238, 75, 43);
-                Tussenvoegsel.Text = "";
-                Tussenvoegsel.Placeholder = "Tussenvoegsel mag alleen letters bevatten";
-                Tussenvoegsel.PlaceholderColor = colorRed;
+                lblTussenvoegsel.Text = "Tussenvoegsel mag alleen letters bevatten";
+                lblTussenvoegsel.BackgroundColor = colorRed;
             }
             else
             {
+                lblTussenvoegsel.Text = "Tussenvoegsel";
+                lblTussenvoegsel.BackgroundColor = default;
                 Tussenvoegsel.Text = Tussenvoegsel.Text.First().ToString().ToUpper() + Tussenvoegsel.Text[1..].ToLower();
             }
         }
