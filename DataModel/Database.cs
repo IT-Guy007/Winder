@@ -36,32 +36,31 @@ public class Database {
         connection.Close();
     }
 
-    public void updateLocalUserFromDatabase(int UID) {
+    public void updateLocalUserFromDatabase(string email) {
         //Start connection
         openConnection();
         
         //Create query
-        SqlCommand query =  new SqlCommand("select * from winder.winder.[User] where UID = @UID", connection);
-        query.Parameters.AddWithValue("@UID", UID);
+        SqlCommand query =  new SqlCommand("select * from winder.winder.[User] where email = @email", connection);
+        query.Parameters.AddWithValue("@email", email);
         
         //Execute query
         try {
             SqlDataReader reader = query.ExecuteReader();
 
             while (reader.Read()) {
-                var tUID = int.Parse(reader["UID"] as string);
+                var UID = int.Parse(reader["UID"] as string);
                 var username = reader["username"] as string;
                 var firstName = reader["firstName"] as string;
                 var middleName = reader["middleName"] as string;
                 var lastName = reader["lastName"] as string;
-                var email = reader["email"] as string;
                 var preferences = reader["preference"] as string;
                 var birthday = DateTime.Parse(reader["birthday"] as string);
                 var gender = reader["gender"] as string;
                 var profilePicture = reader["profilePicture"] as string;
                 var bio = reader["bio"] as string;
 
-                Authentication._currentUser = new User(tUID, username, firstName, middleName, lastName, birthday,
+                Authentication._currentUser = new User(UID, username, firstName, middleName, lastName, birthday,
                     preferences, email, "", gender, StrToByteArray(profilePicture),bio);
             }
 
