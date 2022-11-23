@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUI.InlogScherm"
+             Title="InlogScherm">
+    <VerticalStackLayout>
+    
+        
+        
+        <Entry x:Name="Emailadres"
+               Placeholder="            Email"
+               PlaceholderColor="DarkGray"
+               HorizontalOptions="Center"
+               WidthRequest="150"
+               />
+        
+        <Entry x:Name="Wachtwoord"
+             
+               Placeholder="      Wachtwoord"
+               PlaceholderColor="DarkGray"
+               HorizontalOptions="Center"
+                IsPassword="True"
+               WidthRequest="150"
+               />
+
+        <Button x:Name="Inloggen"
+                Text="Inloggen"
+                Clicked="Inlog"
+                WidthRequest="150"
+                />
+
+
+        <Button x:Name="ForgotPassword"
+                Text="Wachtwoord vergeten?"
+                Clicked="WachtwoordVergeten"
+                WidthRequest="180"
+                HeightRequest="38"
+                BackgroundColor="Transparent"
+                TextColor="Black"
+                BorderColor="Transparent"
+                />
+        
+        
+
+
+    </VerticalStackLayout>
+    
+</ContentPage>
