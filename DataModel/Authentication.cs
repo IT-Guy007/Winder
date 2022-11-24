@@ -26,6 +26,23 @@ public class Authentication {
         inactive,
     }
 
+    public void updateUserSetting(bool activation, bool signedIN) {
+        if (activation) {
+            this._accountState = AccountState.active;
+        }
+        else {
+            this._accountState = AccountState.inactive;
+        }
+
+        if (signedIN) {
+            this._loggedState = LoggedState.signedIn;
+        }
+        else
+        {
+            this._loggedState = LoggedState.signedOut;
+        }
+    }
+    
     public bool EmailIsUnique(string email) {
         Database db = new Database();
         List<string> emails = db.GetEmailFromDataBase();
@@ -73,20 +90,5 @@ public class Authentication {
         return password.Any(char.IsUpper);
     }
     
-    public void updateUserSetting(bool activation, bool signedIN) {
-        if (activation) {
-            this._accountState = AccountState.active;
-        }
-        else {
-            this._accountState = AccountState.inactive;
-        }
-
-        if (signedIN) {
-            this._loggedState = LoggedState.signedIn;
-        }
-        else
-        {
-            this._loggedState = LoggedState.signedOut;
-        }
-    }
+    
 }
