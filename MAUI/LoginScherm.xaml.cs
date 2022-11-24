@@ -1,5 +1,7 @@
-namespace MAUI;
 
+
+
+namespace MAUI;
 public partial class InlogScherm : ContentPage
 {
     Button b = new Button();
@@ -10,6 +12,7 @@ public partial class InlogScherm : ContentPage
         InitializeComponent();
         b.Clicked += Inlog;
         b2.Clicked += WachtwoordVergeten;
+        
     }
     private void Inlog(object sender, EventArgs e)
     {

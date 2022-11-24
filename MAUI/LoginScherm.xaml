@@ -2,25 +2,34 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUI.InlogScherm"
-             Title="InlogScherm"
+             Shell.NavBarIsVisible="False"
+             
              BackgroundImageSource="achtergrond.png"
-             ScaleX="1"
-             ScaleY="1"
+            HeightRequest="580"
+             WidthRequest="792"
+             MaximumHeightRequest="580"
+             MaximumWidthRequest="792"
              
              >
     
     
              
-    <VerticalStackLayout>
-    
-        
-        
-        
+    <VerticalStackLayout VerticalOptions="Center">
+        <VerticalStackLayout VerticalOptions="Center" BackgroundColor="Black">
+
+        <Image  
+            Source="C:\Users\misch\OneDrive\Documenten\GitHub\Winder\MAUI\Resources\Images\winderlogo_zonderwindesheimdating.png"
+            HeightRequest="150"
+            WidthRequest="1000"
+            />
+
         <Entry x:Name="Emailadres"
                Placeholder="            Email"
                PlaceholderColor="DarkGray"
                HorizontalOptions="Center"
                WidthRequest="150"
+               BackgroundColor="White" 
+               Margin="0,-30,0,5"
                />
         
         <Entry x:Name="Wachtwoord"
@@ -28,17 +37,19 @@
                Placeholder="      Wachtwoord"
                PlaceholderColor="DarkGray"
                HorizontalOptions="Center"
+               BackgroundColor="White"
                 IsPassword="True"
                WidthRequest="150"
-               
+               Margin="0,0,0,5"
                />
 
         <Button x:Name="Inloggen"
                 Text="Inloggen"
                 Clicked="Inlog"
-                WidthRequest="150"
+                WidthRequest="100"
                 BackgroundColor="White"
                 TextColor="Black"
+                
                 />
 
 
@@ -54,9 +65,9 @@
                 
                 />
 
-        
 
 
+        </VerticalStackLayout>
 
     </VerticalStackLayout>
     
