@@ -15,7 +15,7 @@ public class Database {
         builder.Password ="Qwerty1@";
         builder.InitialCatalog = "winder";
         
-        _connection = new SqlConnection(builder.ConnectionString);
+        connection = new SqlConnection(builder.ConnectionString);
     }
     
     public void openConnection() {
