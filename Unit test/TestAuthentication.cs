@@ -1,12 +1,18 @@
+using System.Drawing;
+using System.Numerics;
+
 namespace Unit_test;
 using DataModel;
 
 public class TestAuthentication {
+
     Authentication authentication;
+    private Database database;
 
     [SetUp]
     public void Setup() {
         authentication = new Authentication();
+        database = new Database();
     }
 
     [Test]
@@ -53,4 +59,5 @@ public class TestAuthentication {
     public bool AuthenticationEmailIsUnique(string email) {
         return authentication.EmailIsUnique(email);
     }
+
 }
