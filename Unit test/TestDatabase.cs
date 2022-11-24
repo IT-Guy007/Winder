@@ -66,7 +66,7 @@ public class TestDatabase {
     }
 
     [TestCase("s1165707@student.windesheim.nl",false, ExpectedResult = true)]
-    [TestCase("s11707@student.windesheim.nl",false, ExpectedResult = true)]
+    [TestCase("1707@student.windesheim.nl",false, ExpectedResult = false)]
     [TestCase("s1165707@student.windesheim.nl",true, ExpectedResult = true)]
     public bool ToggleActivationTest(string email, bool activation) {
         return _database.toggleActivation(email, activation);

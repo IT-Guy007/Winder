@@ -140,17 +140,21 @@ public class Database {
         //Open connectionn
         openConnection();
         
-        SqlCommand query = new SqlCommand("update winder.winder.[User] set active = @Active where email = @Email");
+        SqlCommand query = new SqlCommand("update winder.winder.[User] set active = @Active where email = @Email", _connection);
         query.Parameters.AddWithValue("@Email", email);
         query.Parameters.AddWithValue("@Active", activate);
         
         //Execute query
         try {
-            query.ExecuteReader();
+            int rows = query.ExecuteNonQuery();
             
             //Close connection
             closeConnection();
-            return true;
+            if (rows != 0) {
+                return true;
+            }
+            return false;
+            
         } catch(SqlException se) {
             
             //Close connection
