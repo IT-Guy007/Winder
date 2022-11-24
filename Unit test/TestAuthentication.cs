@@ -54,7 +54,7 @@ public class TestAuthentication {
         return authentication.CalculateAge(birthDate);
     }
     
-    [TestCase("jeroen.denotter@icloud.com", ExpectedResult = false)]
+    [TestCase("s1165707@student.windesheim.nl", ExpectedResult = false)]
     [TestCase("ditisechteenkutemail@ikhaalnetwerkenniet.com", ExpectedResult = true)]
     public bool AuthenticationEmailIsUnique(string email) {
         return authentication.EmailIsUnique(email);
