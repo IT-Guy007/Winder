@@ -1,11 +1,10 @@
-using System.Drawing.Text;
-using System.Linq.Expressions;
-
 namespace DataModel;
 using System.Data.SqlClient;
 using System.Drawing;
 public class Database {
+
     public SqlConnection connection;
+
 
     public void generateConnection() {
         
@@ -27,7 +26,9 @@ public class Database {
     }
     
     public void closeConnection() {
+
         if (connection == null) {
+
             generateConnection();
         }
         connection.Close();
@@ -77,20 +78,26 @@ public class Database {
     }
 
     public bool checkLogin(string email, string password) {
+        
+        Authentication authentication = new Authentication();
+        string hashed = authentication.HashPassword(password);
         bool output = false;
+        
         //Start connection
         openConnection();
         
         //Create query
-        SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email AND Password = @Password", connection);
+        SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
-        query.Parameters.AddWithValue("@Password", password);
+
         
         //Execute query
         SqlDataReader reader = query.ExecuteReader();
 
-        if (reader.HasRows) {
-            output = true;
+        while (reader.Read()) {
+            if(hashed == reader["password"] as string) {
+                output = true;
+            }
         }
 
         //Close connection
@@ -125,8 +132,9 @@ public class Database {
 
     public bool register(string firstname, string middlename, string lastname, string username, string email,
         string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active) {
-        
-        
+
+        Authentication authentication = new Authentication();
+        string hashedpassword = authentication.HashPassword(password);
         //Start connection
         openConnection();
         
@@ -139,7 +147,7 @@ public class Database {
         query.Parameters.AddWithValue("@birthday", birthday);
         query.Parameters.AddWithValue("@preference", preference);
         query.Parameters.AddWithValue("@email", email);
-        query.Parameters.AddWithValue("@password", password);
+        query.Parameters.AddWithValue("@password", hashedpassword);
         query.Parameters.AddWithValue("@gender", gender);
         query.Parameters.AddWithValue("@username", username);
         query.Parameters.AddWithValue("@bio", bio);
@@ -148,13 +156,42 @@ public class Database {
         
         //Execute query
         try {
-            SqlDataReader reader = query.ExecuteReader();
+            query.ExecuteReader();
             
             //Close connection
             closeConnection();
             return true;
         }
         catch(SqlException se) {
+            
+            //Close connection
+            closeConnection();
+            return false;
+        }
+
+    }
+
+    public bool toggleActivation(string email, bool activate) {
+        
+        //Open connectionn
+        openConnection();
+        
+        SqlCommand query = new SqlCommand("update winder.winder.[User] set active = @Active where email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+        query.Parameters.AddWithValue("@Active", activate);
+        
+        //Execute query
+        try {
+            int rows = query.ExecuteNonQuery();
+            
+            //Close connection
+            closeConnection();
+            if (rows != 0) {
+                return true;
+            }
+            return false;
+            
+        } catch(SqlException se) {
             
             //Close connection
             closeConnection();
