@@ -1,11 +1,10 @@
-using System.Drawing.Text;
-using System.Linq.Expressions;
-
 namespace DataModel;
 using System.Data.SqlClient;
 using System.Drawing;
 public class Database {
+
     public SqlConnection connection;
+
 
     public void generateConnection() {
         
@@ -16,7 +15,7 @@ public class Database {
         builder.Password ="Qwerty1@";
         builder.InitialCatalog = "winder";
         
-        connection = new SqlConnection(builder.ConnectionString);
+        _connection = new SqlConnection(builder.ConnectionString);
     }
     
     public void openConnection() {
@@ -27,7 +26,9 @@ public class Database {
     }
     
     public void closeConnection() {
+
         if (connection == null) {
+
             generateConnection();
         }
         connection.Close();
@@ -125,8 +126,7 @@ public class Database {
 
     public bool register(string firstname, string middlename, string lastname, string username, string email,
         string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active) {
-        
-        
+
         //Start connection
         openConnection();
         
@@ -148,13 +148,42 @@ public class Database {
         
         //Execute query
         try {
-            SqlDataReader reader = query.ExecuteReader();
+            query.ExecuteReader();
             
             //Close connection
             closeConnection();
             return true;
         }
         catch(SqlException se) {
+            
+            //Close connection
+            closeConnection();
+            return false;
+        }
+
+    }
+
+    public bool toggleActivation(string email, bool activate) {
+        
+        //Open connectionn
+        openConnection();
+        
+        SqlCommand query = new SqlCommand("update winder.winder.[User] set active = @Active where email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+        query.Parameters.AddWithValue("@Active", activate);
+        
+        //Execute query
+        try {
+            int rows = query.ExecuteNonQuery();
+            
+            //Close connection
+            closeConnection();
+            if (rows != 0) {
+                return true;
+            }
+            return false;
+            
+        } catch(SqlException se) {
             
             //Close connection
             closeConnection();

@@ -5,13 +5,16 @@ using DataModel;
 public class TestDatabase {
 
     
-    private Authentication _authentication;
-    private Database _database;
+    private Authentication _authentication { get; set; }
+    private Database _database { get; set; }
+    private DateTime today { get; set; }
     
     [SetUp]
     public void Setup() {
         _authentication = new Authentication();
         _database = new Database();
+        today = new DateTime();
+        
 
     }
     
@@ -56,9 +59,9 @@ public class TestDatabase {
         return _database.checkLogin(email, password);
 
     }
-
+    
     [TestCase("Test", "", "Account", "netwerkfailure", "male",
-        "2003-12-10", "male", "Ik haat men leven want ik haal netwerken nooit", "Kaolozooi_ik_haal_netwerkenniet01@","",false,
+        "01-01-2000", "male", "Ik haat men leven want ik haal netwerken nooit", "Kaolozooi_ik_haal_netwerkenniet01@","",false,
         ExpectedResult = true)]
 
     public bool RegisterTest(string firstname, string middlename, string lastname, string username,
@@ -69,5 +72,12 @@ public class TestDatabase {
         string email2 = "s" + email1 + "@student.windesheim.nl";
         return _database.register(firstname, middlename, lastname, username, email2, preference, birthday, gender, bio,
             password,profilePicture, active);
+    }
+
+    [TestCase("s1165707@student.windesheim.nl",false, ExpectedResult = true)]
+    [TestCase("1707@student.windesheim.nl",false, ExpectedResult = false)]
+    [TestCase("s1165707@student.windesheim.nl",true, ExpectedResult = true)]
+    public bool ToggleActivationTest(string email, bool activation) {
+        return _database.toggleActivation(email, activation);
     }
 }
