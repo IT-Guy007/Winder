@@ -9,7 +9,6 @@ public class Authentication {
     
 
     public Authentication() {
-        _currentUser = new User();
         _loggedState = LoggedState.signedOut;
         _accountState = AccountState.inactive;
 
@@ -25,10 +24,5 @@ public class Authentication {
     enum  AccountState {
         active,
         inactive,
-    }
-    
-    public bool SignIn(string username, string password)
-    {
-        return false;
     }
 }

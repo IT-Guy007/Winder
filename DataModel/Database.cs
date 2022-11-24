@@ -16,8 +16,6 @@ public class Database {
         builder.Password ="Qwerty1@";
         builder.InitialCatalog = "winder";
         
-        
-       
         connection = new SqlConnection(builder.ConnectionString);
     }
     
@@ -37,6 +35,7 @@ public class Database {
     }
 
     public void updateLocalUserFromDatabase(string email) {
+        
         //Start connection
         openConnection();
         
@@ -49,7 +48,6 @@ public class Database {
             SqlDataReader reader = query.ExecuteReader();
 
             while (reader.Read()) {
-                var UID = int.Parse(reader["UID"] as string);
                 var username = reader["username"] as string;
                 var firstName = reader["firstName"] as string;
                 var middleName = reader["middleName"] as string;
@@ -60,19 +58,27 @@ public class Database {
                 var profilePicture = reader["profilePicture"] as string;
                 var bio = reader["bio"] as string;
 
-                Authentication._currentUser = new User(UID, username, firstName, middleName, lastName, birthday,
-                    preferences, email, "", gender, StrToByteArray(profilePicture),bio);
+                Authentication._currentUser = new User(username, firstName, middleName, lastName, birthday,
+                    preferences, email, "", gender, Base64StringToBitmap(profilePicture),bio);
             }
+        
+            //Close connection
+            closeConnection();
 
         }
         catch (SqlException sql) {
             Console.WriteLine("Sql error: " + sql);
-            throw;
+            
+            //Close connection
+            closeConnection();
         }
+
+        //Close connection
+        closeConnection();
     }
 
     public bool checkLogin(string email, string password) {
-        
+        bool output = false;
         //Start connection
         openConnection();
         
@@ -83,28 +89,78 @@ public class Database {
         
         //Execute query
         SqlDataReader reader = query.ExecuteReader();
+
+        if (reader.HasRows) {
+            output = true;
+        }
+
+        //Close connection
+        closeConnection();
+        return output;
+    }
+
+    public bool register(string firstname, string middlename, string lastname, string username, string email,
+        string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active) {
         
-        while (reader.Read()) {
-            //If the query returns a result, the login is correct
+        
+        //Start connection
+        openConnection();
+        
+        //Create query
+        SqlCommand query = new SqlCommand("insert into winder.winder.[User] " +
+                                                    "Values (@firstname, @middlename, @lastname, @birthday, @preference, @email, @password, @gender, convert(varbinary(max),@profilePicture), @username, @bio,@active)", connection);
+        query.Parameters.AddWithValue("@firstname", firstname);
+        query.Parameters.AddWithValue("@middlename", middlename);
+        query.Parameters.AddWithValue("@lastname", lastname);
+        query.Parameters.AddWithValue("@birthday", birthday);
+        query.Parameters.AddWithValue("@preference", preference);
+        query.Parameters.AddWithValue("@email", email);
+        query.Parameters.AddWithValue("@password", password);
+        query.Parameters.AddWithValue("@gender", gender);
+        query.Parameters.AddWithValue("@username", username);
+        query.Parameters.AddWithValue("@bio", bio);
+        query.Parameters.AddWithValue("@profilePicture", proficePicture);
+        query.Parameters.AddWithValue("@active", active);
+        
+        //Execute query
+        try {
+            SqlDataReader reader = query.ExecuteReader();
+            
+            //Close connection
+            closeConnection();
             return true;
         }
-        
-        return false;
-        
-        //Close connection
-        
+        catch(SqlException se) {
+            
+            //Close connection
+            closeConnection();
+            return false;
+        }
+
     }
     
-    static System.Drawing.Image StrToByteArray(string str)
+    public static Bitmap Base64StringToBitmap(string base64String)
     {
-        // Convert Base64 String to byte[]
-        byte[] imageBytes = Convert.FromBase64String(str);
-        MemoryStream ms = new MemoryStream(imageBytes, 0,
-            imageBytes.Length);
+        Bitmap bmpReturn = null;
 
-        // Convert byte[] to Image
-        ms.Write(imageBytes, 0, imageBytes.Length);
-        System.Drawing.Image image = System.Drawing.Image.FromStream(ms, true);
-        return image;
+  
+        byte[] byteBuffer = Convert.FromBase64String(base64String);
+        MemoryStream memoryStream = new MemoryStream(byteBuffer);
+
+  
+        memoryStream.Position = 0;
+
+  
+        bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
+
+  
+        memoryStream.Close();
+        memoryStream = null;
+        byteBuffer = null;
+
+  
+        return bmpReturn;
     }
+    
+    
 }

@@ -1,7 +1,6 @@
 namespace DataModel;
 using System.Drawing;
 public class User {
-    private int UID { get; set; }
     private string username { get; set; }
     private string firstName { get; set; }
     private string middleName { get; set; }
@@ -11,14 +10,13 @@ public class User {
     private string email { get; set; }
     private string password { get; set; }
     private string gender { get; set; }
-    private Image profilePicture { get; set; }
+    private Bitmap profilePicture { get; set; }
     
     private string bio { get; set; }
 
-    public User(int UID, string username, string firstName, string middleName, string lastName, DateTime birthDay,
-        string preference, string email, string password, string gender, Image profilePicture, string bio)
+    public User(string username, string firstName, string middleName, string lastName, DateTime birthDay,
+        string preference, string email, string password, string gender, Bitmap profilePicture, string bio)
     {
-        this.UID = UID;
         this.username = username;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -32,7 +30,4 @@ public class User {
         this.bio = bio;
     }
 
-    public User() {
-        
-    }
 }
