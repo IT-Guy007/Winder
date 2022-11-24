@@ -1,11 +1,8 @@
-using System.Drawing.Text;
-using System.Linq.Expressions;
-
 namespace DataModel;
 using System.Data.SqlClient;
 using System.Drawing;
 public class Database {
-    private SqlConnection connection;
+    private SqlConnection? _connection;
 
     public void generateConnection() {
         
@@ -16,22 +13,22 @@ public class Database {
         builder.Password ="Qwerty1@";
         builder.InitialCatalog = "winder";
         
-        connection = new SqlConnection(builder.ConnectionString);
+        _connection = new SqlConnection(builder.ConnectionString);
     }
     
     public void openConnection() {
-        if (connection == null) {
+        if (_connection == null) {
             generateConnection();
         }
-        connection.Open();
+        _connection.Open();
     }
     
     public void closeConnection() {
         
-        if (connection == null) {
+        if (_connection == null) {
             generateConnection();
         }
-        connection.Close();
+        _connection.Close();
     }
 
     public void updateLocalUserFromDatabase(string email) {
@@ -40,7 +37,7 @@ public class Database {
         openConnection();
         
         //Create query
-        SqlCommand query =  new SqlCommand("select * from winder.winder.[User] where email = @email", connection);
+        SqlCommand query =  new SqlCommand("select * from winder.winder.[User] where email = @email", _connection);
         query.Parameters.AddWithValue("@email", email);
         
         //Execute query
@@ -83,7 +80,7 @@ public class Database {
         openConnection();
         
         //Create query
-        SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email AND Password = @Password", connection);
+        SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email AND Password = @Password", _connection);
         query.Parameters.AddWithValue("@Email", email);
         query.Parameters.AddWithValue("@Password", password);
         
@@ -101,14 +98,13 @@ public class Database {
 
     public bool register(string firstname, string middlename, string lastname, string username, string email,
         string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active) {
-        
-        
+
         //Start connection
         openConnection();
         
         //Create query
         SqlCommand query = new SqlCommand("insert into winder.winder.[User] " +
-                                                    "Values (@firstname, @middlename, @lastname, @birthday, @preference, @email, @password, @gender, convert(varbinary(max),@profilePicture), @username, @bio,@active)", connection);
+                                                    "Values (@firstname, @middlename, @lastname, @birthday, @preference, @email, @password, @gender, convert(varbinary(max),@profilePicture), @username, @bio,@active)", _connection);
         query.Parameters.AddWithValue("@firstname", firstname);
         query.Parameters.AddWithValue("@middlename", middlename);
         query.Parameters.AddWithValue("@lastname", lastname);
@@ -124,13 +120,38 @@ public class Database {
         
         //Execute query
         try {
-            SqlDataReader reader = query.ExecuteReader();
+            query.ExecuteReader();
             
             //Close connection
             closeConnection();
             return true;
         }
         catch(SqlException se) {
+            
+            //Close connection
+            closeConnection();
+            return false;
+        }
+
+    }
+
+    public bool toggleActivation(string email, bool activate) {
+        
+        //Open connectionn
+        openConnection();
+        
+        SqlCommand query = new SqlCommand("update winder.winder.[User] set active = @Active where email = @Email");
+        query.Parameters.AddWithValue("@Email", email);
+        query.Parameters.AddWithValue("@Active", activate);
+        
+        //Execute query
+        try {
+            query.ExecuteReader();
+            
+            //Close connection
+            closeConnection();
+            return true;
+        } catch(SqlException se) {
             
             //Close connection
             closeConnection();
