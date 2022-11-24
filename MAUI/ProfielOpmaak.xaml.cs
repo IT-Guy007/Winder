@@ -5,21 +5,24 @@ namespace MAUI;
 
 public partial class ProfielOpmaak : ContentPage
 {
+    List<string> interesses;
     public ProfielOpmaak()
-	{
-		InitializeComponent();
-    }
-        private void wijzigProfielGegevens(object sender, EventArgs e)
     {
-        
+        InitializeComponent();
+        interesses = new List<string>();
+        listInteresses.ItemsSource = interesses;
     }
-    
+    private void wijzigProfielGegevens(object sender, EventArgs e)
+    {
+
+    }
+
     private void Voornaam_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (Voornaam.Text != "")
         {
             if (!checkIfTextIsOnlyLetters(Voornaam.Text))
-            {          
+            {
                 Color colorRed = new Color(238, 75, 43);
                 lblVoornaam.Text = "Voornaam mag alleen letters bevatten";
                 lblVoornaam.BackgroundColor = colorRed;
@@ -57,12 +60,13 @@ public partial class ProfielOpmaak : ContentPage
             if (!checkIfTextIsOnlyLetters(Achternaam.Text))
             {
                 Color colorRed = new Color(238, 75, 43);
-                Achternaam.Text = "";
-                Achternaam.Placeholder = "Achternaam mag alleen letters bevatten";
-                Achternaam.PlaceholderColor = colorRed;
+                lblAchternaam.Text = "Achternaam mag alleen letters bevatten";
+                lblAchternaam.BackgroundColor = colorRed;
             }
             else
             {
+                lblAchternaam.Text = "Tussenvoegsel";
+                lblAchternaam.BackgroundColor = default;
                 Achternaam.Text = Achternaam.Text.First().ToString().ToUpper() + Achternaam.Text[1..].ToLower();
             }
         }
@@ -78,12 +82,13 @@ public partial class ProfielOpmaak : ContentPage
             if (!checkIfTextIsOnlyLetters(Omschrijving.Text))
             {
                 Color colorRed = new Color(238, 75, 43);
-                Omschrijving.Text = "";
-                Omschrijving.Placeholder = "Omschrijving mag alleen letters bevatten";
-                Omschrijving.PlaceholderColor = colorRed;
+                lblOmschrijving.Text = "Omschrijving mag alleen letters bevatten";
+                lblOmschrijving.BackgroundColor = colorRed;
             }
             else
             {
+                lblOmschrijving.Text = "Omschrijving";
+                lblAchternaam.BackgroundColor = default;
                 Omschrijving.Text = Omschrijving.Text.First().ToString().ToUpper() + Omschrijving.Text[1..].ToLower();
             }
         }
@@ -99,23 +104,7 @@ public partial class ProfielOpmaak : ContentPage
             return false;
         }
     }
-    private void Interesses_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        if (Interesses.Text != "")
-        {
-            if (!checkIfTextIsOnlyLetters(Interesses.Text))
-            {
-                Color colorRed = new Color(238, 75, 43);
-                Interesses.Text = "";
-                Interesses.Placeholder = "Interesses mag alleen letters bevatten";
-                Interesses.PlaceholderColor = colorRed;
-            }
-            else
-            {
-                Interesses.Text = Interesses.Text.First().ToString().ToUpper() + Interesses.Text[1..].ToLower();
-            }
-        }
-    }
+
 
     private void Voorkeur_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -125,5 +114,28 @@ public partial class ProfielOpmaak : ContentPage
     private void Geslacht_SelectedIndexChanged(object sender, EventArgs e)
     {
 
+    }
+
+    private void interessePicker_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        addSelectedValueToListInteresses();
+    }
+
+    private void addSelectedValueToListInteresses()
+    {
+        if (interessePicker.SelectedItem != null && interesses.Count < 5)
+        {
+            interessePicker.Title = "Interesse";
+            interessePicker.TitleColor = default;
+            interesses.Add(interessePicker.SelectedItem.ToString());
+            listInteresses.ItemsSource = null;
+            listInteresses.ItemsSource = interesses;
+        }
+        else
+        {
+            Color colorRed = new Color(238, 75, 43);
+            interessePicker.Title = "Je kunt maximaal 5 interesses selecteren";
+            interessePicker.TitleColor = colorRed;
+        }
     }
 }

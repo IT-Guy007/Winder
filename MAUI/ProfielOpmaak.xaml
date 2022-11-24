@@ -4,36 +4,39 @@
              x:Class="MAUI.ProfielOpmaak"
              Title="ProfielOpmaak">
     <VerticalStackLayout>
-        <Label 
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label 
             x:Name="lblVoornaam"
             Text="Voornaam"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry x:Name="Voornaam"
+            <Entry x:Name="Voornaam"
                MaxLength="15"
                Placeholder="Wessel"
                HorizontalOptions="Center"
                TextChanged="Voornaam_TextChanged" />
-        <Label 
+            <Label 
             x:Name="lblTussenvoegsel"
             Text="tussenvoegsel"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry x:Name="Tussenvoegsel"
+            <Entry x:Name="Tussenvoegsel"
                MaxLength="10"
                Placeholder="de"
                HorizontalOptions="Center"
                TextChanged="Tussenvoegsel_TextChanged" />
-        <Label 
+            <Label 
             x:Name="lblAchternaam"
             Text="Achternaam"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry x:Name="Achternaam"
+            <Entry x:Name="Achternaam"
                MaxLength="15"
                Placeholder="Notulist"
                HorizontalOptions="Center"
                TextChanged="Achternaam_TextChanged" />
+        </HorizontalStackLayout>
+
         <Label 
             x:Name="Naam"  
             Text="Leeftijd: "
@@ -79,15 +82,23 @@
                 <x:String>Mentally disordered</x:String>
             </Picker.Items>
         </Picker>
-        <Label 
-            Text="Interesses"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Entry x:Name="Interesses"
-               MaxLength="100"
-               Placeholder="Voetbal, Gamen"
-               HorizontalOptions="Center"
-               TextChanged="Interesses_TextChanged" />
+        <Picker 
+            x:Name="interessePicker"
+        Title="Interesses"
+        HorizontalOptions="Center"
+        SelectedIndexChanged="interessePicker_SelectedIndexChanged">
+            <Picker.Items>
+                <x:String>Voetbal</x:String>
+                <x:String>Basketbal</x:String>
+                <x:String>Sportschool</x:String>
+            </Picker.Items>
+        </Picker>
+        <ListView MaximumHeightRequest="100" HorizontalOptions="Center" x:Name="listInteresses">
+            <ListView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                </x:Array>
+            </ListView.ItemsSource>
+        </ListView>
         <Button x:Name="wijzigProfielKnop"             
                 Text="Opslaan"
                 Clicked="wijzigProfielGegevens"/>
