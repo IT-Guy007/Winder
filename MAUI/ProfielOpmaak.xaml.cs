@@ -88,7 +88,7 @@ public partial class ProfielOpmaak : ContentPage
             else
             {
                 lblOmschrijving.Text = "Omschrijving";
-                lblAchternaam.BackgroundColor = default;
+                lblOmschrijving.BackgroundColor = default;
                 Omschrijving.Text = Omschrijving.Text.First().ToString().ToUpper() + Omschrijving.Text[1..].ToLower();
             }
         }
@@ -127,9 +127,17 @@ public partial class ProfielOpmaak : ContentPage
         {
             interessePicker.Title = "Interesse";
             interessePicker.TitleColor = default;
-            interesses.Add(interessePicker.SelectedItem.ToString());
-            listInteresses.ItemsSource = null;
-            listInteresses.ItemsSource = interesses;
+            if (!interesses.Contains(interessePicker.SelectedItem.ToString()))
+            {
+                interesses.Add(interessePicker.SelectedItem.ToString());
+                listInteresses.ItemsSource = null;
+                listInteresses.ItemsSource = interesses;
+            }
+            else {
+                Color colorRed = new Color(238, 75, 43);
+                interessePicker.Title = "Je hebt deze interesse al toegevoegd";
+                interessePicker.TitleColor = colorRed;
+            }
         }
         else
         {
@@ -137,5 +145,10 @@ public partial class ProfielOpmaak : ContentPage
             interessePicker.Title = "Je kunt maximaal 5 interesses selecteren";
             interessePicker.TitleColor = colorRed;
         }
+    }
+
+    private void DeleteItem_Clicked(object sender, EventArgs e)
+    {
+
     }
 }

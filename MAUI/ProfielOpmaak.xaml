@@ -99,6 +99,7 @@
                 </x:Array>
             </ListView.ItemsSource>
         </ListView>
+        <Button x:Name="DeleteItem" Text="Delete" Clicked="DeleteItem_Clicked" MaximumWidthRequest="100" MaximumHeightRequest="50"/>
         <Button x:Name="wijzigProfielKnop"             
                 Text="Opslaan"
                 Clicked="wijzigProfielGegevens"/>
