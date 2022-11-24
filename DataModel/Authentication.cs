@@ -1,5 +1,7 @@
 namespace DataModel;
 using System.Drawing;
+using System.Security.Cryptography;
+using System.Text;
 
 public class Authentication {
     
@@ -7,14 +9,12 @@ public class Authentication {
     private LoggedState _loggedState { get; set; }
     private AccountState _accountState { get; set; }
     
-
     public Authentication() {
         currentUser = new User();
         _loggedState = LoggedState.signedOut;
         _accountState = AccountState.inactive;
 
     }
-    
     
     //Defining state
     enum LoggedState {
@@ -25,6 +25,27 @@ public class Authentication {
     enum  AccountState {
         active,
         inactive,
+    }
+
+    public bool EmailIsUnique(string email) {
+        Database db = new Database();
+        List<string> emails = db.GetEmailFromDataBase();
+        if (emails.Contains(email)) {
+            return false;
+        }
+        return true;
+    }
+    
+    public string HashPassword(string password) {
+        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+    }
+
+    public int CalculateAge(DateTime birthDate) {
+        int age = DateTime.Now.Year - birthDate.Year;
+        if (DateTime.Now.DayOfYear < birthDate.DayOfYear) {
+            age--;
+        }
+        return age;
     }
 
     public bool CheckPassword(string password) {

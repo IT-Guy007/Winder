@@ -1,15 +1,16 @@
 ﻿using DataModel;
+using System.Data.SqlClient;
 
-Authentication registerCheck = new Authentication();
-bool resultaat;
+namespace Console
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Authentication auth = new Authentication();
+            System.Console.WriteLine(auth.EmailIsUnique("jeroen.denotter@icloud.com"));
+        }
+    }
+}
 
-Console.WriteLine("Voer Email in: ");
-string email = Console.ReadLine();
-resultaat = registerCheck.CheckEmail(email);
-Console.WriteLine("Je Email is " + resultaat);
 
-
-Console.WriteLine("Voer wachtwoord in:");
-string wachtwoord = Console.ReadLine();
-resultaat = registerCheck.CheckPassword(wachtwoord);
-Console.WriteLine("Je wachtwoord is " + resultaat);
