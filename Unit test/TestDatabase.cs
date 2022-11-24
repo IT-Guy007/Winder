@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 namespace Unit_test;
 using DataModel;
 public class TestDatabase {
+
     
     private Authentication _authentication { get; set; }
     private Database _database { get; set; }
@@ -24,24 +25,32 @@ public class TestDatabase {
         try {
             database.generateConnection();
             Assert.Pass();
-        } catch(SqlException e) {
+        } catch (SqlException e) {
             Assert.Fail(e.Message);
         }
-        
+
     }
-    
+
     [Test]
+
     public void TestDatabaseConnection() {
         
         Database database = new Database();
         try {
             database.openConnection();
             Assert.Pass();
+
             database.closeConnection();
         } catch(SqlException e) {
             Assert.Fail(e.Message);
         }
-        
+
+    }
+
+    [Test]
+    public void DatabaseGetEmailForDatabase() {
+        Database database = new Database();
+        Assert.IsNotEmpty(database.GetEmailFromDataBase());
     }
     
     [TestCase("Jeroen", "1234", ExpectedResult = false)]

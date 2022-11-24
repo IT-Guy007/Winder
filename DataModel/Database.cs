@@ -2,7 +2,9 @@ namespace DataModel;
 using System.Data.SqlClient;
 using System.Drawing;
 public class Database {
-    private SqlConnection? _connection;
+
+    public SqlConnection connection;
+
 
     public void generateConnection() {
         
@@ -17,18 +19,19 @@ public class Database {
     }
     
     public void openConnection() {
-        if (_connection == null) {
+        if (connection == null) {
             generateConnection();
         }
-        _connection.Open();
+        connection.Open();
     }
     
     public void closeConnection() {
-        
-        if (_connection == null) {
+
+        if (connection == null) {
+
             generateConnection();
         }
-        _connection.Close();
+        connection.Close();
     }
 
     public void updateLocalUserFromDatabase(string email) {
@@ -37,7 +40,7 @@ public class Database {
         openConnection();
         
         //Create query
-        SqlCommand query =  new SqlCommand("select * from winder.winder.[User] where email = @email", _connection);
+        SqlCommand query =  new SqlCommand("select * from winder.winder.[User] where email = @email", connection);
         query.Parameters.AddWithValue("@email", email);
         
         //Execute query
@@ -80,7 +83,7 @@ public class Database {
         openConnection();
         
         //Create query
-        SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email AND Password = @Password", _connection);
+        SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email AND Password = @Password", connection);
         query.Parameters.AddWithValue("@Email", email);
         query.Parameters.AddWithValue("@Password", password);
         
@@ -96,6 +99,31 @@ public class Database {
         return output;
     }
 
+
+
+    public List<string> GetEmailFromDataBase() {
+        List<string> emails = new List<string>();
+        openConnection();
+        string sql = "USE winder;" +
+                     "SELECT email FROM Winder.Winder.[User];";
+        SqlCommand command = new SqlCommand(sql, connection);
+        try
+        {
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var iets1 = reader["email"] as string;
+                emails.Add(iets1);
+            }
+        }
+        catch (SqlException e)
+        {
+            
+        }
+        closeConnection();
+        return emails;
+    }
+
     public bool register(string firstname, string middlename, string lastname, string username, string email,
         string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active) {
 
@@ -104,7 +132,7 @@ public class Database {
         
         //Create query
         SqlCommand query = new SqlCommand("insert into winder.winder.[User] " +
-                                                    "Values (@firstname, @middlename, @lastname, @birthday, @preference, @email, @password, @gender, convert(varbinary(max),@profilePicture), @username, @bio,@active)", _connection);
+                                                    "Values (@firstname, @middlename, @lastname, @birthday, @preference, @email, @password, @gender, convert(varbinary(max),@profilePicture), @username, @bio,@active)", connection);
         query.Parameters.AddWithValue("@firstname", firstname);
         query.Parameters.AddWithValue("@middlename", middlename);
         query.Parameters.AddWithValue("@lastname", lastname);
@@ -140,7 +168,7 @@ public class Database {
         //Open connectionn
         openConnection();
         
-        SqlCommand query = new SqlCommand("update winder.winder.[User] set active = @Active where email = @Email", _connection);
+        SqlCommand query = new SqlCommand("update winder.winder.[User] set active = @Active where email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
         query.Parameters.AddWithValue("@Active", activate);
         
@@ -186,6 +214,4 @@ public class Database {
   
         return bmpReturn;
     }
-    
-    
 }
