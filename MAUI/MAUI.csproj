@@ -49,6 +49,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="Resources\Images\achtergrond.png" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Compile Update="LoginScherm.xaml.cs">
         <DependentUpon>LoginScherm.xaml</DependentUpon>
       </Compile>
