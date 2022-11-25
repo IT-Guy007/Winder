@@ -20,37 +20,39 @@
             <Image 
             Source="zwartvierkant.png"
             WidthRequest="300"
-            Margin="-100"            
+            Margin="0, 0, 0 ,-300"            
             HeightRequest="300"
-            Opacity="1"
+            Opacity="0.5"
             />
 
         <Image  
             Source="winderlogo_zonderwindesheimdating.png"
             HeightRequest="150"
             WidthRequest="1000"
+            Margin="0,-30,0, 5"
             />
             
             
 
         <Entry x:Name="Emailadres"
-               Placeholder="            Email"
+               Placeholder="                   Email"
+              
                PlaceholderColor="DarkGray"
                HorizontalOptions="Center"
-               WidthRequest="150"
+               WidthRequest="200"
                BackgroundColor="White" 
                Margin="0,-30,0,5"
                />
         
         <Entry x:Name="Wachtwoord"
              
-               Placeholder="      Wachtwoord"
+               Placeholder="            Wachtwoord"
                PlaceholderColor="DarkGray"
                HorizontalOptions="Center"
                BackgroundColor="White"
                 IsPassword="True"
-               WidthRequest="150"
-               Margin="0,0,0,5"
+               WidthRequest="200"
+               Margin="0,0,0,10"
                />
 
         <Button x:Name="Inloggen"
@@ -59,7 +61,7 @@
                 WidthRequest="100"
                 BackgroundColor="White"
                 TextColor="Black"
-                
+                Margin="0,0,0,5"
                 />
 
 
