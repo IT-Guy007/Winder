@@ -38,18 +38,16 @@
         </HorizontalStackLayout>
 
         <Label 
-            x:Name="Naam"  
+            x:Name="Leeftijd"  
             Text="Leeftijd: "
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Slider x:Name="LeeftijdSlider"
-                Minimum="18"
-                Maximum="100"  
-                MinimumWidthRequest="300"
-                MaximumWidthRequest="200"
-                HorizontalOptions="Center"
-                ValueChanged="LeeftijdSlider_ValueChanged"
-                />
+        <DatePicker x:Name="Geboortedatum"
+            MinimumDate="01/01/1970"
+            MaximumDate="12/31/2005"
+            DateSelected="Geboortedatum_DateSelected"
+                    HorizontalOptions="Center"
+            />
         <Label 
             x:Name="lblOmschrijving"
             Text="Omschrijving"
@@ -64,22 +62,22 @@
                />
         <Picker 
         Title="Gender"
-        HorizontalOptions="Center"
-        SelectedIndexChanged="Geslacht_SelectedIndexChanged">
+        x:Name="Gender"
+        HorizontalOptions="Center">
             <Picker.Items>
                 <x:String>Man</x:String>
                 <x:String>Vrouw</x:String>
-                <x:String>Mentally disordered</x:String>
+                <x:String>Onbekend</x:String>
             </Picker.Items>
         </Picker>
         <Picker         
         Title="Voorkeur"
-        HorizontalOptions="Center"
-        SelectedIndexChanged="Voorkeur_SelectedIndexChanged">
+            x:Name="Voorkeur"
+        HorizontalOptions="Center">
             <Picker.Items>
                 <x:String>Man</x:String>
                 <x:String>Vrouw</x:String>
-                <x:String>Mentally disordered</x:String>
+                <x:String>Onbekend</x:String>
             </Picker.Items>
         </Picker>
         <Picker 

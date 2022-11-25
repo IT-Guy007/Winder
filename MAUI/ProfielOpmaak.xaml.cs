@@ -6,6 +6,7 @@ namespace MAUI;
 public partial class ProfielOpmaak : ContentPage
 {
     List<string> interesses;
+    bool voornaam, tussenvoegsel, achternaam, geboortedatum,omschrijving, geslacht,voorkeur, interessesGekozen;
     public ProfielOpmaak()
     {
         InitializeComponent();
@@ -14,7 +15,12 @@ public partial class ProfielOpmaak : ContentPage
     }
     private void wijzigProfielGegevens(object sender, EventArgs e)
     {
+        //checkAllInput(Voornaam, Tussenvoegsel, Achternaam, Geboortedatum, Gender, Voorkeur, Omschrijving, interesses);
+    }
 
+    private void checkAllInput(Entry voornaam, Entry tussenvoegsel, Entry achternaam, DatePicker geboortedatum, Picker gender, Picker voorkeur, Entry omschrijving, List<string> interesses)
+    {
+        
     }
 
     private void Voornaam_TextChanged(object sender, TextChangedEventArgs e)
@@ -71,10 +77,6 @@ public partial class ProfielOpmaak : ContentPage
             }
         }
     }
-    private void LeeftijdSlider_ValueChanged(object sender, ValueChangedEventArgs e)
-    {
-        Naam.Text = "Leeftijd: " + Convert.ToInt16(LeeftijdSlider.Value).ToString();
-    }
     private void Omschrijving_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (Omschrijving.Text != "")
@@ -103,17 +105,6 @@ public partial class ProfielOpmaak : ContentPage
         {
             return false;
         }
-    }
-
-
-    private void Voorkeur_SelectedIndexChanged(object sender, EventArgs e)
-    {
-
-    }
-
-    private void Geslacht_SelectedIndexChanged(object sender, EventArgs e)
-    {
-
     }
 
     private void interessePicker_SelectedIndexChanged(object sender, EventArgs e)
@@ -149,6 +140,18 @@ public partial class ProfielOpmaak : ContentPage
 
     private void DeleteItem_Clicked(object sender, EventArgs e)
     {
+        if (listInteresses.SelectedItem != null) {
+            var item = listInteresses.SelectedItem.ToString();
+            interesses.Remove(item);
+            listInteresses.ItemsSource = null;
+            listInteresses.ItemsSource = interesses;
+            listInteresses.SelectedItem = null;
+        }
+    }
 
+
+    private void Geboortedatum_DateSelected(object sender, DateChangedEventArgs e)
+    {
+        
     }
 }
