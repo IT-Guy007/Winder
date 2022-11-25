@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             
+             x:Class="MAUI.RegisterForm"
+             Title="RegisterForm"
+             
+             
+             >
+    <VerticalStackLayout  Spacing="10" Padding="20">
+
+        
+
+        <Label 
+            Padding="100,0,0,0"
+            FontSize="15"
+            Text="Email"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            TextColor ="White"
+            />
+        <Entry
+            HorizontalOptions="Start"
+            HeightRequest="30"
+            WidthRequest="250" 
+            BackgroundColor ="White"
+            TextColor ="Black"
+            FontSize="15"
+        />
+        <Label 
+            Padding="85,0,0,0"
+            FontSize="15"
+            Text="Voornaam"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            TextColor ="White"
+            />
+        <Entry
+            HorizontalOptions="Start"
+            HeightRequest="30"
+            WidthRequest="250" 
+            BackgroundColor ="White"
+            TextColor ="Black"
+            FontSize="15"
+        />
+        <Label 
+            Padding="75,0,0,0"
+            FontSize="15"
+            Text="Tussenvoegsel"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            TextColor ="White"
+            />
+        <Entry
+            HorizontalOptions="Start"
+            HeightRequest="30"
+            WidthRequest="250" 
+            BackgroundColor ="White"
+            TextColor ="Black"
+            FontSize="15"
+        />
+        <Label 
+            Padding="80,0,0,0"
+            FontSize="15"
+            Text="Achternaam"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            TextColor ="White"
+            />
+        <Entry
+            HorizontalOptions="Start"
+            HeightRequest="30"
+            WidthRequest="250" 
+            BackgroundColor ="White"
+            TextColor ="Black"
+            FontSize="15"
+        />
+        <Label 
+            Padding="70,0,0,0"
+            FontSize="15"
+            Text="Geboortedatum"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            TextColor ="White"
+            />
+        <DatePicker 
+            FontSize="20"
+            WidthRequest="250"
+            HeightRequest="30"
+            BackgroundColor="White"
+            TextColor="Black"
+            HorizontalOptions="Start"
+            />
+
+        <Label 
+            Padding="80,0,0,0"
+            FontSize="15"
+            Text="Wachtwoord"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            TextColor ="White"
+            />
+        <Entry
+            IsPassword="True"
+            HorizontalOptions="Start"
+            HeightRequest="30"
+            WidthRequest="250" 
+            BackgroundColor ="White"
+            TextColor ="Black"
+            FontSize="15"
+        />
+        <Label 
+            Padding="80,0,0,0"
+            FontSize="15"
+            Text="Voorkeur"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            TextColor ="White"
+            />
+
+        <Picker 
+            TextColor="Black"
+            BackgroundColor="White"
+            WidthRequest="250"
+            HorizontalOptions="Start"
+            >
+
+            <Picker.Items >
+               
+                <x:String>Man</x:String>
+                <x:String>Vrouw</x:String>
+                <x:String>Beide</x:String>
+                
+            </Picker.Items>
+        </Picker>
+
+        <Button
+            HorizontalOptions="Start"
+            Margin="0,40,0,0"
+            Text="Registreer"
+            HeightRequest="40"
+            WidthRequest="250"
+            />
+
+
+
+
+    </VerticalStackLayout>
+</ContentPage>
