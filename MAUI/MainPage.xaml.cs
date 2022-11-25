@@ -21,4 +21,9 @@ public partial class MainPage : ContentPage
         SemanticScreenReader.Announce(CounterBtn.Text);
     }
 
+    private void OnProfileClicked(object sender, EventArgs e)
+    {
+        ProfilePage profilePage = new ProfilePage();
+        Navigation.PushAsync(profilePage);
+    }
 }

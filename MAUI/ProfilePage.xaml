@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:DataModel="clr-namespace:DataModel;assembly=DataModel"
+             x:Class="MAUI.ProfilePage"
+             Title="ProfilePage">
+    <ContentPage.BindingContext>
+        <DataModel:ProfilePage/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout>
+        <Ellipse 
+            x:Name="ProfilePicture"
+            HeightRequest="100"
+            WidthRequest="100">
+            <Ellipse.Fill>
+                <ImagePaint 
+            </Ellipse.Fill>
+        </Ellipse>
+    </VerticalStackLayout>
+</ContentPage>
