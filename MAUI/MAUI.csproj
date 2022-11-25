@@ -54,6 +54,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="Resources\Images\Discordpf.png" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\DataModel\DataModel.csproj" />
     </ItemGroup>
 

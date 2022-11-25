@@ -4,17 +4,17 @@
              xmlns:DataModel="clr-namespace:DataModel;assembly=DataModel"
              x:Class="MAUI.ProfilePage"
              Title="ProfilePage">
-    <ContentPage.BindingContext>
-        <DataModel:ProfilePage/>
-    </ContentPage.BindingContext>
+
     <VerticalStackLayout>
-        <Ellipse 
-            x:Name="ProfilePicture"
+
+        <ImageButton
+            Clicked="OnProfilePictureClicked"
+            x:Name="ProfileImage"
             HeightRequest="100"
-            WidthRequest="100">
-            <Ellipse.Fill>
-                <ImagePaint 
-            </Ellipse.Fill>
-        </Ellipse>
+            WidthRequest="100"
+            Source="discordpf.png"
+            Aspect="AspectFill"
+            CornerRadius="50"/>
+
     </VerticalStackLayout>
 </ContentPage>
