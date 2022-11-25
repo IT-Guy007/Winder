@@ -9,6 +9,7 @@
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center"
+            
 >
             
 
@@ -16,7 +17,10 @@
                 Source="dotnet_bot.png"
                 SemanticProperties.Description="Cute dot net bot waving hi to you!"
                 HeightRequest="200"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"
+                
+                
+                />
 
             <Label
                 Text="doei, ysadasdsy!"

@@ -4,146 +4,215 @@
              
              x:Class="MAUI.RegisterForm"
              Title="RegisterForm"
-             
-             
+             BackgroundImageSource="wessel.jpg"
              >
-    <VerticalStackLayout  Spacing="10" Padding="20">
 
-        
 
-        <Label 
-            Padding="100,0,0,0"
-            FontSize="15"
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            
+            
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.Column="0" Fill="Black" Opacity="0.7"  HorizontalOptions="Fill" VerticalOptions="Start">
+            
+            
+        </Rectangle>
+        <VerticalStackLayout Grid.Column="0"  Spacing="10" Padding="20" HorizontalOptions="Start" >
+
+
+
+            <Label 
+           
+            
+            FontSize="12"
             Text="Email"
-            HorizontalOptions="Start"
-            VerticalOptions="Start"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
             TextColor ="White"
+            
+            
+            
             />
-        <Entry
-            HorizontalOptions="Start"
+            <Entry
+            HorizontalOptions="Fill"
             HeightRequest="30"
-            WidthRequest="250" 
+            
             BackgroundColor ="White"
             TextColor ="Black"
             FontSize="15"
         />
-        <Label 
-            Padding="85,0,0,0"
-            FontSize="15"
+            <Label 
+            FontSize="12"
             Text="Voornaam"
-            HorizontalOptions="Start"
+            HorizontalOptions="Center"
             VerticalOptions="Start"
             TextColor ="White"
             />
-        <Entry
-            HorizontalOptions="Start"
+            <Entry
+            HorizontalOptions="Fill"
             HeightRequest="30"
-            WidthRequest="250" 
             BackgroundColor ="White"
             TextColor ="Black"
             FontSize="15"
         />
-        <Label 
-            Padding="75,0,0,0"
-            FontSize="15"
+            <Label 
+            FontSize="12"
             Text="Tussenvoegsel"
-            HorizontalOptions="Start"
+            HorizontalOptions="Center"
             VerticalOptions="Start"
             TextColor ="White"
             />
-        <Entry
-            HorizontalOptions="Start"
+            <Entry
+            HorizontalOptions="Fill"
             HeightRequest="30"
-            WidthRequest="250" 
             BackgroundColor ="White"
             TextColor ="Black"
             FontSize="15"
         />
-        <Label 
-            Padding="80,0,0,0"
-            FontSize="15"
+            <Label 
+            FontSize="12"
             Text="Achternaam"
-            HorizontalOptions="Start"
+            HorizontalOptions="Center"
             VerticalOptions="Start"
             TextColor ="White"
             />
-        <Entry
-            HorizontalOptions="Start"
+            <Entry
+            HorizontalOptions="Fill"
             HeightRequest="30"
-            WidthRequest="250" 
             BackgroundColor ="White"
             TextColor ="Black"
             FontSize="15"
         />
-        <Label 
-            Padding="70,0,0,0"
-            FontSize="15"
+            <Label 
+            FontSize="12"
             Text="Geboortedatum"
-            HorizontalOptions="Start"
+            HorizontalOptions="Center"
             VerticalOptions="Start"
             TextColor ="White"
             />
-        <DatePicker 
-            FontSize="20"
-            WidthRequest="250"
+            <DatePicker 
+            FontSize="12"
             HeightRequest="30"
             BackgroundColor="White"
             TextColor="Black"
-            HorizontalOptions="Start"
+            HorizontalOptions="Center"
+            
+            
             />
 
-        <Label 
-            Padding="80,0,0,0"
-            FontSize="15"
+            <Label 
+            FontSize="12"
             Text="Wachtwoord"
-            HorizontalOptions="Start"
+            HorizontalOptions="Center"
             VerticalOptions="Start"
             TextColor ="White"
             />
-        <Entry
+            <Entry
             IsPassword="True"
-            HorizontalOptions="Start"
-            HeightRequest="30"
-            WidthRequest="250" 
+            HorizontalOptions="Fill"
+            HeightRequest="20"
             BackgroundColor ="White"
             TextColor ="Black"
-            FontSize="15"
+            FontSize="10"
+                Placeholder="test"
+                
         />
-        <Label 
-            Padding="80,0,0,0"
-            FontSize="15"
+            <Label 
+            FontSize="12"
             Text="Voorkeur"
-            HorizontalOptions="Start"
+            HorizontalOptions="Center"
             VerticalOptions="Start"
             TextColor ="White"
+                
             />
 
-        <Picker 
-            TextColor="Black"
-            BackgroundColor="White"
-            WidthRequest="250"
-            HorizontalOptions="Start"
+            <Picker 
+            TextColor="White"
+            BackgroundColor="Gray"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            
             >
 
-            <Picker.Items >
-               
-                <x:String>Man</x:String>
-                <x:String>Vrouw</x:String>
-                <x:String>Beide</x:String>
-                
-            </Picker.Items>
-        </Picker>
+                <Picker.Items >
 
-        <Button
-            HorizontalOptions="Start"
-            Margin="0,40,0,0"
+                    <x:String>Man</x:String>
+                    <x:String>Vrouw</x:String>
+                    <x:String>Beide</x:String>
+
+                </Picker.Items>
+            </Picker>
+
+            <Label 
+            FontSize="12"
+            Text="Opleiding"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor ="White"
+            />
+            <Picker 
+            TextColor="White"
+            BackgroundColor="Gray"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            SelectedItem="Opleidingen"
+            >
+
+                <Picker.Items >
+
+                    <x:String>Opleidingen</x:String>
+                    
+
+                </Picker.Items>
+            </Picker>
+            <Label 
+            FontSize="12"
+            Text="Locatie"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor ="White"
+            />
+            <Picker 
+            TextColor="White"
+            BackgroundColor="Gray"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            
+            >
+
+                <Picker.Items >
+
+                    <x:String>Zwolle</x:String>
+                    <x:String>Almere</x:String>
+
+
+                </Picker.Items>
+            </Picker>
+            <Label 
+             FontSize="12"
+            Text="Interesses"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor ="White"
+            />
+            <Button
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
             Text="Registreer"
-            HeightRequest="40"
-            WidthRequest="250"
+            
             />
 
 
 
 
-    </VerticalStackLayout>
+
+
+
+        </VerticalStackLayout>
+
+    </Grid>
 </ContentPage>
