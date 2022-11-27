@@ -6,7 +6,7 @@ namespace MAUI;
 public partial class ProfielOpmaak : ContentPage
 {
     List<string> interesses;
-    bool voornaam, tussenvoegsel, achternaam, geboortedatum,omschrijving, geslacht,voorkeur, interessesGekozen;
+    bool voornaam = true, tussenvoegsel = true, achternaam = true, geboortedatum = true,omschrijving = true, geslacht = true,voorkeur = true, interessesGekozen = true;
     public ProfielOpmaak()
     {
         InitializeComponent();
@@ -15,12 +15,19 @@ public partial class ProfielOpmaak : ContentPage
     }
     private void wijzigProfielGegevens(object sender, EventArgs e)
     {
-        //checkAllInput(Voornaam, Tussenvoegsel, Achternaam, Geboortedatum, Gender, Voorkeur, Omschrijving, interesses);
+        checkAllInput();
     }
 
-    private void checkAllInput(Entry voornaam, Entry tussenvoegsel, Entry achternaam, DatePicker geboortedatum, Picker gender, Picker voorkeur, Entry omschrijving, List<string> interesses)
+    private void checkAllInput()
     {
-        
+        if (voornaam && tussenvoegsel && achternaam && geboortedatum && omschrijving && geslacht && voorkeur && interessesGekozen)
+        {
+            DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
+        }
+        else {
+            DisplayAlert("Er is iets verkeerd gegaan...", "Vul alle gegevens in", "OK");
+        }
+
     }
 
     private void Voornaam_TextChanged(object sender, TextChangedEventArgs e)
@@ -29,12 +36,14 @@ public partial class ProfielOpmaak : ContentPage
         {
             if (!checkIfTextIsOnlyLetters(Voornaam.Text))
             {
+                voornaam = false;
                 Color colorRed = new Color(238, 75, 43);
                 lblVoornaam.Text = "Voornaam mag alleen letters bevatten";
                 lblVoornaam.BackgroundColor = colorRed;
             }
             else
             {
+                voornaam = true;
                 lblVoornaam.Text = "Voornaam";
                 lblVoornaam.BackgroundColor = default;
                 Voornaam.Text = Voornaam.Text.First().ToString().ToUpper() + Voornaam.Text[1..].ToLower();
@@ -47,12 +56,14 @@ public partial class ProfielOpmaak : ContentPage
         {
             if (!checkIfTextIsOnlyLetters(Tussenvoegsel.Text))
             {
+                tussenvoegsel = false;
                 Color colorRed = new Color(238, 75, 43);
                 lblTussenvoegsel.Text = "Tussenvoegsel mag alleen letters bevatten";
                 lblTussenvoegsel.BackgroundColor = colorRed;
             }
             else
             {
+                tussenvoegsel = true;
                 lblTussenvoegsel.Text = "Tussenvoegsel";
                 lblTussenvoegsel.BackgroundColor = default;
                 Tussenvoegsel.Text = Tussenvoegsel.Text.First().ToString().ToUpper() + Tussenvoegsel.Text[1..].ToLower();
@@ -65,12 +76,14 @@ public partial class ProfielOpmaak : ContentPage
         {
             if (!checkIfTextIsOnlyLetters(Achternaam.Text))
             {
+                achternaam = false;
                 Color colorRed = new Color(238, 75, 43);
                 lblAchternaam.Text = "Achternaam mag alleen letters bevatten";
                 lblAchternaam.BackgroundColor = colorRed;
             }
             else
             {
+                achternaam = true;
                 lblAchternaam.Text = "Tussenvoegsel";
                 lblAchternaam.BackgroundColor = default;
                 Achternaam.Text = Achternaam.Text.First().ToString().ToUpper() + Achternaam.Text[1..].ToLower();
@@ -83,12 +96,14 @@ public partial class ProfielOpmaak : ContentPage
         {
             if (!checkIfTextIsOnlyLetters(Omschrijving.Text))
             {
+                omschrijving = false;
                 Color colorRed = new Color(238, 75, 43);
                 lblOmschrijving.Text = "Omschrijving mag alleen letters bevatten";
                 lblOmschrijving.BackgroundColor = colorRed;
             }
             else
             {
+                omschrijving = true;
                 lblOmschrijving.Text = "Omschrijving";
                 lblOmschrijving.BackgroundColor = default;
                 Omschrijving.Text = Omschrijving.Text.First().ToString().ToUpper() + Omschrijving.Text[1..].ToLower();
