@@ -23,6 +23,14 @@ public partial class ProfielOpmaak : ContentPage
         if (voornaam && tussenvoegsel && achternaam && geboortedatum && omschrijving && geslacht && voorkeur && interessesGekozen)
         {
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
+            Voornaam.Placeholder = Voornaam.Text;
+            Tussenvoegsel.Placeholder = Tussenvoegsel.Text;
+            Achternaam.Placeholder = Achternaam.Text;
+            Omschrijving.Placeholder = Omschrijving.Text;
+            Voornaam.Text = "";
+            Tussenvoegsel.Text = "";
+            Achternaam.Text = "";
+            Omschrijving.Text = "";
         }
         else {
             DisplayAlert("Er is iets verkeerd gegaan...", "Vul alle gegevens in", "OK");
@@ -94,7 +102,7 @@ public partial class ProfielOpmaak : ContentPage
     {
         if (Omschrijving.Text != "")
         {
-            if (!checkIfTextIsOnlyLetters(Omschrijving.Text))
+            if (!checkIfTextIsOnlyLettersAndSpaces(Omschrijving.Text))
             {
                 omschrijving = false;
                 Color colorRed = new Color(238, 75, 43);
@@ -110,6 +118,19 @@ public partial class ProfielOpmaak : ContentPage
             }
         }
     }
+
+    private bool checkIfTextIsOnlyLettersAndSpaces(string text)
+    {
+        foreach (char c in text)
+        {
+            if (!char.IsLetter(c) && c != ' ')
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private bool checkIfTextIsOnlyLetters(string text)
     {
         if (text.All(char.IsLetter))
@@ -167,6 +188,26 @@ public partial class ProfielOpmaak : ContentPage
 
     private void Geboortedatum_DateSelected(object sender, DateChangedEventArgs e)
     {
-        
+        checkIfAgeOfBirthDateIsOver18();
+    }
+
+    private void checkIfAgeOfBirthDateIsOver18()
+    {
+            DateTime today = DateTime.Today;
+            int age = today.Year - Geboortedatum.Date.Year;
+            if (Geboortedatum.Date > today.AddYears(-age)) age--;
+            if (age >= 18)
+            {
+                geboortedatum = true;
+            lblGeboortedatum.Text = "Leeftijd : " + age;
+            lblGeboortedatum.BackgroundColor = default;
+            }
+            else
+            {
+                geboortedatum = false;
+                Color colorRed = new Color(238, 75, 43);
+                lblGeboortedatum.Text = "Je moet minimaal 18 jaar zijn";
+                lblGeboortedatum.BackgroundColor = colorRed;
+            }
     }
 }
