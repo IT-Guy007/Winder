@@ -222,4 +222,27 @@ public class Database {
   
         return bmpReturn;
     }
+
+    public List<string> GetInterestsFromDataBase()
+    {
+        List<string> interests = new List<string>();
+        openConnection();
+        string sql = "SELECT * FROM Winder.Winder.[Interests];";
+        SqlCommand command = new SqlCommand(sql, connection);
+        try
+        {
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var iets1 = reader["name"] as string;
+                interests.Add(iets1);
+            }
+        }
+        catch (SqlException e)
+        {
+            closeConnection();
+        }
+        closeConnection();
+        return interests;
+    }
 }

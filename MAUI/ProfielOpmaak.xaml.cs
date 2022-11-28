@@ -1,19 +1,32 @@
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static System.Net.Mime.MediaTypeNames;
+using DataModel;
 
 namespace MAUI;
 
 public partial class ProfielOpmaak : ContentPage
 {
     List<string> interesses;
+    Database b = new Database();
     bool voornaam = true, tussenvoegsel = true, achternaam = true, geboortedatum = true,omschrijving = true, geslacht = true,voorkeur = true, interessesGekozen = true;
     public ProfielOpmaak()
     {
         InitializeComponent();
         interesses = new List<string>();
+        interessePicker.ItemsSource = getAllListOfInterestsInStrignFromDatabate();
         listInteresses.ItemsSource = interesses;
+        
     }
+
+    private List<string> getAllListOfInterestsInStrignFromDatabate()
+    {
+        List<string> interests = new List<string>();
+        interests = b.GetInterestsFromDataBase();
+        return interests;
+    }
+
     private void wijzigProfielGegevens(object sender, EventArgs e)
     {
         checkAllInput();

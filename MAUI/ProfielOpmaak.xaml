@@ -84,9 +84,6 @@
         HorizontalOptions="Center"
         SelectedIndexChanged="interessePicker_SelectedIndexChanged">
             <Picker.Items>
-                <x:String>Voetbal</x:String>
-                <x:String>Basketbal</x:String>
-                <x:String>Sportschool</x:String>
             </Picker.Items>
         </Picker>
         <ListView MaximumHeightRequest="100" HorizontalOptions="Center" x:Name="listInteresses">
