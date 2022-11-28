@@ -30,4 +30,19 @@ public class User {
         this.bio = bio;
     }
 
+    public User(string username, string firstName, string middleName, string lastName, DateTime birthDay,
+        string preference, string email, string password, string gender, string bio)
+    {
+        this.username = username;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.birthDay = birthDay;
+        this.preference = preference;
+        this.email = email;
+        this.password = password;
+        this.gender = gender;
+        this.bio = bio;
+    }
+
 }

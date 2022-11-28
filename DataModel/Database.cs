@@ -53,13 +53,15 @@ public class Database {
                 var middleName = reader["middleName"] as string;
                 var lastName = reader["lastName"] as string;
                 var preferences = reader["preference"] as string;
-                var birthday = DateTime.Parse(reader["birthday"] as string);
+                var birthday = (DateTime)reader["birthday"];
                 var gender = reader["gender"] as string;
-                var profilePicture = reader["profilePicture"] as string;
+                //var profilePicture = reader["profilePicture"] as string;
                 var bio = reader["bio"] as string;
 
                 Authentication._currentUser = new User(username, firstName, middleName, lastName, birthday,
-                    preferences, email, "", gender, Base64StringToBitmap(profilePicture),bio);
+                    preferences, email, "", gender, bio);
+                //Authentication._currentUser = new User(username, firstName, middleName, lastName, birthday,
+                //    preferences, email, "", gender, Base64StringToBitmap(profilePicture),bio);
             }
         
             //Close connection
@@ -201,7 +203,7 @@ public class Database {
 
     }
     
-    public static Bitmap Base64StringToBitmap(string base64String)
+    public static Bitmap Base64StringToBitmap(string? base64String)
     {
         Bitmap bmpReturn = null;
 

@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUI.RegisterForm"
+             Title="RegisterForm"
              BackgroundImageSource="backgr.jpeg"
              
              >
@@ -32,6 +33,16 @@
             VerticalOptions="Start"
             TextColor ="White"
             />
+            <Label 
+                x:Name="Foutvoornaam"
+            FontSize="12"
+            Text="Voornaam mag niet leeg zijn"
+                IsVisible="false"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor ="OrangeRed"
+                
+            />
             <Entry
                 x:Name="Voornaam"
             HorizontalOptions="Fill"
@@ -50,6 +61,8 @@
             VerticalOptions="Start"
             TextColor ="White"
             />
+           
+
             <Entry
                 x:Name="Tussenvoegsel"
             HorizontalOptions="Fill"
@@ -66,6 +79,16 @@
             HorizontalOptions="Center"
             VerticalOptions="Start"
             TextColor ="White"
+            />
+            <Label 
+                x:Name="FoutAchternaam"
+            FontSize="12"
+            Text="Achternaam mag niet leeg zijn"
+                IsVisible="false"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor ="OrangeRed"
+                
             />
             <Entry
                 x:Name="Achternaam"
@@ -84,6 +107,16 @@
             HorizontalOptions="Center"
             VerticalOptions="Center"
             TextColor ="White"
+                
+            />
+            <Label 
+                x:Name="FoutGeslacht"
+            FontSize="12"
+            Text="Geslacht mag niet leeg zijn"
+                IsVisible="false"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor ="OrangeRed"
                 
             />
 
@@ -114,6 +147,16 @@
             VerticalOptions="Start"
             TextColor ="White"
             />
+            <Label 
+                x:Name="FoutLeeftijd"
+            FontSize="12"
+            Text="Minimum leeftijd is 18 jaar"
+                IsVisible="false"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor ="OrangeRed"
+                
+            />
 
             <DatePicker 
                 x:Name="Geboortedatum"
@@ -136,6 +179,17 @@
 
             
             />
+            <Label 
+                x:Name="FoutEmail"
+            FontSize="12"
+            Text="Email mag niet leeg zijn"
+                IsVisible="false"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor ="OrangeRed"
+                
+            />
+            
 
             <Entry
                 x:Name="Email"
@@ -154,6 +208,17 @@
             VerticalOptions="Start"
             TextColor ="White"
             />
+            <Label 
+                x:Name="FoutWachtwoord"
+            FontSize="12"
+            Text="Wachtwoord mag niet leeg zijn"
+                
+                IsVisible="false"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor ="OrangeRed"
+                
+            />
             <Entry
                 x:Name="Wachtwoord"
             IsPassword="True"
@@ -162,7 +227,7 @@
             BackgroundColor ="White"
             TextColor ="Black"
             FontSize="Body"
-                Placeholder="test"
+            
                 WidthRequest="220"
                 
         />
@@ -178,6 +243,17 @@
             HorizontalOptions="Center"
             VerticalOptions="Center"
             TextColor ="White"
+                
+            />
+            <Label 
+                x:Name="FoutVoorkeur"
+            FontSize="12"
+            Text="Voorkeur mag niet leeg zijn"
+                
+                IsVisible="false"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor ="OrangeRed"
                 
             />
 
@@ -210,6 +286,17 @@
             VerticalOptions="Center"
             TextColor ="White"
             />
+            <Label 
+                x:Name="FoutOpleiding"
+            FontSize="12"
+            Text="Opleiding mag niet leeg zijn"
+                
+                IsVisible="false"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor ="OrangeRed"
+                
+            />
             <Picker 
                 x:Name="Opleiding"
             TextColor="White"
@@ -239,6 +326,17 @@
                 
             TextColor ="White"
             />
+            <Label 
+                x:Name="FoutLocatie"
+            FontSize="12"
+            Text="Locatie mag niet leeg zijn"
+                
+                IsVisible="false"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor ="OrangeRed"
+                
+            />
             <Picker 
                 x:Name="Locatie"
             TextColor="White"
@@ -266,6 +364,17 @@
             HorizontalOptions="Center"
             VerticalOptions="Center"
             TextColor ="White"
+            />
+            <Label 
+                x:Name="Foutinteresses"
+            FontSize="12"
+            Text="Interesses mag niet leeg zijn"
+                
+                IsVisible="false"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor ="OrangeRed"
+                
             />
 
 
