@@ -19,7 +19,7 @@
                 HorizontalOptions="Center" />
 
             <Label
-                Text="doei, ysadasdsy!"
+                Text=""
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
                 HorizontalOptions="Center" />
