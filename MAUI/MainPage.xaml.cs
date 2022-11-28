@@ -6,7 +6,6 @@ public partial class MainPage : ContentPage {
         InitializeComponent();
     }
 
-
     private void RegisterButton(object sender, EventArgs e) {
         Navigation.PushAsync(new RegisterForm());
     }

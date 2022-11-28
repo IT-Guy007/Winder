@@ -5,49 +5,48 @@
              Shell.NavBarIsVisible="False"
              
              BackgroundColor="#CC415F"
-        >
+             >
     
-    <VerticalStackLayout VerticalOptions="Center"  >
+            <VerticalStackLayout VerticalOptions="Center"  >
             
-            <Image 
-            Source="zwartvierkant.png"
-            WidthRequest="300"
-            Margin="0, 0, 0 ,-300"            
-            HeightRequest="300"
-            Opacity="0.5"
-            />
-
-        <Image  
-            Source="winderlogo_zonderwindesheimdating.png"
-            HeightRequest="150"
-            WidthRequest="1000"
-            Margin="0,-30,0, 5"
-            />
-            
-            
-
-        <Button x:Name="Inloggen"
-                Text="Inloggen"
-                Clicked="LoginButton"
-                WidthRequest="100"
-                BackgroundColor="White"
-                TextColor="Black"
-                Margin="0,0,0,5"
+                <Image 
+                Source="zwartvierkant.png"
+                WidthRequest="300"
+                Margin="0, 0, 0 ,-300"            
+                HeightRequest="300"
+                Opacity="0.5"
                 />
 
+                <Image  
+                    Source="winderlogo_zonderwindesheimdating.png"
+                    HeightRequest="150"
+                    WidthRequest="1000"
+                    Margin="0,-30,0, 5"
+                    />
+            
+            
 
-        <Button x:Name="Registreren"
-                Text="Nog geen account?"
-                TextColor="White"
-                Clicked="RegisterButton"
-                WidthRequest="180"
-                HeightRequest="38"
-                BackgroundColor="Transparent"
-                BorderColor="Transparent"
+                <Button x:Name="Inloggen"
+                        Text="Inloggen"
+                        Clicked="LoginButton"
+                        WidthRequest="150"
+                        BackgroundColor="White"
+                        TextColor="Black"
+                        Margin="0,0,0,5"
+                        />
+
+
+                <Button x:Name="Registreren"
+                        Text="Registreren?"
+                        Clicked="RegisterButton"
+                        WidthRequest="150"
+                        BackgroundColor="White"
+                        TextColor="Black"
+                        Margin="0,0,0,5"
+                />
+                        
                 
-                />
-
-            
+                
         </VerticalStackLayout>
 
     

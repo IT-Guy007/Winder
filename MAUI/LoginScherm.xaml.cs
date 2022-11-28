@@ -1,39 +1,35 @@
 
 
-
 using DataModel;
-using Microsoft.Maui.Layouts;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MAUI;
-public partial class LoginScherm : ContentPage
-{
+public partial class LoginScherm : ContentPage {
     Button b = new Button();
     Button b2 = new Button();
-   
-    public LoginScherm()
-    {
+
+    Database database = new Database();
+
+    public LoginScherm() {
         InitializeComponent();
         b.Clicked += Inlog;
         b2.Clicked += WachtwoordVergeten;
         
     }
+
     private void Inlog(object sender, EventArgs e)
     {
-        Database database = new Database();
-        var Email = Emailadres.Text.Trim();
-        var Password = Wachtwoord.Text.Trim();
-        if (database.checkLogin(Email, Password))
-        {
-            FoutmeldingInloggen.IsVisible = false;
+        var Email = Emailadres.Text;
+        var Password = Wachtwoord.Text;
+        if (database.checkLogin(Email, Password)) {
             Navigation.PushAsync(new ProfielOpmaak());
         }
-        else
-        {
+        else {
             FoutmeldingInloggen.IsVisible = true;
         }
+
     }
-    private void WachtwoordVergeten(object sender, EventArgs e)
-    {
+    private void WachtwoordVergeten(object sender, EventArgs e) {
         
     }
    
