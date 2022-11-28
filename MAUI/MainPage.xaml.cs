@@ -6,13 +6,11 @@ public partial class MainPage : ContentPage {
         InitializeComponent();
     }
 
-    private void RegisterButton(object sender, EventArgs e)
-    {
+    private void RegisterButton(object sender, EventArgs e) {
         throw new NotImplementedException();
     }
 
-    private void LoginButton(object sender, EventArgs e)
-    {
+    private void LoginButton(object sender, EventArgs e) {
         throw new NotImplementedException();
     }
 }
