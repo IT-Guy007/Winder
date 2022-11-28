@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MAUI.InlogScherm" 
-             Shell.NavBarIsVisible="False"
+             x:Class="MAUI.LoginScherm" 
              
              BackgroundImageSource="achtergrond.png"
-            HeightRequest="580"
-             WidthRequest="792"
-             MaximumHeightRequest="580"
-             MaximumWidthRequest="792"
-             
-             >
+>
 
 
-
-        <VerticalStackLayout VerticalOptions="Center" >
+    
         <VerticalStackLayout VerticalOptions="Center"  >
 
             <Image 
@@ -77,8 +70,7 @@
                 
                 />
 
-
-        </VerticalStackLayout>
+            
     </VerticalStackLayout>
 
   
