@@ -10,17 +10,48 @@ public partial class ProfielOpmaak : ContentPage
 {
     List<string> interesses;
     Database b = new Database();
-    bool voornaam = true, tussenvoegsel = true, achternaam = true, geboortedatum = true,omschrijving = true, geslacht = true,voorkeur = true, interessesGekozen = true;
+    bool voornaam = true, tussenvoegsel = true, achternaam = true, geboortedatum = false,omschrijving = true, geslacht = true,voorkeur = true, interessesGekozen = true;
     public ProfielOpmaak()
     {
         InitializeComponent();
         interesses = new List<string>();
-        interessePicker.ItemsSource = getAllListOfInterestsInStrignFromDatabate();
+        interessePicker.ItemsSource = getAllListOfInterestsInStringFromDatabase();
         listInteresses.ItemsSource = interesses;
-        
+        loadUserFromDatabaseInForm();
     }
 
-    private List<string> getAllListOfInterestsInStrignFromDatabate()
+    private void loadUserFromDatabaseInForm()
+    {
+        var user = b.GetUserFromDatabase();
+        Voornaam.Placeholder = user.firstName;
+        Tussenvoegsel.Placeholder = user.middleName;
+        Achternaam.Placeholder = user.lastName;
+        Geboortedatum.Date = getUserBirthday(user);
+        Omschrijving.Placeholder = user.bio;
+        Gender.SelectedIndex = getGenderFromUser(user);
+    }
+
+    private int getGenderFromUser(User user)
+    {
+        if (user.gender == "male")return 1;
+        if (user.gender == "female")return 2;
+        return 0;
+    }
+
+    private DateTime getUserBirthday(User user)
+    {
+        if (user.birthDay == null)
+        {
+            return DateTime.Now;
+        }
+        else
+        {
+            return (DateTime)user.birthDay;
+        }
+    }
+
+
+    private List<string> getAllListOfInterestsInStringFromDatabase()
     {
         List<string> interests = new List<string>();
         interests = b.GetInterestsFromDataBase();
@@ -191,6 +222,8 @@ public partial class ProfielOpmaak : ContentPage
     private void DeleteItem_Clicked(object sender, EventArgs e)
     {
         if (listInteresses.SelectedItem != null) {
+            interessePicker.Title = "Interesse";
+            interessePicker.TitleColor = default;
             var item = listInteresses.SelectedItem.ToString();
             interesses.Remove(item);
             listInteresses.ItemsSource = null;
@@ -213,8 +246,8 @@ public partial class ProfielOpmaak : ContentPage
             if (age >= 18)
             {
                 geboortedatum = true;
-            lblGeboortedatum.Text = "Leeftijd : " + age;
-            lblGeboortedatum.BackgroundColor = default;
+                lblGeboortedatum.Text = "Leeftijd : " + age;
+                lblGeboortedatum.BackgroundColor = default;
             }
             else
             {

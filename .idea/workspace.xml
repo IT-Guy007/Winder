@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d94c203-6d0e-4d79-80c2-0bb2ccba3c7e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.vs/Console/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/24d53990-e8c2-4298-a391-f6737f70d235.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/d94bb917-9265-482a-aaa1-8c40518ddbed.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/v17/.futdcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
