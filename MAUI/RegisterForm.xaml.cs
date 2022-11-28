@@ -2,6 +2,9 @@
 
 
 
+using System.Drawing;
+using DataModel;
+
 namespace MAUI;
 
 public partial class RegisterForm : ContentPage
@@ -23,8 +26,7 @@ public partial class RegisterForm : ContentPage
 
 
 
-    public RegisterForm() 
-    {
+    public RegisterForm() {
         InitializeComponent();
         
     }
@@ -40,13 +42,10 @@ public partial class RegisterForm : ContentPage
     }
 
 
-    public void RegisterBtnEvent(object sender, EventArgs e)
-    {
-
+    public void RegisterBtnEvent(object sender, EventArgs e) {
 
         //declaring objects by form values by clicking " registreer " button
 
-        
         email = Email.Text;
         voornaam = Voornaam.Text;
         tussenvoegsel = Tussenvoegsel.Text;
@@ -55,7 +54,14 @@ public partial class RegisterForm : ContentPage
         geboortedatum = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
         geslacht = Geslacht.SelectedItem.ToString();
 
-        
+        Database database = new Database();
+        Random random = new Random();
+        if (database.register(voornaam, tussenvoegsel, achternaam, random.Next(100000, 999999).ToString(), email,
+                voorkeur, geboortedatum,
+                geslacht, "", wachtwoord, "", true))
+        {
+            Navigation.PushAsync(new MatchPage());
+        }
 
         //setting objects visible to proceed the registerform
         LblVoorkeur.IsVisible = true;

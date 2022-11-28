@@ -6,8 +6,6 @@
              
              >
 
-
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -309,10 +307,6 @@
             Text="Opslaan"
             
             />
-
-
-
-
 
         </VerticalStackLayout>
 
