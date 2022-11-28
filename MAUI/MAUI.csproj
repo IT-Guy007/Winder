@@ -35,6 +35,10 @@
         <AssemblyVersion>1.0</AssemblyVersion>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios|AnyCPU'" />
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-ios|AnyCPU'" />
+
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -54,7 +58,19 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="Resources\Images\backgr.jpeg" />
+      <None Remove="Resources\Images\bck.jpeg" />
+      <None Remove="Resources\Images\Wessel.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\DataModel\DataModel.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiXaml Update="RegisterForm.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
     </ItemGroup>
 
 </Project>
