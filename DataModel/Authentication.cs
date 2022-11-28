@@ -44,7 +44,7 @@ public class Authentication {
         }
     }
     
-    // checking if email is already in database
+    // checking if email is already in database, returns true if unique
     public bool EmailIsUnique(string email) {
         Database db = new Database();
         List<string> emails = db.GetEmailFromDataBase();
@@ -76,7 +76,7 @@ public class Authentication {
         return false;
     }
 
-    // checks if email belongs to Windesheim
+    // checks if email belongs to Windesheim, returns true if so
     public bool CheckEmail(string email) {
         if (email.EndsWith("@student.windesheim.nl") && email.StartsWith("s")) {
             return true;
