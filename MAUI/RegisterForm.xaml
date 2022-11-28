@@ -4,7 +4,7 @@
              
              x:Class="MAUI.RegisterForm"
              Title="RegisterForm"
-             BackgroundImageSource="wessel.jpg"
+             BackgroundImageSource="backgr.jpeg"
              >
 
 
@@ -16,36 +16,19 @@
             <ColumnDefinition Width="*" />
             
             
+            
         </Grid.ColumnDefinitions>
-        <Rectangle Grid.Column="0" Fill="Black" Opacity="0.7"  HorizontalOptions="Fill" VerticalOptions="Start">
+        <Rectangle Grid.Column="0" Fill="Black" Opacity="0.6"  HorizontalOptions="Fill" VerticalOptions="Start">
             
             
         </Rectangle>
-        <VerticalStackLayout Grid.Column="0"  Spacing="10" Padding="20" HorizontalOptions="Start" >
+        <VerticalStackLayout Grid.Column="0"  Spacing="10" Padding="20" HorizontalOptions="Center" >
 
 
 
+            
             <Label 
-           
-            
-            FontSize="12"
-            Text="Email"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            TextColor ="White"
-            
-            
-            
-            />
-            <Entry
-            HorizontalOptions="Fill"
-            HeightRequest="30"
-            
-            BackgroundColor ="White"
-            TextColor ="Black"
-            FontSize="15"
-        />
-            <Label 
+                x:Name="LblVoornaam"
             FontSize="12"
             Text="Voornaam"
             HorizontalOptions="Center"
@@ -53,13 +36,17 @@
             TextColor ="White"
             />
             <Entry
+                x:Name="Voornaam"
             HorizontalOptions="Fill"
             HeightRequest="30"
             BackgroundColor ="White"
             TextColor ="Black"
             FontSize="15"
+                WidthRequest="220"
+                
         />
             <Label 
+                x:Name="LblTussenvoegsel"
             FontSize="12"
             Text="Tussenvoegsel"
             HorizontalOptions="Center"
@@ -67,13 +54,16 @@
             TextColor ="White"
             />
             <Entry
+                x:Name="Tussenvoegsel"
             HorizontalOptions="Fill"
             HeightRequest="30"
             BackgroundColor ="White"
             TextColor ="Black"
             FontSize="15"
+                WidthRequest="220"
         />
             <Label 
+                x:Name="LblAchternaam"
             FontSize="12"
             Text="Achternaam"
             HorizontalOptions="Center"
@@ -81,20 +71,55 @@
             TextColor ="White"
             />
             <Entry
+                x:Name="Achternaam"
             HorizontalOptions="Fill"
             HeightRequest="30"
             BackgroundColor ="White"
             TextColor ="Black"
             FontSize="15"
+                WidthRequest="220"
         />
             <Label 
+                x:Name="LblGeslacht"
+            FontSize="12"
+            Text="Geslacht"
+                IsVisible="True"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TextColor ="White"
+                
+            />
+
+            <Picker 
+                x:Name="Geslacht"
+                IsVisible="True"
+            TextColor="White"
+            BackgroundColor="Gray"
+            HorizontalOptions="Center"
+                VerticalOptions="Center"
+            HorizontalTextAlignment="Center"
+            
+            >
+
+                <Picker.Items >
+
+                    <x:String>Man</x:String>
+                    <x:String>Vrouw</x:String>
+                    <x:String>Anders</x:String>
+
+                </Picker.Items>
+            </Picker>
+            <Label 
+                x:Name="LblGeboortedatum"
             FontSize="12"
             Text="Geboortedatum"
             HorizontalOptions="Center"
             VerticalOptions="Start"
             TextColor ="White"
             />
+
             <DatePicker 
+                x:Name="Geboortedatum"
             FontSize="12"
             HeightRequest="30"
             BackgroundColor="White"
@@ -103,8 +128,29 @@
             
             
             />
-
             <Label 
+           
+             x:Name="Lblemail"
+            FontSize="12"
+            Text="Email"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TextColor ="White"
+
+            
+            />
+
+            <Entry
+                x:Name="Email"
+            HorizontalOptions="Fill"
+            HeightRequest="30"
+            BackgroundColor ="White"
+            TextColor ="Black"
+            FontSize="15"
+                WidthRequest="220"
+        />
+            <Label 
+                x:Name="LblWachtwoord"
             FontSize="12"
             Text="Wachtwoord"
             HorizontalOptions="Center"
@@ -112,28 +158,39 @@
             TextColor ="White"
             />
             <Entry
+                x:Name="Wachtwoord"
             IsPassword="True"
             HorizontalOptions="Fill"
             HeightRequest="20"
             BackgroundColor ="White"
             TextColor ="Black"
-            FontSize="10"
+            FontSize="Body"
                 Placeholder="test"
+                WidthRequest="220"
                 
         />
+            
+            
+
+           
             <Label 
+                x:Name="LblVoorkeur"
             FontSize="12"
             Text="Voorkeur"
+                IsVisible="False"
             HorizontalOptions="Center"
-            VerticalOptions="Start"
+            VerticalOptions="Center"
             TextColor ="White"
                 
             />
 
             <Picker 
+                x:Name="Voorkeur"
+                IsVisible="False"
             TextColor="White"
             BackgroundColor="Gray"
             HorizontalOptions="Center"
+                VerticalOptions="Center"
             HorizontalTextAlignment="Center"
             
             >
@@ -146,40 +203,52 @@
 
                 </Picker.Items>
             </Picker>
-
+            
             <Label 
+                x:Name="LblOpleiding"
             FontSize="12"
+                IsVisible="False"
             Text="Opleiding"
             HorizontalOptions="Center"
-            VerticalOptions="Start"
+            VerticalOptions="Center"
             TextColor ="White"
             />
             <Picker 
+                x:Name="Opleiding"
             TextColor="White"
+                IsVisible="False"
             BackgroundColor="Gray"
             HorizontalOptions="Center"
+                VerticalOptions="Center"
             HorizontalTextAlignment="Center"
-            SelectedItem="Opleidingen"
+            
             >
-
-                <Picker.Items >
+            
+            
+            <Picker.Items >
 
                     <x:String>Opleidingen</x:String>
                     
 
                 </Picker.Items>
             </Picker>
-            <Label 
+            <Label
+                x:Name="LblLocatie"
             FontSize="12"
             Text="Locatie"
+                IsVisible="False"
             HorizontalOptions="Center"
-            VerticalOptions="Start"
+            VerticalOptions="Center"
+                
             TextColor ="White"
             />
             <Picker 
+                x:Name="Locatie"
             TextColor="White"
             BackgroundColor="Gray"
+                IsVisible="False"
             HorizontalOptions="Center"
+                VerticalOptions="Center"
             HorizontalTextAlignment="Center"
             
             >
@@ -193,20 +262,54 @@
                 </Picker.Items>
             </Picker>
             <Label 
+                x:Name="LblInteresses"
              FontSize="12"
             Text="Interesses"
+                IsVisible="False"
             HorizontalOptions="Center"
-            VerticalOptions="Start"
+            VerticalOptions="Center"
             TextColor ="White"
             />
+
+
+            <Picker
+                x:Name="Interesses"
+            TextColor="White"
+            BackgroundColor="Gray"
+                IsVisible="False"
+                 VerticalOptions="Center"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            
+            >
+            
+
+            <Picker.Items >
+
+                        <x:String>interesses</x:String>
+
+
+                    </Picker.Items>
+                </Picker>
+            
+
             <Button
+                x:Name="Registreer"
+                Clicked="RegisterBtnEvent"
             HorizontalOptions="Center"
             VerticalOptions="Start"
             Text="Registreer"
             
             />
-
-
+            <Button
+                x:Name="Opslaan"
+                IsVisible="False"
+                Clicked="SaveEvent"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Text="Opslaan"
+            
+            />
 
 
 
