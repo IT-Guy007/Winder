@@ -8,7 +8,7 @@
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:RegisterForm}"
+        ContentTemplate="{DataTemplate local:ProfielOpmaak}"
         Route="MainPage" />
 
 </Shell>
