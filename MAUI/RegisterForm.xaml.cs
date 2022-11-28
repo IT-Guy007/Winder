@@ -1,7 +1,3 @@
-
-
-
-
 using System.Drawing;
 using DataModel;
 
@@ -20,11 +16,6 @@ public partial class RegisterForm : ContentPage
     private string opleiding;
     private string locatie;
     private string interesses;
-
-
-
-
-
 
     public RegisterForm() {
         InitializeComponent();
@@ -269,8 +260,3 @@ public partial class RegisterForm : ContentPage
             Opslaan.IsVisible = true;
         }
     }
-
-
-
-
-}
