@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUI.LoginScherm" 
+             Shell.NavBarIsVisible="False"
+             
+             BackgroundImageSource="achtergrond.png"
+             HeightRequest="580"
+             WidthRequest="792"
+             MaximumHeightRequest="580"
+             MaximumWidthRequest="792"
+             
+             >
+
+
+
+        <VerticalStackLayout VerticalOptions="Center" >
+        <VerticalStackLayout VerticalOptions="Center"  >
+
+            <Image 
+            Source="zwartvierkant.png"
+            WidthRequest="300"
+            Margin="0, 0, 0 ,-300"            
+            HeightRequest="300"
+            Opacity="0.5"
+            />
+
+        <Image  
+            Source="winderlogo_zonderwindesheimdating.png"
+            HeightRequest="150"
+            WidthRequest="1000"
+            Margin="0,-30,0, 5"
+            />
+            
+            
+
+        <Entry x:Name="Emailadres"
+               Placeholder="                   Email"
+              
+               PlaceholderColor="DarkGray"
+               HorizontalOptions="Center"
+               WidthRequest="200"
+               BackgroundColor="White" 
+               Margin="0,-30,0,5"
+               />
+        
+        <Entry x:Name="Wachtwoord"
+             
+               Placeholder="            Wachtwoord"
+               PlaceholderColor="DarkGray"
+               HorizontalOptions="Center"
+               BackgroundColor="White"
+                IsPassword="True"
+               WidthRequest="200"
+               Margin="0,0,0,10"
+               />
+
+        <Button x:Name="Inloggen"
+                Text="Inloggen"
+                Clicked="Inlog"
+                WidthRequest="100"
+                BackgroundColor="White"
+                TextColor="Black"
+                Margin="0,0,0,5"
+                />
+
+
+        <Button x:Name="ForgotPassword"
+                Text="Wachtwoord vergeten?"
+                TextColor="White"
+                Clicked="WachtwoordVergeten"
+                WidthRequest="180"
+                HeightRequest="38"
+                BackgroundColor="Transparent"
+                
+                BorderColor="Transparent"
+                
+                />
+
+
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+
+  
+    
+</ContentPage>

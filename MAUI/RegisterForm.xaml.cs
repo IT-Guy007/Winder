@@ -2,6 +2,7 @@
 
 
 
+using System.Drawing;
 using DataModel;
 
 namespace MAUI;
@@ -25,8 +26,7 @@ public partial class RegisterForm : ContentPage
 
 
 
-    public RegisterForm() 
-    {
+    public RegisterForm() {
         InitializeComponent();
         
     }
@@ -227,12 +227,16 @@ public partial class RegisterForm : ContentPage
         #endregion
 
 
-        
-
-
-        if (aantalchecks == 7)
+        Database database = new Database();
+        Random random = new Random();
+        if (database.register(voornaam, tussenvoegsel, achternaam, random.Next(100000, 999999).ToString(), email,
+                voorkeur, geboortedatum,
+                geslacht, "", wachtwoord, "", true))
         {
-            //setting objects visible to proceed the registerform
+            Navigation.PushAsync(new MatchPage());
+        }
+
+        //setting objects visible to proceed the registerform
         LblVoorkeur.IsVisible = true;
         Voorkeur.IsVisible = true;
         LblOpleiding.IsVisible = true;
