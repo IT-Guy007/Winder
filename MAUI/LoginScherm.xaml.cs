@@ -8,8 +8,8 @@ public partial class LoginScherm : ContentPage
 {
     Button b = new Button();
     Button b2 = new Button();
-    Database database = new Database();
 
+    Database database = new Database();
 
     public LoginScherm()
     {
@@ -18,6 +18,7 @@ public partial class LoginScherm : ContentPage
         b2.Clicked += WachtwoordVergeten;
         
     }
+
     private void Inlog(object sender, EventArgs e)
     {
         var Email = Emailadres.Text;
@@ -30,8 +31,7 @@ public partial class LoginScherm : ContentPage
         }
 
     }
-    private void WachtwoordVergeten(object sender, EventArgs e)
-    {
+    private void WachtwoordVergeten(object sender, EventArgs e) {
         
     }
    
