@@ -1,3 +1,4 @@
+
 using System.ComponentModel.DataAnnotations;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -47,13 +48,13 @@ public partial class ProfielOpmaak : ContentPage
                 voornaam = false;
                 Color colorRed = new Color(238, 75, 43);
                 lblVoornaam.Text = "Voornaam mag alleen letters bevatten";
-                lblVoornaam.BackgroundColor = colorRed;
+                lblVoornaam.TextColor = colorRed;
             }
             else
             {
                 voornaam = true;
                 lblVoornaam.Text = "Voornaam";
-                lblVoornaam.BackgroundColor = default;
+                lblVoornaam.Text = default;
                 Voornaam.Text = Voornaam.Text.First().ToString().ToUpper() + Voornaam.Text[1..].ToLower();
             }
         }
@@ -67,13 +68,13 @@ public partial class ProfielOpmaak : ContentPage
                 tussenvoegsel = false;
                 Color colorRed = new Color(238, 75, 43);
                 lblTussenvoegsel.Text = "Tussenvoegsel mag alleen letters bevatten";
-                lblTussenvoegsel.BackgroundColor = colorRed;
+                lblTussenvoegsel.TextColor = colorRed;
             }
             else
             {
                 tussenvoegsel = true;
                 lblTussenvoegsel.Text = "Tussenvoegsel";
-                lblTussenvoegsel.BackgroundColor = default;
+                lblTussenvoegsel.TextColor = default;
                 Tussenvoegsel.Text = Tussenvoegsel.Text.First().ToString().ToUpper() + Tussenvoegsel.Text[1..].ToLower();
             }
         }
@@ -87,13 +88,13 @@ public partial class ProfielOpmaak : ContentPage
                 achternaam = false;
                 Color colorRed = new Color(238, 75, 43);
                 lblAchternaam.Text = "Achternaam mag alleen letters bevatten";
-                lblAchternaam.BackgroundColor = colorRed;
+                lblAchternaam.TextColor = colorRed;
             }
             else
             {
                 achternaam = true;
                 lblAchternaam.Text = "Tussenvoegsel";
-                lblAchternaam.BackgroundColor = default;
+                lblAchternaam.TextColor = default;
                 Achternaam.Text = Achternaam.Text.First().ToString().ToUpper() + Achternaam.Text[1..].ToLower();
             }
         }
@@ -107,13 +108,13 @@ public partial class ProfielOpmaak : ContentPage
                 omschrijving = false;
                 Color colorRed = new Color(238, 75, 43);
                 lblOmschrijving.Text = "Omschrijving mag alleen letters bevatten";
-                lblOmschrijving.BackgroundColor = colorRed;
+                lblOmschrijving.TextColor = colorRed;
             }
             else
             {
                 omschrijving = true;
                 lblOmschrijving.Text = "Omschrijving";
-                lblOmschrijving.BackgroundColor = default;
+                lblOmschrijving.TextColor = default;
                 Omschrijving.Text = Omschrijving.Text.First().ToString().ToUpper() + Omschrijving.Text[1..].ToLower();
             }
         }
