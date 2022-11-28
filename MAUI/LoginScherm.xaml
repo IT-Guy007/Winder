@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MAUI.InlogScherm" 
+             x:Class="MAUI.LoginScherm" 
              Shell.NavBarIsVisible="False"
              
              BackgroundImageSource="achtergrond.png"
-            HeightRequest="580"
-             WidthRequest="792"
-             MaximumHeightRequest="580"
-             MaximumWidthRequest="792"
              
-             >
+            >
 
 
 
@@ -41,6 +37,7 @@
                HorizontalOptions="Center"
                WidthRequest="200"
                BackgroundColor="White" 
+               TextColor="Black"
                Margin="0,-30,0,5"
                />
         
@@ -48,6 +45,7 @@
              
                Placeholder="            Wachtwoord"
                PlaceholderColor="DarkGray"
+               TextColor="Black"
                HorizontalOptions="Center"
                BackgroundColor="White"
                 IsPassword="True"
@@ -64,8 +62,14 @@
                 Margin="0,0,0,5"
                 />
 
+            <Label x:Name="FoutmeldingInloggen"
+               Text="Combinatie bestaat niet"
+               HorizontalTextAlignment="Center"
+               TextColor="Red"
+               IsVisible="false"/>
 
-        <Button x:Name="ForgotPassword"
+
+            <Button x:Name="ForgotPassword"
                 Text="Wachtwoord vergeten?"
                 TextColor="White"
                 Clicked="WachtwoordVergeten"
