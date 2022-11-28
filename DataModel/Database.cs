@@ -102,6 +102,7 @@ public class Database {
 
         //Close connection
         closeConnection();
+        updateLocalUserFromDatabase(email);
         return output;
     }
 
