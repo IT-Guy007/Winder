@@ -1,29 +1,18 @@
 ﻿namespace MAUI;
 
-public partial class MainPage : ContentPage
-{
-    int count = 0;
+public partial class MainPage : ContentPage {
 
-    public MainPage()
-    {
+    public MainPage() {
         InitializeComponent();
     }
 
-    private void OnCounterClicked(object sender, EventArgs e)
-    {
-        count++;
 
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
-        else
-            CounterBtn.Text = $"Clicked {count} times";
+    private void RegisterButton(object sender, EventArgs e) {
+        thow new NotImplementedException();
 
-        SemanticScreenReader.Announce(CounterBtn.Text);
     }
 
-    private void OnProfileClicked(object sender, EventArgs e)
-    {
-        ProfilePage profilePage = new ProfilePage();
-        Navigation.PushAsync(profilePage);
+    private void LoginButton(object sender, EventArgs e) {
+        throw new NotImplementedException();
     }
 }
