@@ -4,15 +4,13 @@ using DataModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MAUI;
-public partial class LoginScherm : ContentPage
-{
+public partial class LoginScherm : ContentPage {
     Button b = new Button();
     Button b2 = new Button();
 
     Database database = new Database();
 
-    public LoginScherm()
-    {
+    public LoginScherm() {
         InitializeComponent();
         b.Clicked += Inlog;
         b2.Clicked += WachtwoordVergeten;
