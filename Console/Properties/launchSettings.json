@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "Console": {
+      "commandName": "Project"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "Profile 1": {
+      "commandName": "Executable",
+      "remoteDebugEnabled": false
+    }
+  }
+}

@@ -31,7 +31,7 @@ public partial class RegisterForm : ContentPage
 
     public void SaveEvent (object sender, EventArgs e)
     {
-        //Declaring objects
+        //Declaring objects by "Opslaan" button
         voorkeur = Voorkeur.ToString();
         opleiding = Opleiding.ToString();
         locatie = Locatie.ToString();
@@ -43,7 +43,10 @@ public partial class RegisterForm : ContentPage
     public void RegisterBtnEvent(object sender, EventArgs e)
     {
 
-        //declaring objects by form values
+
+        //declaring objects by form values by clicking " registreer " button
+
+        
         email = Email.Text;
         voornaam = Voornaam.Text;
         tussenvoegsel = Tussenvoegsel.Text;
