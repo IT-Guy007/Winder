@@ -5,10 +5,6 @@
              Shell.NavBarIsVisible="False"
              
              BackgroundColor="#CC415F"
-             HeightRequest="580"
-             WidthRequest="792"
-             MaximumHeightRequest="580"
-             MaximumWidthRequest="792"
         >
     
     <VerticalStackLayout VerticalOptions="Center"  >

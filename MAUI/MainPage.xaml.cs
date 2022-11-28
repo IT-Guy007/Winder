@@ -8,11 +8,10 @@ public partial class MainPage : ContentPage {
 
 
     private void RegisterButton(object sender, EventArgs e) {
-        thow new NotImplementedException();
-
+        Navigation.PushAsync(new RegisterForm());
     }
 
     private void LoginButton(object sender, EventArgs e) {
-        throw new NotImplementedException();
+        Navigation.PushAsync(new LoginScherm());
     }
 }
