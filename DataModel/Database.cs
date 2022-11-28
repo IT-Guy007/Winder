@@ -270,12 +270,13 @@ public class Database
         return interests;
     }
 
-    public User GetUserFromDatabase()
+    public User GetUserFromDatabase(string email)
     {
         User user = null;
         openConnection();
-        string sql = "SELECT * FROM Winder.Winder.[User] where email = 's1416890@student.windesheim.nl'";
+        string sql = "SELECT * FROM Winder.Winder.[User] where email = @Email";
         SqlCommand command = new SqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@Email", email);
         try
         {
             SqlDataReader reader = command.ExecuteReader();
@@ -287,8 +288,8 @@ public class Database
                 var preferences = reader["preference"] as string;
                 string? gender = reader["gender"] as string;
                 DateTime? bday = getDateTimefromReader(reader);
-                //var birthday = DateTime.Parse(bday);
                 var bio = reader["bio"] as string;
+
                 user = new User(null,firstName, middleName,lastName,bday, preferences, null,null, gender, null,bio);
             }
         }

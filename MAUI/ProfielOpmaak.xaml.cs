@@ -22,13 +22,21 @@ public partial class ProfielOpmaak : ContentPage
 
     private void loadUserFromDatabaseInForm()
     {
-        var user = b.GetUserFromDatabase();
+        var user = b.GetUserFromDatabase("s1168742@student.windesheim.nl");
         Voornaam.Placeholder = user.firstName;
         Tussenvoegsel.Placeholder = user.middleName;
         Achternaam.Placeholder = user.lastName;
         Geboortedatum.Date = getUserBirthday(user);
         Omschrijving.Placeholder = user.bio;
         Gender.SelectedIndex = getGenderFromUser(user);
+        Voorkeur.SelectedIndex = getPreferenceFromUser(user);
+    }
+
+    private int getPreferenceFromUser(User user)
+    {
+        if (user.preference == "male") return 1;
+        if (user.preference == "female") return 2;
+        return 0;
     }
 
     private int getGenderFromUser(User user)
@@ -68,10 +76,6 @@ public partial class ProfielOpmaak : ContentPage
         if (voornaam && tussenvoegsel && achternaam && geboortedatum && omschrijving && geslacht && voorkeur && interessesGekozen)
         {
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
-            Voornaam.Placeholder = Voornaam.Text;
-            Tussenvoegsel.Placeholder = Tussenvoegsel.Text;
-            Achternaam.Placeholder = Achternaam.Text;
-            Omschrijving.Placeholder = Omschrijving.Text;
             Voornaam.Text = "";
             Tussenvoegsel.Text = "";
             Achternaam.Text = "";
