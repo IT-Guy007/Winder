@@ -21,15 +21,4 @@ public partial class MainPage : ContentPage
         SemanticScreenReader.Announce(CounterBtn.Text);
     }
 
-    private void OnRegister(object sender, EventArgs e)
-    {
-        
-        RegisterForm test = new RegisterForm();
-
-        Navigation.PushAsync(test);
-
-    }
-
-
-
 }
