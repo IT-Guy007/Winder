@@ -81,10 +81,6 @@ public partial class RegisterForm : ContentPage
                 
         #endregion
 
-
-
-        
-
     }
 
 
@@ -92,7 +88,7 @@ public partial class RegisterForm : ContentPage
     {
         int aantalchecks = 0;
         Authentication auth = new Authentication();
-        //declaring objects by form values by clicking " registreer " button
+        // declaring objects by form values by clicking " registreer " button
         // also doing checks
         DateTime geboortedatumtijdelijk;
         geboortedatumtijdelijk = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
@@ -219,11 +215,7 @@ public partial class RegisterForm : ContentPage
 
 
         Database database = new Database();
-        Random random = new Random();
-        if (database.register(voornaam, tussenvoegsel, achternaam, random.Next(100000, 999999).ToString(), email,
-                voorkeur, geboortedatum,
-                geslacht, "", wachtwoord, "", true))
-        {
+        if (database.register(voornaam, tussenvoegsel, achternaam, email, voorkeur, geboortedatum, geslacht, "", wachtwoord, "", true)) {
             Navigation.PushAsync(new MatchPage());
         }
 
