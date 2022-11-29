@@ -20,7 +20,7 @@ public partial class LoginScherm : ContentPage {
         var Password = Wachtwoord.Text;
         if (database.checkLogin(Email, Password)) {
             FoutmeldingInloggen.IsVisible = false;
-            Navigation.PushAsync(new ProfielOpmaak());
+            Navigation.PushAsync(new MatchPage());
         }
         else {
             FoutmeldingInloggen.IsVisible = true;

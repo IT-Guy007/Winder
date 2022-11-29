@@ -102,6 +102,7 @@ public partial class RegisterForm : ContentPage
                 Navigation.PushAsync(new MatchPage());
             }
         }
+
     }
 
     private async void OnProfilePictureClicked(object sender, EventArgs e)
@@ -125,7 +126,7 @@ public partial class RegisterForm : ContentPage
     {
         int aantalchecks = 0;
         Authentication auth = new Authentication();
-        //declaring objects by form values by clicking " registreer " button
+        // declaring objects by form values by clicking " registreer " button
         // also doing checks
         DateTime geboortedatumtijdelijk;
         geboortedatumtijdelijk = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
