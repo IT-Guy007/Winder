@@ -4,8 +4,6 @@
              x:Class="MAUI.LoginScherm"              
              BackgroundImageSource="achtergrond.png">
 
-
-    
         <VerticalStackLayout VerticalOptions="Center"  >
 
             <Image 
@@ -27,12 +25,11 @@
 
         <Entry x:Name="Emailadres"
                Placeholder="                   Email"
-              
+               TextColor="Black"
                PlaceholderColor="DarkGray"
                HorizontalOptions="Center"
                WidthRequest="200"
                BackgroundColor="White" 
-               TextColor="Black"
                Margin="0,-30,0,5"
                />
         
@@ -43,10 +40,16 @@
                TextColor="Black"
                HorizontalOptions="Center"
                BackgroundColor="White"
-                IsPassword="True"
+               IsPassword="True"
                WidthRequest="200"
                Margin="0,0,0,10"
                />
+            <Label
+            x:Name="FoutmeldingInloggen"
+            Text="Deze combinatie is bij ons niet bekend"
+            TextColor="Red"
+            HorizontalOptions="Center"
+            IsVisible="false"/>
 
         <Button x:Name="Inloggen"
                 Text="Inloggen"
@@ -57,14 +60,8 @@
                 Margin="0,0,0,5"
                 />
 
-            <Label x:Name="FoutmeldingInloggen"
-               Text="Combinatie bestaat niet"
-               HorizontalTextAlignment="Center"
-               TextColor="Red"
-               IsVisible="false"/>
 
-
-            <Button x:Name="ForgotPassword"
+        <Button x:Name="ForgotPassword"
                 Text="Wachtwoord vergeten?"
                 TextColor="White"
                 Clicked="WachtwoordVergeten"
