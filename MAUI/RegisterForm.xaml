@@ -27,7 +27,7 @@
 
 
 
-            
+            <Image Source="logo.png" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center" VerticalOptions="Start" ></Image>
             <Label 
                 x:Name="LblVoornaam"
             FontSize="12"
