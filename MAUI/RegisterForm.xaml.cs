@@ -1,7 +1,3 @@
-
-
-
-
 using System.Drawing;
 using DataModel;
 
@@ -21,14 +17,8 @@ public partial class RegisterForm : ContentPage
     private string locatie;
     private string interesses;
 
-
-
-
-
-
     public RegisterForm() {
         InitializeComponent();
-        
     }
 
     public void SaveEvent (object sender, EventArgs e)
@@ -46,6 +36,18 @@ public partial class RegisterForm : ContentPage
         {
             FoutVoorkeur.IsVisible = false;
             voorkeur = Voorkeur.ToString();
+            aantalchecks += 1;
+        }
+        #endregion
+        #region Profielfotocheck
+        if (ProfileImage.Source == null)
+        {
+            FoutProfielfoto.IsVisible = true;
+            aantalchecks -= 1;
+        }
+        else
+        {
+            FoutProfielfoto.IsVisible = false;
             aantalchecks += 1;
         }
         #endregion
@@ -87,15 +89,37 @@ public partial class RegisterForm : ContentPage
             interesses = Interesses.ToString();
             aantalchecks+= 1;
         }
-                
+
         #endregion
 
-
-
-        
-
+        if (aantalchecks == 5){
+            Database database = new Database();
+            Random random = new Random();
+            if (database.register(voornaam, tussenvoegsel, achternaam, random.Next(100000, 999999).ToString(), email,
+                    voorkeur, geboortedatum,
+                    geslacht, "", wachtwoord, "", true))
+            {
+                Navigation.PushAsync(new MatchPage());
+            }
+        }
     }
 
+    private async void OnProfilePictureClicked(object sender, EventArgs e)
+    {
+        var image = await FilePicker.PickAsync(new PickOptions
+        {
+            PickerTitle = "Kies een profielfoto",
+            FileTypes = FilePickerFileType.Images
+        });
+
+        if (image == null)
+        {
+            return;
+        }
+
+        var stream = await image.OpenReadAsync();
+        ProfileImage.Source = ImageSource.FromStream(() => stream);
+    }
 
     public void RegisterBtnEvent(object sender, EventArgs e)
     {
@@ -105,6 +129,7 @@ public partial class RegisterForm : ContentPage
         // also doing checks
         DateTime geboortedatumtijdelijk;
         geboortedatumtijdelijk = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
+        
         #region email checks
         if (Email.Text == null)
         {
@@ -226,29 +251,22 @@ public partial class RegisterForm : ContentPage
         }
         #endregion
 
-
-        Database database = new Database();
-        Random random = new Random();
-        if (database.register(voornaam, tussenvoegsel, achternaam, random.Next(100000, 999999).ToString(), email,
-                voorkeur, geboortedatum,
-                geslacht, "", wachtwoord, "", true))
+        if (aantalchecks == 7)
         {
-            Navigation.PushAsync(new MatchPage());
-        }
-
-        //setting objects visible to proceed the registerform
-        LblVoorkeur.IsVisible = true;
-        Voorkeur.IsVisible = true;
-        LblOpleiding.IsVisible = true;
-        Opleiding.IsVisible = true;
-        LblLocatie.IsVisible = true;
-        Locatie.IsVisible = true;
-        LblInteresses.IsVisible = true;
-        Interesses.IsVisible = true;
+            //setting objects visible to proceed the registerform
+            LblVoorkeur.IsVisible = true;
+            Voorkeur.IsVisible = true;
+            LblOpleiding.IsVisible = true;
+            Opleiding.IsVisible = true;
+            LblLocatie.IsVisible = true;
+            Locatie.IsVisible = true;
+            LblInteresses.IsVisible = true;
+            Interesses.IsVisible = true;
+            ProfileImage.IsVisible = true;
 
 
-        // Making objects unvisible to proceed the registerform
-        
+            // Making objects unvisible to proceed the registerform
+
             Email.IsVisible = false;
             Lblemail.IsVisible = false;
             Voornaam.IsVisible = false;
@@ -269,8 +287,4 @@ public partial class RegisterForm : ContentPage
             Opslaan.IsVisible = true;
         }
     }
-
-
-
-
 }
