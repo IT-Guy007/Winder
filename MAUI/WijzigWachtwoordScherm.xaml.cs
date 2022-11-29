@@ -11,7 +11,7 @@ public partial class WijzigWachtwoord : ContentPage
         
     }
 
-    private void Wijzig(object sender, EventArgs e)
+    private void VeiligheidsVragenVerzend(object sender, EventArgs e)
     {
 
     }
