@@ -4,15 +4,13 @@ using DataModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MAUI;
-public partial class LoginScherm : ContentPage
-{
+public partial class LoginScherm : ContentPage {
     Button b = new Button();
     Button b2 = new Button();
 
     Database database = new Database();
 
-    public LoginScherm()
-    {
+    public LoginScherm() {
         InitializeComponent();
         b.Clicked += Inlog;
         b2.Clicked += WachtwoordVergeten;
@@ -24,7 +22,7 @@ public partial class LoginScherm : ContentPage
         var Email = Emailadres.Text;
         var Password = Wachtwoord.Text;
         if (database.checkLogin(Email, Password)) {
-            Navigation.PushAsync(new ProfielOpmaak());
+            Navigation.PushAsync(new MatchPage());
         }
         else {
             FoutmeldingInloggen.IsVisible = true;
