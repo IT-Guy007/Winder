@@ -133,7 +133,7 @@ public class Database {
         return emails;
     }
 
-    public bool register(string firstname, string middlename, string lastname, string username, string email,
+    public bool register(string firstname, string middlename, string lastname, string email,
         string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active) {
 
         Authentication authentication = new Authentication();
@@ -152,7 +152,6 @@ public class Database {
         query.Parameters.AddWithValue("@email", email);
         query.Parameters.AddWithValue("@password", hashedpassword);
         query.Parameters.AddWithValue("@gender", gender);
-        query.Parameters.AddWithValue("@username", username);
         query.Parameters.AddWithValue("@bio", bio);
         query.Parameters.AddWithValue("@profilePicture", proficePicture);
         query.Parameters.AddWithValue("@active", active);
