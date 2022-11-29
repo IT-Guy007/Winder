@@ -1,7 +1,7 @@
 namespace DataModel;
 using System.Drawing;
 public class User {
-    private string username { get; set; }
+    public string username { get; set; }
     public string firstName { get; set; }
     public string middleName { get; set; }
     public string lastName { get; set; }

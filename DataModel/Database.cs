@@ -282,6 +282,7 @@ public class Database
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
+                string? username = reader["email"] as string;
                 var firstName = reader["firstname"] as string;
                 var middleName = reader["middlename"] as string;
                 var lastName = reader["lastname"] as string;
@@ -290,7 +291,7 @@ public class Database
                 DateTime? bday = getDateTimefromReader(reader);
                 var bio = reader["bio"] as string;
 
-                user = new User(null,firstName, middleName,lastName,bday, preferences, null,null, gender, null,bio);
+                user = new User(username,firstName, middleName,lastName,bday, preferences, null,null, gender, null,bio);
             }
         }
         catch (SqlException e)
@@ -304,7 +305,25 @@ public class Database
     private DateTime? getDateTimefromReader(SqlDataReader reader)
     {
         return reader.IsDBNull(3) ?
-                           (DateTime?)DateTime.Now.Date :
+                           (DateTime?)new DateTime(1925, 01, 01, 0, 0, 0, 0) :
                            (DateTime?)reader.GetDateTime(3);
+    }
+
+    public void RegisterInterestInDatabase(string username, string interest)
+    {
+        openConnection();
+        string sql = "INSERT INTO winder.winder.userHasInterest (UID, interest) VALUES(@Email, @Interest)";
+        SqlCommand command = new SqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@Email", username);
+        command.Parameters.AddWithValue("@Interest", interest);
+        try
+        {
+            command.ExecuteNonQuery();
+        }
+        catch (SqlException e)
+        {
+            closeConnection();
+        }
+        closeConnection();
     }
 }

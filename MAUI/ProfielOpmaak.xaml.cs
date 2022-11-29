@@ -10,6 +10,7 @@ public partial class ProfielOpmaak : ContentPage
 {
     List<string> interesses;
     Database b = new Database();
+    User user;
     bool voornaam = true, tussenvoegsel = true, achternaam = true, geboortedatum = false,omschrijving = true, geslacht = true,voorkeur = true, interessesGekozen = true;
     public ProfielOpmaak()
     {
@@ -22,7 +23,7 @@ public partial class ProfielOpmaak : ContentPage
 
     private void loadUserFromDatabaseInForm()
     {
-        var user = b.GetUserFromDatabase("s1168742@student.windesheim.nl");
+        user = b.GetUserFromDatabase("s1168742@student.windesheim.nl");
         Voornaam.Placeholder = user.firstName;
         Tussenvoegsel.Placeholder = user.middleName;
         Achternaam.Placeholder = user.lastName;
@@ -80,11 +81,19 @@ public partial class ProfielOpmaak : ContentPage
             Tussenvoegsel.Text = "";
             Achternaam.Text = "";
             Omschrijving.Text = "";
+            registerInterestsInDatabase();
         }
         else {
             DisplayAlert("Er is iets verkeerd gegaan...", "Vul alle gegevens in", "OK");
         }
+    }
 
+    private void registerInterestsInDatabase()
+    {
+        foreach (var item in interesses)
+        {
+            b.RegisterInterestInDatabase(user.username, item);
+        }
     }
 
     private void Voornaam_TextChanged(object sender, TextChangedEventArgs e)
