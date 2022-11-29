@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MAUI.InlogScherm" 
-             Shell.NavBarIsVisible="False"
-             
-             BackgroundImageSource="achtergrond.png"
-            HeightRequest="580"
-             WidthRequest="792"
-             MaximumHeightRequest="580"
-             MaximumWidthRequest="792"
-             
-             >
+             x:Class="MAUI.LoginScherm"              
+             BackgroundImageSource="achtergrond.png">
 
-
-
-        <VerticalStackLayout VerticalOptions="Center" >
         <VerticalStackLayout VerticalOptions="Center"  >
 
             <Image 
@@ -36,7 +25,7 @@
 
         <Entry x:Name="Emailadres"
                Placeholder="                   Email"
-              
+               TextColor="Black"
                PlaceholderColor="DarkGray"
                HorizontalOptions="Center"
                WidthRequest="200"
@@ -48,12 +37,19 @@
              
                Placeholder="            Wachtwoord"
                PlaceholderColor="DarkGray"
+               TextColor="Black"
                HorizontalOptions="Center"
                BackgroundColor="White"
-                IsPassword="True"
+               IsPassword="True"
                WidthRequest="200"
                Margin="0,0,0,10"
                />
+            <Label
+            x:Name="FoutmeldingInloggen"
+            Text="Deze combinatie is bij ons niet bekend"
+            TextColor="Red"
+            HorizontalOptions="Center"
+            IsVisible="false"/>
 
         <Button x:Name="Inloggen"
                 Text="Inloggen"
@@ -77,8 +73,7 @@
                 
                 />
 
-
-        </VerticalStackLayout>
+            
     </VerticalStackLayout>
 
   

@@ -7,8 +7,13 @@
     Shell.FlyoutBehavior="Disabled">
 
     <ShellContent
+<<<<<<< HEAD
         Title="Home"
         ContentTemplate="{DataTemplate local:WijzigWachtwoord}"
+=======
+        Title="Winder"
+        ContentTemplate="{DataTemplate local:MainPage}"
+>>>>>>> 71666a27444e2bd04c4981139628d4e1bfc6b2c1
         Route="MainPage" />
 
 </Shell>

@@ -30,6 +30,10 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios|AnyCPU'" />
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-ios|AnyCPU'" />
+
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -49,6 +53,7 @@
     </ItemGroup>
 
     <ItemGroup>
+<<<<<<< HEAD
       <MauiXaml Remove="WijzigWachtwoordScherm.xaml" />
     </ItemGroup>
 
@@ -66,12 +71,31 @@
       <Compile Update="LoginScherm.xaml.cs">
         <DependentUpon>LoginScherm.xaml</DependentUpon>
       </Compile>
+=======
+      <None Remove="Resources\Images\backgr.jpeg" />
+      <None Remove="Resources\Images\bck.jpeg" />
+      <None Remove="Resources\Images\Wessel.jpg" />
     </ItemGroup>
 
     <ItemGroup>
-      <MauiXaml Update="LoginScherm.xaml">
+      <ProjectReference Include="..\DataModel\DataModel.csproj" />
+>>>>>>> 71666a27444e2bd04c4981139628d4e1bfc6b2c1
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiXaml Update="RegisterForm.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
+      <MauiXaml Update="MatchPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="MatchPage.xaml.cs">
+        <DependentUpon>MatchPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>
