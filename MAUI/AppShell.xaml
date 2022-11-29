@@ -8,7 +8,7 @@
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:InlogScherm}"
+        ContentTemplate="{DataTemplate local:WijzigWachtwoord}"
         Route="MainPage" />
 
 </Shell>
