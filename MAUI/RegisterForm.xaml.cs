@@ -35,7 +35,7 @@ public partial class RegisterForm : ContentPage
         else
         {
             FoutVoorkeur.IsVisible = false;
-            voorkeur = Voorkeur.ToString();
+            voorkeur = Voorkeur.SelectedItem.ToString();
             aantalchecks += 1;
         }
         #endregion
@@ -60,7 +60,7 @@ public partial class RegisterForm : ContentPage
         else
         {
             FoutOpleiding.IsVisible= false;
-            opleiding = Opleiding.ToString();
+            opleiding = Opleiding.SelectedItem.ToString();
             aantalchecks += 1;
         }
         #endregion
@@ -73,7 +73,7 @@ public partial class RegisterForm : ContentPage
         else
         {
             FoutLocatie.IsVisible= false;
-            locatie = Locatie.ToString();
+            locatie = Locatie.SelectedItem.ToString();
             aantalchecks+= 1;
         }
         #endregion
@@ -86,22 +86,25 @@ public partial class RegisterForm : ContentPage
         else
         {
             Foutinteresses.IsVisible= false;
-            interesses = Interesses.ToString();
+            interesses = Interesses.SelectedItem.ToString();
             aantalchecks+= 1;
         }
 
         #endregion
 
-        if (aantalchecks == 5){
+        //if (aantalchecks == 5){
             Database database = new Database();
-            Random random = new Random();
-            if (database.register(voornaam, tussenvoegsel, achternaam, random.Next(100000, 999999).ToString(), email,
-                    voorkeur, geboortedatum,
-                    geslacht, "", wachtwoord, "", true))
-            {
-                Navigation.PushAsync(new MatchPage());
-            }
+        MatchPage matchpage = new MatchPage();
+        if (tussenvoegsel == null)
+        {
+            tussenvoegsel = "";
         }
+        bool geregistreerd = database.register(voornaam, tussenvoegsel,achternaam , email, voorkeur, geboortedatum, geslacht,"random tekst" , wachtwoord, "", true, locatie, opleiding);
+        if (geregistreerd)
+            {
+            Navigation.PushAsync(matchpage);
+        }
+        //}
 
     }
 
@@ -120,6 +123,7 @@ public partial class RegisterForm : ContentPage
 
         var stream = await image.OpenReadAsync();
         ProfileImage.Source = ImageSource.FromStream(() => stream);
+
     }
 
     public void RegisterBtnEvent(object sender, EventArgs e)

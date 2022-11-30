@@ -19,7 +19,7 @@
                 x:Name="ProfileImage"
                 HeightRequest="100"
                 WidthRequest="100"
-                Aspect="AspectFill"
+                Aspect="AspectFit"
                 CornerRadius="50"
                 IsVisible="false"/>
             

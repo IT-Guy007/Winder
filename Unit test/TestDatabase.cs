@@ -61,17 +61,17 @@ public class TestDatabase {
     }
     
     [TestCase("Test", "", "Account", "male",
-        "01-01-2000", "male", "Ik haat men leven want ik haal netwerken nooit", "Kaolozooi_ik_haal_netwerkenniet01@","",false,
+        "01-01-2000", "male", "Ik haat men leven want ik haal netwerken nooit", "Kaolozooi_ik_haal_netwerkenniet01@","",false, "Zwolle", "opleiding",
         ExpectedResult = true)]
 
     public bool RegisterTest(string firstname, string middlename, string lastname,
-        string preference, DateTime birthday, string gender, string bio, string password,string profilePicture, bool active)
+        string preference, DateTime birthday, string gender, string bio, string password,string profilePicture, bool active, string locatie, string opleiding)
     {
         Random random = new Random();
         var email1 = random.Next(0, 999999);
         string email2 = "s" + email1 + "@student.windesheim.nl";
         return _database.register(firstname, middlename, lastname, email2, preference, birthday, gender, bio,
-            password,profilePicture, active);
+            password,profilePicture, active, locatie, opleiding);
     }
 
     [TestCase("s1165707@student.windesheim.nl",false, ExpectedResult = true)]
