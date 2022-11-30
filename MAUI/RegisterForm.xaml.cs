@@ -19,8 +19,14 @@ public partial class RegisterForm : ContentPage
     private List<string> interesseslist = new List<string>();
     
 
-    public RegisterForm() {
+    public RegisterForm()
+    {
         InitializeComponent();
+        interesseslist = database.GetInterestsFromDataBase();
+        foreach (string interest in interesseslist)
+        {
+            Interesses.Items.Add(interest);
+        }
     }
 
     public void SaveEvent (object sender, EventArgs e)
@@ -55,7 +61,7 @@ public partial class RegisterForm : ContentPage
         }
         #endregion
         #region Opleiding check
-        if (Opleiding.SelectedItem == null)
+        if (Opleiding.Text == null)
         {
             FoutOpleiding.IsVisible = true;
             aantalchecks-= 1;
@@ -63,7 +69,7 @@ public partial class RegisterForm : ContentPage
         else
         {
             FoutOpleiding.IsVisible= false;
-            opleiding = Opleiding.SelectedItem.ToString();
+            opleiding = Opleiding.Text.ToString();
             aantalchecks += 1;
         }
         #endregion
@@ -95,21 +101,22 @@ public partial class RegisterForm : ContentPage
 
         #endregion
 
-        //if (aantalchecks == 5){
-            
-        MatchPage matchpage = new MatchPage();
-        if (tussenvoegsel == null)
+        if (aantalchecks == 5)
         {
-            tussenvoegsel = "";
-        }
-        bool geregistreerd = database.register(voornaam, tussenvoegsel,achternaam , email, voorkeur, geboortedatum, geslacht,"random tekst" , wachtwoord, "", true, locatie, opleiding);
-        if (geregistreerd)
-            {
-            Navigation.PushAsync(matchpage);
-        }
-        //}
 
-    }
+                MatchPage matchpage = new MatchPage();
+            if (tussenvoegsel == null)
+            {
+                tussenvoegsel = "";
+            }
+            bool geregistreerd = database.register(voornaam, tussenvoegsel,achternaam , email, voorkeur, geboortedatum, geslacht,"random tekst" , wachtwoord, "", true, locatie, opleiding);
+            if (geregistreerd)
+                {
+                Navigation.PushAsync(matchpage);
+            }
+        }
+
+}
 
     private async void OnProfilePictureClicked(object sender, EventArgs e)
     {
@@ -262,8 +269,7 @@ public partial class RegisterForm : ContentPage
 
         if (aantalchecks == 7)
         {
-            interesseslist = database.GetInterestsFromDataBase();
-            Interesses.ItemsSource = interesseslist;
+            
             
 
             //setting objects visible to proceed the registerform

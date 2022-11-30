@@ -264,20 +264,16 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Start"
                 TextColor ="OrangeRed"/>
-            
-            <Picker 
+            <Entry
                 x:Name="Opleiding"
-                TextColor="White"
-                IsVisible="False"
-                BackgroundColor="Gray"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                HorizontalTextAlignment="Center">
+                HorizontalOptions="Fill"
+                HeightRequest="30"
+                BackgroundColor ="White"
+                TextColor ="Black"
+                FontSize="15"
+                WidthRequest="220"/>
             
-                <Picker.Items >
-                    <x:String>Opleidingen</x:String>
-                </Picker.Items>
-            </Picker>
+            
             
             <Label
                 x:Name="LblLocatie"
