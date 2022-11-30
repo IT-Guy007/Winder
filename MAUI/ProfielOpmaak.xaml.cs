@@ -11,6 +11,7 @@ public partial class ProfielOpmaak : ContentPage
 {
     List<string> interesses;
     Database b = new Database();
+    Color colorRed = new Color(238, 75, 43);
     User user;
     bool voornaam = true, tussenvoegsel = true, achternaam = true, geboortedatum = false,omschrijving = true, geslacht = true,voorkeur = true, interessesGekozen = true;
     public ProfielOpmaak()
@@ -132,7 +133,6 @@ public partial class ProfielOpmaak : ContentPage
             if (!checkIfTextIsOnlyLetters(Voornaam.Text))
             {
                 voornaam = false;
-                Color colorRed = new Color(238, 75, 43);
                 lblVoornaam.Text = "Voornaam mag alleen letters bevatten";
                 lblVoornaam.TextColor = colorRed;
             }
@@ -152,7 +152,6 @@ public partial class ProfielOpmaak : ContentPage
             if (!checkIfTextIsOnlyLetters(Tussenvoegsel.Text))
             {
                 tussenvoegsel = false;
-                Color colorRed = new Color(238, 75, 43);
                 lblTussenvoegsel.Text = "Tussenvoegsel mag alleen letters bevatten";
                 lblTussenvoegsel.TextColor = colorRed;
             }
@@ -172,7 +171,6 @@ public partial class ProfielOpmaak : ContentPage
             if (!checkIfTextIsOnlyLetters(Achternaam.Text))
             {
                 achternaam = false;
-                Color colorRed = new Color(238, 75, 43);
                 lblAchternaam.Text = "Achternaam mag alleen letters bevatten";
                 lblAchternaam.TextColor = colorRed;
             }
@@ -192,7 +190,6 @@ public partial class ProfielOpmaak : ContentPage
             if (!checkIfTextIsOnlyLettersSpacesCommasAndDots(Omschrijving.Text))
             {
                 omschrijving = false;
-                Color colorRed = new Color(238, 75, 43);
                 lblOmschrijving.Text = "Omschrijving mag alleen letters bevatten";
                 lblOmschrijving.TextColor = colorRed;
             }
@@ -236,11 +233,6 @@ public partial class ProfielOpmaak : ContentPage
 
     private void interessePicker_SelectedIndexChanged(object sender, EventArgs e)
     {
-        addSelectedValueToListInteresses();
-    }
-
-    private void addSelectedValueToListInteresses()
-    {
         if (interessePicker.SelectedItem != null && interesses.Count < 5)
         {
             interessePicker.Title = "Interesse";
@@ -251,8 +243,8 @@ public partial class ProfielOpmaak : ContentPage
                 listInteresses.ItemsSource = null;
                 listInteresses.ItemsSource = interesses;
             }
-            else {
-                Color colorRed = new Color(238, 75, 43);
+            else
+            {
                 interessePicker.Title = "Je hebt deze interesse al toegevoegd";
                 interessePicker.TitleColor = colorRed;
             }
@@ -298,7 +290,6 @@ public partial class ProfielOpmaak : ContentPage
             else
             {
                 geboortedatum = false;
-                Color colorRed = new Color(238, 75, 43);
                 lblGeboortedatum.Text = "Je moet minimaal 18 jaar zijn";
                 lblGeboortedatum.BackgroundColor = colorRed;
             }
