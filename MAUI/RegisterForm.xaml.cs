@@ -218,7 +218,7 @@ public partial class RegisterForm : ContentPage
             else
             {
                 FoutWachtwoord.IsVisible= false;
-                wachtwoord = Wachtwoord.Text;
+                wachtwoord = auth.HashPassword(Wachtwoord.Text);
                 aantalchecks += 1;
             }
            

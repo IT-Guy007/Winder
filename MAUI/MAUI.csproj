@@ -55,6 +55,7 @@
     <ItemGroup>
       <None Remove="Resources\Images\backgr.jpeg" />
       <None Remove="Resources\Images\bck.jpeg" />
+      <None Remove="Resources\Images\logo.png" />
       <None Remove="Resources\Images\Wessel.jpg" />
     </ItemGroup>
 
