@@ -76,10 +76,7 @@ public partial class ProfielOpmaak : ContentPage
             b.updateUserInDatabaseWithNewUserProfile(user);
             registerInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
-            Voornaam.Text = "";
-            Tussenvoegsel.Text = "";
-            Achternaam.Text = "";
-            Omschrijving.Text = "";
+            fillInFormWithUserProperties(user);
         }
         else
         {
@@ -87,12 +84,35 @@ public partial class ProfielOpmaak : ContentPage
         }
     }
 
+    private void fillInFormWithUserProperties(User user)
+    {
+        clearTextFromEntries();
+        updatePlaceholders();
+    }
+
+    private void updatePlaceholders()
+    {
+        Voornaam.Placeholder = user.firstName;
+        Tussenvoegsel.Placeholder = user.middleName;
+        Achternaam.Placeholder = user.lastName;
+        Geboortedatum.Date = getUserBirthday(user);
+        Omschrijving.Placeholder = user.bio;
+    }
+
+    private void clearTextFromEntries()
+    {
+        Voornaam.Text = "";
+        Tussenvoegsel.Text = "";
+        Achternaam.Text = "";
+        Omschrijving.Text = "";
+    }
+
     private void updateUserPropertiesPrepareForUpdateQuery(User user)
     {
-        if(user.firstName != Voornaam.Text) user.firstName = Voornaam.Text;
-        if(user.middleName != Tussenvoegsel.Text) user.middleName = Tussenvoegsel.Text;
-        if(user.lastName != Achternaam.Text) user.lastName = Achternaam.Text;
-        if(user.bio != Omschrijving.Text) user.bio = Omschrijving.Text;
+        if(user.firstName != Voornaam.Text && Voornaam.Text != null) user.firstName = Voornaam.Text;
+        if(user.middleName != Tussenvoegsel.Text && Tussenvoegsel.Text != null) user.middleName = Tussenvoegsel.Text;
+        if(user.lastName != Achternaam.Text && Achternaam.Text != null)user.lastName = Achternaam.Text;
+        if(user.bio != Omschrijving.Text && Omschrijving.Text != null) user.bio = Omschrijving.Text;
         if(user.birthDay != Geboortedatum.Date) user.birthDay = Geboortedatum.Date;
         if(user.gender != Gender.SelectedItem.ToString())user.gender = Gender.SelectedItem.ToString();
         if(user.preference != Voorkeur.SelectedItem.ToString()) user.preference = Voorkeur.SelectedItem.ToString();

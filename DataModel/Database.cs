@@ -375,26 +375,23 @@ public class Database
 
     public void updateUserInDatabaseWithNewUserProfile(User user)
     {
-
-        Authentication authentication = new Authentication();
-        //Start connection
-        openConnection();
-
-        //Create query
-        SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
-        "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, birthday = @birthday, bio = @bio" +
-        "where email = @Email", connection);  
-        query.Parameters.AddWithValue("@firstname", user.firstName);
-        query.Parameters.AddWithValue("@middlename", user.middleName);
-        query.Parameters.AddWithValue("@lastname", user.lastName);
-        query.Parameters.AddWithValue("@birthday", user.birthDay);
-        query.Parameters.AddWithValue("@preference", user.preference);
-        query.Parameters.AddWithValue("@Email", user.username);
-        query.Parameters.AddWithValue("@bio", user.bio);
-        //Execute query
         try
         {
-            query.ExecuteReader();
+            //Start connection
+            openConnection();
+            //Create query
+            SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
+            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, birthday = @birthday, bio = @bio " +
+            "where email = @Email", connection);
+            query.Parameters.AddWithValue("@firstname", user.firstName);
+            query.Parameters.AddWithValue("@middlename", user.middleName);
+            query.Parameters.AddWithValue("@lastname", user.lastName);
+            query.Parameters.AddWithValue("@birthday", user.birthDay);
+            query.Parameters.AddWithValue("@preference", user.preference);
+            query.Parameters.AddWithValue("@Email", user.username);
+            query.Parameters.AddWithValue("@bio", user.bio);
+            //Execute query
+            query.ExecuteNonQuery();
 
             //Close connection
             closeConnection();
