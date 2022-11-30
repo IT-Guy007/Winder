@@ -26,8 +26,6 @@
         <VerticalStackLayout Grid.Column="0"  Spacing="10" Padding="20" HorizontalOptions="Center" >
 
 
-
-            <Image Source="logo.png" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center" VerticalOptions="Start" ></Image>
             <Label 
                 x:Name="LblVoornaam"
             FontSize="12"

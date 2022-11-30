@@ -90,7 +90,7 @@ public partial class RegisterForm : ContentPage
                 
         #endregion
 
-
+        
 
         
 
@@ -188,7 +188,7 @@ public partial class RegisterForm : ContentPage
             else
             {
                 FoutWachtwoord.IsVisible= false;
-                wachtwoord = Wachtwoord.Text;
+                wachtwoord = auth.HashPassword(Wachtwoord.Text);
                 aantalchecks += 1;
             }
            
@@ -227,7 +227,6 @@ public partial class RegisterForm : ContentPage
         #endregion
 
 
-        
 
 
         if (aantalchecks == 7)
