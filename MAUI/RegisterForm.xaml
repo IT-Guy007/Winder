@@ -338,11 +338,11 @@
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center">
-            
 
-                <Picker.Items >
-                    <x:String>interesses</x:String>
+                <Picker.Items>
+
                 </Picker.Items>
+
             </Picker>
             
             <Button

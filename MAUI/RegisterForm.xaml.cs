@@ -15,7 +15,9 @@ public partial class RegisterForm : ContentPage
     private string voorkeur;
     private string opleiding;
     private string locatie;
-    private string interesses;
+    Database database = new Database();
+    private List<string> interesseslist = new List<string>();
+    
 
     public RegisterForm() {
         InitializeComponent();
@@ -23,6 +25,7 @@ public partial class RegisterForm : ContentPage
 
     public void SaveEvent (object sender, EventArgs e)
     {
+        
         int aantalchecks = 0;
         //Declaring objects by "Opslaan" button
         // checks
@@ -86,14 +89,14 @@ public partial class RegisterForm : ContentPage
         else
         {
             Foutinteresses.IsVisible= false;
-            interesses = Interesses.SelectedItem.ToString();
-            aantalchecks+= 1;
+            Interesses.ItemsSource = interesseslist;
+            aantalchecks += 1;
         }
 
         #endregion
 
         //if (aantalchecks == 5){
-            Database database = new Database();
+            
         MatchPage matchpage = new MatchPage();
         if (tussenvoegsel == null)
         {
@@ -134,6 +137,7 @@ public partial class RegisterForm : ContentPage
         // also doing checks
         DateTime geboortedatumtijdelijk;
         geboortedatumtijdelijk = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
+        
         
         #region email checks
         if (Email.Text == null)
@@ -258,6 +262,10 @@ public partial class RegisterForm : ContentPage
 
         if (aantalchecks == 7)
         {
+            interesseslist = database.GetInterestsFromDataBase();
+            Interesses.ItemsSource = interesseslist;
+            
+
             //setting objects visible to proceed the registerform
             LblVoorkeur.IsVisible = true;
             Voorkeur.IsVisible = true;
