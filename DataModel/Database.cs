@@ -48,18 +48,19 @@ public class Database {
             SqlDataReader reader = query.ExecuteReader();
 
             while (reader.Read()) {
-                var username = reader["username"] as string;
                 var firstName = reader["firstName"] as string;
                 var middleName = reader["middleName"] as string;
                 var lastName = reader["lastName"] as string;
                 var preferences = reader["preference"] as string;
-                var birthday = DateTime.Parse(reader["birthday"] as string);
+                var birthday = (DateTime)reader["birthday"];
                 var gender = reader["gender"] as string;
-                var profilePicture = reader["profilePicture"] as string;
+                //var profilePicture = reader["profilePicture"] as string;
                 var bio = reader["bio"] as string;
 
-                Authentication._currentUser = new User(username, firstName, middleName, lastName, birthday,
-                    preferences, email, "", gender, Base64StringToBitmap(profilePicture),bio);
+                Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
+                    preferences, email, "", gender, bio);
+                //Authentication._currentUser = new User(username, firstName, middleName, lastName, birthday,
+                //    preferences, email, "", gender, Base64StringToBitmap(profilePicture),bio);
             }
         
             //Close connection
@@ -102,6 +103,7 @@ public class Database {
 
         //Close connection
         closeConnection();
+        updateLocalUserFromDatabase(email);
         return output;
     }
 
@@ -130,8 +132,8 @@ public class Database {
         return emails;
     }
 
-    public bool register(string firstname, string middlename, string lastname, string username, string email,
-        string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active) {
+    public bool register(string firstname, string middlename, string lastname, string email,
+        string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active, string locatie, string opleiding) {
 
         Authentication authentication = new Authentication();
         string hashedpassword = authentication.HashPassword(password);
@@ -140,7 +142,7 @@ public class Database {
         
         //Create query
         SqlCommand query = new SqlCommand("insert into winder.winder.[User] " +
-                                                    "Values (@firstname, @middlename, @lastname, @birthday, @preference, @email, @password, @gender, convert(varbinary(max),@profilePicture), @username, @bio,@active)", connection);
+                                                    "Values (@firstname, @middlename, @lastname, @birthday, @preference, @email, @password, @gender, convert(varbinary(max),@profilePicture), @bio,@active, @locatie, @opleiding)", connection);
         query.Parameters.AddWithValue("@firstname", firstname);
         query.Parameters.AddWithValue("@middlename", middlename);
         query.Parameters.AddWithValue("@lastname", lastname);
@@ -149,11 +151,12 @@ public class Database {
         query.Parameters.AddWithValue("@email", email);
         query.Parameters.AddWithValue("@password", hashedpassword);
         query.Parameters.AddWithValue("@gender", gender);
-        query.Parameters.AddWithValue("@username", username);
         query.Parameters.AddWithValue("@bio", bio);
         query.Parameters.AddWithValue("@profilePicture", proficePicture);
         query.Parameters.AddWithValue("@active", active);
-        
+        query.Parameters.AddWithValue("@locatie", locatie);
+        query.Parameters.AddWithValue("@opleiding", opleiding);
+
         //Execute query
         try {
             query.ExecuteReader();
@@ -163,7 +166,8 @@ public class Database {
             return true;
         }
         catch(SqlException se) {
-            
+
+            Console.WriteLine(se.ToString());
             //Close connection
             closeConnection();
             return false;
@@ -200,7 +204,7 @@ public class Database {
 
     }
     
-    public static Bitmap Base64StringToBitmap(string base64String)
+    public static Bitmap Base64StringToBitmap(string? base64String)
     {
         Bitmap bmpReturn = null;
 
