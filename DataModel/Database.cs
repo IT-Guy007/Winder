@@ -204,18 +204,6 @@ public class Database {
         }
 
     }
-    
-    public static byte[] BitmapToBase64String(Bitmap bitmap)
-    {
-        var stream = new MemoryStream();
-        bitmap.Save(stream, ImageFormat.Png);
-        return stream.ToArray();
-    }
-
-    public static string ByteArrToBase64String(byte[] bytes)
-    {
-        return Convert.ToBase64String(bytes);
-    }
 
     public static Bitmap Base64StringToBitmap(string? base64String)
     {

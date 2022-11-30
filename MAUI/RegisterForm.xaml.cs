@@ -17,6 +17,7 @@ public partial class RegisterForm : ContentPage
     private string opleiding;
     private string locatie;
     private string interesses;
+    private string profielfoto;
 
     public RegisterForm() {
         InitializeComponent();
@@ -295,10 +296,5 @@ public partial class RegisterForm : ContentPage
         stream = await image.OpenReadAsync();
         ProfileImage.Source = ImageSource.FromStream(() => stream);
 
-    }
-    
-    private void StreamToBitmapImage()
-    {
-        Bitmap bitmap = new Bitmap(stream);       
     }
 }
