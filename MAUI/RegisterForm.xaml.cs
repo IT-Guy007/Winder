@@ -1,3 +1,4 @@
+using System.Buffers.Text;
 using System.Drawing;
 using DataModel;
 
@@ -21,6 +22,7 @@ public partial class RegisterForm : ContentPage
         InitializeComponent();
     }
 
+    //Second button, makes sure your preferences are saved
     public void SaveEvent (object sender, EventArgs e)
     {
         int aantalchecks = 0;
@@ -108,24 +110,7 @@ public partial class RegisterForm : ContentPage
 
     }
 
-    private async void OnProfilePictureClicked(object sender, EventArgs e)
-    {
-        var image = await FilePicker.PickAsync(new PickOptions
-        {
-            PickerTitle = "Kies een profielfoto",
-            FileTypes = FilePickerFileType.Images
-        });
-
-        if (image == null)
-        {
-            return;
-        }
-
-        var stream = await image.OpenReadAsync();
-        ProfileImage.Source = ImageSource.FromStream(() => stream);
-
-    }
-
+    //First buuton, checks the fields and sends to second page with fields
     public void RegisterBtnEvent(object sender, EventArgs e)
     {
         int aantalchecks = 0;
@@ -291,5 +276,29 @@ public partial class RegisterForm : ContentPage
             //Opslaan button visible
             Opslaan.IsVisible = true;
         }
+    }
+
+    Stream stream;
+    private async void OnProfilePictureClicked(object sender, EventArgs e)
+    {
+        var image = await FilePicker.PickAsync(new PickOptions
+        {
+            PickerTitle = "Kies een profielfoto",
+            FileTypes = FilePickerFileType.Images
+        });
+
+        if (image == null)
+        {
+            return;
+        }
+
+        stream = await image.OpenReadAsync();
+        ProfileImage.Source = ImageSource.FromStream(() => stream);
+
+    }
+    
+    private void StreamToBitmapImage()
+    {
+        Bitmap bitmap = new Bitmap(stream);       
     }
 }

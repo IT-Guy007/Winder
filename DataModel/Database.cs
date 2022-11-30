@@ -1,6 +1,8 @@
 namespace DataModel;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Imaging;
+
 public class Database {
 
     public SqlConnection connection;
@@ -166,7 +168,6 @@ public class Database {
             return true;
         }
         catch(SqlException se) {
-
             Console.WriteLine(se.ToString());
             //Close connection
             closeConnection();
@@ -204,6 +205,18 @@ public class Database {
 
     }
     
+    public static byte[] BitmapToBase64String(Bitmap bitmap)
+    {
+        var stream = new MemoryStream();
+        bitmap.Save(stream, ImageFormat.Png);
+        return stream.ToArray();
+    }
+
+    public static string ByteArrToBase64String(byte[] bytes)
+    {
+        return Convert.ToBase64String(bytes);
+    }
+
     public static Bitmap Base64StringToBitmap(string? base64String)
     {
         Bitmap bmpReturn = null;
