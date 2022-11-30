@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static System.Net.Mime.MediaTypeNames;
 using DataModel;
+using System.Text.RegularExpressions;
 
 namespace MAUI;
 
@@ -17,13 +18,13 @@ public partial class ProfielOpmaak : ContentPage
         InitializeComponent();
         interesses = new List<string>();
         interessePicker.ItemsSource = getAllListOfInterestsInStringFromDatabase();
-        listInteresses.ItemsSource = interesses;
         loadUserFromDatabaseInForm();
+        interesses = b.LoadInterestsFromDatabaseInListInteresses(user.username);
+        listInteresses.ItemsSource = interesses;
     }
-
     private void loadUserFromDatabaseInForm()
     {
-        user = b.GetUserFromDatabase("s1168742@student.windesheim.nl");
+        user = b.GetUserFromDatabase("s1416890@student.windesheim.nl");
         Voornaam.Placeholder = user.firstName;
         Tussenvoegsel.Placeholder = user.middleName;
         Achternaam.Placeholder = user.lastName;
@@ -69,33 +70,41 @@ public partial class ProfielOpmaak : ContentPage
 
     private void wijzigProfielGegevens(object sender, EventArgs e)
     {
-        checkAllInput();
-    }
-
-    private void checkAllInput()
-    {
         if (voornaam && tussenvoegsel && achternaam && geboortedatum && omschrijving && geslacht && voorkeur && interessesGekozen)
         {
+            updateUserPropertiesPrepareForUpdateQuery(user);
+            b.updateUserInDatabaseWithNewUserProfile(user);
+            registerInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             Voornaam.Text = "";
             Tussenvoegsel.Text = "";
             Achternaam.Text = "";
             Omschrijving.Text = "";
-            registerInterestsInDatabase();
         }
-        else {
+        else
+        {
             DisplayAlert("Er is iets verkeerd gegaan...", "Vul alle gegevens in", "OK");
         }
     }
 
-    private void registerInterestsInDatabase()
+    private void updateUserPropertiesPrepareForUpdateQuery(User user)
     {
-        foreach (var item in interesses)
-        {
-            b.RegisterInterestInDatabase(user.username, item);
-        }
+        if(user.firstName != Voornaam.Text) user.firstName = Voornaam.Text;
+        if(user.middleName != Tussenvoegsel.Text) user.middleName = Tussenvoegsel.Text;
+        if(user.lastName != Achternaam.Text) user.lastName = Achternaam.Text;
+        if(user.bio != Omschrijving.Text) user.bio = Omschrijving.Text;
+        if(user.birthDay != Geboortedatum.Date) user.birthDay = Geboortedatum.Date;
+        if(user.gender != Gender.SelectedItem.ToString())user.gender = Gender.SelectedItem.ToString();
+        if(user.preference != Voorkeur.SelectedItem.ToString()) user.preference = Voorkeur.SelectedItem.ToString();
     }
 
+    private void registerInterestsInDatabase()
+    {
+        foreach (var interest in interesses)
+        {
+            b.RegisterInterestInDatabase(user.username, interest);
+        }
+    }
     private void Voornaam_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (Voornaam.Text != "")
@@ -160,7 +169,7 @@ public partial class ProfielOpmaak : ContentPage
     {
         if (Omschrijving.Text != "")
         {
-            if (!checkIfTextIsOnlyLettersAndSpaces(Omschrijving.Text))
+            if (!checkIfTextIsOnlyLettersSpacesCommasAndDots(Omschrijving.Text))
             {
                 omschrijving = false;
                 Color colorRed = new Color(238, 75, 43);
@@ -172,9 +181,13 @@ public partial class ProfielOpmaak : ContentPage
                 omschrijving = true;
                 lblOmschrijving.Text = "Omschrijving";
                 lblOmschrijving.TextColor = default;
-                Omschrijving.Text = Omschrijving.Text.First().ToString().ToUpper() + Omschrijving.Text[1..].ToLower();
             }
         }
+    }
+
+    private bool checkIfTextIsOnlyLettersSpacesCommasAndDots(string text)
+    {
+        return Regex.IsMatch(text, @"^[a-zA-Z ,.]+$");
     }
 
     private bool checkIfTextIsOnlyLettersAndSpaces(string text)
@@ -237,14 +250,14 @@ public partial class ProfielOpmaak : ContentPage
         if (listInteresses.SelectedItem != null) {
             interessePicker.Title = "Interesse";
             interessePicker.TitleColor = default;
-            var item = listInteresses.SelectedItem.ToString();
-            interesses.Remove(item);
+            var interest = listInteresses.SelectedItem.ToString();
+            b.removeInterestOutOfuserHasInterestTableDatabase(user.username, interest);
+            interesses.Remove(interest);
             listInteresses.ItemsSource = null;
             listInteresses.ItemsSource = interesses;
             listInteresses.SelectedItem = null;
         }
     }
-
 
     private void Geboortedatum_DateSelected(object sender, DateChangedEventArgs e)
     {

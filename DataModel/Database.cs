@@ -1,6 +1,11 @@
 namespace DataModel;
+
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Reflection;
 using System.Reflection.PortableExecutable;
 
 public class Database
@@ -308,11 +313,10 @@ public class Database
                            (DateTime?)new DateTime(1925, 01, 01, 0, 0, 0, 0) :
                            (DateTime?)reader.GetDateTime(3);
     }
-
     public void RegisterInterestInDatabase(string username, string interest)
     {
         openConnection();
-        string sql = "INSERT INTO winder.winder.userHasInterest (UID, interest) VALUES(@Email, @Interest)";
+        string sql = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
         SqlCommand command = new SqlCommand(sql, connection);
         command.Parameters.AddWithValue("@Email", username);
         command.Parameters.AddWithValue("@Interest", interest);
@@ -325,5 +329,82 @@ public class Database
             closeConnection();
         }
         closeConnection();
+    }
+
+    public void removeInterestOutOfuserHasInterestTableDatabase(string username, string interest)
+    {
+        openConnection();
+        string sql = "Delete From winder.userHasInterest Where UID = @Email and interest = @Interest";
+        SqlCommand command = new SqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@Email", username);
+        command.Parameters.AddWithValue("@Interest", interest);
+        try
+        {
+            command.ExecuteNonQuery();
+        }
+        catch (SqlException e)
+        {
+            closeConnection();
+        }
+        closeConnection();
+    }
+
+    public List<string> LoadInterestsFromDatabaseInListInteresses(string email)
+    {
+        List<string> interests = new List<string>();
+        openConnection();
+        string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
+        SqlCommand command = new SqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@Email", email);
+        try
+        {
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var iets1 = reader["interest"] as string;
+                interests.Add(iets1);
+            }
+        }
+        catch (SqlException e)
+        {
+            closeConnection();
+        }
+        closeConnection();
+        return interests;
+    }
+
+    public void updateUserInDatabaseWithNewUserProfile(User user)
+    {
+
+        Authentication authentication = new Authentication();
+        //Start connection
+        openConnection();
+
+        //Create query
+        SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
+        "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, birthday = @birthday, bio = @bio" +
+        "where email = @Email", connection);  
+        query.Parameters.AddWithValue("@firstname", user.firstName);
+        query.Parameters.AddWithValue("@middlename", user.middleName);
+        query.Parameters.AddWithValue("@lastname", user.lastName);
+        query.Parameters.AddWithValue("@birthday", user.birthDay);
+        query.Parameters.AddWithValue("@preference", user.preference);
+        query.Parameters.AddWithValue("@Email", user.username);
+        query.Parameters.AddWithValue("@bio", user.bio);
+        //Execute query
+        try
+        {
+            query.ExecuteReader();
+
+            //Close connection
+            closeConnection();
+        }
+        catch (SqlException se)
+        {
+
+            //Close connection
+            closeConnection();
+        }
+
     }
 }
