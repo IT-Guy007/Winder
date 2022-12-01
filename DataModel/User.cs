@@ -4,15 +4,12 @@ public class User {
     private string firstName { get; set; }
     private string middleName { get; set; }
     private string lastName { get; set; }
-    private DateTime birthDay { get; set; }
+    private DateTime? birthDay { get; set; }
     private string preference { get; set; }
     private string email { get; set; }
     private string password { get; set; }
-    private string gender { get; set; }
+    public string gender { get; set; }
     private Bitmap profilePicture { get; set; }
-    
-    private string bio { get; set; }
-
     public User(string firstName, string middleName, string lastName, DateTime birthDay,
         string preference, string email, string password, string gender, Bitmap profilePicture, string bio)
     {
