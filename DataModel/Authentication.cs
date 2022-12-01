@@ -12,7 +12,6 @@ public class Authentication {
     public Authentication() {
         _loggedState = LoggedState.signedOut;
         _accountState = AccountState.inactive;
-
     }
 
     //Defining state
@@ -25,7 +24,7 @@ public class Authentication {
         active,
         inactive,
     }
-
+    
     public void updateUserSetting(bool activation, bool signedIN) {
         if (activation) {
             this._accountState = AccountState.active;
@@ -43,6 +42,7 @@ public class Authentication {
         }
     }
     
+    // checking if email is already in database, returns true if unique
     public bool EmailIsUnique(string email) {
         Database db = new Database();
         List<string> emails = db.GetEmailFromDataBase();
@@ -52,10 +52,16 @@ public class Authentication {
         return true;
     }
     
+    // Hashing the password
     public string HashPassword(string password) {
-        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+        if (!string.IsNullOrEmpty(password))
+        {
+            return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+        }
+        return null;
     }
 
+    // Calculating the age by using date as parameter
     public int CalculateAge(DateTime birthDate) {
         int age = DateTime.Now.Year - birthDate.Year;
         if (DateTime.Now.DayOfYear < birthDate.DayOfYear) {
@@ -64,6 +70,7 @@ public class Authentication {
         return age;
     }
 
+    // checks if validated
     public bool CheckPassword(string password) {
         if (PasswordLength(password) && PasswordContainsNumber(password) && PasswordContainsCapitalLetter(password)) {
             return true;
@@ -71,6 +78,7 @@ public class Authentication {
         return false;
     }
 
+    // checks if email belongs to Windesheim, returns true if so
     public bool CheckEmail(string email) {
         if (email.EndsWith("@student.windesheim.nl") && email.StartsWith("s")) {
             return true;
@@ -89,6 +97,5 @@ public class Authentication {
     private bool PasswordContainsCapitalLetter(string password) {
         return password.Any(char.IsUpper);
     }
-    
     
 }
