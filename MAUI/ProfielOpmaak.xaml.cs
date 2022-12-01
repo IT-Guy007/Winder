@@ -278,20 +278,20 @@ public partial class ProfielOpmaak : ContentPage
 
     private void checkIfAgeOfBirthDateIsOver18()
     {
-            DateTime today = DateTime.Today;
-            int age = today.Year - Geboortedatum.Date.Year;
-            if (Geboortedatum.Date > today.AddYears(-age)) age--;
-            if (age >= 18)
-            {
-                geboortedatum = true;
-                lblGeboortedatum.Text = "Leeftijd : " + age;
-                lblGeboortedatum.BackgroundColor = default;
-            }
-            else
-            {
-                geboortedatum = false;
-                lblGeboortedatum.Text = "Je moet minimaal 18 jaar zijn";
-                lblGeboortedatum.BackgroundColor = colorRed;
-            }
+        DateTime today = DateTime.Today;
+        int age = today.Year - Geboortedatum.Date.Year;
+        if (Geboortedatum.Date > today.AddYears(-age)) age--;
+        if (age >= 18)
+        {
+            geboortedatum = true;
+            lblGeboortedatum.Text = "Leeftijd : " + age;
+            lblGeboortedatum.BackgroundColor = default;
+        }
+        else
+        {
+            geboortedatum = false;
+            lblGeboortedatum.Text = "Je moet minimaal 18 jaar zijn";
+            lblGeboortedatum.BackgroundColor = colorRed;
+        }
     }
 }
