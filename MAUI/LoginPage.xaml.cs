@@ -1,5 +1,3 @@
-
-
 using DataModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,7 +12,6 @@ public partial class LoginPage : ContentPage {
         InitializeComponent();
         b.Clicked += Inlog;
         b2.Clicked += WachtwoordVergeten;
-        
     }
 
     private void Inlog(object sender, EventArgs e)
@@ -22,12 +19,12 @@ public partial class LoginPage : ContentPage {
         var Email = Emailadres.Text;
         var Password = Wachtwoord.Text;
         if (database.checkLogin(Email, Password)) {
+            FoutmeldingInloggen.IsVisible = false;
             Navigation.PushAsync(new MatchPage());
         }
         else {
             FoutmeldingInloggen.IsVisible = true;
         }
-
     }
     private void WachtwoordVergeten(object sender, EventArgs e) {
         

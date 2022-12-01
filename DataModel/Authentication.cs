@@ -12,7 +12,6 @@ public class Authentication {
     public Authentication() {
         _loggedState = LoggedState.signedOut;
         _accountState = AccountState.inactive;
-
     }
 
     //Defining state
@@ -25,7 +24,6 @@ public class Authentication {
         active,
         inactive,
     }
-
     
     public void updateUserSetting(bool activation, bool signedIN) {
         if (activation) {
@@ -56,7 +54,11 @@ public class Authentication {
     
     // Hashing the password
     public string HashPassword(string password) {
-        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+        if (!string.IsNullOrEmpty(password))
+        {
+            return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+        }
+        return null;
     }
 
     // Calculating the age by using date as parameter
@@ -84,7 +86,6 @@ public class Authentication {
         return false;
     }
 
-
     private bool PasswordLength(string password) {
         return password.Length >= 8;
     }
@@ -96,6 +97,5 @@ public class Authentication {
     private bool PasswordContainsCapitalLetter(string password) {
         return password.Any(char.IsUpper);
     }
-    
     
 }

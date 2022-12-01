@@ -63,9 +63,9 @@
         x:Name="Gender"
         HorizontalOptions="Center">
             <Picker.Items>
+                <x:String>Kies</x:String>
                 <x:String>Man</x:String>
                 <x:String>Vrouw</x:String>
-                <x:String>Onbekend</x:String>
             </Picker.Items>
         </Picker>
         <Picker         
@@ -73,9 +73,9 @@
             x:Name="Voorkeur"
         HorizontalOptions="Center">
             <Picker.Items>
+                <x:String>Kies</x:String>
                 <x:String>Man</x:String>
                 <x:String>Vrouw</x:String>
-                <x:String>Onbekend</x:String>
             </Picker.Items>
         </Picker>
         <Picker 
@@ -84,9 +84,7 @@
         HorizontalOptions="Center"
         SelectedIndexChanged="interessePicker_SelectedIndexChanged">
             <Picker.Items>
-                <x:String>Voetbal</x:String>
-                <x:String>Basketbal</x:String>
-                <x:String>Sportschool</x:String>
+
             </Picker.Items>
         </Picker>
         <ListView MaximumHeightRequest="100" HorizontalOptions="Center" x:Name="listInteresses">

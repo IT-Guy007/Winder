@@ -1,3 +1,4 @@
+using System.Buffers.Text;
 using System.Drawing;
 using DataModel;
 
@@ -19,9 +20,9 @@ public partial class RegisterPage : ContentPage
 
     public RegisterPage() {
         InitializeComponent();
-        
     }
 
+    //Second button, makes sure your preferences are saved
     public void SaveEvent (object sender, EventArgs e)
     {
         int aantalchecks = 0;
@@ -36,7 +37,19 @@ public partial class RegisterPage : ContentPage
         else
         {
             FoutVoorkeur.IsVisible = false;
-            voorkeur = Voorkeur.ToString();
+            voorkeur = Voorkeur.SelectedItem.ToString();
+            aantalchecks += 1;
+        }
+        #endregion
+        #region Profielfotocheck
+        if (ProfileImage.Source == null)
+        {
+            FoutProfielfoto.IsVisible = true;
+            aantalchecks -= 1;
+        }
+        else
+        {
+            FoutProfielfoto.IsVisible = false;
             aantalchecks += 1;
         }
         #endregion
@@ -49,7 +62,7 @@ public partial class RegisterPage : ContentPage
         else
         {
             FoutOpleiding.IsVisible= false;
-            opleiding = Opleiding.ToString();
+            opleiding = Opleiding.SelectedItem.ToString();
             aantalchecks += 1;
         }
         #endregion
@@ -62,7 +75,7 @@ public partial class RegisterPage : ContentPage
         else
         {
             FoutLocatie.IsVisible= false;
-            locatie = Locatie.ToString();
+            locatie = Locatie.SelectedItem.ToString();
             aantalchecks+= 1;
         }
         #endregion
@@ -75,15 +88,29 @@ public partial class RegisterPage : ContentPage
         else
         {
             Foutinteresses.IsVisible= false;
-            interesses = Interesses.ToString();
+            interesses = Interesses.SelectedItem.ToString();
             aantalchecks+= 1;
         }
-                
+
         #endregion
+
+        //if (aantalchecks == 5){
+            Database database = new Database();
+        MatchPage matchpage = new MatchPage();
+        if (tussenvoegsel == null)
+        {
+            tussenvoegsel = "";
+        }
+        bool geregistreerd = database.register(voornaam, tussenvoegsel,achternaam , email, voorkeur, geboortedatum, geslacht,"random tekst" , wachtwoord, "", true, locatie, opleiding);
+        if (geregistreerd)
+            {
+            Navigation.PushAsync(matchpage);
+        }
+        //}
 
     }
 
-
+    //First buuton, checks the fields and sends to second page with fields
     public void RegisterBtnEvent(object sender, EventArgs e)
     {
         int aantalchecks = 0;
@@ -92,6 +119,7 @@ public partial class RegisterPage : ContentPage
         // also doing checks
         DateTime geboortedatumtijdelijk;
         geboortedatumtijdelijk = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
+        
         #region email checks
         if (Email.Text == null)
         {
@@ -175,7 +203,7 @@ public partial class RegisterPage : ContentPage
             else
             {
                 FoutWachtwoord.IsVisible= false;
-                wachtwoord = Wachtwoord.Text;
+                wachtwoord = auth.HashPassword(Wachtwoord.Text);
                 aantalchecks += 1;
             }
            
@@ -213,25 +241,22 @@ public partial class RegisterPage : ContentPage
         }
         #endregion
 
-
-        Database database = new Database();
-        if (database.register(voornaam, tussenvoegsel, achternaam, email, voorkeur, geboortedatum, geslacht, "", wachtwoord, "", true)) {
-            Navigation.PushAsync(new MatchPage());
-        }
-
-        //setting objects visible to proceed the registerform
-        LblVoorkeur.IsVisible = true;
-        Voorkeur.IsVisible = true;
-        LblOpleiding.IsVisible = true;
-        Opleiding.IsVisible = true;
-        LblLocatie.IsVisible = true;
-        Locatie.IsVisible = true;
-        LblInteresses.IsVisible = true;
-        Interesses.IsVisible = true;
+        if (aantalchecks == 7)
+        {
+            //setting objects visible to proceed the registerform
+            LblVoorkeur.IsVisible = true;
+            Voorkeur.IsVisible = true;
+            LblOpleiding.IsVisible = true;
+            Opleiding.IsVisible = true;
+            LblLocatie.IsVisible = true;
+            Locatie.IsVisible = true;
+            LblInteresses.IsVisible = true;
+            Interesses.IsVisible = true;
+            ProfileImage.IsVisible = true;
 
 
-        // Making objects unvisible to proceed the registerform
-        
+            // Making objects unvisible to proceed the registerform
+
             Email.IsVisible = false;
             Lblemail.IsVisible = false;
             Voornaam.IsVisible = false;
@@ -252,3 +277,28 @@ public partial class RegisterPage : ContentPage
             Opslaan.IsVisible = true;
         }
     }
+
+    Stream stream;
+    private async void OnProfilePictureClicked(object sender, EventArgs e)
+    {
+        var image = await FilePicker.PickAsync(new PickOptions
+        {
+            PickerTitle = "Kies een profielfoto",
+            FileTypes = FilePickerFileType.Images
+        });
+
+        if (image == null)
+        {
+            return;
+        }
+
+        stream = await image.OpenReadAsync();
+        ProfileImage.Source = ImageSource.FromStream(() => stream);
+
+    }
+    
+    private void StreamToBitmapImage()
+    {
+        Bitmap bitmap = new Bitmap(stream);       
+    }
+}
