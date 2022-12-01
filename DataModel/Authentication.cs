@@ -58,7 +58,7 @@ public class Authentication {
         {
             return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
         }
-        return null;
+        return "";
     }
 
     // Calculating the age by using date as parameter

@@ -1,54 +1,62 @@
-﻿using System.Drawing.Printing;
+﻿using System.Drawing;
+using System.Drawing.Printing;
+using DataModel;
+using Microsoft.Maui.Platform;
+using Color = Microsoft.Maui.Graphics.Color;
+using Image = Microsoft.Maui.Controls.Image;
+using Point = Microsoft.Maui.Graphics.Point;
 
 namespace MAUI;
 
-public partial class MatchPage : ContentPage {
-    private VerticalStackLayout _verticalStackLayout = new VerticalStackLayout();
-    private LinearGradientBrush _linearGradientBrush;
+public partial class MatchPage : ContentPage
+{
+
+    private Image _imageButton;
+    private Queue<Profile> profileQueue = new Queue<Profile>();
+
     private Image[] _images = new Image[10];
-    private Button _imageButton;
     private int selectedImage = 0;
 
     public MatchPage() {
         Title = "Make your match now!";
 
-        _verticalStackLayout.Margin = 20;
-        _verticalStackLayout.WidthRequest = 800;
-
-        if (_images.Length == 0) {
-            _imageButton = new Button {
-                ImageSource = "Resources/Images/NoMoreMatches.png"
-            };
+        StackLayout _verticalStackLayout = new StackLayout{Orientation = StackOrientation.Vertical};
+        
+        StackLayout ImageLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
+        
+        //Images
+        if (profileQueue.Count == 0) {
+            Image noMoreUsers = new Image() { Source = "nomorematches.png" };
+            noMoreUsers.Aspect = Aspect.AspectFit;
+            noMoreUsers.WidthRequest = 800;
+            noMoreUsers.HeightRequest = 800;
+            ImageLayout.Add(noMoreUsers);
+            
         } else {
-            _imageButton = new Button {
-                ImageSource = _images[selectedImage].Source,
-            };
-        };
+            
+            //Image carousel
 
-
-
-        _linearGradientBrush = new LinearGradientBrush() {
-            StartPoint = new Point(500, 0),
-            EndPoint = new Point(500,2000),
-            GradientStops = new GradientStopCollection() {
-                new GradientStop() { Color = Color.FromHex("#000000")},
-                new GradientStop() { Color = Color.FromHex("#FFFFFF")}
-            }
+            //fullname
+            
+            //Age
+            
+            //Bio
             
             
-        };
+            //Buttons
+            
+            //Undo
+            
+            //Cancel
+            
+            //Like
 
-      
-        _verticalStackLayout.IsVisible = true;
-        Content.Background = _linearGradientBrush;
-        Content = new VerticalStackLayout {
-            IsVisible = true,
-            Children = {
-                _verticalStackLayout
-            }
-        };
+        }
 
-
+        _verticalStackLayout.Add(ImageLayout);
+        _verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
+        
+        Content = _verticalStackLayout;
     }
 
 }

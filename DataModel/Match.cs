@@ -13,6 +13,4 @@ public class Match {
         this.matchDate = matchDate;
     }
     
-        
-    
 }
