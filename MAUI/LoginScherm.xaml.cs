@@ -13,7 +13,7 @@ public partial class LoginScherm : ContentPage {
     public LoginScherm() {
         InitializeComponent();
         b.Clicked += Inlog;
-        b2.Clicked += WachtwoordVergeten;
+        
         
     }
 
@@ -29,8 +29,11 @@ public partial class LoginScherm : ContentPage {
         }
 
     }
-    private void WachtwoordVergeten(object sender, EventArgs e) {
-        
-    }
    
+    private void WachtwoordVergeten(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new WijzigWachtwoordScherm());
+
+    }
+
 }
