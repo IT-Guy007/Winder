@@ -9,7 +9,7 @@ public class User {
     public string email { get; set; }
     private string password { get; set; }
     public string gender { get; set; }
-    public Bitmap profilePicture { get; set; }
+    public Image profilePicture { get; set; }
     public string bio { get; set; }
     public User(string firstName, string middleName, string lastName, DateTime birthDay,
         string preference, string email, string password, string gender, Bitmap profilePicture, string bio)

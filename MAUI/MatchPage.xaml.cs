@@ -1,16 +1,11 @@
-﻿using System.Drawing;
-using System.Drawing.Printing;
-using DataModel;
-using Microsoft.Maui.Platform;
-using Color = Microsoft.Maui.Graphics.Color;
-using Image = Microsoft.Maui.Controls.Image;
-using Point = Microsoft.Maui.Graphics.Point;
+﻿using DataModel;
 
 namespace MAUI;
 
 public partial class MatchPage : ContentPage
 {
-
+    private  Authentication _authentication= new Authentication();
+    
     private Image _imageButton;
     private Queue<Profile> profileQueue = new Queue<Profile>();
 
@@ -26,11 +21,11 @@ public partial class MatchPage : ContentPage
         
         //Images
         if (profileQueue.Count == 0) {
-            Image noMoreUsers = new Image() { Source = "nomorematches.png" };
-            noMoreUsers.Aspect = Aspect.AspectFit;
-            noMoreUsers.WidthRequest = 800;
-            noMoreUsers.HeightRequest = 800;
-            ImageLayout.Add(noMoreUsers);
+            Image profileImage = new Image() { Source = ImageSource.FromResource(_authentication._currentUser.profilePicture.ToString())};
+            profileImage.Aspect = Aspect.AspectFit;
+            profileImage.WidthRequest = 800;
+            profileImage.HeightRequest = 800;
+            _verticalStackLayout.Add(profileImage);
             
         } else {
             

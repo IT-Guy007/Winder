@@ -2,15 +2,13 @@ namespace DataModel;
 
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Reflection;
-using System.Reflection.PortableExecutable;
 using System.Drawing.Imaging;
 public class Database
 {
-    public SqlConnection connection;
+    private Authentication _authentication = new Authentication();
+public SqlConnection connection;
     public void generateConnection()
     {
 
@@ -67,7 +65,7 @@ public class Database
                 var gender = reader["gender"] as string;
                 //var profilePicture = reader["profilePicture"] as string;
                 var bio = reader["bio"] as string;
-                Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
+                _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
                     preferences, email, "", gender, bio);
                 //Authentication._currentUser = new User(username, firstName, middleName, lastName, birthday,
                 //    preferences, email, "", gender, Base64StringToBitmap(profilePicture),bio);
