@@ -1,7 +1,6 @@
 using System.Buffers.Text;
 using System.Drawing;
 using DataModel;
-using System.Windows;
 
 namespace MAUI;
 
@@ -18,7 +17,7 @@ public partial class RegisterForm : ContentPage
     private string opleiding;
     private string locatie;
     private string interesses;
-    private byte[] profielfoto;
+    private string profielfoto;
 
     public RegisterForm() {
         InitializeComponent();
@@ -96,23 +95,19 @@ public partial class RegisterForm : ContentPage
 
         #endregion
 
-        if (aantalchecks == 5)
-        {
+        //if (aantalchecks == 5){
             Database database = new Database();
-            MatchPage matchpage = new MatchPage();
-            if (tussenvoegsel == null)
-            {
-                tussenvoegsel = "";
-            }
-            bool geregistreerd = database.register(voornaam, tussenvoegsel, achternaam, email, voorkeur, geboortedatum, geslacht, "random tekst", wachtwoord, profielfoto, true, locatie, opleiding);
-            int geregistreedInt = database.registrationFunction(voornaam, tussenvoegsel, achternaam, email, voorkeur, geboortedatum, geslacht, "random tekst", wachtwoord, profielfoto, true, locatie, opleiding);
-            FoutProfielfoto.Text = geregistreedInt.ToString() + " opgeslagen";
-            FoutProfielfoto.IsVisible = true;
-            //if (geregistreerd)
-            //{
-            //    Navigation.PushAsync(matchpage);
-            //}
+        MatchPage matchpage = new MatchPage();
+        if (tussenvoegsel == null)
+        {
+            tussenvoegsel = "";
         }
+        bool geregistreerd = database.register(voornaam, tussenvoegsel,achternaam , email, voorkeur, geboortedatum, geslacht,"random tekst" , wachtwoord, "", true, locatie, opleiding);
+        if (geregistreerd)
+            {
+            Navigation.PushAsync(matchpage);
+        }
+        //}
 
     }
 
@@ -284,31 +279,22 @@ public partial class RegisterForm : ContentPage
         }
     }
 
+    Stream stream;
     private async void OnProfilePictureClicked(object sender, EventArgs e)
     {
-        try
+        var image = await FilePicker.PickAsync(new PickOptions
         {
-            var image = await FilePicker.PickAsync(new PickOptions
-            {
-                PickerTitle = "Kies een profielfoto",
-                FileTypes = FilePickerFileType.Images
-            }) ;
+            PickerTitle = "Kies een profielfoto",
+            FileTypes = FilePickerFileType.Images
+        });
 
-            if (image == null)
-            {
-                return;
-            }
-
-            byte[] imageArr = null;
-            Stream stream = await image.OpenReadAsync();
-            BinaryReader binary = new BinaryReader(stream);
-            imageArr = binary.ReadBytes((int)imageArr.Length);
-            ProfileImage.Source = ImageSource.FromStream(() => stream);
-        }
-        catch(Exception ex)
+        if (image == null)
         {
-            FoutProfielfoto.Text = ex.Message;
-            FoutProfielfoto.IsVisible = true;
+            return;
         }
+
+        stream = await image.OpenReadAsync();
+        ProfileImage.Source = ImageSource.FromStream(() => stream);
+
     }
 }
