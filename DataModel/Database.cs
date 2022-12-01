@@ -2,11 +2,11 @@ namespace DataModel;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Windows.Markup;
 
 public class Database {
 
     public SqlConnection connection;
-
 
     public void generateConnection() {
         
@@ -109,8 +109,6 @@ public class Database {
         return output;
     }
 
-
-
     public List<string> GetEmailFromDataBase() {
         List<string> emails = new List<string>();
         openConnection();
@@ -135,7 +133,7 @@ public class Database {
     }
 
     public bool register(string firstname, string middlename, string lastname, string email,
-        string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active, string locatie, string opleiding) {
+        string preference, DateTime birthday, string gender, string bio, string password, byte[] proficePicture, bool active, string locatie, string opleiding) {
 
         Authentication authentication = new Authentication();
         string hashedpassword = authentication.HashPassword(password);
@@ -226,5 +224,19 @@ public class Database {
 
   
         return bmpReturn;
+    }
+
+    public int registrationFunction(string firstname, string middlename, string lastname, string email, string preference, DateTime birthday, string gender, 
+                                     string bio, string password, byte[] proficePicture, bool active, string locatie, string opleiding)
+    {
+        string query = "INSERT INTO User (firstname, middlename, lastname, birthday, preference, email, password, gender, profilePicture, bio, active, location, opleiding)"+
+                       "VALUES('"+firstname+"', '"+middlename+"', '"+lastname+"', '"+birthday+" 00:00:00.000', '"+preference+"', '"+email+"', '"+password+"', '"+gender+"', @img, '"+bio+
+                       "', "+active+", '"+locatie+"', '"+opleiding+")";
+        openConnection();
+        SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.Add(new SqlParameter("@img", proficePicture));
+        int x = command.ExecuteNonQuery();
+        closeConnection();
+        return x;
     }
 }
