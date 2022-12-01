@@ -299,7 +299,7 @@ public class Database
                 DateTime? bday = getDateTimefromReader(reader);
                 var bio = reader["bio"] as string;
 
-                user = new User(username,firstName, middleName,lastName,bday, preferences, null,null, gender, null,bio);
+                user = new User(firstName, middleName,lastName,bday, preferences, null,null, gender, null,bio);
             }
         }
         catch (SqlException e)
@@ -376,7 +376,7 @@ public class Database
         return interests;
     }
 
-    public void updateUserInDatabaseWithNewUserProfile(User user)
+    public void updateUserInDatabaseWithNewUserProfile()
     {
         try
         {
@@ -386,13 +386,13 @@ public class Database
             SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
             "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, birthday = @birthday, bio = @bio " +
             "where email = @Email", connection);
-            query.Parameters.AddWithValue("@firstname", user.firstName);
-            query.Parameters.AddWithValue("@middlename", user.middleName);
-            query.Parameters.AddWithValue("@lastname", user.lastName);
-            query.Parameters.AddWithValue("@birthday", user.birthDay);
-            query.Parameters.AddWithValue("@preference", user.preference);
-            query.Parameters.AddWithValue("@Email", user.username);
-            query.Parameters.AddWithValue("@bio", user.bio);
+            query.Parameters.AddWithValue("@firstname", Authentication._currentUser.firstName);
+            query.Parameters.AddWithValue("@middlename", Authentication._currentUser.middleName);
+            query.Parameters.AddWithValue("@lastname", Authentication._currentUser.lastName);
+            query.Parameters.AddWithValue("@birthday", Authentication._currentUser.birthDay);
+            query.Parameters.AddWithValue("@preference", Authentication._currentUser.preference);
+            query.Parameters.AddWithValue("@Email", Authentication._currentUser.email);
+            query.Parameters.AddWithValue("@bio", Authentication._currentUser.bio);
             //Execute query
             query.ExecuteNonQuery();
 

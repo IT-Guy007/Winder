@@ -20,12 +20,12 @@ public partial class ProfielOpmaak : ContentPage
         interesses = new List<string>();
         interessePicker.ItemsSource = getAllListOfInterestsInStringFromDatabase();
         loadUserFromDatabaseInForm();
-        interesses = b.LoadInterestsFromDatabaseInListInteresses(user.username);
+        //interesses = b.LoadInterestsFromDatabaseInListInteresses(user.username);
         listInteresses.ItemsSource = interesses;
     }
     private void loadUserFromDatabaseInForm()
     {
-        user = b.GetUserFromDatabase("s1416890@student.windesheim.nl");
+        user = Authentication._currentUser;
         Voornaam.Placeholder = user.firstName;
         Tussenvoegsel.Placeholder = user.middleName;
         Achternaam.Placeholder = user.lastName;
@@ -73,8 +73,8 @@ public partial class ProfielOpmaak : ContentPage
     {
         if (voornaam && tussenvoegsel && achternaam && geboortedatum && omschrijving && geslacht && voorkeur && interessesGekozen)
         {
-            updateUserPropertiesPrepareForUpdateQuery(user);
-            b.updateUserInDatabaseWithNewUserProfile(user);
+            updateUserPropertiesPrepareForUpdateQuery();
+            b.updateUserInDatabaseWithNewUserProfile();
             registerInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             fillInFormWithUserProperties(user);
@@ -108,22 +108,21 @@ public partial class ProfielOpmaak : ContentPage
         Omschrijving.Text = "";
     }
 
-    private void updateUserPropertiesPrepareForUpdateQuery(User user)
+    private void updateUserPropertiesPrepareForUpdateQuery()
     {
-        if(user.firstName != Voornaam.Text && Voornaam.Text != null) user.firstName = Voornaam.Text;
-        if(user.middleName != Tussenvoegsel.Text && Tussenvoegsel.Text != null) user.middleName = Tussenvoegsel.Text;
-        if(user.lastName != Achternaam.Text && Achternaam.Text != null)user.lastName = Achternaam.Text;
-        if(user.bio != Omschrijving.Text && Omschrijving.Text != null) user.bio = Omschrijving.Text;
-        if(user.birthDay != Geboortedatum.Date) user.birthDay = Geboortedatum.Date;
-        if(user.gender != Gender.SelectedItem.ToString())user.gender = Gender.SelectedItem.ToString();
-        if(user.preference != Voorkeur.SelectedItem.ToString()) user.preference = Voorkeur.SelectedItem.ToString();
+        if(Authentication._currentUser.firstName != Voornaam.Text && Voornaam.Text != null) Authentication._currentUser.firstName = Voornaam.Text;
+        if (Authentication._currentUser.middleName != Tussenvoegsel.Text && Tussenvoegsel.Text != null) Authentication._currentUser.middleName = Tussenvoegsel.Text;
+        if (Authentication._currentUser.lastName != Achternaam.Text && Achternaam.Text != null) Authentication._currentUser.lastName = Achternaam.Text;
+        if (Authentication._currentUser.birthDay != Geboortedatum.Date) Authentication._currentUser.birthDay = Geboortedatum.Date;
+        if (Authentication._currentUser.bio != Omschrijving.Text && Omschrijving.Text != null) Authentication._currentUser.bio = Omschrijving.Text;
+        if (Authentication._currentUser.gender != Gender.SelectedItem.ToString()) Authentication._currentUser.gender = Gender.SelectedItem.ToString();
+        if(Authentication._currentUser.preference != Voorkeur.SelectedItem.ToString()) Authentication._currentUser.preference = Voorkeur.SelectedItem.ToString();
     }
-
     private void registerInterestsInDatabase()
     {
         foreach (var interest in interesses)
         {
-            b.RegisterInterestInDatabase(user.username, interest);
+            b.RegisterInterestInDatabase(Authentication._currentUser.email, interest);
         }
     }
     private void Voornaam_TextChanged(object sender, TextChangedEventArgs e)
@@ -263,7 +262,7 @@ public partial class ProfielOpmaak : ContentPage
             interessePicker.Title = "Interesse";
             interessePicker.TitleColor = default;
             var interest = listInteresses.SelectedItem.ToString();
-            b.removeInterestOutOfuserHasInterestTableDatabase(user.username, interest);
+            b.removeInterestOutOfuserHasInterestTableDatabase(Authentication._currentUser.email, interest);
             interesses.Remove(interest);
             listInteresses.ItemsSource = null;
             listInteresses.ItemsSource = interesses;
