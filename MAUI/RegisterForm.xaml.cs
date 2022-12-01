@@ -282,7 +282,6 @@ public partial class RegisterForm : ContentPage
         }
     }
 
-    Stream stream;
     private async void OnProfilePictureClicked(object sender, EventArgs e)
     {
         try
