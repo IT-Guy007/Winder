@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d94c203-6d0e-4d79-80c2-0bb2ccba3c7e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml.cs" afterDir="false" />
-    </list>
+    <list default="true" id="4d94c203-6d0e-4d79-80c2-0bb2ccba3c7e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

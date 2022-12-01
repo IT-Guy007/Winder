@@ -403,4 +403,62 @@ public class Database
         }
 
     }
+
+    public void insertPreference(string email, string preference)
+    {
+        // open connection
+
+        openConnection();
+        string selectPreference = "SELECT preference FROM winder.winder.[User] WHERE email = @Email";
+        SqlCommand query = new SqlCommand(selectPreference, connection);
+        query.Parameters.AddWithValue("@Email", email);
+
+        try
+        {
+            query.ExecuteReader();
+            closeConnection();
+        }
+        catch (SqlException se)
+        {
+            closeConnection();
+        }
+
+
+        if (selectPreference.Equals(null))
+        {
+            openConnection();
+            SqlCommand query1 = new SqlCommand("INSERT INTO winder.winder.[User] (preference) VALUES (@Preference) WHERE email = @Email", connection);
+            query1.Parameters.AddWithValue("@Email", email);
+            query1.Parameters.AddWithValue("@Preference", preference);
+            try
+            {
+                query.ExecuteReader();
+                closeConnection();
+            }
+            catch (SqlException se)
+            {
+                closeConnection();
+            }
+        }
+        else
+        {
+            openConnection();
+            SqlCommand query2 = new SqlCommand("UPDATE winder.winder.[User] SET preference = @Preference WHERE email = @Email", connection);
+            query2.Parameters.AddWithValue("@Email", email);
+            query2.Parameters.AddWithValue("@Preference", preference);
+            try
+            {
+                query.ExecuteReader();
+                closeConnection();
+            }
+            catch (SqlException se)
+            {
+                closeConnection();
+            }
+        }
+
+        closeConnection();
+    }
+
+
 }
