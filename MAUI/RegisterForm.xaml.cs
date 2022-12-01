@@ -1,5 +1,5 @@
 using DataModel;
-using Foundation;
+
 
 namespace MAUI;
 
@@ -168,6 +168,7 @@ public partial class RegisterForm : ContentPage
             bool geregistreerd = database.register(voornaam, tussenvoegsel,achternaam , email, voorkeur, geboortedatum, geslacht,"random tekst" , wachtwoord, "", true, locatie, opleiding);
             if (geregistreerd)
                 {
+               
                 Navigation.PushAsync(matchpage);
             }
         }
@@ -192,13 +193,12 @@ public partial class RegisterForm : ContentPage
 
     }
 
-    //checkt of waardes naar eisen voldoen
+    //checkt of waardes naar eisen voldoen en declareert de variabelen
     public bool RegisterBtnEventCheck()
     {
         int aantalchecks = 0;
         Authentication auth = new Authentication();
-        // declaring objects by form values by clicking " registreer " button
-        // also doing checks
+       
         DateTime geboortedatumtijdelijk;
         geboortedatumtijdelijk = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
 

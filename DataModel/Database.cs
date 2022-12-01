@@ -78,25 +78,28 @@ public class Database {
         closeConnection();
     }
 
-    public bool checkLogin(string email, string password) {
-        
+    public bool checkLogin(string email, string password)
+    {
+
         Authentication authentication = new Authentication();
         string hashed = authentication.HashPassword(password);
         bool output = false;
-        
+
         //Start connection
         openConnection();
-        
+
         //Create query
         SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
 
-        
+
         //Execute query
         SqlDataReader reader = query.ExecuteReader();
 
-        while (reader.Read()) {
-            if(hashed == reader["password"] as string) {
+        while (reader.Read())
+        {
+            if (hashed == reader["password"] as string)
+            {
                 output = true;
             }
         }
@@ -106,6 +109,8 @@ public class Database {
         updateLocalUserFromDatabase(email);
         return output;
     }
+
+    
 
 
 
@@ -203,29 +208,33 @@ public class Database {
         }
 
     }
-    
+
     public static Bitmap Base64StringToBitmap(string? base64String)
     {
         Bitmap bmpReturn = null;
 
-  
+
         byte[] byteBuffer = Convert.FromBase64String(base64String);
         MemoryStream memoryStream = new MemoryStream(byteBuffer);
 
-  
+
         memoryStream.Position = 0;
 
-  
+
         bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
 
-  
+
         memoryStream.Close();
         memoryStream = null;
         byteBuffer = null;
 
-  
+
         return bmpReturn;
     }
+
+
+
+
     public List<string> GetInterestsFromDataBase()
     {
         List<string> interests = new List<string>();
