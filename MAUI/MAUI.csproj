@@ -63,7 +63,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <MauiXaml Update="RegisterForm.xaml">
+      <MauiXaml Update="RegisterPage.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
       <MauiXaml Update="MatchPage.xaml">

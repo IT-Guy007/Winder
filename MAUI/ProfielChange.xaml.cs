@@ -4,11 +4,11 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace MAUI;
 
-public partial class ProfielOpmaak : ContentPage
+public partial class ProfileChange : ContentPage
 {
     List<string> interesses;
     bool voornaam = true, tussenvoegsel = true, achternaam = true, geboortedatum = true,omschrijving = true, geslacht = true,voorkeur = true, interessesGekozen = true;
-    public ProfielOpmaak()
+    public ProfileChange()
     {
         InitializeComponent();
         interesses = new List<string>();
