@@ -296,10 +296,11 @@ public class Database
                 var lastName = reader["lastname"] as string;
                 var preferences = reader["preference"] as string;
                 string? gender = reader["gender"] as string;
-                DateTime? bday = getDateTimefromReader(reader);
+                DateTime? bday = reader["birthday"] as DateTime?;
                 var bio = reader["bio"] as string;
-
-                user = new User(username,firstName, middleName,lastName,bday, preferences, null,null, gender, null,bio);
+                
+                DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
+                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, new Bitmap(1024,1024),bio);
             }
         }
         catch (SqlException e)
@@ -310,12 +311,7 @@ public class Database
         return user;
     }
 
-    private DateTime? getDateTimefromReader(SqlDataReader reader)
-    {
-        return reader.IsDBNull(3) ?
-                           (DateTime?)new DateTime(1925, 01, 01, 0, 0, 0, 0) :
-                           (DateTime?)reader.GetDateTime(3);
-    }
+    
     public void RegisterInterestInDatabase(string username, string interest)
     {
         openConnection();
@@ -391,7 +387,7 @@ public class Database
             query.Parameters.AddWithValue("@lastname", user.lastName);
             query.Parameters.AddWithValue("@birthday", user.birthDay);
             query.Parameters.AddWithValue("@preference", user.preference);
-            query.Parameters.AddWithValue("@Email", user.username);
+            query.Parameters.AddWithValue("@Email", user.email);
             query.Parameters.AddWithValue("@bio", user.bio);
             //Execute query
             query.ExecuteNonQuery();

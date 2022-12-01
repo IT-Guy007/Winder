@@ -2,8 +2,7 @@
 
 namespace MAUI;
 
-public partial class MatchPage : ContentPage
-{
+public partial class MatchPage : ContentPage {
     private VerticalStackLayout _verticalStackLayout = new VerticalStackLayout();
     private LinearGradientBrush _linearGradientBrush;
     private Image[] _images = new Image[10];
@@ -11,6 +10,7 @@ public partial class MatchPage : ContentPage
     private int selectedImage = 0;
 
     public MatchPage() {
+        Title = "Make your match now!";
 
         _verticalStackLayout.Margin = 20;
         _verticalStackLayout.WidthRequest = 800;
@@ -38,10 +38,10 @@ public partial class MatchPage : ContentPage
             
         };
 
-        Title = "Make your match now!";
+      
         _verticalStackLayout.IsVisible = true;
         Content.Background = _linearGradientBrush;
-        Content = new VerticalStackLayout() {
+        Content = new VerticalStackLayout {
             IsVisible = true,
             Children = {
                 _verticalStackLayout
@@ -50,7 +50,5 @@ public partial class MatchPage : ContentPage
 
 
     }
-    
-    
-    
+
 }
