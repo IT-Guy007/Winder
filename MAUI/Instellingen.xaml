@@ -20,6 +20,8 @@
                 </Grid.ColumnDefinitions>
                 <Label FontSize="30" Text="Voorkeurleeftijd" TextColor="Black" VerticalOptions="Center" Margin="30,0,0,0"/>
                 <Label Grid.Column="1" Text="Minimale leeftijd" TextColor="Black" FontSize="20" VerticalOptions="Center" HorizontalOptions="Start" />
+               
+                
                 <Picker 
                 x:Name="minimaleLeeftijd"
                 Margin="160,0,0,0"
@@ -54,6 +56,15 @@
 
                     </Picker.ItemsSource>
                 </Picker>
+                <Label 
+                x:Name="foutLeeftijd"
+                FontSize="20"
+                Text="Minimale leeftijd mag niet groter zijn dan maximale leeftijd"
+                IsVisible="false"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="OrangeRed"
+                Grid.Column="1"/>
             </Grid>
         </StackLayout>
         
@@ -109,7 +120,7 @@
                 </Grid.ColumnDefinitions>
                 <Label FontSize="30" Text="Locatie" TextColor="Black" VerticalOptions="Center" Margin="30,0,0,0"/>
                 <Picker 
-                x:Name="Locatie"
+                x:Name="Location"
                 IsVisible="True"
                 TextColor="White"
                 BackgroundColor="Gray"

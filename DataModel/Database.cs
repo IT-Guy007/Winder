@@ -58,7 +58,8 @@ public class Database
         try
         {
             SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 var firstName = reader["firstName"] as string;
                 var middleName = reader["middleName"] as string;
                 var lastName = reader["lastName"] as string;
@@ -147,7 +148,8 @@ public class Database
         return emails;
     }
     public bool register(string firstname, string middlename, string lastname, string email,
-        string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active, string locatie, string opleiding) {
+        string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active, string locatie, string opleiding)
+    {
         Authentication authentication = new Authentication();
         string hashedpassword = authentication.HashPassword(password);
         //Start connection
@@ -178,7 +180,8 @@ public class Database
             closeConnection();
             return true;
         }
-        catch(SqlException se) {
+        catch (SqlException se)
+        {
             Console.WriteLine(se.ToString());
             //Close connection
             closeConnection();
@@ -298,9 +301,9 @@ public class Database
                 string? gender = reader["gender"] as string;
                 DateTime? bday = reader["birthday"] as DateTime?;
                 var bio = reader["bio"] as string;
-                
+
                 DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
-                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, new Bitmap(1024,1024),bio);
+                user = new User(firstName, middleName, lastName, birthday, preferences, email, "", gender, new Bitmap(1024, 1024), bio);
             }
         }
         catch (SqlException e)
@@ -311,7 +314,7 @@ public class Database
         return user;
     }
 
-    
+
     public void RegisterInterestInDatabase(string username, string interest)
     {
         openConnection();
@@ -409,7 +412,7 @@ public class Database
         // open connection
 
         openConnection();
-        string selectPreference = "SELECT preference FROM winder.winder.[User] WHERE email = @Email";
+        string selectPreference = "SELECT preference FROM winder.[User] WHERE email = @Email";
         SqlCommand query = new SqlCommand(selectPreference, connection);
         query.Parameters.AddWithValue("@Email", email);
 
@@ -427,7 +430,7 @@ public class Database
         if (selectPreference.Equals(null))
         {
             openConnection();
-            SqlCommand query1 = new SqlCommand("INSERT INTO winder.winder.[User] (preference) VALUES (@Preference) WHERE email = @Email", connection);
+            SqlCommand query1 = new SqlCommand("INSERT INTO winder.[User] (preference) VALUES (@Preference) WHERE email = @Email", connection);
             query1.Parameters.AddWithValue("@Email", email);
             query1.Parameters.AddWithValue("@Preference", preference);
             try
@@ -443,7 +446,7 @@ public class Database
         else
         {
             openConnection();
-            SqlCommand query2 = new SqlCommand("UPDATE winder.winder.[User] SET preference = @Preference WHERE email = @Email", connection);
+            SqlCommand query2 = new SqlCommand("UPDATE winder.[User] SET preference = @Preference WHERE email = @Email", connection);
             query2.Parameters.AddWithValue("@Email", email);
             query2.Parameters.AddWithValue("@Preference", preference);
             try
@@ -460,5 +463,27 @@ public class Database
         closeConnection();
     }
 
+    public void insertLocation(string email, string location)
+    {
+        // open connection
 
+        openConnection();
+       
+        SqlCommand query = new SqlCommand("UPDATE winder.[User] SET location = @Location WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+        query.Parameters.AddWithValue("@Location", location);
+        
+        try
+        {
+            query.ExecuteReader();
+            closeConnection();
+        }
+        catch (SqlException se)
+        {
+            closeConnection();
+        }
+
+
+    }
+    
 }

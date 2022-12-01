@@ -12,6 +12,7 @@ public partial class Instellingen : ContentPage
     {
         InitializeComponent();
         getMinimaleLeeftijd();
+      
     }
 
     public void getMinimaleLeeftijd()
@@ -30,14 +31,61 @@ public partial class Instellingen : ContentPage
     }
     public void setPreference()
     {
+
         string preference = Preference.SelectedItem.ToString();
         database.insertPreference(email, preference);
     }
 
-    public void editDataBtn(object sender, EventArgs e)
+    public void setLocation()
     {
-        setPreference();
+       
+            string location = Location.SelectedItem.ToString();
+            database.insertLocation(email, location);
+        
+    }
+    
+    public bool checkIfMinAgeLowerThenMax()
+    {
+        int minAge = (int)minimaleLeeftijd.SelectedItem;
+        int maxAge = (int)maximaleLeeftijd.SelectedItem;
+
+        if (minAge > maxAge)
+        {
+            
+            return false;
+        } else {
+            
+            return true;
+        }
+       
     }
 
+    public void editDataBtn(object sender, EventArgs e)
+    {
+       
+        try
+        {
+             checkIfMinAgeLowerThenMax();
+            if (checkIfMinAgeLowerThenMax() == false)
+            {
 
+                foutLeeftijd.IsVisible = true;
+
+            } else
+            {
+                setPreference();
+                setLocation();
+                DisplayAlert("Melding", "Er zijn succesvol gegevens aangepast", "OK");
+            }
+           
+            
+        }
+        catch
+        {
+
+           DisplayAlert("Melding", "Er zijn geen gegevens aangepast", "OK");
+        }
+
+
+    }
 }
