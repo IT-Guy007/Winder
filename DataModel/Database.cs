@@ -109,8 +109,6 @@ public class Database {
         return output;
     }
 
-
-
     public List<string> GetEmailFromDataBase() {
         List<string> emails = new List<string>();
         openConnection();
@@ -226,5 +224,30 @@ public class Database {
 
   
         return bmpReturn;
+    }
+
+    public void registrationFunction(string firstname, string middlename, string lastname, string email, string preference, DateTime birthday, string gender,
+                                 string bio, string password, byte[] proficePicture, bool active, string locatie, string opleiding)
+    {
+        openConnection();
+        SqlCommand command = new SqlCommand("INSERT INTO Winder.Winder.[User](firstname, middlename, lastname, birthday, preference, email, password, gender, profilePicture, bio, active, location, education)" +
+                       "VALUES('" + firstname + "', '" + middlename + "', '" + lastname + "', @birthday, '" + preference + "', '" + email + "', '" + password + "', '" + gender + "', @img, '" + bio +
+                       "', @active, '" + locatie + "', '" + opleiding + "')", connection);
+        command.Parameters.AddWithValue("@img", proficePicture);
+        command.Parameters.AddWithValue("@active", active); 
+        command.Parameters.AddWithValue("@birthday", birthday);
+        try
+        {
+            command.ExecuteReader();
+
+            //Close connection
+            closeConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            //Close connection
+            closeConnection();
+        }
     }
 }
