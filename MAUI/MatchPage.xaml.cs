@@ -11,7 +11,7 @@ public partial class MatchPage : ContentPage
     private int selectedImage = 0;
 
     public MatchPage() {
-        
+
         _verticalStackLayout.Margin = 20;
         _verticalStackLayout.WidthRequest = 800;
 
@@ -31,18 +31,23 @@ public partial class MatchPage : ContentPage
             StartPoint = new Point(500, 0),
             EndPoint = new Point(500,2000),
             GradientStops = new GradientStopCollection() {
-                new GradientStop() { Color = Color.FromHex("#FF0000"), Offset = 0 },
-                new GradientStop() { Color = Color.FromHex("#FF0000"), Offset = 0 },
-                new GradientStop() { Color = Color.FromHex("#FF0000"), Offset = 1 }
+                new GradientStop() { Color = Color.FromHex("#000000")},
+                new GradientStop() { Color = Color.FromHex("#FFFFFF")}
             }
             
             
         };
 
         Title = "Make your match now!";
+        _verticalStackLayout.IsVisible = true;
         Content.Background = _linearGradientBrush;
-        Content = _verticalStackLayout;
-        
+        Content = new VerticalStackLayout() {
+            IsVisible = true,
+            Children = {
+                _verticalStackLayout
+            }
+        };
+
 
     }
     
