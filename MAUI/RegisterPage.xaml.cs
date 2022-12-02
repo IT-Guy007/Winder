@@ -168,7 +168,7 @@ public partial class RegisterPage : ContentPage
         if (SaveEventChecks())
         {
 
-            MatchPage matchpage = new MatchPage();
+            
             if (tussenvoegsel == null)
             {
                 tussenvoegsel = "";
@@ -179,29 +179,10 @@ public partial class RegisterPage : ContentPage
                 {
                     database.RegisterInterestInDatabase(email, interesse);
                 }
-                Navigation.PushAsync(matchpage);
+                Navigation.PushAsync(new MainPage());
             
         }
 
-
-    }
-
-
-    private async void OnProfilePictureClicked(object sender, EventArgs e)
-    {
-        var image = await FilePicker.PickAsync(new PickOptions
-        {
-            PickerTitle = "Kies een profielfoto",
-            FileTypes = FilePickerFileType.Images
-        });
-
-        if (image == null)
-        {
-            return;
-        }
-
-        var stream = await image.OpenReadAsync();
-        ProfileImage.Source = ImageSource.FromStream(() => stream);
 
     }
 
@@ -266,6 +247,15 @@ public partial class RegisterPage : ContentPage
         }
         #endregion
 
+        #region tussenvoegsel
+
+        if (Tussenvoegsel.Text != null)
+        {
+            tussenvoegsel = Tussenvoegsel.Text;
+        }
+
+        #endregion
+        
         #region achernaam check
 
         if (Achternaam.Text == null)
