@@ -261,6 +261,7 @@ public class Database {
         openConnection(); // connectie opzetten
 
         email = email.ToLower();
+        
         //querys maken
         SqlCommand queryLikedPerson = new SqlCommand("delete from winder.winder.Liked where person = @Email", connection);
         queryLikedPerson.Parameters.AddWithValue("@Email", email);
