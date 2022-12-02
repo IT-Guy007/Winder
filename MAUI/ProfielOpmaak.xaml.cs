@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using static System.Net.Mime.MediaTypeNames;
 using DataModel;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace MAUI;
 
@@ -11,7 +12,7 @@ public partial class ProfielOpmaak : ContentPage
 {
     List<string> interesses;
     Database b = new Database();
-    Color colorRed = new Color(238, 75, 43);
+    Color ErrorColor = new Color(255,243,5);
     User user;
     bool voornaam = true, tussenvoegsel = true, achternaam = true, geboortedatum = false,omschrijving = true, geslacht = true,voorkeur = true, interessesGekozen = true;
     public ProfielOpmaak()
@@ -20,19 +21,41 @@ public partial class ProfielOpmaak : ContentPage
         interesses = new List<string>();
         interessePicker.ItemsSource = getAllListOfInterestsInStringFromDatabase();
         loadUserFromDatabaseInForm();
-        //interesses = b.LoadInterestsFromDatabaseInListInteresses(user.username);
         listInteresses.ItemsSource = interesses;
+        changeLabelsTextSizeAndColor(9, new Color(0, 0, 0));
     }
+
+    private void changeLabelsTextSizeAndColor(int fontSize, Color color)
+    {
+        lblVoornaam.FontSize = fontSize;
+        lblVoornaam.TextColor = color;
+        lblTussenvoegsel.FontSize = fontSize;
+        lblTussenvoegsel.TextColor = color;
+        lblAchternaam.FontSize = fontSize;
+        lblAchternaam.TextColor = color;
+        lblGeboortedatum.FontSize = fontSize;
+        lblGeboortedatum.TextColor = color;
+        Gender.FontSize = fontSize;
+        Voorkeur.FontSize = fontSize;
+        lblOmschrijving.FontSize = fontSize;
+        lblOmschrijving.TextColor = color;
+        interessePicker.FontSize = fontSize;
+        
+    }
+
     private void loadUserFromDatabaseInForm()
     {
-        user = Authentication._currentUser;
-        Voornaam.Placeholder = user.firstName;
-        Tussenvoegsel.Placeholder = user.middleName;
-        Achternaam.Placeholder = user.lastName;
-        Geboortedatum.Date = getUserBirthday(user);
-        Omschrijving.Placeholder = user.bio;
-        Gender.SelectedIndex = getGenderFromUser(user);
-        Voorkeur.SelectedIndex = getPreferenceFromUser(user);
+        if (Authentication._currentUser != null)
+        {
+            user = Authentication._currentUser;
+            Voornaam.Placeholder = user.firstName;
+            Tussenvoegsel.Placeholder = user.middleName;
+            Achternaam.Placeholder = user.lastName;
+            Geboortedatum.Date = getUserBirthday(user);
+            Omschrijving.Placeholder = user.bio;
+            Gender.SelectedIndex = getGenderFromUser(user);
+            Voorkeur.SelectedIndex = getPreferenceFromUser(user);
+        }
     }
 
     private int getPreferenceFromUser(User user)
@@ -110,11 +133,11 @@ public partial class ProfielOpmaak : ContentPage
 
     private void updateUserPropertiesPrepareForUpdateQuery()
     {
-        if(Authentication._currentUser.firstName != Voornaam.Text && Voornaam.Text != null) Authentication._currentUser.firstName = Voornaam.Text;
-        if (Authentication._currentUser.middleName != Tussenvoegsel.Text && Tussenvoegsel.Text != null) Authentication._currentUser.middleName = Tussenvoegsel.Text;
-        if (Authentication._currentUser.lastName != Achternaam.Text && Achternaam.Text != null) Authentication._currentUser.lastName = Achternaam.Text;
+        if(Authentication._currentUser.firstName != Voornaam.Text && Voornaam.Text != null && Voornaam.Text != "") Authentication._currentUser.firstName = Voornaam.Text;
+        if (Authentication._currentUser.middleName != Tussenvoegsel.Text && Tussenvoegsel.Text != null && Tussenvoegsel.Text != "") Authentication._currentUser.middleName = Tussenvoegsel.Text;
+        if (Authentication._currentUser.lastName != Achternaam.Text && Achternaam.Text != null && Achternaam.Text != "") Authentication._currentUser.lastName = Achternaam.Text;
         if (Authentication._currentUser.birthDay != Geboortedatum.Date) Authentication._currentUser.birthDay = Geboortedatum.Date;
-        if (Authentication._currentUser.bio != Omschrijving.Text && Omschrijving.Text != null) Authentication._currentUser.bio = Omschrijving.Text;
+        if (Authentication._currentUser.bio != Omschrijving.Text && Omschrijving.Text != null && Omschrijving.Text != "") Authentication._currentUser.bio = Omschrijving.Text;
         if (Authentication._currentUser.gender != Gender.SelectedItem.ToString()) Authentication._currentUser.gender = Gender.SelectedItem.ToString();
         if(Authentication._currentUser.preference != Voorkeur.SelectedItem.ToString()) Authentication._currentUser.preference = Voorkeur.SelectedItem.ToString();
     }
@@ -133,7 +156,7 @@ public partial class ProfielOpmaak : ContentPage
             {
                 voornaam = false;
                 lblVoornaam.Text = "Voornaam mag alleen letters bevatten";
-                lblVoornaam.TextColor = colorRed;
+                lblVoornaam.TextColor = ErrorColor;
             }
             else
             {
@@ -152,7 +175,7 @@ public partial class ProfielOpmaak : ContentPage
             {
                 tussenvoegsel = false;
                 lblTussenvoegsel.Text = "Tussenvoegsel mag alleen letters bevatten";
-                lblTussenvoegsel.TextColor = colorRed;
+                lblTussenvoegsel.TextColor = ErrorColor;
             }
             else
             {
@@ -171,7 +194,7 @@ public partial class ProfielOpmaak : ContentPage
             {
                 achternaam = false;
                 lblAchternaam.Text = "Achternaam mag alleen letters bevatten";
-                lblAchternaam.TextColor = colorRed;
+                lblAchternaam.TextColor = ErrorColor;
             }
             else
             {
@@ -190,7 +213,7 @@ public partial class ProfielOpmaak : ContentPage
             {
                 omschrijving = false;
                 lblOmschrijving.Text = "Omschrijving mag alleen letters bevatten";
-                lblOmschrijving.TextColor = colorRed;
+                lblOmschrijving.TextColor = ErrorColor;
             }
             else
             {
@@ -245,14 +268,13 @@ public partial class ProfielOpmaak : ContentPage
             else
             {
                 interessePicker.Title = "Je hebt deze interesse al toegevoegd";
-                interessePicker.TitleColor = colorRed;
+                interessePicker.TitleColor = ErrorColor;
             }
         }
         else
         {
-            Color colorRed = new Color(238, 75, 43);
             interessePicker.Title = "Je kunt maximaal 5 interesses selecteren";
-            interessePicker.TitleColor = colorRed;
+            interessePicker.TitleColor = ErrorColor;
         }
     }
 
@@ -290,7 +312,7 @@ public partial class ProfielOpmaak : ContentPage
         {
             geboortedatum = false;
             lblGeboortedatum.Text = "Je moet minimaal 18 jaar zijn";
-            lblGeboortedatum.BackgroundColor = colorRed;
+            lblGeboortedatum.BackgroundColor = ErrorColor;
         }
     }
 }

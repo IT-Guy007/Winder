@@ -2,25 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d94c203-6d0e-4d79-80c2-0bb2ccba3c7e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a3cbb12f-f583-4a0b-ae78-1f613701c394.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a3cbb12f-f583-4a0b-ae78-1f613701c394.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vs/Console/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/1acfd161-3537-4540-be2c-f46a380526d4.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/5e238354-234a-47db-9826-a8648dade29b.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/61168188-7f50-409e-968c-20ba1f5a8a2e.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/7d538a33-8c87-4c8f-998b-633b7e05d452.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/a56fa659-acaf-4f4b-b645-0f4941d7d763.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/d1e05189-39f6-44a3-9576-71afa7f3184d.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/dad21891-5045-4fd2-800a-e31a5ed99982.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/e221bfa2-ba82-48be-9358-df6a742096fe.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/e2ecaf39-c7e0-4313-8bdc-8da93f82f26b.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/fc77b61d-98d4-4731-9d90-b18387174f7c.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/v17/.futdcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.metadata.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.metadata.v5.1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.projects.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.projects.v5.1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/LoginScherm.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/LoginScherm.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/9387bd60-9e77-4cc2-9398-8d576b3d869a.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
