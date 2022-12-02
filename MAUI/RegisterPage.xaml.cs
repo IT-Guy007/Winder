@@ -1,9 +1,12 @@
+
+using System.Buffers.Text;
+using System.Drawing;
 using DataModel;
 
 
 namespace MAUI;
 
-public partial class RegisterForm : ContentPage
+public partial class RegisterPage : ContentPage
 {
 	private string email;
     private string voornaam;
@@ -20,8 +23,9 @@ public partial class RegisterForm : ContentPage
     private List<string> GekozenInteressesLijst = new List<string>();
 
 
-    public RegisterForm()
-    {
+
+    public RegisterPage() {
+
         InitializeComponent();
         interesseslist = database.GetInterestsFromDataBase();
         foreach (string interest in interesseslist)
@@ -29,6 +33,7 @@ public partial class RegisterForm : ContentPage
             Interesses.Items.Add(interest);
         }
     }
+
 
     //Gebruiker verwijdert een " interesse " uit de selectie door erop te klikken
     public void Gekozeninteresses_ItemSelected(object sender, EventArgs e)
@@ -174,6 +179,7 @@ public partial class RegisterForm : ContentPage
         }
 
     }
+
 
     private async void OnProfilePictureClicked(object sender, EventArgs e)
     {
@@ -383,5 +389,29 @@ public partial class RegisterForm : ContentPage
         }
     }
 
-   
+
+    Stream stream;
+    private async void OnProfilePictureClicked(object sender, EventArgs e)
+    {
+        var image = await FilePicker.PickAsync(new PickOptions
+        {
+            PickerTitle = "Kies een profielfoto",
+            FileTypes = FilePickerFileType.Images
+        });
+
+        if (image == null)
+        {
+            return;
+        }
+
+        stream = await image.OpenReadAsync();
+        ProfileImage.Source = ImageSource.FromStream(() => stream);
+
+    }
+    
+    private void StreamToBitmapImage()
+    {
+        Bitmap bitmap = new Bitmap(stream);       
+    }
+
 }
