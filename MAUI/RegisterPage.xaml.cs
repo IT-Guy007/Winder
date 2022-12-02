@@ -4,7 +4,7 @@ using DataModel;
 
 namespace MAUI;
 
-public partial class RegisterForm : ContentPage
+public partial class RegisterPage : ContentPage
 {
 	private string email;
     private string voornaam;
@@ -19,7 +19,7 @@ public partial class RegisterForm : ContentPage
     private string interesses;
     private byte[] profielfoto;
 
-    public RegisterForm() {
+    public RegisterPage() {
         InitializeComponent();
     }
 
