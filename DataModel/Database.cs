@@ -121,6 +121,8 @@ public class Database
         return output;
     }
 
+    
+
 
     public List<string> GetEmailFromDataBase() {
 
@@ -265,6 +267,7 @@ public class Database
         closeConnection();
         return interests;
     }
+
 
     public User GetUserFromDatabase(string email)
     {
@@ -417,4 +420,5 @@ public class Database
         }
 
     }
+
 }
