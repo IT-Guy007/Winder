@@ -212,7 +212,32 @@
                 TextColor ="Black"
                 FontSize="Body"
                 WidthRequest="220"/>
+            <Label 
+                x:Name="LblOpleiding"
+                FontSize="12"
+                IsVisible="False"
+                Text="Opleiding"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor ="White"/>
 
+            <Label 
+                x:Name="FoutOpleiding"
+                FontSize="12"
+                Text="Opleiding mag niet leeg zijn"
+                IsVisible="false"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="OrangeRed"/>
+            <Entry
+                x:Name="Opleiding"
+                HorizontalOptions="Fill"
+                HeightRequest="30"
+                BackgroundColor ="White"
+                IsVisible="false"
+                TextColor ="Black"
+                FontSize="15"
+                WidthRequest="220"/>
             <Label 
                 x:Name="LblVoorkeur"
                 FontSize="12"
@@ -247,37 +272,9 @@
                 </Picker.Items>
             </Picker>
             
-            <Label 
-                x:Name="LblOpleiding"
-                FontSize="12"
-                IsVisible="False"
-                Text="Opleiding"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                TextColor ="White"/>
+          
             
-            <Label 
-                x:Name="FoutOpleiding"
-                FontSize="12"
-                Text="Opleiding mag niet leeg zijn"
-                IsVisible="false"
-                HorizontalOptions="Center"
-                VerticalOptions="Start"
-                TextColor ="OrangeRed"/>
             
-            <Picker 
-                x:Name="Opleiding"
-                TextColor="White"
-                IsVisible="False"
-                BackgroundColor="Gray"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                HorizontalTextAlignment="Center">
-            
-                <Picker.Items >
-                    <x:String>Opleidingen</x:String>
-                </Picker.Items>
-            </Picker>
             
             <Label
                 x:Name="LblLocatie"
@@ -315,7 +312,7 @@
             <Label 
                 x:Name="LblInteresses"
                 FontSize="12"
-                Text="Interesses"
+                Text="Interesses ( maximaal 5 )"
                 IsVisible="False"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
@@ -337,20 +334,36 @@
                 IsVisible="False"
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
-                HorizontalTextAlignment="Center">
-            
+                HorizontalTextAlignment="Center"
+                SelectedIndexChanged="OnSelectedItems"
+                >
 
-                <Picker.Items >
-                    <x:String>interesses</x:String>
+                <Picker.Items>
+
                 </Picker.Items>
+
             </Picker>
             
+            <ListView HeightRequest="100" WidthRequest="200" HorizontalOptions="Center" x:Name="Gekozeninteresses" BackgroundColor="Black" 
+                      IsVisible="false"
+                      SelectionMode="Single"
+                      ItemSelected="Gekozeninteresses_ItemSelected"
+                      >
+                
+                
+                <ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                    </x:Array>
+                </ListView.ItemsSource>
+            </ListView>
+
             <Button
                 x:Name="Registreer"
                 Clicked="RegisterBtnEvent"
                 HorizontalOptions="Center"
                 VerticalOptions="Start"
                 Text="Registreer"/>
+
             
             <Button
                 x:Name="Opslaan"
