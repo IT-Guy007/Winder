@@ -173,6 +173,15 @@ public partial class RegisterForm : ContentPage
         }
         #endregion
 
+        #region tussenvoegsel
+
+        if (Tussenvoegsel.Text != null)
+        {
+            tussenvoegsel = Tussenvoegsel.Text;
+        }
+
+        #endregion
+
         #region achernaam check
 
         if (Achternaam.Text == null)
