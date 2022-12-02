@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.metadata.v5.1" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/MAUI/RegisterPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/RegisterPage.xaml.cs" afterDir="false" />
     </list>
+
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
