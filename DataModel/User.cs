@@ -11,6 +11,10 @@ public class User {
     public string gender { get; set; }
     public Image profilePicture { get; set; }
     public string bio { get; set; }
+    
+    public string location { get; set; }
+    
+    public string education { get; set; }
     public User(string firstName, string middleName, string lastName, DateTime birthDay,
         string preference, string email, string password, string gender, Bitmap profilePicture, string bio)
     {

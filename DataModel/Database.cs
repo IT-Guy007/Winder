@@ -125,8 +125,7 @@ public SqlConnection connection;
     {
         List<string> emails = new List<string>();
         openConnection();
-        string sql = "USE winder;" +
-                     "SELECT email FROM Winder.Winder.[User];";
+        string sql = "SELECT email FROM Winder.Winder.[User];";
         SqlCommand command = new SqlCommand(sql, connection);
         try
         {
@@ -276,8 +275,7 @@ public SqlConnection connection;
         return interests;
     }
 
-    public User GetUserFromDatabase(string email)
-    {
+    public User GetUserFromDatabase(string email) {
         User user = null;
         openConnection();
         string sql = "SELECT * FROM Winder.Winder.[User] where email = @Email";

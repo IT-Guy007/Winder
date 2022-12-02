@@ -6,52 +6,136 @@ public partial class MatchPage : ContentPage
 {
     private  Authentication _authentication= new Authentication();
     
-    private Image _imageButton;
-    private Queue<Profile> profileQueue = new Queue<Profile>();
-
+    private Queue<Profile> _profileQueue = new Queue<Profile>();
+    private Profile _currentProfile;
     private Image[] _images = new Image[10];
     private int selectedImage = 0;
 
     public MatchPage() {
         Title = "Make your match now!";
 
-        StackLayout _verticalStackLayout = new StackLayout{Orientation = StackOrientation.Vertical};
+        StackLayout verticalStackLayout = new StackLayout{Orientation = StackOrientation.Vertical};
         
-        StackLayout ImageLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
+        StackLayout imageLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
         
         //Images
-        if (profileQueue.Count == 0) {
-            Image profileImage = new Image() { Source = ImageSource.FromResource(_authentication._currentUser.profilePicture.ToString())};
-            profileImage.Aspect = Aspect.AspectFit;
-            profileImage.WidthRequest = 800;
-            profileImage.HeightRequest = 800;
-            _verticalStackLayout.Add(profileImage);
+        if (_profileQueue.Count == 0) {
+            if (_authentication._currentUser.profilePicture.Height > 0) {
+                var profileImage = new Image {
+                    Source = ImageSource.FromResource(_authentication._currentUser.profilePicture.ToString()),
+                    Aspect = Aspect.AspectFit,
+                    WidthRequest = 800,
+                    HeightRequest = 800
+                };
+                verticalStackLayout.Add(profileImage);
+            } else {
+                var profileImage = new Image {
+                    Source = "winderlogo_zonderwindesheimdating.png",
+                    Aspect = Aspect.AspectFit,
+                    WidthRequest = 800,
+                    HeightRequest = 800
+                };
+                verticalStackLayout.Add(profileImage);
+            }
+
+            
+            var label = new Label { Text = "No more profiles to match with", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
+            verticalStackLayout.Add(label);
             
         } else {
+            StackLayout infoStackLayout = new StackLayout{Orientation = StackOrientation.Vertical};
+            if(_currentProfile == null) {
+                _currentProfile = _profileQueue.Dequeue();
+            }
             
             //Image carousel
+            var currentImage = new Button
+            {
+                ImageSource = ImageSource.FromResource(_currentProfile.profile_images[selectedImage].ToString()),
+                WidthRequest = 800,
+                HeightRequest = 800,
 
+            };
+            currentImage.Clicked += (sender, args) => {
+                if(selectedImage < _currentProfile.profile_images.Length) {
+                    selectedImage++;
+                } else {
+                    selectedImage = 0;
+                }
+            };
+            
+            
             //fullname
+            StackLayout nameStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
+            var fullnamelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };
+            var fullname = new Label { Text = _currentProfile.user.firstName + " " + _currentProfile.user.middleName + " "+ _currentProfile.user.lastName, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            nameStackLayout.Add(fullnamelbl);
+            nameStackLayout.Add(fullname);
+            infoStackLayout.Add(nameStackLayout);
+            
+            //Gender
+            StackLayout genderStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            var genderlbl = new Label { Text = "Geslacht: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var gender = new Label {Text = _currentProfile.user.gender, FontSize = 20, HorizontalOptions = LayoutOptions.Start};
+            
+            genderStackLayout.Add(genderlbl);
+            genderStackLayout.Add(gender);
+            infoStackLayout.Add(genderStackLayout);
             
             //Age
+            if (_currentProfile.user.birthDay != null) {
+                StackLayout ageStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
+                var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };
+                
+                var birthday = int.Parse(_currentProfile.user.birthDay.Value.ToString("yyyyMMdd"));
+                var today = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
+                var age = new Label { Text = ((today - birthday) /1000).ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+                ageStackLayout.Add(agelbl);
+                ageStackLayout.Add(age);
+                infoStackLayout.Add(ageStackLayout);
+            }
             
+            //Location
+            StackLayout locationStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
+            var locationlbl = new Label { Text = "Windesheim locatie: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };
+            var location = new Label { Text = _currentProfile.user.location , FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            locationStackLayout.Add(locationlbl);
+            locationStackLayout.Add(location);
+            infoStackLayout.Add(locationStackLayout);
+            
+            //Education
+            StackLayout educationStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
+            var educationlbl = new Label { Text = "Opleiding: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };
+            var education = new Label { Text = _currentProfile.user.education , FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            educationStackLayout.Add(educationlbl);
+            educationStackLayout.Add(education);
+            infoStackLayout.Add(educationStackLayout);
+
             //Bio
+            StackLayout bioStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
+            var biolbl = new Label { Text = "Bio: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };
+            var bio = new Label { Text = _currentProfile.user.bio, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             
+            bioStackLayout.Add(biolbl);
+            bioStackLayout.Add(bio);
+            imageLayout.Add(bioStackLayout);
             
             //Buttons
+            StackLayout buttonStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
+            var likeButton = new Button { Text = "Like", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
+            var dislikeButton = new Button { Text = "Dislike", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
+            buttonStackLayout.Add(likeButton);
+            buttonStackLayout.Add(dislikeButton);
             
-            //Undo
-            
-            //Cancel
-            
-            //Like
 
         }
-
-        _verticalStackLayout.Add(ImageLayout);
-        _verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
+        verticalStackLayout.Add(imageLayout);
         
-        Content = _verticalStackLayout;
+        
+        
+        
+        verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
+        Content = verticalStackLayout;
     }
 
 }
