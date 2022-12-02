@@ -165,7 +165,8 @@ public partial class RegisterPage : ContentPage
         if (SaveEventChecks())
         {
 
-            MatchPage matchpage = new MatchPage();
+
+            
             if (tussenvoegsel == null)
             {
                 tussenvoegsel = "";
@@ -173,31 +174,17 @@ public partial class RegisterPage : ContentPage
             bool geregistreerd = database.register(voornaam, tussenvoegsel,achternaam , email, voorkeur, geboortedatum, geslacht,"random tekst" , wachtwoord, "", true, locatie, opleiding);
             if (geregistreerd)
                 {
-               
-                Navigation.PushAsync(matchpage);
+               foreach (string interesse in GekozenInteressesLijst)
+                {
+                    database.RegisterInterestInDatabase(email, interesse);
+                }
+                Navigation.PushAsync(new MainPage());
             }
         }
 
     }
 
 
-    private async void OnProfilePictureClicked(object sender, EventArgs e)
-    {
-        var image = await FilePicker.PickAsync(new PickOptions
-        {
-            PickerTitle = "Kies een profielfoto",
-            FileTypes = FilePickerFileType.Images
-        });
-
-        if (image == null)
-        {
-            return;
-        }
-
-        var stream = await image.OpenReadAsync();
-        ProfileImage.Source = ImageSource.FromStream(() => stream);
-
-    }
 
     //checkt of waardes naar eisen voldoen en declareert de variabelen
     public bool RegisterBtnEventCheck()
