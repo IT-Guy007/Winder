@@ -17,6 +17,7 @@ public partial class RegisterPage : ContentPage
     private string opleiding;
     private string locatie;
     private string interesses;
+    private byte[] profielfoto;
 
     public RegisterPage() {
         InitializeComponent();
@@ -101,11 +102,14 @@ public partial class RegisterPage : ContentPage
         {
             tussenvoegsel = "";
         }
-        bool geregistreerd = database.register(voornaam, tussenvoegsel,achternaam , email, voorkeur, geboortedatum, geslacht,"random tekst" , wachtwoord, "", true, locatie, opleiding);
-        if (geregistreerd)
-            {
-            Navigation.PushAsync(matchpage);
-        }
+        //bool geregistreerd = database.register(voornaam, tussenvoegsel,achternaam , email, voorkeur, geboortedatum, geslacht,"random tekst" , wachtwoord, "", true, locatie, opleiding);
+        //if (geregistreerd)
+        //    {
+        //    Navigation.PushAsync(matchpage);
+        //}
+        database.registrationFunction(voornaam, tussenvoegsel, achternaam, email, voorkeur, geboortedatum, geslacht, "random tekst", wachtwoord, profielfoto, true, locatie, opleiding);
+        //FoutProfielfoto.Text = geregistreedInt.ToString() + " opgeslagen";
+        //FoutProfielfoto.IsVisible = true;
         //}
 
     }
@@ -278,27 +282,32 @@ public partial class RegisterPage : ContentPage
         }
     }
 
-    Stream stream;
     private async void OnProfilePictureClicked(object sender, EventArgs e)
     {
-        var image = await FilePicker.PickAsync(new PickOptions
+        try
         {
-            PickerTitle = "Kies een profielfoto",
-            FileTypes = FilePickerFileType.Images
-        });
+            var image = await FilePicker.PickAsync(new PickOptions
+            {
+                PickerTitle = "Kies een profielfoto",
+                FileTypes = FilePickerFileType.Images
+            });
 
-        if (image == null)
-        {
-            return;
+            if (image == null)
+            {
+                return;
+            }
+            string imgLocation = image.FullPath;
+            byte[] imageArr = null;
+            FileStream fileStream = new FileStream(imgLocation, FileMode.Open, FileAccess.Read);
+            Stream stream = await image.OpenReadAsync();
+            BinaryReader binary = new BinaryReader(fileStream);
+            imageArr = binary.ReadBytes((int)fileStream.Length);
+            profielfoto = imageArr;
+            ProfileImage.Source = ImageSource.FromStream(() => stream);
+
+        } catch (Exception ex) {
+            FoutProfielfoto.Text = ex.Message;
+            FoutProfielfoto.IsVisible = true;
         }
-
-        stream = await image.OpenReadAsync();
-        ProfileImage.Source = ImageSource.FromStream(() => stream);
-
-    }
-    
-    private void StreamToBitmapImage()
-    {
-        Bitmap bitmap = new Bitmap(stream);       
     }
 }

@@ -122,9 +122,8 @@ public class Database
     }
 
 
+    public List<string> GetEmailFromDataBase() {
 
-    public List<string> GetEmailFromDataBase()
-    {
         List<string> emails = new List<string>();
         openConnection();
         string sql = "USE winder;" +
@@ -219,17 +218,6 @@ public class Database
             return false;
         }
 
-    }
-    public static byte[] BitmapToBase64String(Bitmap bitmap)
-    {
-        var stream = new MemoryStream();
-        bitmap.Save(stream, ImageFormat.Png);
-        return stream.ToArray();
-    }
-
-    public static string ByteArrToBase64String(byte[] bytes)
-    {
-        return Convert.ToBase64String(bytes);
     }
 
     public static Bitmap Base64StringToBitmap(string? base64String)
@@ -391,6 +379,31 @@ public class Database
             query.Parameters.AddWithValue("@bio", user.bio);
             //Execute query
             query.ExecuteNonQuery();
+            //Close connection
+            closeConnection();
+        }
+        catch (SqlException se)
+        {
+
+            Console.WriteLine(se.ToString());
+            //Close connection
+            closeConnection();
+        }
+    }
+
+    public void registrationFunction(string firstname, string middlename, string lastname, string email, string preference, DateTime birthday, string gender,
+                                 string bio, string password, byte[] proficePicture, bool active, string locatie, string opleiding)
+    {
+        openConnection();
+        SqlCommand command = new SqlCommand("INSERT INTO Winder.Winder.[User](firstname, middlename, lastname, birthday, preference, email, password, gender, profilePicture, bio, active, location, education)" +
+                       "VALUES('" + firstname + "', '" + middlename + "', '" + lastname + "', @birthday, '" + preference + "', '" + email + "', '" + password + "', '" + gender + "', @img, '" + bio +
+                       "', @active, '" + locatie + "', '" + opleiding + "')", connection);
+        command.Parameters.AddWithValue("@img", proficePicture);
+        command.Parameters.AddWithValue("@active", active); 
+        command.Parameters.AddWithValue("@birthday", birthday);
+        try
+        {
+            command.ExecuteReader();
 
             //Close connection
             closeConnection();
@@ -398,6 +411,7 @@ public class Database
         catch (SqlException se)
         {
 
+            Console.WriteLine(se.ToString());
             //Close connection
             closeConnection();
         }
