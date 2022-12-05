@@ -14,32 +14,46 @@ public partial class MatchPage : ContentPage
     public MatchPage() {
         Title = "Make your match now!";
 
-        StackLayout verticalStackLayout = new StackLayout{Orientation = StackOrientation.Vertical};
-        
+        StackLayout verticalStackLayout = new StackLayout {
+            Orientation = StackOrientation.Vertical,
+            VerticalOptions = LayoutOptions.Fill
+        };
         StackLayout imageLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
         
+        verticalStackLayout.Spacing = 10;
         //Images
         if (_profileQueue.Count == 0) {
-            if (_authentication._currentUser.profilePicture.Height > 0) {
-                var profileImage = new Image {
+            if(_authentication._currentUser != null) {
+            //if(_authentication._currentUser.profilePicture.Height != 0 ) {
+
+                var profileImage = new Image
+                {
                     Source = ImageSource.FromResource(_authentication._currentUser.profilePicture.ToString()),
                     Aspect = Aspect.AspectFit,
                     WidthRequest = 800,
                     HeightRequest = 800
                 };
                 verticalStackLayout.Add(profileImage);
+                
             } else {
                 var profileImage = new Image {
-                    Source = "winderlogo_zonderwindesheimdating.png",
+                    Source = "noprofile.jpg",
                     Aspect = Aspect.AspectFit,
-                    WidthRequest = 800,
-                    HeightRequest = 800
+                    WidthRequest = 200,
+                    HeightRequest = 200,
+                    HorizontalOptions = LayoutOptions.Center
                 };
                 verticalStackLayout.Add(profileImage);
+                var noProfileImage = new Label {
+                    Text = "You have no profilepicture yet, add one to get more matches",
+                    HorizontalOptions = LayoutOptions.Center
+                };
+                verticalStackLayout.Add(noProfileImage);
+                
             }
 
             
-            var label = new Label { Text = "No more profiles to match with", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
+            var label = new Label { Text = "No more profiles to match with for now", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
             verticalStackLayout.Add(label);
             
         } else {
