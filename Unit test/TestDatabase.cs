@@ -80,4 +80,9 @@ public class TestDatabase {
     public bool ToggleActivationTest(string email, bool activation) {
         return _database.toggleActivation(email, activation);
     }
+    public bool updateUserInDatabaseWithNewUserProfileTest(string firstname, string middlename, string lastname,
+        string preference, DateTime? birthday, string gender, string bio, string profilePicture) 
+    {
+        return _database.updateUserInDatabaseWithNewUserProfile(firstname, middlename, lastname, preference, birthday, gender, bio, null);
+    }
 }

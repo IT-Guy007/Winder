@@ -120,9 +120,6 @@ public class Database
         updateLocalUserFromDatabase(email);
         return output;
     }
-
-
-
     public List<string> GetEmailFromDataBase()
     {
         List<string> emails = new List<string>();
@@ -235,26 +232,16 @@ public class Database
     public static Bitmap Base64StringToBitmap(string? base64String)
     {
         Bitmap bmpReturn = null;
-
-
         byte[] byteBuffer = Convert.FromBase64String(base64String);
         MemoryStream memoryStream = new MemoryStream(byteBuffer);
-
-
         memoryStream.Position = 0;
-
-
         bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
-
-
         memoryStream.Close();
         memoryStream = null;
         byteBuffer = null;
-
-
         return bmpReturn;
     }
-
+    //Fetches a list of all interests of an user from the database and returns the list
     public List<string> GetInterestsFromDataBase()
     {
         List<string> interests = new List<string>();
@@ -277,7 +264,6 @@ public class Database
         closeConnection();
         return interests;
     }
-
     public User GetUserFromDatabase(string email)
     {
         User user = null;
@@ -309,13 +295,14 @@ public class Database
         closeConnection();
         return user;
     }
-
+    //Returns a valid datetime if value is true or false
     private DateTime? getDateTimefromReader(SqlDataReader reader)
     {
         return reader.IsDBNull(3) ?
                            (DateTime?)new DateTime(1925, 01, 01, 0, 0, 0, 0) :
                            (DateTime?)reader.GetDateTime(3);
     }
+    //Registers interests in database for an user
     public void RegisterInterestInDatabase(string username, string interest)
     {
         openConnection();
@@ -333,7 +320,7 @@ public class Database
         }
         closeConnection();
     }
-
+    //Removes all interests from an user in the database
     public void removeInterestOutOfuserHasInterestTableDatabase(string username, string interest)
     {
         openConnection();
@@ -351,7 +338,7 @@ public class Database
         }
         closeConnection();
     }
-
+    //Fetches a list of interest from of the database from the requested user
     public List<string> LoadInterestsFromDatabaseInListInteresses(string email)
     {
         List<string> interests = new List<string>();
@@ -375,8 +362,9 @@ public class Database
         closeConnection();
         return interests;
     }
-
-    public void updateUserInDatabaseWithNewUserProfile()
+    //Fetches a list of interest from of the database from the requested user
+    public bool updateUserInDatabaseWithNewUserProfile(string firstname, string middlename, string lastname,
+        string preference, DateTime? birthday, string gender, string bio, string profilePicture)
     {
         try
         {
@@ -384,26 +372,27 @@ public class Database
             openConnection();
             //Create query
             SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
-            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, birthday = @birthday, bio = @bio " +
+            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, birthday = @birthday, set gender = @Gender, set preference = @Voorkeur, bio = @bio " +
             "where email = @Email", connection);
-            query.Parameters.AddWithValue("@firstname", Authentication._currentUser.firstName);
-            query.Parameters.AddWithValue("@middlename", Authentication._currentUser.middleName);
-            query.Parameters.AddWithValue("@lastname", Authentication._currentUser.lastName);
-            query.Parameters.AddWithValue("@birthday", Authentication._currentUser.birthDay);
-            query.Parameters.AddWithValue("@preference", Authentication._currentUser.preference);
+            query.Parameters.AddWithValue("@firstname", firstname);
+            query.Parameters.AddWithValue("@middlename", middlename);
+            query.Parameters.AddWithValue("@lastname", lastname);
+            query.Parameters.AddWithValue("@Gender", gender);
+            query.Parameters.AddWithValue("@birthday", birthday);
+            query.Parameters.AddWithValue("@Voorkeur", preference);
             query.Parameters.AddWithValue("@Email", Authentication._currentUser.email);
-            query.Parameters.AddWithValue("@bio", Authentication._currentUser.bio);
-            //Execute query
+            query.Parameters.AddWithValue("@bio", bio);
             query.ExecuteNonQuery();
-
             //Close connection
             closeConnection();
+            return true;
         }
         catch (SqlException se)
         {
 
             //Close connection
             closeConnection();
+            return false;
         }
 
     }

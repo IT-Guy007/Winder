@@ -60,14 +60,24 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center"
             />
-        
+
         <Entry x:Name="Omschrijving"
                MaxLength="150"
                Placeholder="Hallo, mijn naam is Wessel"
                HorizontalOptions="Center"
                TextChanged="Omschrijving_TextChanged"
                />
-        
+        <Label 
+            x:Name="lblOpleiding"
+            Text="Opleiding"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            />
+        <Entry x:Name="Opleiding"
+               MaxLength="30"
+               HorizontalOptions="Center"
+               TextChanged="Opleiding_TextChanged"
+               />
         <Picker 
         Title="Gender"
         x:Name="Gender"
