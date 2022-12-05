@@ -3,4 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUI.MatchPage" 
              >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <VerticalStackLayout Grid.Column="0">
+            <Image
+                x:Name="ImageFeedUser"/>
+        </VerticalStackLayout>
+        
+        <VerticalStackLayout Grid.Column="1">
+            <HorizontalStackLayout>
+                <Label
+                    x:Name="NameFeedUser"
+                    Text="Name User Here"/>
+                <Label
+                    Text=" ,"/>
+                <Label
+                    x:Name="AgeFeedUser"
+                    Text="... jaar"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label
+                    x:Name="SchoolFeedUser"
+                    Text="School"/>
+                <Label
+                    x:Name="MajorFeedUser"
+                    Text="Opleiding"/>
+            </HorizontalStackLayout>
+            <Label
+                x:Name="BioFeedUser"
+                Text="Hier een bio van de persoon"/>
+            
+            <HorizontalStackLayout>
+                <Button
+                    x:Name="DislikeBtn"
+                    Clicked="DislikeBtn_Clicked"
+                    Text="Dislike"
+                    BackgroundColor="Red"
+                    TextColor="DarkRed"/>
+                <Button
+                    x:Name="LikeBtn"
+                    Clicked="LikeBtn_Clicked"
+                    Text="Like"
+                    BackgroundColor="Green"
+                    TextColor="LightGreen"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

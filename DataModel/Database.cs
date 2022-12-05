@@ -8,12 +8,13 @@ using System.Drawing;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
 using System.Drawing.Imaging;
+using System.Text.RegularExpressions;
+
 public class Database
 {
     public SqlConnection connection;
     public void generateConnection()
     {
-
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
         builder.DataSource = "192.168.1.106,1433";
@@ -103,7 +104,6 @@ public class Database
         SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
 
-
         //Execute query
         SqlDataReader reader = query.ExecuteReader();
 
@@ -120,9 +120,6 @@ public class Database
         updateLocalUserFromDatabase(email);
         return output;
     }
-
-    
-
 
     public List<string> GetEmailFromDataBase() {
 
@@ -210,11 +207,9 @@ public class Database
                 return true;
             }
             return false;
-
         }
         catch (SqlException se)
         {
-
             //Close connection
             closeConnection();
             return false;
@@ -226,21 +221,16 @@ public class Database
     {
         Bitmap bmpReturn = null;
 
-
         byte[] byteBuffer = Convert.FromBase64String(base64String);
         MemoryStream memoryStream = new MemoryStream(byteBuffer);
 
-
         memoryStream.Position = 0;
 
-
         bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
-
 
         memoryStream.Close();
         memoryStream = null;
         byteBuffer = null;
-
 
         return bmpReturn;
     }
@@ -289,9 +279,12 @@ public class Database
                 string? gender = reader["gender"] as string;
                 DateTime? bday = reader["birthday"] as DateTime?;
                 var bio = reader["bio"] as string;
+                var school = reader["location"] as string;
+                var major = reader["education"] as string;
+                byte[] img = (byte[])(reader["profilePicture"]);
                 
                 DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
-                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, new Bitmap(1024,1024),bio);
+                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, img, bio, school, major);
             }
         }
         catch (SqlException e)
@@ -302,7 +295,6 @@ public class Database
         return user;
     }
 
-    
     public void RegisterInterestInDatabase(string username, string interest)
     {
         openConnection();
@@ -387,7 +379,6 @@ public class Database
         }
         catch (SqlException se)
         {
-
             Console.WriteLine(se.ToString());
             //Close connection
             closeConnection();
@@ -407,13 +398,11 @@ public class Database
         try
         {
             command.ExecuteReader();
-
             //Close connection
             closeConnection();
         }
         catch (SqlException se)
         {
-
             Console.WriteLine(se.ToString());
             //Close connection
             closeConnection();
@@ -421,4 +410,62 @@ public class Database
 
     }
 
+    //<summary>Checks if there is a match between users.</summary>
+    public bool checkMatch(string emailCurrentUser, string emailLikedPerson)
+    {
+        bool match;
+        openConnection();
+
+        SqlCommand command = new SqlCommand("SELECT * FROM Winder.Winder.[Liked] WHERE person = @emailLikedPerson AND likedPerson = @emailCurrentUser", connection);
+        command.Parameters.AddWithValue("@emailLikedPerson", emailLikedPerson);
+        command.Parameters.AddWithValue("@emailCurrentUser", emailCurrentUser);
+
+        try
+        {
+            SqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            match = reader.HasRows;
+            //Close connection
+            closeConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            match = false;
+            //Close connection
+            closeConnection();
+        }
+        
+        return match;
+    }
+
+    public void NewLike(string emailCurrentUser, string emailLikedPerson)
+    {
+        if (checkMatch(emailCurrentUser, emailLikedPerson))
+        {
+            //There is a match
+        }
+        else
+        {
+            //There is no match yet
+            openConnection();
+            SqlCommand command = new SqlCommand("INSERT INTO Winder.Winder.[Liked] (person, likedPerson) " +
+                                                "VALUES (@currentUser, @likedUser)", connection);
+            command.Parameters.AddWithValue("@currentUser", emailCurrentUser);
+            command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
+
+            try
+            {
+                command.ExecuteReader();
+                //Close connection
+                closeConnection();
+            }
+            catch (SqlException se)
+            {
+                Console.WriteLine(se.ToString());
+                //Close connection
+                closeConnection();
+            }
+        }
+    }
 }

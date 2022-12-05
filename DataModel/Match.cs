@@ -12,7 +12,5 @@ public class Match {
         this.person2 = person2;
         this.matchDate = matchDate;
     }
-    
-        
-    
+
 }
