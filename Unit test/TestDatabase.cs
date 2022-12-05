@@ -80,4 +80,37 @@ public class TestDatabase {
     public bool ToggleActivationTest(string email, bool activation) {
         return _database.toggleActivation(email, activation);
     }
+
+
+    [TestCase("jannieandes@gmail.com", ExpectedResult = true)]
+    [TestCase("japiejaap@gmail.com", ExpectedResult = false)]
+    public bool DatabaseDeleteUser(string email)
+    {
+        try
+        {
+            
+            _database.DeleteUser(email);
+            return true;
+
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    [TestCase("jannieandes@gmail.com", "asdf", ExpectedResult = true)]
+    [TestCase("japiejaap@gmail.com", "asedf",  ExpectedResult = false)]
+    public bool DatabaseUpdatePassword(string email, string password)
+    {
+        try
+        {
+            _database.UpdatePassword(email, password);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }

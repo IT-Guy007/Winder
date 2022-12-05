@@ -60,4 +60,36 @@ public class TestAuthentication {
         return authentication.EmailIsUnique(email);
     }
 
+
+
+
+    [TestCase(4, ExpectedResult = "4")]
+    [TestCase(0, ExpectedResult = "0")]
+    [TestCase(9, ExpectedResult = "9")]
+    public string AuthenticationRandomString(int length)
+    {
+        return Authentication.RandomString(length).Length.ToString();
+
+    }
+
+
+    [TestCase("1174004@student.widnesheim.nl", "hoi", "hoi", ExpectedResult = true)]
+    [TestCase("1174004@student.widnesheim.nl", "hoi", "", ExpectedResult = true)]
+    [TestCase("1174004@student.widnesheim.nl", "", "hoi", ExpectedResult = true)]
+    [TestCase("", "hoi", "hoi", ExpectedResult = false)]
+    [TestCase("1174004", "hoi", "hoi", ExpectedResult = false)]
+    public bool AuthenticationSendEmail(string email, string subject, string body)
+    {
+
+        try
+        {
+            authentication.SendEmail(email, subject, body);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+        
+    }
 }

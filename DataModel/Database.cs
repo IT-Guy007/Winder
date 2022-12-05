@@ -228,77 +228,88 @@ public class Database {
 
     public void UpdatePassword(string email, string password)
     {
-        // connectieopzetten en query maken
-        Authentication authentication = new Authentication();
-        string hashedpassword = authentication.HashPassword(password); // eerst het password hashen voor het updaten
-        openConnection();
-        SqlCommand query = new SqlCommand("update winder.winder.[User] set password = @password where email = @Email", connection);
-        query.Parameters.AddWithValue("@Email", email);
-        query.Parameters.AddWithValue("@password", hashedpassword);
-
-        //Execute query
-        try
+        Authentication a = new Authentication();
+        if (a.EmailIsUnique(email) == false) // checken of email in de database staat
         {
-            query.ExecuteNonQuery();
+            // connectieopzetten en query maken
+            Authentication authentication = new Authentication();
+            string hashedpassword = authentication.HashPassword(password); // eerst het password hashen voor het updaten
+            openConnection();
+            SqlCommand query = new SqlCommand("update winder.winder.[User] set password = @password where email = @Email", connection);
+            query.Parameters.AddWithValue("@Email", email);
+            query.Parameters.AddWithValue("@password", hashedpassword);
 
-            //Close connection
-            closeConnection();
-            
+            //Execute query
+            try
+            {
+                query.ExecuteNonQuery();
 
-        }
-        catch (SqlException se)
-        {
+                //Close connection
+                closeConnection();
 
-            //Close connection
-            closeConnection();
-            
+
+            }
+            catch (SqlException se)
+            {
+
+                //Close connection
+                closeConnection();
+
+            }
         }
     }
 
 
     public void DeleteUser(string email)
     {
-        openConnection(); // connectie opzetten
+        Authentication a = new Authentication();
 
-        email = email.ToLower();
-        
-        //querys maken
-        SqlCommand queryLikedPerson = new SqlCommand("delete from winder.winder.Liked where person = @Email", connection);
-        queryLikedPerson.Parameters.AddWithValue("@Email", email);
-        SqlCommand queryLikedLikedPerson = new SqlCommand("delete from winder.winder.Liked where likedPerson = @Email", connection);
-        queryLikedLikedPerson.Parameters.AddWithValue("@Email", email);
-
-        SqlCommand queryMatchPerson1 = new SqlCommand("delete from winder.winder.Match where person1 = @Email", connection);
-        queryMatchPerson1.Parameters.AddWithValue("@Email", email);
-        SqlCommand queryMatchPerson2 = new SqlCommand("delete from winder.winder.Match where person2 = @Email", connection);
-        queryMatchPerson2.Parameters.AddWithValue("@Email", email);
-
-        SqlCommand queryuserHasInterest = new SqlCommand("delete from winder.winder.userHasInterest where UID = @Email", connection);
-        queryuserHasInterest.Parameters.AddWithValue("@Email", email);
-
-        SqlCommand queryUser = new SqlCommand("delete from winder.winder.[User] where email = @Email", connection);
-        queryUser.Parameters.AddWithValue("@Email", email);
-
-        //Execute querys
-        try
-        {
-            queryLikedPerson.ExecuteNonQuery();
-            queryLikedLikedPerson.ExecuteNonQuery();
-            queryMatchPerson1.ExecuteNonQuery();
-            queryMatchPerson2.ExecuteNonQuery();
-            queryuserHasInterest.ExecuteNonQuery();
-
-            queryUser.ExecuteNonQuery();
-
-            //Close connection
-            closeConnection();
-        }
-        catch (SqlException se)
+        if (a.EmailIsUnique(email) == false)
         {
 
-            //Close connection
-            closeConnection();
 
+            openConnection(); // connectie opzetten
+
+            email = email.ToLower();
+
+            //querys maken
+            SqlCommand queryLikedPerson = new SqlCommand("delete from winder.winder.Liked where person = @Email", connection);
+            queryLikedPerson.Parameters.AddWithValue("@Email", email);
+            SqlCommand queryLikedLikedPerson = new SqlCommand("delete from winder.winder.Liked where likedPerson = @Email", connection);
+            queryLikedLikedPerson.Parameters.AddWithValue("@Email", email);
+
+            SqlCommand queryMatchPerson1 = new SqlCommand("delete from winder.winder.Match where person1 = @Email", connection);
+            queryMatchPerson1.Parameters.AddWithValue("@Email", email);
+            SqlCommand queryMatchPerson2 = new SqlCommand("delete from winder.winder.Match where person2 = @Email", connection);
+            queryMatchPerson2.Parameters.AddWithValue("@Email", email);
+
+            SqlCommand queryuserHasInterest = new SqlCommand("delete from winder.winder.userHasInterest where UID = @Email", connection);
+            queryuserHasInterest.Parameters.AddWithValue("@Email", email);
+
+            SqlCommand queryUser = new SqlCommand("delete from winder.winder.[User] where email = @Email", connection);
+            queryUser.Parameters.AddWithValue("@Email", email);
+
+            //Execute querys
+            try
+            {
+                queryLikedPerson.ExecuteNonQuery();
+                queryLikedLikedPerson.ExecuteNonQuery();
+                queryMatchPerson1.ExecuteNonQuery();
+                queryMatchPerson2.ExecuteNonQuery();
+                queryuserHasInterest.ExecuteNonQuery();
+
+                queryUser.ExecuteNonQuery();
+
+                //Close connection
+                closeConnection();
+            }
+            catch (SqlException se)
+            {
+
+                //Close connection
+                closeConnection();
+
+            }
         }
 
     }

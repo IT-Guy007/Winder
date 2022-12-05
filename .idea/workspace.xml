@@ -2,18 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4615082f-8811-46e8-af9e-6dbe226cb6fc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.vs/Console/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/b862b6fc-8fdd-45a2-af6d-ff4a9ff1f54d.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/e9d81106-f0a1-422f-87eb-b7b67e0c760c.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/v17/.futdcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.metadata.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.metadata.v5.1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.projects.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.projects.v5.1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Console/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Console/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Authentication.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/422f9a35-bc58-47c3-986f-bcfe01965481.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/5c91952f-281b-4be1-bf0b-b36e1c062433.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Console/v17/TestStore/0/004.testlog" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Console/v17/TestStore/0/testlog.manifest" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/v17/TestStore/0/testlog.manifest" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/LoginScherm.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/LoginScherm.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/WijzigWachtwoordScherm.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/WijzigWachtwoordScherm.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/WijzigWachtwoordScherm.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/WijzigWachtwoordScherm.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unit test/TestAuthentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unit test/TestAuthentication.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unit test/TestDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unit test/TestDatabase.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
