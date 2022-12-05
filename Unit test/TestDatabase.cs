@@ -2,6 +2,8 @@ using System.Data.SqlClient;
 
 namespace Unit_test;
 using DataModel;
+using NUnit.Framework.Internal;
+
 public class TestDatabase {
 
     
@@ -81,10 +83,38 @@ public class TestDatabase {
         return _database.toggleActivation(email, activation);
     }
 
-    [TestCase("Peter", "van", "Huizkes", "Vrouw", "1998/01/01", "Man", "bio info", null, ExpectedResult = true)]
+    [TestCase("Peter", "van", "Huizkes", "Vrouw", "1998/01/01", "Man", "bio info",  null, "s1416890@student.windesheim.nl", ExpectedResult = true)]
     public bool updateUserInDatabaseWithNewUserProfileTest(string firstname, string middlename, string lastname,
-        string preference, DateTime? birthday, string gender, string bio, string profilePicture) 
+        string preference, DateTime? birthday, string gender, string bio, string profilePicture, string email) 
     {
-        return _database.updateUserInDatabaseWithNewUserProfile(firstname, middlename, lastname, preference, birthday, gender, bio, null);
+        return _database.updateUserInDatabaseWithNewUserProfile(firstname, middlename, lastname, preference, birthday, gender, bio, null, email);
+    }
+    
+    [TestCase("@student.windesheim.nl", ExpectedResult = false)]
+    [TestCase("s1416890@student.windesheim.nl", ExpectedResult = true)]
+    public bool LoadInterestsFromDatabaseInListInteressesTest(string email)
+    {
+        return _database.LoadInterestsFromDatabaseInListInteresses(email).Count > 0;
+    }
+    
+    [TestCase("s1416890@student.windesheim.nl","Lezen", ExpectedResult = true)]
+    [TestCase("s1416890@student.windesheim.nl", "bestaat niet", ExpectedResult = false)]
+    public bool removeInterestOutOfuserHasInterestTableDatabaseTest(string email, string interest)
+    {
+        return _database.removeInterestOutOfuserHasInterestTableDatabase(email, interest);
+    }
+    
+    [TestCase("s1416890@student.windesheim.nl", "Roeien", ExpectedResult = false)]
+    [TestCase("s1416890@student.windesheim.nl", "Astrologie", ExpectedResult = true)]
+    [TestCase("s1416890@student.windesheim.nl", "Sportschool", ExpectedResult = false)]
+    [TestCase("NietBestaandeGebruiker@student.windesheim.nl", "Lezen", ExpectedResult = false)]
+    public bool addInterestToUserInterestsTest(string email, string interest)
+    {
+            return _database.addInterestToUserInterests(email, interest);
+    }
+    [TestCase(ExpectedResult = true)]
+    public bool GetInterestsFromDataBaseTest()
+    {
+        return _database.GetInterestsFromDataBase().Count > 0;
     }
 }

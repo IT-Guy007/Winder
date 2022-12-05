@@ -264,37 +264,6 @@ public class Database
         closeConnection();
         return interests;
     }
-    public User GetUserFromDatabase(string email)
-    {
-        User user = null;
-        openConnection();
-        string sql = "SELECT * FROM Winder.Winder.[User] where email = @Email";
-        SqlCommand command = new SqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@Email", email);
-        try
-        {
-            SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                string? username = reader["email"] as string;
-                var firstName = reader["firstname"] as string;
-                var middleName = reader["middlename"] as string;
-                var lastName = reader["lastname"] as string;
-                var preferences = reader["preference"] as string;
-                string? gender = reader["gender"] as string;
-                DateTime? bday = getDateTimefromReader(reader);
-                var bio = reader["bio"] as string;
-
-                user = new User(firstName, middleName,lastName,bday, preferences, null,null, gender, null,bio);
-            }
-        }
-        catch (SqlException e)
-        {
-            closeConnection();
-        }
-        closeConnection();
-        return user;
-    }
     //Returns a valid datetime if value is true or false
     private DateTime? getDateTimefromReader(SqlDataReader reader)
     {
@@ -303,25 +272,27 @@ public class Database
                            (DateTime?)reader.GetDateTime(3);
     }
     //Registers interests in database for an user
-    public void RegisterInterestInDatabase(string username, string interest)
+    public bool addInterestToUserInterests(string email, string interest)
     {
-        openConnection();
-        string sql = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
-        SqlCommand command = new SqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@Email", username);
-        command.Parameters.AddWithValue("@Interest", interest);
         try
         {
+            openConnection();
+            string sql = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Email", email);
+            command.Parameters.AddWithValue("@Interest", interest);
             command.ExecuteNonQuery();
+            closeConnection(); 
+            return true;
         }
         catch (SqlException e)
         {
             closeConnection();
+            return false;
         }
-        closeConnection();
     }
     //Removes all interests from an user in the database
-    public void removeInterestOutOfuserHasInterestTableDatabase(string username, string interest)
+    public bool removeInterestOutOfuserHasInterestTableDatabase(string username, string interest)
     {
         openConnection();
         string sql = "Delete From winder.userHasInterest Where UID = @Email and interest = @Interest";
@@ -331,12 +302,13 @@ public class Database
         try
         {
             command.ExecuteNonQuery();
+            return true;
         }
         catch (SqlException e)
         {
             closeConnection();
+            return false;
         }
-        closeConnection();
     }
     //Fetches a list of interest from of the database from the requested user
     public List<string> LoadInterestsFromDatabaseInListInteresses(string email)
@@ -364,7 +336,7 @@ public class Database
     }
     //Fetches a list of interest from of the database from the requested user
     public bool updateUserInDatabaseWithNewUserProfile(string firstname, string middlename, string lastname,
-        string preference, DateTime? birthday, string gender, string bio, string profilePicture)
+        string preference, DateTime? birthday, string gender, string bio, string profilePicture, string email)
     {
         try
         {
@@ -372,7 +344,7 @@ public class Database
             openConnection();
             //Create query
             SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
-            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, birthday = @birthday, set gender = @Gender, set preference = @Voorkeur, bio = @bio " +
+            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, birthday = @birthday, gender = @Gender, preference = @Voorkeur, bio = @bio " +
             "where email = @Email", connection);
             query.Parameters.AddWithValue("@firstname", firstname);
             query.Parameters.AddWithValue("@middlename", middlename);
@@ -380,7 +352,7 @@ public class Database
             query.Parameters.AddWithValue("@Gender", gender);
             query.Parameters.AddWithValue("@birthday", birthday);
             query.Parameters.AddWithValue("@Voorkeur", preference);
-            query.Parameters.AddWithValue("@Email", Authentication._currentUser.email);
+            query.Parameters.AddWithValue("@Email", email);
             query.Parameters.AddWithValue("@bio", bio);
             query.ExecuteNonQuery();
             //Close connection

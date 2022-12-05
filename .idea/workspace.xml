@@ -3,9 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="4d94c203-6d0e-4d79-80c2-0bb2ccba3c7e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/v17/.futdcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.metadata.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.metadata.v5.1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.projects.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.projects.v5.1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/5159c305-d9dd-41b2-80ff-4956c7db41b8.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Console/v17/TestStore/0/000.testlog" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unit test/TestDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unit test/TestDatabase.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

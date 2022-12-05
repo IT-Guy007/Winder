@@ -98,7 +98,7 @@ public partial class ProfielOpmaak : ContentPage
         if (voornaam && tussenvoegsel && achternaam && geboortedatum && omschrijving && geslacht && voorkeur && interessesGekozen && opleiding)
         {
             updateUserPropertiesPrepareForUpdateQuery();
-            b.updateUserInDatabaseWithNewUserProfile(Authentication._currentUser.firstName, Authentication._currentUser.middleName, Authentication._currentUser.lastName, Authentication._currentUser.preference, Authentication._currentUser.birthDay, Authentication._currentUser.gender, Authentication._currentUser.gender, null);
+            b.updateUserInDatabaseWithNewUserProfile(Authentication._currentUser.firstName, Authentication._currentUser.middleName, Authentication._currentUser.lastName, Authentication._currentUser.preference, Authentication._currentUser.birthDay, Authentication._currentUser.gender, Authentication._currentUser.gender, null, Authentication._currentUser.email);
             registerInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             fillInFormWithUserProperties(user);
@@ -147,7 +147,7 @@ public partial class ProfielOpmaak : ContentPage
     {
         foreach (var interest in interesses)
         {
-            b.RegisterInterestInDatabase(Authentication._currentUser.email, interest);
+            b.addInterestToUserInterests(Authentication._currentUser.email, interest);
         }
     }
     private void Voornaam_TextChanged(object sender, TextChangedEventArgs e)
