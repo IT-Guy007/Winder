@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="4615082f-8811-46e8-af9e-6dbe226cb6fc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vs/Console/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
@@ -10,6 +11,13 @@
       <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.metadata.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.metadata.v5.1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.projects.v5.1" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.projects.v5.1" afterDir="false" />
     </list>
+=======
+    <list default="true" id="4d94c203-6d0e-4d79-80c2-0bb2ccba3c7e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/console.metadata.v5.1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MAUI/RegisterPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/RegisterPage.xaml.cs" afterDir="false" />
+    </list>
+
+>>>>>>> main
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,11 +26,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectId" id="2IDyvCMbdcMHiciXu539YLSOVBu" />
+=======
+  <component name="ProjectId" id="2IAqHjM2LhG1Tqy95nGLOt4iqvf" />
+>>>>>>> main
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenDatabaseViewOnStart&quot;: &quot;true&quot;,
@@ -36,6 +49,21 @@
     ]
   }
 }</component>
+=======
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenDatabaseViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/robin"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlserver"
+    ]
+  }
+}]]></component>
+>>>>>>> main
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
