@@ -80,6 +80,8 @@ public class TestDatabase {
     public bool ToggleActivationTest(string email, bool activation) {
         return _database.toggleActivation(email, activation);
     }
+
+    [TestCase("Peter", "van", "Huizkes", "Vrouw", "1998/01/01", "Man", "bio info", null, ExpectedResult = true)]
     public bool updateUserInDatabaseWithNewUserProfileTest(string firstname, string middlename, string lastname,
         string preference, DateTime? birthday, string gender, string bio, string profilePicture) 
     {
