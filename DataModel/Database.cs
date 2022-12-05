@@ -435,7 +435,7 @@ public class Database
             query1.Parameters.AddWithValue("@Preference", preference);
             try
             {
-                query.ExecuteReader();
+                query1.ExecuteReader();
                 closeConnection();
             }
             catch (SqlException se)
@@ -446,12 +446,12 @@ public class Database
         else
         {
             openConnection();
-            SqlCommand query2 = new SqlCommand("UPDATE winder.[User] SET preference = @Preference WHERE email = @Email", connection);
+            SqlCommand query2 = new SqlCommand("UPDATE winder.winder.[User] SET preference = @Preference WHERE email = @Email", connection);
             query2.Parameters.AddWithValue("@Email", email);
             query2.Parameters.AddWithValue("@Preference", preference);
             try
             {
-                query.ExecuteReader();
+                query2.ExecuteReader();
                 closeConnection();
             }
             catch (SqlException se)
@@ -469,7 +469,7 @@ public class Database
 
         openConnection();
        
-        SqlCommand query = new SqlCommand("UPDATE winder.[User] SET location = @Location WHERE email = @Email", connection);
+        SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET location = @Location WHERE email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
         query.Parameters.AddWithValue("@Location", location);
         
@@ -485,5 +485,64 @@ public class Database
 
 
     }
-    
+
+    public string placePreference(string email)
+    {
+        // open connection
+
+        openConnection();
+
+        SqlCommand query = new SqlCommand("SELECT preference FROM winder.winder.[User] WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+
+
+        try
+        {
+            SqlDataReader reader = query.ExecuteReader();
+            if (reader.Read())
+            {
+                var preference = reader["preference"] as string;
+                closeConnection();
+                return preference;
+
+            }
+        }
+        catch (SqlException se)
+        {
+            closeConnection();
+            return "";
+        }
+        return "";
+    }
+
+    public string placeLocation(string email)
+    {
+        // open connection
+
+        openConnection();
+
+        SqlCommand query = new SqlCommand("SELECT location FROM winder.winder.[User] WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+
+
+        try
+        {
+            SqlDataReader reader = query.ExecuteReader();
+            if (reader.Read())
+            {
+                var location = reader["location"] as string;
+                closeConnection();
+                return location;
+
+            }
+        }
+        catch (SqlException se)
+        {
+            closeConnection();
+            return "";
+        }
+        return "";
+    }
+
+
 }

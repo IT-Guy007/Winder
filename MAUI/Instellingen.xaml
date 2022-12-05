@@ -1,92 +1,119 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-  
-    <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MAUI.Instellingen"
-             BackgroundColor="#CC415F">
+
+<ContentPage
+    x:Class="MAUI.Instellingen"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#CC415F">
 
 
 
 
 
-    <StackLayout Padding="10"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <StackLayout
+        Padding="10"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
 
-        <StackLayout BackgroundColor="#D9D9D9" HorizontalOptions="FillAndExpand" HeightRequest="50" Margin="0,60,0,0"  >
+        <StackLayout
+            Margin="0,60,0,0"
+            BackgroundColor="#D9D9D9"
+            HeightRequest="50"
+            HorizontalOptions="FillAndExpand">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
 
                 </Grid.ColumnDefinitions>
-                <Label FontSize="30" Text="Voorkeurleeftijd" TextColor="Black" VerticalOptions="Center" Margin="30,0,0,0"/>
-                <Label Grid.Column="1" Text="Minimale leeftijd" TextColor="Black" FontSize="20" VerticalOptions="Center" HorizontalOptions="Start" />
-               
-                
-                <Picker 
-                x:Name="minimaleLeeftijd"
-                Margin="160,0,0,0"
-                IsVisible="True"
-                TextColor="White"
-                BackgroundColor="Gray"
-                VerticalOptions="Center"
+                <Label
+                    Margin="30,0,0,0"
+                    FontSize="30"
+                    Text="Voorkeurleeftijd"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <Label
                     Grid.Column="1"
-                    >
+                    FontSize="20"
+                    HorizontalOptions="Start"
+                    Text="Minimale leeftijd"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
 
 
-                    <Picker.ItemsSource >
-                        
-                    </Picker.ItemsSource>
-                </Picker>
-                <Label HorizontalOptions="Center" Grid.Column="1" Text="Maximale leeftijd" TextColor="Black" FontSize="20" Margin="0,10" />
-
-                <Picker 
-                x:Name="maximaleLeeftijd"
-                Margin="400,0,0,0"
-                IsVisible="True"
-                TextColor="White"
-                BackgroundColor="Gray"
-                VerticalOptions="Center"
-                    
-                    
+                <Picker
+                    x:Name="minimaleLeeftijd"
                     Grid.Column="1"
-                    >
+                    Margin="160,0,0,0"
+                    BackgroundColor="Gray"
+                    IsVisible="True"
+                    TextColor="White"
+                    VerticalOptions="Center">
 
 
-                    <Picker.ItemsSource >
-
-                    </Picker.ItemsSource>
+                    <Picker.ItemsSource />
                 </Picker>
-                <Label 
-                x:Name="foutLeeftijd"
-                FontSize="20"
-                Text="Minimale leeftijd mag niet groter zijn dan maximale leeftijd"
-                IsVisible="false"
-                HorizontalOptions="Center"
-                VerticalOptions="Start"
-                TextColor ="OrangeRed"
-                Grid.Column="1"/>
+                <Label
+                    Grid.Column="1"
+                    Margin="0,10"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    Text="Maximale leeftijd"
+                    TextColor="Black" />
+
+                <Picker
+                    x:Name="maximaleLeeftijd"
+                    Grid.Column="1"
+                    Margin="400,0,0,0"
+                    BackgroundColor="Gray"
+                    IsVisible="True"
+                    TextColor="White"
+                    VerticalOptions="Center">
+
+
+                    <Picker.ItemsSource />
+                </Picker>
+                <Label
+                    x:Name="foutLeeftijd"
+                    Grid.Column="1"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    IsVisible="false"
+                    Text="Minimale leeftijd mag niet groter zijn dan maximale leeftijd"
+                    TextColor="OrangeRed"
+                    VerticalOptions="Start" />
             </Grid>
         </StackLayout>
-        
-        
-        <StackLayout  BackgroundColor="#D9D9D9" HorizontalOptions="FillAndExpand" HeightRequest="50" Margin="0,15,0,0"  >
+
+
+        <StackLayout
+            Margin="0,15,0,0"
+            BackgroundColor="#D9D9D9"
+            HeightRequest="50"
+            HorizontalOptions="FillAndExpand">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
 
                 </Grid.ColumnDefinitions>
-                <Label FontSize="30" Text="Voorkeur geslacht" TextColor="Black" VerticalOptions="Center" Margin="30,0,0,0"/>
-                <Picker 
-                x:Name="Preference"
-                IsVisible="True"
-                TextColor="White"
-                BackgroundColor="Gray"
-                HorizontalOptions="Start"
-                VerticalOptions="Center"
-                HorizontalTextAlignment="Center"
-                    Grid.Column="1">
-                   
+                <Label
+                    Margin="30,0,0,0"
+                    FontSize="30"
+                    Text="Voorkeur geslacht"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <Picker
+                    x:Name="Preference"
+                    Grid.Column="1"
+                    BackgroundColor="Gray"
+                    HorizontalOptions="Start"
+                    HorizontalTextAlignment="Center"
+                    IsVisible="True"
+                    SelectedItem=""
+                    TextColor="White"
+                    VerticalOptions="Center">
+
 
                     <Picker.Items>
                         <x:String>Man</x:String>
@@ -96,43 +123,68 @@
                 </Picker>
             </Grid>
         </StackLayout>
-        
-        
-        <StackLayout  BackgroundColor="#D9D9D9" HorizontalOptions="FillAndExpand" HeightRequest="50" Margin="0,15,0,0"  >
+
+
+        <StackLayout
+            Margin="0,15,0,0"
+            BackgroundColor="#D9D9D9"
+            HeightRequest="50"
+            HorizontalOptions="FillAndExpand">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
 
                 </Grid.ColumnDefinitions>
-                <Label FontSize="30" Text="Wachwoord" TextColor="Black" VerticalOptions="Center" Margin="30,0,0,0"/>
-                <Label Grid.Column="1" Text="zie wachtwoord" TextColor="Black" FontSize="20" VerticalOptions="Center" HorizontalOptions="Start" />
+                <Label
+                    Margin="30,0,0,0"
+                    FontSize="30"
+                    Text="Wachwoord"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Column="1"
+                    FontSize="20"
+                    HorizontalOptions="Start"
+                    Text="zie wachtwoord"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
             </Grid>
         </StackLayout>
-        
-        
-        <StackLayout  BackgroundColor="#D9D9D9" HorizontalOptions="FillAndExpand" HeightRequest="50" Margin="0,15,0,0"  >
+
+
+        <StackLayout
+            Margin="0,15,0,0"
+            BackgroundColor="#D9D9D9"
+            HeightRequest="50"
+            HorizontalOptions="FillAndExpand">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
 
                 </Grid.ColumnDefinitions>
-                <Label FontSize="30" Text="Locatie" TextColor="Black" VerticalOptions="Center" Margin="30,0,0,0"/>
-                <Picker 
-                x:Name="Location"
-                IsVisible="True"
-                TextColor="White"
-                BackgroundColor="Gray"
-                HorizontalOptions="Start"
-                VerticalOptions="Center"
-                HorizontalTextAlignment="Center"
-                    Grid.Column="1">
+                <Label
+                    Margin="30,0,0,0"
+                    FontSize="30"
+                    Text="Locatie"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <Picker
+                    x:Name="Location"
+                    Grid.Column="1"
+                    BackgroundColor="Gray"
+                    HorizontalOptions="Start"
+                    HorizontalTextAlignment="Center"
+                    IsVisible="True"
+                    SelectedItem=""
+                    TextColor="White"
+                    VerticalOptions="Center">
 
-                    <Picker.Items >
+                    <Picker.Items>
                         <x:String>Zwolle</x:String>
                         <x:String>Almere</x:String>
-                        
+
                     </Picker.Items>
                 </Picker>
             </Grid>
@@ -141,23 +193,21 @@
         <Grid>
             <Grid.ColumnDefinitions>
 
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
 
             </Grid.ColumnDefinitions>
-            <Button Text="Account verwijderen" 
-                BackgroundColor="#D9D9D9" 
+            <Button
+                BackgroundColor="#D9D9D9"
                 HeightRequest="60"
-                />
+                Text="Account verwijderen" />
 
             <Button
-            Text="Wijzigingen opslaan"
-            BackgroundColor="#D9D9D9"
-            HeightRequest="60"
                 Grid.Column="1"
+                BackgroundColor="#D9D9D9"
                 Clicked="editDataBtn"
-            
-            />
+                HeightRequest="60"
+                Text="Wijzigingen opslaan" />
 
         </Grid>
 

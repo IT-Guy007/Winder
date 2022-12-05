@@ -12,7 +12,9 @@ public partial class Instellingen : ContentPage
     {
         InitializeComponent();
         getMinimaleLeeftijd();
-      
+        placePreference();
+        placeLocation();
+
     }
 
     public void getMinimaleLeeftijd()
@@ -40,25 +42,44 @@ public partial class Instellingen : ContentPage
     {
        
             string location = Location.SelectedItem.ToString();
-            database.insertLocation(email, location);
-        
+            database.insertLocation(email, location);    
     }
     
     public bool checkIfMinAgeLowerThenMax()
     {
-        int minAge = (int)minimaleLeeftijd.SelectedItem;
-        int maxAge = (int)maximaleLeeftijd.SelectedItem;
-
-        if (minAge > maxAge)
+        try
         {
-            
-            return false;
-        } else {
-            
-            return true;
+            int minAge = (int)minimaleLeeftijd.SelectedItem;
+            int maxAge = (int)maximaleLeeftijd.SelectedItem;
+            if (minAge > maxAge)
+            {
+
+                return false;
+            }
+            else
+            {
+
+                return true;
+            }
         }
-       
+        catch (Exception e)
+        {
+            return false;
+        }
     }
+
+    public void placePreference( )
+    {
+       string placePreference = database.placePreference(email);
+        Preference.SelectedItem = placePreference;
+    }
+    
+    public void placeLocation()
+    {
+        string placeLocation = database.placeLocation(email);
+        Location.SelectedItem = placeLocation;
+        
+        }
 
     public void editDataBtn(object sender, EventArgs e)
     {
