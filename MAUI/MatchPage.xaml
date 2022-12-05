@@ -3,15 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUI.MatchPage" 
              >
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         
+        <BoxView>
+            <BoxView.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipeDislike"/>
+                <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipeLike"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
+        
         <VerticalStackLayout Grid.Column="0">
             <Image
-                x:Name="ImageFeedUser"/>
+                x:Name="ImageFeedUser"
+                HeightRequest="600"
+                WidthRequest="600"/>
         </VerticalStackLayout>
         
         <VerticalStackLayout Grid.Column="1">
@@ -40,13 +50,13 @@
             <HorizontalStackLayout>
                 <Button
                     x:Name="DislikeBtn"
-                    Clicked="DislikeBtn_Clicked"
+                    Clicked="OnDislike"
                     Text="Dislike"
                     BackgroundColor="Red"
                     TextColor="DarkRed"/>
                 <Button
                     x:Name="LikeBtn"
-                    Clicked="LikeBtn_Clicked"
+                    Clicked="OnLike"
                     Text="Like"
                     BackgroundColor="Green"
                     TextColor="LightGreen"/>

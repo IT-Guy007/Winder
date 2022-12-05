@@ -144,6 +144,7 @@ public class Database
         closeConnection();
         return emails;
     }
+
     public bool register(string firstname, string middlename, string lastname, string email,
         string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active, string locatie, string opleiding) {
         Authentication authentication = new Authentication();
@@ -257,7 +258,6 @@ public class Database
         closeConnection();
         return interests;
     }
-
 
     public User GetUserFromDatabase(string email)
     {
@@ -416,7 +416,7 @@ public class Database
         bool match;
         openConnection();
 
-        SqlCommand command = new SqlCommand("SELECT * FROM Winder.Winder.[Liked] WHERE person = @emailLikedPerson AND likedPerson = @emailCurrentUser", connection);
+        SqlCommand command = new SqlCommand("SELECT * FROM Winder.Winder.[Liked] WHERE person = @emailLikedPerson AND likedPerson = @emailCurrentUser AND liked = 1", connection);
         command.Parameters.AddWithValue("@emailLikedPerson", emailLikedPerson);
         command.Parameters.AddWithValue("@emailCurrentUser", emailCurrentUser);
 
@@ -441,31 +441,91 @@ public class Database
 
     public void NewLike(string emailCurrentUser, string emailLikedPerson)
     {
-        if (checkMatch(emailCurrentUser, emailLikedPerson))
-        {
-            //There is a match
-        }
-        else
-        {
-            //There is no match yet
-            openConnection();
-            SqlCommand command = new SqlCommand("INSERT INTO Winder.Winder.[Liked] (person, likedPerson) " +
-                                                "VALUES (@currentUser, @likedUser)", connection);
-            command.Parameters.AddWithValue("@currentUser", emailCurrentUser);
-            command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
+        //There is no match yet
+        openConnection();
+        SqlCommand command = new SqlCommand("INSERT INTO Winder.Winder.[Liked] (person, likedPerson, liked) " +
+                                            "VALUES (@currentUser, @likedUser, 1)", connection);
+        command.Parameters.AddWithValue("@currentUser", emailCurrentUser);
+        command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
 
-            try
-            {
-                command.ExecuteReader();
-                //Close connection
-                closeConnection();
-            }
-            catch (SqlException se)
-            {
-                Console.WriteLine(se.ToString());
-                //Close connection
-                closeConnection();
-            }
+        try
+        {
+            command.ExecuteReader();
+            //Close connection
+            closeConnection();
+        }
+        catch (SqlException se)
+        {
+            //throw new Exception(se.ToString());
+            Console.WriteLine(se.ToString());
+            //Close connection
+            closeConnection();
+        }
+    }
+
+    //als iemand jou gedisliked heeft krijg jij hem niet meer te zien want een match is dan niet meer mogelijk
+    public void NewDislike(string emailCurrentUser, string emailLikedPerson)
+    {
+        //There is no match yet
+        openConnection();
+        SqlCommand command = new SqlCommand("INSERT INTO Winder.Winder.[Liked] (person, likedPerson, liked) " +
+                                            "VALUES (@currentUser, @likedUser, 0)", connection);
+        command.Parameters.AddWithValue("@currentUser", emailCurrentUser);
+        command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
+
+        try
+        {
+            command.ExecuteReader();
+            //Close connection
+            closeConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            //Close connection
+            closeConnection();
+        }
+    }
+
+    public void NewMatch(string emailCurrentUser, string emailLikedPerson)
+    {
+        openConnection();
+
+        SqlCommand command = new SqlCommand("INSERT INTO winder.winder.[Match] (person1, person2) " +
+                                            "VALUES (@currentUser, @likedUser)", connection);
+        command.Parameters.AddWithValue("@currentUser", emailCurrentUser);
+        command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
+
+        try
+        {
+            command.ExecuteReader();
+            closeConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            closeConnection();
+        }
+    }
+
+    public void deleteLikeOnMatch(string emailCurrentUser, string emailLikedUser)
+    {
+        openConnection();
+
+        SqlCommand command = new SqlCommand("DELETE FROM winder.winder.[Liked] " +
+                                            "WHERE person = @emailLikedUser AND likedPerson = @emailCurrentUser ", connection);
+        command.Parameters.AddWithValue("@emailLikedUser", emailLikedUser);
+        command.Parameters.AddWithValue("@emailCurrentUser", emailCurrentUser);
+
+        try
+        {
+            command.ExecuteReader();
+            closeConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            closeConnection();
         }
     }
 }

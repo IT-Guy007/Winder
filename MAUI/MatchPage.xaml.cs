@@ -17,7 +17,9 @@ public partial class MatchPage : ContentPage {
 
         Database database = new Database();
         Authentication auth = new Authentication();
-        feedUser = (User)database.GetUserFromDatabase("sbananen@student.windesheim.nl");
+
+        //standaard persoon
+        feedUser = (User)database.GetUserFromDatabase("s1168742@student.windesheim.nl");
 
         string feedUserName = feedUser.firstName + " " + feedUser.middleName + " " + feedUser.lastName;
         if (feedUser.middleName == null)
@@ -32,8 +34,6 @@ public partial class MatchPage : ContentPage {
         this.BioFeedUser.Text = feedUser.bio;
 
         GetImage(feedUser.profilePicture);
-        
-
         
         //Title = "Make your match now!";
 
@@ -50,8 +50,6 @@ public partial class MatchPage : ContentPage {
         //    };
         //};
 
-
-
         //_linearGradientBrush = new LinearGradientBrush() {
         //    StartPoint = new Point(500, 0),
         //    EndPoint = new Point(500,2000),
@@ -59,11 +57,8 @@ public partial class MatchPage : ContentPage {
         //        new GradientStop() { Color = Color.FromHex("#000000")},
         //        new GradientStop() { Color = Color.FromHex("#FFFFFF")}
         //    }
-            
-            
         //};
 
-      
         //_verticalStackLayout.IsVisible = true;
         //Content.Background = _linearGradientBrush;
         //Content = new VerticalStackLayout {
@@ -72,27 +67,63 @@ public partial class MatchPage : ContentPage {
         //        _verticalStackLayout
         //    }
         //};
-
-
     }
 
     public void GetImage(byte[] img)
     {
-        MemoryStream stream = new MemoryStream();
-        this.ImageFeedUser.Source = ImageSource.FromStream(() => stream);
+        using (var ms = new MemoryStream(img))
+        {
+            this.ImageFeedUser.Source = ImageSource.FromStream(() => ms);
+        }
+    }
+    int swipeAmount = 0;
+    private void OnSwipeLike(object sender, EventArgs e)
+    {
+        if (swipeAmount % 2 == 0)
+        {
+            OnLike(sender, e);
+        }
+        swipeAmount++;
     }
 
-    private void LikeBtn_Clicked(object sender, EventArgs e)
+    private void OnLike(object sender, EventArgs e)
     {
         Database database = new Database();
         string emailCurrentUser = Authentication._currentUser.email;
         string emailLikedUser = feedUser.email;
 
-        database.NewLike(emailCurrentUser, emailLikedUser);
+        if (database.checkMatch(emailCurrentUser, emailLikedUser))
+        {
+            database.NewMatch(emailLikedUser, emailCurrentUser);
+            database.deleteLikeOnMatch(emailCurrentUser, emailLikedUser);
+        }
+        else
+        {
+            database.NewLike(emailCurrentUser, emailLikedUser);
+        }
+
+        //en krijg een pop-up dat je een match hebt
+
+        //en daarna door naar de volgende persoon
     }
 
-    private void DislikeBtn_Clicked(object sender, EventArgs e)
+    private void OnSwipeDislike(object sender, EventArgs e)
     {
+        if (swipeAmount % 2 == 0)
+        {
+            OnDislike(sender, e);
+        }
+        swipeAmount++;
+    }
 
+    private void OnDislike(object sender, EventArgs e)
+    {
+        Database database = new Database();
+        string emailCurrentUser = Authentication._currentUser.email;
+        string emaildDislikedUser = feedUser.email;
+
+        database.NewDislike(emailCurrentUser, emaildDislikedUser);
+
+        //naar de volgende persoon
     }
 }

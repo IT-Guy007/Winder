@@ -347,9 +347,6 @@ public partial class RegisterPage : ContentPage
 
         if (RegisterBtnEventCheck())
         {
-            
-            
-
             //setting objects visible to proceed the registerform
             LblVoorkeur.IsVisible = true;
             Voorkeur.IsVisible = true;
