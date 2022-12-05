@@ -67,8 +67,7 @@ public SqlConnection connection;
                 var bio = reader["bio"] as string;
                 _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
                     preferences, email, "", gender, bio);
-                //Authentication._currentUser = new User(username, firstName, middleName, lastName, birthday,
-                //    preferences, email, "", gender, Base64StringToBitmap(profilePicture),bio);
+
             }
 
             //Close connection
@@ -217,40 +216,6 @@ public SqlConnection connection;
         }
 
     }
-    public static byte[] BitmapToBase64String(Bitmap bitmap)
-    {
-        var stream = new MemoryStream();
-        bitmap.Save(stream, ImageFormat.Png);
-        return stream.ToArray();
-    }
-
-    public static string ByteArrToBase64String(byte[] bytes)
-    {
-        return Convert.ToBase64String(bytes);
-    }
-
-    public static Bitmap Base64StringToBitmap(string? base64String)
-    {
-        Bitmap bmpReturn = null;
-
-
-        byte[] byteBuffer = Convert.FromBase64String(base64String);
-        MemoryStream memoryStream = new MemoryStream(byteBuffer);
-
-
-        memoryStream.Position = 0;
-
-
-        bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
-
-
-        memoryStream.Close();
-        memoryStream = null;
-        byteBuffer = null;
-
-
-        return bmpReturn;
-    }
 
     public List<string> GetInterestsFromDataBase()
     {
@@ -263,8 +228,8 @@ public SqlConnection connection;
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                var iets1 = reader["name"] as string;
-                interests.Add(iets1);
+                var item = reader["name"] as string;
+                interests.Add(item);
             }
         }
         catch (SqlException e)
@@ -344,20 +309,19 @@ public SqlConnection connection;
         closeConnection();
     }
 
-    public List<string> LoadInterestsFromDatabaseInListInteresses(string email)
+    public string[] LoadInterestsFromDatabaseInListInteresses(string email)
     {
-        List<string> interests = new List<string>();
+        string[] interests = new string[10];
         openConnection();
         string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
         SqlCommand command = new SqlCommand(sql, connection);
         command.Parameters.AddWithValue("@Email", email);
-        try
-        {
+        try {
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                var iets1 = reader["interest"] as string;
-                interests.Add(iets1);
+                string item = reader["interest"] as string ?? "Unknown";
+                interests.Append(item);
             }
         }
         catch (SqlException e)
@@ -374,6 +338,7 @@ public SqlConnection connection;
         {
             //Start connection
             openConnection();
+            
             //Create query
             SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
             "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, birthday = @birthday, bio = @bio " +
@@ -398,5 +363,40 @@ public SqlConnection connection;
             closeConnection();
         }
 
+    }
+
+    public Image[] getPicturesFromDatabase(string email) {
+
+        //TO-DO: Get pictures from database
+        return null;
+    }
+
+    //User to get the profiles for the match(run async)
+    public Profile[] get5Profiles(string email) {
+        //The algorithm that determines who to get
+        
+        //The users to get
+        string[] usersToRetrief = new string[5];
+
+        //Results
+        Profile[] profiles = new Profile[5];
+        
+        //Retrieving
+        for(int i = 0;i != 4;i++) {
+            
+            //Get the user
+            User user = GetUserFromDatabase(usersToRetrief[i]);
+            
+            //Get the interests of the user
+            user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]);
+
+            //Get the images of the user
+            Image[] images = getPicturesFromDatabase(usersToRetrief[i]);
+            var profile = new Profile(user, images);
+            
+            profiles.Append(profile);
+        }
+        
+        return profiles;
     }
 }

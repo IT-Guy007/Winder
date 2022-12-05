@@ -2,15 +2,15 @@
 
 namespace MAUI;
 
-public partial class MatchPage : ContentPage
-{
-    private  Authentication _authentication= new Authentication();
-    
-    private Queue<Profile> _profileQueue = new Queue<Profile>();
+public partial class MatchPage : ContentPage {
+    private Authentication _authentication= new Authentication();
+    private Database _database = new Database();
+
+    private  Queue<Profile> _profileQueue = new Queue<Profile>();
     private Profile _currentProfile;
     private Image[] _images = new Image[10];
     private int selectedImage = 0;
-
+    
     public MatchPage() {
         Title = "Make your match now!";
 
@@ -138,8 +138,16 @@ public partial class MatchPage : ContentPage
             StackLayout buttonStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
             var likeButton = new Button { Text = "Like", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
             var dislikeButton = new Button { Text = "Dislike", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
-            buttonStackLayout.Add(likeButton);
+            
+            likeButton.Clicked += (sender, args) => {
+                checkIfqueNeedsMoreProfiles();
+            };
+            dislikeButton.Clicked += (sender, args) =>
+            {
+                checkIfqueNeedsMoreProfiles();
+            };
             buttonStackLayout.Add(dislikeButton);
+            buttonStackLayout.Add(likeButton);
             
 
         }
@@ -152,4 +160,22 @@ public partial class MatchPage : ContentPage
         Content = verticalStackLayout;
     }
 
+    
+    private async Task updateQue() {
+        Task gettingProfiles = getProfiles();
+        await gettingProfiles;
+    }
+    
+    private async Task getProfiles() {
+        Profile[] profiles =  _database.get5Profiles(_authentication._currentUser.email);
+        foreach (var profile in profiles) {
+            _profileQueue.Enqueue(profile);
+        }
+    }
+    
+    private void checkIfqueNeedsMoreProfiles() {
+        if(_profileQueue.Count < 5) {
+            updateQue();
+        }
+    }
 }
