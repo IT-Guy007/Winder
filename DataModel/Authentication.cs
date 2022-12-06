@@ -1,10 +1,13 @@
+using System.Net;
+using System.Net.Mail;
+
 namespace DataModel;
 using System.Security.Cryptography;
 using System.Text;
 
 public class Authentication {
     
-    public static User _currentUser { get; set; }
+    public User _currentUser { get; set; }
     private LoggedState _loggedState { get; set; }
     private AccountState _accountState { get; set; }
     
@@ -24,7 +27,7 @@ public class Authentication {
         inactive,
     }
     
-    public void updateUserSetting(bool activation, bool signedIN) {
+    public void UpdateUserSetting(bool activation, bool signedIN) {
         if (activation) {
             this._accountState = AccountState.active;
         }
