@@ -101,7 +101,7 @@ public partial class MatchPage : ContentPage {
                 StackLayout ageStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
                 var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };
                 
-                var birthday = int.Parse(_currentProfile.user.birthDay.Value.ToString("yyyyMMdd"));
+                var birthday = int.Parse(_currentProfile.user.birthDay.ToString("yyyyMMdd"));
                 var today = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
                 var age = new Label { Text = ((today - birthday) /1000).ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
                 ageStackLayout.Add(agelbl);
@@ -120,7 +120,7 @@ public partial class MatchPage : ContentPage {
             //Education
             StackLayout educationStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
             var educationlbl = new Label { Text = "Opleiding: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };
-            var education = new Label { Text = _currentProfile.user.education , FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var education = new Label { Text = _currentProfile.user.major , FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             educationStackLayout.Add(educationlbl);
             educationStackLayout.Add(education);
             infoStackLayout.Add(educationStackLayout);
@@ -140,42 +140,56 @@ public partial class MatchPage : ContentPage {
             var dislikeButton = new Button { Text = "Dislike", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
             
             likeButton.Clicked += (sender, args) => {
-                checkIfqueNeedsMoreProfiles();
+                CheckIfQueueNeedsMoreProfiles();
+                string emailCurrentUser = _authentication._currentUser.email;
+                string emailLikedUser = _currentProfile.user.email;
+                if (_database.CheckMatch(emailCurrentUser, emailLikedUser))
+                {
+                    _database.NewMatch(emailLikedUser, emailCurrentUser);
+                    _database.deleteLikeOnMatch(emailCurrentUser, emailLikedUser);
+                }
+                else {
+                    _database.NewLike(emailCurrentUser, emailLikedUser);
+                }
+
+                //en krijg een pop-up dat je een match hebt
+
+                //en daarna door naar de volgende persoon
             };
             dislikeButton.Clicked += (sender, args) =>
             {
-                checkIfqueNeedsMoreProfiles();
+                CheckIfQueueNeedsMoreProfiles();
+                string emailCurrentUser = _authentication._currentUser.email;
+                string emaildDislikedUser = _currentProfile.user.email;
+
+                _database.NewDislike(emailCurrentUser, emaildDislikedUser);
+
             };
             buttonStackLayout.Add(dislikeButton);
             buttonStackLayout.Add(likeButton);
-            
 
         }
         verticalStackLayout.Add(imageLayout);
-        
-        
-        
         
         verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
     }
 
-    
-    private async Task updateQue() {
-        Task gettingProfiles = getProfiles();
+    private async Task UpdateQue() {
+        Task gettingProfiles = GetProfiles();
         await gettingProfiles;
     }
     
-    private async Task getProfiles() {
-        Profile[] profiles =  _database.get5Profiles(_authentication._currentUser.email);
+    private async Task GetProfiles() {
+        Profile[] profiles =  _database.Get5Profiles(_authentication._currentUser.email);
         foreach (var profile in profiles) {
             _profileQueue.Enqueue(profile);
         }
     }
     
-    private void checkIfqueNeedsMoreProfiles() {
+    private void CheckIfQueueNeedsMoreProfiles() {
         if(_profileQueue.Count < 5) {
-            updateQue();
+            UpdateQue();
         }
     }
 }
