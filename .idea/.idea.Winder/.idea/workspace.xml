@@ -5,107 +5,17 @@
     <projectFile kind="XamarinIOS">Winder/Winder.csproj</projectFile>
     <projectFile kind="XamarinMacOS">Winder/Winder.csproj</projectFile>
   </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Console/xs/project-cache/MAUI-Debug-net7.0-ios16.0.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/xs/UserPrefs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder.sln" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder/LoginPage.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder/LoginPage.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder/MainPage.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder/Platforms/Tizen/Main.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder/Platforms/Windows/App.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder/RegisterPage.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder/RegisterPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/xs/UserPrefs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/xs/UserPrefs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/xs/project-cache/DataModel-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/xs/project-cache/DataModel-Debug.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/xs/project-cache/MAUI-Debug-net6.0-android31.0.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/xs/project-cache/MAUI-Debug-net6.0-android31.0.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/xs/project-cache/MAUI-Debug-net6.0-ios.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/xs/project-cache/MAUI-Debug-net6.0-ios.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/xs/project-cache/MAUI-Debug-net6.0-maccatalyst.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/xs/project-cache/MAUI-Debug-net6.0-maccatalyst.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/xs/project-cache/Unit test-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Console/xs/project-cache/Unit test-Debug.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Console.sln" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Console/Console.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Console/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Console/Properties/launchSettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Authentication.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/VSWorkspaceState.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/VSWorkspaceState.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/b3216a3a-96fe-48b7-aad1-4d5d000b38f5.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/.wsuo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/.wsuo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/slnx.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/slnx.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/App.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/App.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/App.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/AppShell.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/AppShell.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/AppShell.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/AppShell.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/LoginPage.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/LoginPage.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/MAUI.App.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder.App.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/MAUI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/MainPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ForgotPassword.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/MainPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ForgotPassword.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/MatchPage.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/MatchPage.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/MauiProgram.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MauiProgram.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/Android/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/Android/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/Android/MainActivity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/Android/MainActivity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/Android/MainApplication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/Android/MainApplication.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/Android/Resources/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/Android/Resources/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/MacCatalyst/AppDelegate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/iOS/AppDelegate.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/MacCatalyst/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/MacCatalyst/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/MacCatalyst/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/iOS/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/Tizen/Main.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/Tizen/tizen-manifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/Tizen/tizen-manifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/Windows/App.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/Windows/App.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/Windows/App.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/Windows/Package.appxmanifest" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/Windows/Package.appxmanifest" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/Windows/app.manifest" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/Windows/app.manifest" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/iOS/AppDelegate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/MacCatalyst/AppDelegate.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/iOS/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/iOS/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Platforms/iOS/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Platforms/MacCatalyst/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/ProfielChange.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/ProfielChange.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/RegisterPage.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/RegisterPage.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/AppIcon/appicon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/AppIcon/appicon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/AppIcon/appiconfg.svg" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/AppIcon/appiconfg.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Fonts/OpenSans-Regular.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Fonts/OpenSans-Regular.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Fonts/OpenSans-Semibold.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Fonts/OpenSans-Semibold.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Images/achtergrond.png" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Images/achtergrond.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Images/backgr.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Images/backgr.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Images/bck.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Images/bck.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Images/discordpf.png" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Images/discordpf.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Images/dotnet_bot.svg" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Images/dotnet_bot.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Images/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Images/nomorematches.png" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Images/nomorematches.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Images/noprofile.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Images/noprofile.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Images/wessel.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Images/wessel.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Images/winderlogo_zonderwindesheimdating.png" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Images/winderlogo_zonderwindesheimdating.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Images/zwartvierkant.png" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Images/zwartvierkant.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Raw/AboutAssets.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Raw/AboutAssets.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Splash/splash.svg" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Splash/splash.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Styles/Colors.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Styles/Colors.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/Resources/Styles/Styles.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Resources/Styles/Styles.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/WijzigWachtwoordScherm.xaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MAUI/WijzigWachtwoordScherm.xaml.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unit test/.vs/Unit test/FileContentIndex/b7b3c5b0-de62-4fdc-a5c7-23a1de9d4f3d.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unit test/.vs/Unit test/FileContentIndex/c9fa9b80-6f2f-46cc-ba50-39b89e3eaec6.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unit test/.vs/Unit test/FileContentIndex/read.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unit test/.vs/Unit test/v17/.wsuo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unit test/.vs/VSWorkspaceState.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unit test/.vs/slnx.sqlite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unit test/TestAuthentication.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unit test/TestDatabase.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unit test/Unit test.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/Unittest.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unit test/Usings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/Usings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/global.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,6 +29,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2IXh0gUq4gGfG1ZtGTJa2sn2Fwy" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -136,11 +49,16 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "rider.run.widget.enabled.cache": "false",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Xamarin.Mac.Winder">
+  <component name="RunManager" selected="Xamarin.iOS.Winder">
     <configuration name="Winder" type="XamarinAndroidProject" factoryName="Xamarin.Android">
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -175,6 +93,8 @@
       <option name="presentableId" value="Default" />
       <updated>1670333620927</updated>
       <workItem from="1670333630372" duration="1909000" />
+      <workItem from="1670336283276" duration="336000" />
+      <workItem from="1670336668242" duration="640000" />
     </task>
     <servers />
   </component>
