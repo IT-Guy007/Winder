@@ -544,5 +544,110 @@ public class Database
         return "";
     }
 
+    public void insertMinAge(string email, int minAge)
+    {
+        // open connection
+
+        openConnection();
+
+        SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET min = @minAge WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+        query.Parameters.AddWithValue("@minAge", minAge);
+
+        try
+        {
+            query.ExecuteReader();
+            closeConnection();
+        }
+        catch (SqlException se)
+        {
+            closeConnection();
+        }
+
+    }
+
+    public void insertMaxAge(string email, int maxAge)
+    {
+        // open connection
+
+        openConnection();
+
+        SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET max = @maxAge WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+        query.Parameters.AddWithValue("@maxAge", maxAge);
+
+        try
+        {
+            query.ExecuteReader();
+            closeConnection();
+        }
+        catch (SqlException se)
+        {
+            closeConnection();
+        }
+
+    }
+
+    public int placeMinAge(string email)
+    {
+        // open connection
+
+        openConnection();
+
+        SqlCommand query = new SqlCommand("SELECT min FROM winder.winder.[User] WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+
+        
+        try
+        {
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read())
+            {
+                int? minAge = reader["min"] as int?;
+                closeConnection();
+                int minimalAge = minAge ?? 18;
+                return minimalAge;
+
+            }
+        }
+        catch (SqlException se)
+        {
+            closeConnection();
+            return 0;
+        }
+        return 0;
+    }
+
+    public int placeMaxAge(string email)
+    {
+        // open connection
+
+        openConnection();
+
+        SqlCommand query = new SqlCommand("SELECT max FROM winder.winder.[User] WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+
+
+        try
+        {
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read())
+            {
+                int? minAge = reader["max"] as int?;
+                closeConnection();
+                int minimalAge = minAge ?? 18;
+                return minimalAge;
+
+            }
+        }
+        catch (SqlException se)
+        {
+            closeConnection();
+            return 0;
+        }
+        return 0;
+    }
+
+
 
 }

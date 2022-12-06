@@ -14,6 +14,9 @@ public partial class Instellingen : ContentPage
         getMinimaleLeeftijd();
         placePreference();
         placeLocation();
+        placeMinAge();
+        placeMaxAge();
+
 
     }
 
@@ -81,6 +84,35 @@ public partial class Instellingen : ContentPage
         
         }
 
+    public void placeMinAge()
+    {
+        
+            int placeMinAge = database.placeMinAge(email);
+            minimaleLeeftijd.SelectedItem = placeMinAge;
+        
+    }
+    
+    public void placeMaxAge()
+    {
+        int placeMaxAge = database.placeMaxAge(email);
+        maximaleLeeftijd.SelectedItem = placeMaxAge;
+        
+    }
+
+    public void setMinAge()
+    {
+        int minAge = (int)minimaleLeeftijd.SelectedItem;
+        database.insertMinAge(email, minAge);
+
+    }
+
+    public void setMaxAge()
+    {
+        int maxAge = (int)maximaleLeeftijd.SelectedItem;
+        database.insertMaxAge(email, maxAge);
+
+    }
+
     public void editDataBtn(object sender, EventArgs e)
     {
        
@@ -96,6 +128,8 @@ public partial class Instellingen : ContentPage
             {
                 setPreference();
                 setLocation();
+                setMinAge();
+                setMaxAge();
                 DisplayAlert("Melding", "Er zijn succesvol gegevens aangepast", "OK");
             }
            
