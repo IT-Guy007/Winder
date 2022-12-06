@@ -86,7 +86,7 @@ public partial class WijzigWachtwoordScherm : ContentPage
                     
                   
                     DisplayAlert("", "Wachtwoord is succesvol gewijzigd", "OK"); // popup
-                    Navigation.PushAsync(new LoginScherm()); // terug naar het loginscherm
+                    Navigation.PushAsync(new LoginPage()); // terug naar het loginscherm
                 }
 
                 

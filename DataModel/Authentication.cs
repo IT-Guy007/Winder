@@ -122,7 +122,7 @@ public class Authentication {
     }
 
     
-<<<<<<< HEAD
+//<<<<<<< HEAD
     //verstuurd de mail
     public void SendEmail(string email, string body, string subject)
     {
@@ -156,6 +156,6 @@ public class Authentication {
 
 
 
-=======
->>>>>>> main
+//=======
+//>>>>>>> main
 }

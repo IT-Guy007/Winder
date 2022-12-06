@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-<<<<<<< HEAD
-    <data-source source="LOCAL" name="winder@192.168.1.106" uuid="1eb88172-2709-4b62-a6bb-f22ec2e3a473">
-=======
-    <data-source source="LOCAL" name="winder@192.168.1.106" uuid="a3cbb12f-f583-4a0b-ae78-1f613701c394">
->>>>>>> main
-      <driver-ref>sqlserver.ms</driver-ref>
+    <data-source source="LOCAL" name="slnx" uuid="86606f5a-3d96-40d8-924b-2e7b3e7c6aa7">
+      <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://192.168.1.106:1433;database=winder</jdbc-url>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\misch\source\repos\Winder\.vs\slnx.sqlite</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="slnx 2" uuid="55a8482d-8083-46d7-bdd2-400d1c82928e">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\misch\source\repos\Winder\.vs\slnx 2.sqlite</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

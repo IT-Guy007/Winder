@@ -11,12 +11,12 @@ public partial class LoginPage : ContentPage {
     public LoginPage() {
         InitializeComponent();
         b.Clicked += Inlog;
-<<<<<<< HEAD:MAUI/LoginScherm.xaml.cs
+//<<<<<<< HEAD:MAUI/LoginScherm.xaml.cs
         
         
-=======
+//=======
         b2.Clicked += WachtwoordVergeten;
->>>>>>> main:MAUI/LoginPage.xaml.cs
+//>>>>>>> main:MAUI/LoginPage.xaml.cs
     }
 
     private void Inlog(object sender, EventArgs e)
