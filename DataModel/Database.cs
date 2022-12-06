@@ -66,10 +66,10 @@ public SqlConnection connection;
                 var gender = reader["gender"] as string;
                 var profilePicture = reader["profilePicture"] as byte[];
                 var bio = reader["bio"] as string;
-                var school = reader["school"] as string;
+                var location = reader["location"] as string;
                 var major = reader["education"] as string;
                 _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
-                    preferences, email, "", gender ,profilePicture, bio,school,major);
+                    preferences, email, "", gender ,profilePicture, bio,location,major);
 
             }
 
