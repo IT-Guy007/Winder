@@ -50,8 +50,8 @@
             HorizontalOptions="Center" />
         
         <DatePicker x:Name="Geboortedatum"
-            DateSelected="Geboortedatum_DateSelected"
-                    HorizontalOptions="Center"
+            DateSelected="DateOfBirthSelectedDate"
+            HorizontalOptions="Center"
             />
         
         <Label 

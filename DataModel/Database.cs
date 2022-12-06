@@ -1,17 +1,22 @@
+using Microsoft.Maui.Controls;
+
 namespace DataModel;
 
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+
 using System.Drawing;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
 using System.Drawing.Imaging;
-public class Database
-{
+
+
+public class Database {
+    private Authentication _authentication = new Authentication();
     public SqlConnection connection;
-    public void generateConnection()
+    public void GenerateConnection()
     {
 
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
@@ -44,9 +49,7 @@ public class Database
         connection.Close();
     }
 
-    public void updateLocalUserFromDatabase(string email)
-    {
-
+    public void UpdateLocalUserFromDatabase(string email) {
         //Start connection
         openConnection();
 
@@ -67,10 +70,10 @@ public class Database
                 var gender = reader["gender"] as string;
                 //var profilePicture = reader["profilePicture"] as string;
                 var bio = reader["bio"] as string;
-                Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
-                    preferences, email, "", gender, bio);
-                //Authentication._currentUser = new User(username, firstName, middleName, lastName, birthday,
-                //    preferences, email, "", gender, Base64StringToBitmap(profilePicture),bio);
+                var school = reader["school"] as string;
+                var major = reader["education"] as string;
+                _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
+                    preferences, email, "", gender ,VarBinaryToImage(profilePicture), bio,school,major);
             }
 
             //Close connection
@@ -223,25 +226,129 @@ public class Database
         bitmap.Save(stream, ImageFormat.Png);
         return stream.ToArray();
     }
-
     public static string ByteArrToBase64String(byte[] bytes)
     {
         return Convert.ToBase64String(bytes);
     }
 
+
     public static Bitmap Base64StringToBitmap(string? base64String)
     {
         Bitmap bmpReturn = null;
+
+
         byte[] byteBuffer = Convert.FromBase64String(base64String);
         MemoryStream memoryStream = new MemoryStream(byteBuffer);
+
+
         memoryStream.Position = 0;
+
+
         bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
+
+
         memoryStream.Close();
         memoryStream = null;
         byteBuffer = null;
+
+
         return bmpReturn;
     }
-    //Fetches a list of all interests of an user from the database and returns the list
+
+    public void UpdatePassword(string email, string password)
+    {
+        Authentication a = new Authentication();
+        if (a.EmailIsUnique(email) == false) // checken of email in de database staat
+        {
+            // connectieopzetten en query maken
+            Authentication authentication = new Authentication();
+            string hashedpassword = authentication.HashPassword(password); // eerst het password hashen voor het updaten
+            OpenConnection();
+            SqlCommand query = new SqlCommand("update winder.winder.[User] set password = @password where email = @Email", connection);
+            query.Parameters.AddWithValue("@Email", email);
+            query.Parameters.AddWithValue("@password", hashedpassword);
+
+            //Execute query
+            try
+            {
+                query.ExecuteNonQuery();
+
+                //Close connection
+                CloseConnection();
+
+
+            }
+            catch (SqlException se)
+            {
+
+                //Close connection
+                CloseConnection();
+
+            }
+        }
+    }
+
+
+    public void DeleteUser(string email)
+    {
+        Authentication a = new Authentication();
+
+        if (a.EmailIsUnique(email) == false)
+        {
+
+
+            OpenConnection(); // connectie opzetten
+
+            email = email.ToLower();
+
+            //querys maken
+            SqlCommand queryLikedPerson = new SqlCommand("delete from winder.winder.Liked where person = @Email", connection);
+            queryLikedPerson.Parameters.AddWithValue("@Email", email);
+            SqlCommand queryLikedLikedPerson = new SqlCommand("delete from winder.winder.Liked where likedPerson = @Email", connection);
+            queryLikedLikedPerson.Parameters.AddWithValue("@Email", email);
+
+            SqlCommand queryMatchPerson1 = new SqlCommand("delete from winder.winder.Match where person1 = @Email", connection);
+            queryMatchPerson1.Parameters.AddWithValue("@Email", email);
+            SqlCommand queryMatchPerson2 = new SqlCommand("delete from winder.winder.Match where person2 = @Email", connection);
+            queryMatchPerson2.Parameters.AddWithValue("@Email", email);
+
+            SqlCommand queryuserHasInterest = new SqlCommand("delete from winder.winder.userHasInterest where UID = @Email", connection);
+            queryuserHasInterest.Parameters.AddWithValue("@Email", email);
+
+            SqlCommand queryUser = new SqlCommand("delete from winder.winder.[User] where email = @Email", connection);
+            queryUser.Parameters.AddWithValue("@Email", email);
+
+            //Execute querys
+            try
+            {
+                queryLikedPerson.ExecuteNonQuery();
+                queryLikedLikedPerson.ExecuteNonQuery();
+                queryMatchPerson1.ExecuteNonQuery();
+                queryMatchPerson2.ExecuteNonQuery();
+                queryuserHasInterest.ExecuteNonQuery();
+
+                queryUser.ExecuteNonQuery();
+
+                //Close connection
+                CloseConnection();
+            }
+            catch (SqlException se)
+            {
+
+                //Close connection
+                CloseConnection();
+
+            }
+        }
+
+    }
+    
+
+
+
+
+  
+
     public List<string> GetInterestsFromDataBase()
     {
         List<string> interests = new List<string>();
@@ -270,6 +377,41 @@ public class Database
         return reader.IsDBNull(3) ?
                            (DateTime?)new DateTime(1925, 01, 01, 0, 0, 0, 0) :
                            (DateTime?)reader.GetDateTime(3);
+    }
+        public User GetUserFromDatabase(string email)
+    {
+        User user = null;
+        OpenConnection();
+        string sql = "SELECT * FROM Winder.Winder.[User] where email = @Email";
+        SqlCommand command = new SqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@Email", email);
+        try
+        {
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string? username = reader["email"] as string;
+                var firstName = reader["firstname"] as string;
+                var middleName = reader["middlename"] as string;
+                var lastName = reader["lastname"] as string;
+                var preferences = reader["preference"] as string;
+                string? gender = reader["gender"] as string;
+                DateTime? bday = reader["birthday"] as DateTime?;
+                var bio = reader["bio"] as string;
+                var school = reader["location"] as string;
+                var major = reader["education"] as string;
+                byte[] img = (byte[])(reader["profilePicture"]);
+                
+                DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
+                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, VarBinaryToImage(img), bio, school, major);
+            }
+        }
+        catch (SqlException e)
+        {
+            CloseConnection();
+        }
+        CloseConnection();
+        return user;
     }
     //Registers interests in database for an user
     public bool addInterestToUserInterests(string email, string interest)
@@ -369,4 +511,187 @@ public class Database
         }
 
     }
+
+
+    //<summary>Checks if there is a match between users.</summary>
+    public bool CheckMatch(string emailCurrentUser, string emailLikedPerson)
+    {
+        bool match;
+        OpenConnection();
+
+        SqlCommand command = new SqlCommand("SELECT * FROM Winder.Winder.[Liked] WHERE person = @emailLikedPerson AND likedPerson = @emailCurrentUser AND liked = 1", connection);
+        command.Parameters.AddWithValue("@emailLikedPerson", emailLikedPerson);
+        command.Parameters.AddWithValue("@emailCurrentUser", emailCurrentUser);
+
+        try
+        {
+            SqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            match = reader.HasRows;
+            //Close connection
+            CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            match = false;
+            //Close connection
+            CloseConnection();
+        }
+        
+        return match;
+    }
+
+    public void NewLike(string emailCurrentUser, string emailLikedPerson)
+    {
+        //There is no match yet
+        OpenConnection();
+        SqlCommand command = new SqlCommand("INSERT INTO Winder.Winder.[Liked] (person, likedPerson, liked) " +
+                                            "VALUES (@currentUser, @likedUser, 1)", connection);
+        command.Parameters.AddWithValue("@currentUser", emailCurrentUser);
+        command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
+
+        try
+        {
+            command.ExecuteReader();
+            //Close connection
+            CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            //throw new Exception(se.ToString());
+            Console.WriteLine(se.ToString());
+            //Close connection
+            CloseConnection();
+        }
+    }
+
+    //als iemand jou gedisliked heeft krijg jij hem niet meer te zien want een match is dan niet meer mogelijk
+    public void NewDislike(string emailCurrentUser, string emailLikedPerson)
+    {
+        //There is no match yet
+        OpenConnection();
+        SqlCommand command = new SqlCommand("INSERT INTO Winder.Winder.[Liked] (person, likedPerson, liked) " +
+                                            "VALUES (@currentUser, @likedUser, 0)", connection);
+        command.Parameters.AddWithValue("@currentUser", emailCurrentUser);
+        command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
+
+        try
+        {
+            command.ExecuteReader();
+            //Close connection
+            CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            //Close connection
+            CloseConnection();
+        }
+    }
+
+    public void NewMatch(string emailCurrentUser, string emailLikedPerson)
+    {
+        OpenConnection();
+
+        SqlCommand command = new SqlCommand("INSERT INTO winder.winder.[Match] (person1, person2) " +
+                                            "VALUES (@currentUser, @likedUser)", connection);
+        command.Parameters.AddWithValue("@currentUser", emailCurrentUser);
+        command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
+
+        try
+        {
+            command.ExecuteReader();
+            CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            CloseConnection();
+        }
+    }
+        public void deleteLikeOnMatch(string emailCurrentUser, string emailLikedUser)
+    {
+        OpenConnection();
+
+        SqlCommand command = new SqlCommand("DELETE FROM winder.winder.[Liked] " +
+                                            "WHERE person = @emailLikedUser AND likedPerson = @emailCurrentUser ", connection);
+        command.Parameters.AddWithValue("@emailLikedUser", emailLikedUser);
+        command.Parameters.AddWithValue("@emailCurrentUser", emailCurrentUser);
+
+        try
+        {
+            command.ExecuteReader();
+            CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            CloseConnection();
+        }
+    }
+
+    public Image[] GetPicturesFromDatabase(string email) {
+        
+        Image[] result = new Image[10];
+
+        //TO-DO: Get pictures from database
+        //Start connection
+        OpenConnection();
+
+        //Create query
+        SqlCommand query = new SqlCommand("select * from winder.winder.[Photos] where email = @email", connection);
+        query.Parameters.AddWithValue("@email", email);
+
+        //Execute query
+        try {
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read()) {
+                
+            }
+        } catch(SqlException se) {
+            Console.WriteLine("Error retrieving pictures from database");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+        }
+
+        return result;
+    }
+
+    //User to get the profiles for the match(run async)
+    public Profile[] Get5Profiles(string email) {
+        //The algorithm that determines who to get
+        
+        //The users to get
+        string[] usersToRetrief = new string[5];
+
+        //Results
+        Profile[] profiles = new Profile[5];
+        
+        //Retrieving
+        for(int i = 0;i != 4;i++) {
+            
+            //Get the user
+            User user = GetUserFromDatabase(usersToRetrief[i]);
+            
+            //Get the interests of the user
+            user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]);
+
+            //Get the images of the user
+            Image[] images = GetPicturesFromDatabase(usersToRetrief[i]);
+            var profile = new Profile(user, images);
+            
+            profiles.Append(profile);
+        }
+        
+        return profiles;
+    }
+    public Image VarBinaryToImage(byte[] input) {
+        Stream stream = new MemoryStream(input);
+        Image image = new Image {
+            Source = ImageSource.FromStream(() => stream)
+        };
+        return image;
+    }
+
 }

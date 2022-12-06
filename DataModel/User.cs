@@ -1,5 +1,8 @@
+using Microsoft.Maui.Controls;
+
 namespace DataModel;
 using System.Drawing;
+
 public class User {
     public string firstName { get; set; }
     public string middleName { get; set; }
@@ -9,10 +12,15 @@ public class User {
     public string email { get; set; }
     public string password { get; set; }
     public string gender { get; set; }
+    public Image profilePicture { get; set; }
     public string bio { get; set; }
-    private Bitmap profilePicture { get; set; }
-    public User(string firstName, string middleName, string lastName, DateTime? birthDay,
-        string preference, string email, string password, string gender, Bitmap profilePicture, string bio)
+    public string school { get; set; }
+    public string major { get; set; }
+    public string[] interests { get; set; }
+    public string location { get; set; }
+
+    public User(string firstName, string middleName, string lastName, DateTime birthDay,
+        string preference, string email, string password, string gender, Image profilePicture, string bio, string school, string major)
     {
         this.firstName = firstName;
         this.middleName = middleName;
