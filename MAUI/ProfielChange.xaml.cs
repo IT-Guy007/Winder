@@ -14,7 +14,7 @@ public partial class ProfileChange : ContentPage
         interesses = new List<string>();
         listInteresses.ItemsSource = interesses;
     }
-    private void wijzigProfielGegevens(object sender, EventArgs e)
+    private void ChangeUserData(object sender, EventArgs e)
     {
         checkAllInput();
     }
@@ -39,7 +39,7 @@ public partial class ProfileChange : ContentPage
 
     }
 
-    private void Voornaam_TextChanged(object sender, TextChangedEventArgs e)
+    private void FirstnameTextChanged(object sender, TextChangedEventArgs e)
     {
         if (Voornaam.Text != "")
         {
@@ -59,7 +59,7 @@ public partial class ProfileChange : ContentPage
             }
         }
     }
-    private void Tussenvoegsel_TextChanged(object sender, TextChangedEventArgs e)
+    private void MiddlenameTextChanged(object sender, TextChangedEventArgs e)
     {
         if (Tussenvoegsel.Text != "")
         {
@@ -79,7 +79,7 @@ public partial class ProfileChange : ContentPage
             }
         }
     }
-    private void Achternaam_TextChanged(object sender, TextChangedEventArgs e)
+    private void LastnameTextChanged(object sender, TextChangedEventArgs e)
     {
         if (Achternaam.Text != "")
         {
@@ -99,7 +99,7 @@ public partial class ProfileChange : ContentPage
             }
         }
     }
-    private void Omschrijving_TextChanged(object sender, TextChangedEventArgs e)
+    private void BioTextChanged(object sender, TextChangedEventArgs e)
     {
         if (Omschrijving.Text != "")
         {
@@ -144,7 +144,7 @@ public partial class ProfileChange : ContentPage
         }
     }
 
-    private void interessePicker_SelectedIndexChanged(object sender, EventArgs e)
+    private void PickerIndexChanged(object sender, EventArgs e)
     {
         addSelectedValueToListInteresses();
     }
@@ -175,7 +175,7 @@ public partial class ProfileChange : ContentPage
         }
     }
 
-    private void DeleteItem_Clicked(object sender, EventArgs e)
+    private void DeleteInterest(object sender, EventArgs e)
     {
         if (listInteresses.SelectedItem != null) {
             var item = listInteresses.SelectedItem.ToString();
@@ -187,7 +187,7 @@ public partial class ProfileChange : ContentPage
     }
 
 
-    private void Geboortedatum_DateSelected(object sender, DateChangedEventArgs e)
+    private void DateOfBirthSelectedDate(object sender, DateChangedEventArgs e)
     {
         checkIfAgeOfBirthDateIsOver18();
     }

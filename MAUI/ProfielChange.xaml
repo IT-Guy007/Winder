@@ -44,7 +44,7 @@
             HorizontalOptions="Center" />
         <DatePicker x:Name="Geboortedatum"
             DateSelected="DateOfBirthSelectedDate"
-                    HorizontalOptions="Center"
+            HorizontalOptions="Center"
             />
         <Label 
             x:Name="lblOmschrijving"
@@ -93,7 +93,11 @@
                 </x:Array>
             </ListView.ItemsSource>
         </ListView>
-        <Button x:Name="DeleteItem" Text="Delete" Clicked="DeleteInterest" MaximumWidthRequest="100" MaximumHeightRequest="40"/>
+        <Button x:Name="DeleteItem" 
+                Text="Delete" 
+                Clicked="DeleteInterest" 
+                MaximumWidthRequest="100" 
+                MaximumHeightRequest="40"/>
         <Button x:Name="wijzigProfielKnop"             
                 Text="Opslaan"
                 Clicked="ChangeUserData"/>
