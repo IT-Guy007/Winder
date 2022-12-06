@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUI.RegisterPage"
+             Title="RegisterForm"
+             BackgroundImageSource="backgr.jpeg">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.Column="0" Fill="Black" Opacity="0.6"  HorizontalOptions="Fill" VerticalOptions="Start"></Rectangle>
+        <VerticalStackLayout Grid.Column="0"  Spacing="10" Padding="20" HorizontalOptions="Center" >
+
+            <ImageButton
+                Clicked="OnProfilePictureClicked"
+                x:Name="ProfileImage"
+                HeightRequest="100"
+                WidthRequest="100"
+                Aspect="AspectFill"
+                CornerRadius="50"
+                IsVisible="false"/>
+            
+            <Label 
+                x:Name="FoutProfielfoto"
+                FontSize="12"
+                Text="Profielfoto is verplicht"
+                IsVisible="false"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="OrangeRed"/>
+
+            <Label 
+                x:Name="LblVoornaam"
+                FontSize="12"
+                Text="Voornaam"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="White"/>
+            
+            <Label 
+                x:Name="Foutvoornaam"
+                FontSize="12"
+                Text="Voornaam mag niet leeg zijn"
+                IsVisible="false"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="OrangeRed"/>
+            
+            <Entry
+                x:Name="Voornaam"
+                HorizontalOptions="Fill"
+                HeightRequest="30"
+                BackgroundColor ="White"
+                TextColor ="Black"
+                FontSize="15"
+                WidthRequest="220"/>
+
+            <Label 
+                x:Name="LblTussenvoegsel"
+                FontSize="12"
+                Text="Tussenvoegsel"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="White"/>
+
+            <Entry
+                x:Name="Tussenvoegsel"
+                HorizontalOptions="Fill"
+                HeightRequest="30"
+                BackgroundColor ="White"
+                TextColor ="Black"
+                FontSize="15"
+                WidthRequest="220"/>
+            
+            <Label 
+                x:Name="LblAchternaam"
+                FontSize="12"
+                Text="Achternaam"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="White"/>
+            
+            <Label 
+                x:Name="FoutAchternaam"
+                FontSize="12"
+                Text="Achternaam mag niet leeg zijn"
+                IsVisible="false"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="OrangeRed"/>
+            
+            <Entry
+                x:Name="Achternaam"
+                HorizontalOptions="Fill"
+                HeightRequest="30"
+                BackgroundColor ="White"
+                TextColor ="Black"
+                FontSize="15"
+                WidthRequest="220"/>
+            
+            <Label 
+                x:Name="LblGeslacht"
+                FontSize="12"
+                Text="Geslacht"
+                IsVisible="True"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor ="White"/>
+            
+            <Label 
+                x:Name="FoutGeslacht"
+                FontSize="12"
+                Text="Geslacht mag niet leeg zijn"
+                IsVisible="false"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="OrangeRed"/>
+
+            <Picker 
+                x:Name="Geslacht"
+                IsVisible="True"
+                TextColor="White"
+                BackgroundColor="Gray"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                HorizontalTextAlignment="Center">
+
+                <Picker.Items >
+                    <x:String>Man</x:String>
+                    <x:String>Vrouw</x:String>
+                    <x:String>Anders</x:String>
+                </Picker.Items>
+            </Picker>
+            
+            <Label 
+                x:Name="LblGeboortedatum"
+                FontSize="12"
+                Text="Geboortedatum"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="White"/>
+            
+            <Label 
+                x:Name="FoutLeeftijd"
+                FontSize="12"
+                Text="Minimum leeftijd is 18 jaar"
+                IsVisible="false"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="OrangeRed"/>
+
+            <DatePicker 
+                x:Name="Geboortedatum"
+                FontSize="12"
+                HeightRequest="30"
+                BackgroundColor="White"
+                TextColor="Black"
+                HorizontalOptions="Center"/>
+            
+            <Label 
+                x:Name="Lblemail"
+                FontSize="12"
+                Text="Email"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor ="White"/>
+            
+            <Label 
+                x:Name="FoutEmail"
+                FontSize="12"
+                Text="Email mag niet leeg zijn"
+                IsVisible="false"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="OrangeRed"/>
+            
+            <Entry
+                x:Name="Email"
+                HorizontalOptions="Fill"
+                HeightRequest="30"
+                BackgroundColor ="White"
+                TextColor ="Black"
+                FontSize="15"
+                WidthRequest="220"/>
+            
+            <Label 
+                x:Name="LblWachtwoord"
+                FontSize="12"
+                Text="Wachtwoord"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="White"/>
+            
+            <Label 
+                x:Name="FoutWachtwoord"
+                FontSize="12"
+                Text="Wachtwoord mag niet leeg zijn"
+                IsVisible="false"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="OrangeRed"/>
+            
+            <Entry
+                x:Name="Wachtwoord"
+                IsPassword="True"
+                HorizontalOptions="Fill"
+                HeightRequest="20"
+                BackgroundColor ="White"
+                TextColor ="Black"
+                FontSize="Body"
+                WidthRequest="220"/>
+            <Label 
+                x:Name="LblOpleiding"
+                FontSize="12"
+                IsVisible="False"
+                Text="Opleiding"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor ="White"/>
+
+            <Label 
+                x:Name="FoutOpleiding"
+                FontSize="12"
+                Text="Opleiding mag niet leeg zijn"
+                IsVisible="false"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="OrangeRed"/>
+            <Entry
+                x:Name="Opleiding"
+                HorizontalOptions="Fill"
+                HeightRequest="30"
+                BackgroundColor ="White"
+                IsVisible="false"
+                TextColor ="Black"
+                FontSize="15"
+                WidthRequest="220"/>
+            <Label 
+                x:Name="LblVoorkeur"
+                FontSize="12"
+                Text="Voorkeur"
+                IsVisible="False"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor ="White"/>
+            
+            <Label 
+                x:Name="FoutVoorkeur"
+                FontSize="12"
+                Text="Voorkeur mag niet leeg zijn"
+                IsVisible="false"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="OrangeRed"/>
+
+            <Picker 
+                x:Name="Voorkeur"
+                IsVisible="False"
+                TextColor="White"
+                BackgroundColor="Gray"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                HorizontalTextAlignment="Center">
+
+                <Picker.Items >
+                    <x:String>Man</x:String>
+                    <x:String>Vrouw</x:String>
+                    <x:String>Beide</x:String>
+                </Picker.Items>
+            </Picker>
+            
+          
+            
+            
+            
+            <Label
+                x:Name="LblLocatie"
+                FontSize="12"
+                Text="Locatie"
+                IsVisible="False"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor ="White"/>
+            
+            <Label 
+                x:Name="FoutLocatie"
+                FontSize="12"
+                Text="Locatie mag niet leeg zijn"
+                IsVisible="false"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="OrangeRed"/>
+            
+            <Picker 
+                x:Name="Locatie"
+                TextColor="White"
+                BackgroundColor="Gray"
+                IsVisible="False"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                HorizontalTextAlignment="Center">
+
+                <Picker.Items >
+                    <x:String>Zwolle</x:String>
+                    <x:String>Almere</x:String>
+                </Picker.Items>
+            </Picker>
+            
+            <Label 
+                x:Name="LblInteresses"
+                FontSize="12"
+                Text="Interesses ( maximaal 5 )"
+                IsVisible="False"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor ="White"/>
+            
+            <Label 
+                x:Name="Foutinteresses"
+                FontSize="12"
+                Text="Interesses mag niet leeg zijn"
+                IsVisible="false"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor ="OrangeRed"/>
+
+            <Picker
+                x:Name="Interesses"
+                TextColor="White"
+                BackgroundColor="Gray"
+                IsVisible="False"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                SelectedIndexChanged="OnSelectedItems"
+                >
+
+                <Picker.Items>
+
+                </Picker.Items>
+
+            </Picker>
+            
+            <ListView HeightRequest="100" WidthRequest="200" HorizontalOptions="Center" x:Name="Gekozeninteresses" BackgroundColor="Black" 
+                      IsVisible="false"
+                      SelectionMode="Single"
+                      ItemSelected="SelectedItemsOfInterests"
+                      >
+                
+                
+                <ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                    </x:Array>
+                </ListView.ItemsSource>
+            </ListView>
+
+            <Button
+                x:Name="Registreer"
+                Clicked="RegisterBtnEvent"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                Text="Registreer"/>
+
+            
+            <Button
+                x:Name="Opslaan"
+                IsVisible="False"
+                Clicked="SaveEvent"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Text="Opslaan"/>
+
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>
