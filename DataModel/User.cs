@@ -15,6 +15,7 @@ public class User {
     public string school { get; set; }
     public string major { get; set; }
     public string[] interests { get; set; }
+    public string location { get; set; }
 
     public User(string firstName, string middleName, string lastName, DateTime birthDay,
         string preference, string email, string password, string gender, byte[] profilePicture, string bio, string school, string major)
@@ -32,34 +33,4 @@ public class User {
         this.school = school;
         this.major = major;
     }
-
-    public User(string firstName, string middleName, string lastName, DateTime birthDay,
-        string preference, string email, string password, string gender, byte[] profilePicture, string bio)
-    {
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.birthDay = birthDay;
-        this.preference = preference;
-        this.email = email;
-        this.password = password;
-        this.gender = gender;
-        this.profilePicture = profilePicture;
-        this.bio = bio;
-    }
-
-    public User(string firstName, string middleName, string lastName, DateTime birthDay,
-        string preference, string email, string password, string gender, string bio)
-    {
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.birthDay = birthDay;
-        this.preference = preference;
-        this.email = email;
-        this.password = password;
-        this.gender = gender;
-        this.bio = bio;
-    }
-
 }

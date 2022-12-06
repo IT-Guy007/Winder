@@ -25,7 +25,7 @@ public class Authentication {
         inactive,
     }
     
-    public void updateUserSetting(bool activation, bool signedIN) {
+    public void UpdateUserSetting(bool activation, bool signedIN) {
         if (activation) {
             this._accountState = AccountState.active;
         }
