@@ -252,7 +252,7 @@ public partial class RegisterPage : ContentPage
         }
 
         #endregion
-        
+
         #region achernaam check
 
         if (Achternaam.Text == null)
@@ -344,9 +344,6 @@ public partial class RegisterPage : ContentPage
 
         if (RegisterBtnEventCheck())
         {
-            
-            
-
             //setting objects visible to proceed the registerform
             LblVoorkeur.IsVisible = true;
             Voorkeur.IsVisible = true;

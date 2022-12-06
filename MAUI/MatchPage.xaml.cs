@@ -141,26 +141,41 @@ public partial class MatchPage : ContentPage {
             
             likeButton.Clicked += (sender, args) => {
                 checkIfqueNeedsMoreProfiles();
+                string emailCurrentUser = Authentication._currentUser.email;
+                string emailLikedUser = feedUser.email;
+                if (database.checkMatch(emailCurrentUser, emailLikedUser))
+                {
+                    database.NewMatch(emailLikedUser, emailCurrentUser);
+                    database.deleteLikeOnMatch(emailCurrentUser, emailLikedUser);
+                }
+                else
+                {
+                    database.NewLike(emailCurrentUser, emailLikedUser);
+                }
+
+                //en krijg een pop-up dat je een match hebt
+
+                //en daarna door naar de volgende persoon
             };
             dislikeButton.Clicked += (sender, args) =>
             {
                 checkIfqueNeedsMoreProfiles();
+                string emailCurrentUser = Authentication._currentUser.email;
+                string emaildDislikedUser = feedUser.email;
+
+                _database.NewDislike(emailCurrentUser, emaildDislikedUser);
+
             };
             buttonStackLayout.Add(dislikeButton);
             buttonStackLayout.Add(likeButton);
-            
 
         }
         verticalStackLayout.Add(imageLayout);
-        
-        
-        
         
         verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
     }
 
-    
     private async Task updateQue() {
         Task gettingProfiles = getProfiles();
         await gettingProfiles;
