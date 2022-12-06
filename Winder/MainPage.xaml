@@ -4,7 +4,9 @@
              x:Class="MAUI.MainPage" 
              Shell.NavBarIsVisible="False"
              BackgroundColor="#CC415F">
-    
+    <Shell.BackButtonBehavior >
+        <BackButtonBehavior IsVisible="False" IsEnabled="False"></BackButtonBehavior>
+    </Shell.BackButtonBehavior>
     <VerticalStackLayout VerticalOptions="Center"  >
             
         <Image 
@@ -31,7 +33,7 @@
 
         <Button 
             x:Name="Registreren"
-            Text="Registreren?"
+            Text="Registreren"
             Clicked="RegisterButton"
             WidthRequest="150"
             BackgroundColor="White"

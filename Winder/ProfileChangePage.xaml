@@ -4,6 +4,19 @@
              x:Class="MAUI.ProfileChange"
              Title="Profiel">
     <VerticalStackLayout>
+        <ImageButton
+                
+                x:Name="Backbutton"
+                Source="backbutton.png"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                HeightRequest="40"
+                WidthRequest="40"
+                Aspect="AspectFill"
+                IsVisible="false"
+                CornerRadius="50"
+                Grid.Row="0"
+                />
         <HorizontalStackLayout HorizontalOptions="Center">
             <Label 
             x:Name="lblVoornaam"
