@@ -34,4 +34,7 @@ public class User {
         this.school = school;
         this.major = major;
     }
+    
+    public User(){}
+    
 }

@@ -1,3 +1,6 @@
+using System.Net;
+using System.Net.Mail;
+
 namespace DataModel;
 using System.Security.Cryptography;
 using System.Text;
@@ -11,6 +14,7 @@ public class Authentication {
     public Authentication() {
         _loggedState = LoggedState.signedOut;
         _accountState = AccountState.inactive;
+        _currentUser = new User();
     }
 
     //Defining state

@@ -9,8 +9,7 @@ using System.Data.SqlClient;
 public class Database {
     private Authentication _authentication = new Authentication();
     public SqlConnection connection;
-    public void GenerateConnection()
-    {
+    public void GenerateConnection() {
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
         builder.DataSource = "192.168.1.106,1433";
@@ -30,11 +29,9 @@ public class Database {
         connection.Open();
     }
 
-    public void CloseConnection()
-    {
+    public void CloseConnection() {
 
-        if (connection == null)
-        {
+        if (connection == null) {
 
             GenerateConnection();
         }
@@ -43,54 +40,56 @@ public class Database {
 
     public void UpdateLocalUserFromDatabase(string email) {
 
-        //Start connection
-        OpenConnection();
-
-        //Create query
-        SqlCommand query = new SqlCommand("select * from winder.winder.[User] where email = @email", connection);
-        query.Parameters.AddWithValue("@email", email);
-
-        //Execute query
-        try
+        if (!string.IsNullOrWhiteSpace(email))
         {
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read()) {
-                var firstName = reader["firstName"] as string;
-                var middleName = reader["middleName"] as string;
-                var lastName = reader["lastName"] as string;
-                var preferences = reader["preference"] as string;
-                var birthday = (DateTime)reader["birthday"];
-                var gender = reader["gender"] as string;
-                var profilePicture = reader["profilePicture"] as byte[];
-                var bio = reader["bio"] as string;
-                var school = reader["school"] as string;
-                var major = reader["education"] as string;
-                _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
-                    preferences, email, "", gender ,VarBinaryToImage(profilePicture), bio,school,major);
+            //Start connection
+            OpenConnection();
 
+            //Create query
+            SqlCommand query = new SqlCommand("select * from winder.winder.[User] where email = @email", connection);
+            query.Parameters.AddWithValue("@email", email);
+
+            //Execute query
+            try
+            {
+                SqlDataReader reader = query.ExecuteReader();
+                while (reader.Read())
+                {
+                    var firstName = reader["firstName"] as string;
+                    var middleName = reader["middleName"] as string;
+                    var lastName = reader["lastName"] as string;
+                    var preferences = reader["preference"] as string;
+                    var birthday = (DateTime)reader["birthday"];
+                    var gender = reader["gender"] as string;
+                    var profilePicture = reader["profilePicture"] as byte[];
+                    var bio = reader["bio"] as string;
+                    var school = reader["school"] as string;
+                    var major = reader["education"] as string;
+                    _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
+                        preferences, email, "", gender, VarBinaryToImage(profilePicture), bio, school, major);
+
+                }
+
+                //Close connection
+                CloseConnection();
+
+            }
+            catch (SqlException sql)
+            {
+                Console.WriteLine("Sql error: " + sql);
+
+                //Close connection
+                CloseConnection();
             }
 
             //Close connection
             CloseConnection();
-
         }
-        catch (SqlException sql)
-        {
-            Console.WriteLine("Sql error: " + sql);
-
-            //Close connection
-            CloseConnection();
-        }
-
-        //Close connection
-        CloseConnection();
     }
 
-    public bool CheckLogin(string email, string password)
-    {
-
-        Authentication authentication = new Authentication();
-        string hashed = authentication.HashPassword(password);
+    public bool CheckLogin(string email, string password) {
+        
+        string hashed = _authentication.HashPassword(password);
         bool output = false;
 
         //Start connection
@@ -115,6 +114,7 @@ public class Database {
         CloseConnection();
         UpdateLocalUserFromDatabase(email);
         return output;
+        
     }
 
     public List<string> GetEmailFromDataBase() {
@@ -187,7 +187,8 @@ public class Database {
         //Open connectionn
         OpenConnection();
 
-        SqlCommand query = new SqlCommand("update winder.winder.[User] set active = @Active where email = @Email", connection);
+        SqlCommand query = new SqlCommand("update winder.winder.[User] set active = @Active where email = @Email",
+            connection);
         query.Parameters.AddWithValue("@Email", email);
         query.Parameters.AddWithValue("@Active", activate);
 
@@ -202,6 +203,7 @@ public class Database {
             {
                 return true;
             }
+
             return false;
         }
         catch (SqlException se)
@@ -211,30 +213,6 @@ public class Database {
             return false;
         }
 
-    }
-
-
-    public static Bitmap Base64StringToBitmap(string? base64String)
-    {
-        Bitmap bmpReturn = null;
-
-
-        byte[] byteBuffer = Convert.FromBase64String(base64String);
-        MemoryStream memoryStream = new MemoryStream(byteBuffer);
-
-
-        memoryStream.Position = 0;
-
-
-        bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
-
-
-        memoryStream.Close();
-        memoryStream = null;
-        byteBuffer = null;
-
-
-        return bmpReturn;
     }
 
     public void UpdatePassword(string email, string password)
@@ -674,12 +652,11 @@ public class Database {
         
         return profiles;
     }
-    public Image VarBinaryToImage(byte[] input) {
+    private Image VarBinaryToImage(byte[] input) {
         Stream stream = new MemoryStream(input);
         Image image = new Image {
             Source = ImageSource.FromStream(() => stream)
         };
         return image;
     }
-
 }
