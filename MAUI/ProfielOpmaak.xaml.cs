@@ -207,6 +207,22 @@ public partial class ProfielOpmaak : ContentPage
             }
         }
     }
+
+    private void listInteresses_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+        if (listInteresses.SelectedItem != null)
+        {
+            interessePicker.Title = "Interesse";
+            interessePicker.TitleColor = default;
+            var interest = listInteresses.SelectedItem.ToString();
+            b.removeInterestOutOfuserHasInterestTableDatabase(Authentication._currentUser.email, interest);
+            interesses.Remove(interest);
+            listInteresses.ItemsSource = null;
+            listInteresses.ItemsSource = interesses;
+            listInteresses.SelectedItem = null;
+        }
+    }
+
     private void Omschrijving_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (Omschrijving.Text != "")
@@ -279,21 +295,6 @@ public partial class ProfielOpmaak : ContentPage
             interessePicker.TitleColor = ErrorColor;
         }
     }
-
-    private void DeleteItem_Clicked(object sender, EventArgs e)
-    {
-        if (listInteresses.SelectedItem != null) {
-            interessePicker.Title = "Interesse";
-            interessePicker.TitleColor = default;
-            var interest = listInteresses.SelectedItem.ToString();
-            b.removeInterestOutOfuserHasInterestTableDatabase(Authentication._currentUser.email, interest);
-            interesses.Remove(interest);
-            listInteresses.ItemsSource = null;
-            listInteresses.ItemsSource = interesses;
-            listInteresses.SelectedItem = null;
-        }
-    }
-
     private void Geboortedatum_DateSelected(object sender, DateChangedEventArgs e)
     {
         DateTime today = DateTime.Today;

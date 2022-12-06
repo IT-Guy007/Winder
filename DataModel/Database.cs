@@ -294,14 +294,15 @@ public class Database
     //Removes all interests from an user in the database
     public bool removeInterestOutOfuserHasInterestTableDatabase(string username, string interest)
     {
-        openConnection();
-        string sql = "Delete From winder.userHasInterest Where UID = @Email and interest = @Interest";
-        SqlCommand command = new SqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@Email", username);
-        command.Parameters.AddWithValue("@Interest", interest);
         try
         {
+            openConnection();
+            string sql = "Delete From winder.userHasInterest Where UID = @Email and interest = @Interest";
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Email", username);
+            command.Parameters.AddWithValue("@Interest", interest);
             command.ExecuteNonQuery();
+            closeConnection();
             return true;
         }
         catch (SqlException e)

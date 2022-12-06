@@ -107,13 +107,12 @@
 
             </Picker.Items>
         </Picker>
-        <ListView MaximumHeightRequest="100" HorizontalOptions="Center" x:Name="listInteresses">
+        <ListView ItemSelected="listInteresses_ItemSelected" MaximumHeightRequest="100" HorizontalOptions="Center" x:Name="listInteresses">
             <ListView.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                 </x:Array>
             </ListView.ItemsSource>
         </ListView>
-        <Button x:Name="DeleteItem" Text="Delete" Clicked="DeleteItem_Clicked" MaximumWidthRequest="100" MaximumHeightRequest="40"/>
         <Button x:Name="wijzigProfielKnop"             
                 Text="Opslaan"
                 Clicked="wijzigProfielGegevens"/>

@@ -3,11 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4d94c203-6d0e-4d79-80c2-0bb2ccba3c7e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/5159c305-d9dd-41b2-80ff-4956c7db41b8.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Console/v17/TestStore/0/000.testlog" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Console/FileContentIndex/427f0a1f-329a-4d5d-8dce-7ad6046e6cf4.vsidx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MAUI/ProfielOpmaak.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unit test/TestDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unit test/TestDatabase.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
