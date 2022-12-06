@@ -175,7 +175,7 @@ public partial class MatchPage : ContentPage {
         Content = verticalStackLayout;
     }
 
-    private async Task UpdateQue() {
+    private async Task UpdateQueue() {
         Task gettingProfiles = GetProfiles();
         await gettingProfiles;
     }
@@ -189,7 +189,7 @@ public partial class MatchPage : ContentPage {
     
     private void CheckIfQueueNeedsMoreProfiles() {
         if(_profileQueue.Count < 5) {
-            UpdateQue();
+            UpdateQueue();
         }
     }
 }

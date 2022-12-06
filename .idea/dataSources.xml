@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="winder@192.168.1.106" uuid="a3cbb12f-f583-4a0b-ae78-1f613701c394">
+    <data-source source="LOCAL" name="192.168.1.106" uuid="5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://192.168.1.106:1433;database=winder</jdbc-url>
+      <jdbc-url>jdbc:sqlserver://192.168.1.106:1433</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

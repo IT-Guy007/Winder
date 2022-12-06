@@ -1,5 +1,7 @@
+using System.Net;
+using System.Net.Mail;
+
 namespace DataModel;
-using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -12,7 +14,8 @@ public class Authentication {
     public Authentication() {
         _loggedState = LoggedState.signedOut;
         _accountState = AccountState.inactive;
-       
+        _currentUser = new User();
+
     }
 
     //Defining state
@@ -59,7 +62,7 @@ public class Authentication {
         {
             return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
         }
-        return "";
+        return null;
     }
 
     // Calculating the age by using date as parameter
@@ -98,5 +101,60 @@ public class Authentication {
     private bool PasswordContainsCapitalLetter(string password) {
         return password.Any(char.IsUpper);
     }
+
+
+    //maakt de authenticatiecode aan
+    public static string RandomString(int length)
+    {
+        const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
+        StringBuilder res = new StringBuilder();
+        using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+        {
+            byte[] uintBuffer = new byte[sizeof(uint)];
+
+            while (length-- > 0)
+            {
+                rng.GetBytes(uintBuffer);
+                uint num = BitConverter.ToUInt32(uintBuffer, 0);
+                res.Append(valid[(int)(num % (uint)valid.Length)]);
+            }
+        }
+
+        return res.ToString();
+    }
+
+
+    //verstuurd de mail
+    public void SendEmail(string email, string body, string subject)
+    {
+        //zet de client op
+        SmtpClient smtpClient = new SmtpClient("smtp.gmail.com")
+        {
+            Port = 587,
+            UseDefaultCredentials = false,
+            Credentials = new NetworkCredential("thewinderapp@gmail.com", "xltbqbsyderpqsxp"),
+            EnableSsl = true,
+
+        };
+
+        // maakt de mail aan
+        MailMessage mailMessage = new MailMessage
+        {
+            From = new MailAddress("thewinderapp@gmail.com"),
+            Subject = subject,
+            Body = body,    
+            IsBodyHtml = true,
+        };
+        
+        mailMessage.To.Add(email);
+        // verstuurd de mail
+        smtpClient.Send(mailMessage);
+    }
+
     
+
+
+
+
+
 }
