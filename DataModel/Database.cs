@@ -245,7 +245,6 @@ public class Database
         return bmpReturn;
     }
 
-//<<<<<<< HEAD
     public void UpdatePassword(string email, string password)
     {
         Authentication a = new Authentication();
@@ -338,8 +337,7 @@ public class Database
 
 
 
-    
-//=======
+  
     public List<string> GetInterestsFromDataBase()
     {
         List<string> interests = new List<string>();
@@ -516,5 +514,5 @@ public class Database
 
     }
 
-//>>>>>>> main
+
 }
