@@ -2,17 +2,15 @@ namespace DataModel;
 
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Reflection;
-using System.Reflection.PortableExecutable;
 using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 
 public class Database
 {
-    public SqlConnection connection;
+    private Authentication _authentication = new Authentication();
+public SqlConnection connection;
     public void generateConnection()
     {
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
@@ -68,10 +66,9 @@ public class Database
                 var gender = reader["gender"] as string;
                 //var profilePicture = reader["profilePicture"] as string;
                 var bio = reader["bio"] as string;
-                Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
+                _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
                     preferences, email, "", gender, bio);
-                //Authentication._currentUser = new User(username, firstName, middleName, lastName, birthday,
-                //    preferences, email, "", gender, Base64StringToBitmap(profilePicture),bio);
+
             }
 
             //Close connection
@@ -125,8 +122,7 @@ public class Database
 
         List<string> emails = new List<string>();
         openConnection();
-        string sql = "USE winder;" +
-                     "SELECT email FROM Winder.Winder.[User];";
+        string sql = "SELECT email FROM Winder.Winder.[User];";
         SqlCommand command = new SqlCommand(sql, connection);
         try
         {
@@ -218,24 +214,6 @@ public class Database
 
     }
 
-    public static Bitmap Base64StringToBitmap(string? base64String)
-    {
-        Bitmap bmpReturn = null;
-
-        byte[] byteBuffer = Convert.FromBase64String(base64String);
-        MemoryStream memoryStream = new MemoryStream(byteBuffer);
-
-        memoryStream.Position = 0;
-
-        bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
-
-        memoryStream.Close();
-        memoryStream = null;
-        byteBuffer = null;
-
-        return bmpReturn;
-    }
-
     public List<string> GetInterestsFromDataBase()
     {
         List<string> interests = new List<string>();
@@ -247,8 +225,8 @@ public class Database
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                var iets1 = reader["name"] as string;
-                interests.Add(iets1);
+                var item = reader["name"] as string;
+                interests.Add(item);
             }
         }
         catch (SqlException e)
@@ -331,20 +309,19 @@ public class Database
         closeConnection();
     }
 
-    public List<string> LoadInterestsFromDatabaseInListInteresses(string email)
+    public string[] LoadInterestsFromDatabaseInListInteresses(string email)
     {
-        List<string> interests = new List<string>();
+        string[] interests = new string[10];
         openConnection();
         string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
         SqlCommand command = new SqlCommand(sql, connection);
         command.Parameters.AddWithValue("@Email", email);
-        try
-        {
+        try {
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                var iets1 = reader["interest"] as string;
-                interests.Add(iets1);
+                string item = reader["interest"] as string ?? "Unknown";
+                interests.Append(item);
             }
         }
         catch (SqlException e)
@@ -361,6 +338,7 @@ public class Database
         {
             //Start connection
             openConnection();
+            
             //Create query
             SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
             "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, birthday = @birthday, bio = @bio " +
@@ -507,8 +485,7 @@ public class Database
             closeConnection();
         }
     }
-
-    public void deleteLikeOnMatch(string emailCurrentUser, string emailLikedUser)
+        public void deleteLikeOnMatch(string emailCurrentUser, string emailLikedUser)
     {
         openConnection();
 
@@ -528,4 +505,40 @@ public class Database
             closeConnection();
         }
     }
+
+    public Image[] getPicturesFromDatabase(string email) {
+
+        //TO-DO: Get pictures from database
+        return null;
+    }
+
+    //User to get the profiles for the match(run async)
+    public Profile[] get5Profiles(string email) {
+        //The algorithm that determines who to get
+        
+        //The users to get
+        string[] usersToRetrief = new string[5];
+
+        //Results
+        Profile[] profiles = new Profile[5];
+        
+        //Retrieving
+        for(int i = 0;i != 4;i++) {
+            
+            //Get the user
+            User user = GetUserFromDatabase(usersToRetrief[i]);
+            
+            //Get the interests of the user
+            user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]);
+
+            //Get the images of the user
+            Image[] images = getPicturesFromDatabase(usersToRetrief[i]);
+            var profile = new Profile(user, images);
+            
+            profiles.Append(profile);
+        }
+        
+        return profiles;
+    }
+
 }

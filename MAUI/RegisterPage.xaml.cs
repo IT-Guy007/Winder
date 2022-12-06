@@ -168,7 +168,6 @@ public partial class RegisterPage : ContentPage
         if (SaveEventChecks())
         {
 
-            
             if (tussenvoegsel == null)
             {
                 tussenvoegsel = "";
@@ -180,11 +179,9 @@ public partial class RegisterPage : ContentPage
                     database.RegisterInterestInDatabase(email, interesse);
                 }
                 Navigation.PushAsync(new MainPage());
-            
         }
-
-
     }
+
 
     //checkt of waardes naar eisen voldoen en declareert de variabelen
     public bool RegisterBtnEventCheck()

@@ -14,6 +14,7 @@ public class User {
     public string bio { get; set; }
     public string school { get; set; }
     public string major { get; set; }
+    public string[] interests { get; set; }
 
     public User(string firstName, string middleName, string lastName, DateTime birthDay,
         string preference, string email, string password, string gender, byte[] profilePicture, string bio, string school, string major)
