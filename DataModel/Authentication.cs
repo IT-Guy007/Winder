@@ -7,7 +7,7 @@ using System.Text;
 
 public class Authentication {
     
-    public static User _currentUser { get; set; }
+    public User _currentUser { get; set; }
     private LoggedState _loggedState { get; set; }
     private AccountState _accountState { get; set; }
     
@@ -60,7 +60,7 @@ public class Authentication {
         {
             return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
         }
-        return null;
+        return "";
     }
 
     // Calculating the age by using date as parameter
