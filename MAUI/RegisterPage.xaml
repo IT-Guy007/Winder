@@ -347,7 +347,7 @@
             <ListView HeightRequest="100" WidthRequest="200" HorizontalOptions="Center" x:Name="Gekozeninteresses" BackgroundColor="Black" 
                       IsVisible="false"
                       SelectionMode="Single"
-                      ItemSelected="Gekozeninteresses_ItemSelected"
+                      ItemSelected="SelectedItemsOfInterests"
                       >
                 
                 

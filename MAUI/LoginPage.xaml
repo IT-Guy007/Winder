@@ -40,7 +40,7 @@
 
         <Button x:Name="Inloggen"
             Text="Inloggen"
-            Clicked="Inlog"
+            Clicked="Login"
             WidthRequest="100"
             BackgroundColor="White"
             TextColor="Black"

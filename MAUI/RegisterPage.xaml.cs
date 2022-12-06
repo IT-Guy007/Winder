@@ -9,16 +9,16 @@ namespace MAUI;
 public partial class RegisterPage : ContentPage
 {
 	private string email;
-    private string voornaam;
-    private string achternaam;
-    private DateTime geboortedatum;
-    private string geslacht;
-    private string tussenvoegsel;
-    private string wachtwoord;
-    private string voorkeur;
-    private string opleiding;
-    private string locatie;
-    private byte[] profielfoto;
+    private string firstname;
+    private string middlename;
+    private string lastname;
+    private DateTime dateOfBirth;
+    private string gender;
+    private string password;
+    private string preference;
+    private string major;
+    private string school;
+    private byte[] profilePicture;
 
     Database database = new Database();
     private List<string> interesseslist = new List<string>();
@@ -38,7 +38,7 @@ public partial class RegisterPage : ContentPage
 
 
     //Gebruiker verwijdert een " interesse " uit de selectie door erop te klikken
-    public void Gekozeninteresses_ItemSelected(object sender, EventArgs e)
+    public void SelectedItemsOfInterests(object sender, EventArgs e)
     {
         if (Gekozeninteresses.SelectedItem != null)
         {
@@ -96,7 +96,7 @@ public partial class RegisterPage : ContentPage
         else
         {
             FoutVoorkeur.IsVisible = false;
-            voorkeur = Voorkeur.SelectedItem.ToString();
+            preference = Voorkeur.SelectedItem.ToString();
             aantalchecks += 1;
         }
         #endregion
@@ -121,7 +121,7 @@ public partial class RegisterPage : ContentPage
         else
         {
             FoutOpleiding.IsVisible = false;
-            opleiding = Opleiding.Text.ToString();
+            major = Opleiding.Text.ToString();
             aantalchecks += 1;
         }
         #endregion
@@ -134,7 +134,7 @@ public partial class RegisterPage : ContentPage
         else
         {
             FoutLocatie.IsVisible = false;
-            locatie = Locatie.SelectedItem.ToString();
+            school = Locatie.SelectedItem.ToString();
             aantalchecks += 1;
         }
         #endregion
@@ -168,11 +168,11 @@ public partial class RegisterPage : ContentPage
         if (SaveEventChecks())
         {
 
-            if (tussenvoegsel == null)
+            if (middlename == null)
             {
-                tussenvoegsel = "";
+                middlename = "";
             }
-             database.registrationFunction(voornaam, tussenvoegsel, achternaam, email, voorkeur, geboortedatum, geslacht, "random tekst", wachtwoord, profielfoto, true, locatie, opleiding);
+             database.RegistrationFunction(firstname, middlename, lastname, email, preference, dateOfBirth, gender, "random tekst", password, profilePicture, true, school, major);
             
                foreach (string interesse in GekozenInteressesLijst)
                 {
@@ -239,7 +239,7 @@ public partial class RegisterPage : ContentPage
         else
         {
             Foutvoornaam.IsVisible = false;
-            voornaam = Voornaam.Text;
+            firstname = Voornaam.Text;
             aantalchecks += 1;
         }
         #endregion
@@ -248,7 +248,7 @@ public partial class RegisterPage : ContentPage
 
         if (Tussenvoegsel.Text != null)
         {
-            tussenvoegsel = Tussenvoegsel.Text;
+            middlename = Tussenvoegsel.Text;
         }
 
         #endregion
@@ -264,7 +264,7 @@ public partial class RegisterPage : ContentPage
         else
         {
             FoutAchternaam.IsVisible = false;
-            achternaam = Achternaam.Text;
+            lastname = Achternaam.Text;
             aantalchecks += 1;
         }
 
@@ -288,7 +288,7 @@ public partial class RegisterPage : ContentPage
             else
             {
                 FoutWachtwoord.IsVisible = false;
-                wachtwoord = auth.HashPassword(Wachtwoord.Text);
+                password = auth.HashPassword(Wachtwoord.Text);
                 aantalchecks += 1;
             }
 
@@ -307,7 +307,7 @@ public partial class RegisterPage : ContentPage
         else
         {
             FoutLeeftijd.IsVisible = false;
-            geboortedatum = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
+            dateOfBirth = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
             aantalchecks += 1;
         }
         #endregion
@@ -322,7 +322,7 @@ public partial class RegisterPage : ContentPage
         else
         {
             FoutGeslacht.IsVisible = false;
-            geslacht = Geslacht.SelectedItem.ToString();
+            gender = Geslacht.SelectedItem.ToString();
             aantalchecks += 1;
         }
         #endregion
@@ -399,7 +399,7 @@ public partial class RegisterPage : ContentPage
             Stream stream = await image.OpenReadAsync();
             BinaryReader binary = new BinaryReader(fileStream);
             imageArr = binary.ReadBytes((int)fileStream.Length);
-            profielfoto = imageArr;
+            profilePicture = imageArr;
             ProfileImage.Source = ImageSource.FromStream(() => stream);
 
         } catch (Exception ex) {

@@ -11,7 +11,7 @@ public class Database
 {
     private Authentication _authentication = new Authentication();
 public SqlConnection connection;
-    public void generateConnection()
+    public void GenerateConnection()
     {
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
@@ -23,31 +23,31 @@ public SqlConnection connection;
         connection = new SqlConnection(builder.ConnectionString);
     }
 
-    public void openConnection()
+    public void OpenConnection()
     {
         if (connection == null)
         {
-            generateConnection();
+            GenerateConnection();
         }
         connection.Open();
     }
 
-    public void closeConnection()
+    public void CloseConnection()
     {
 
         if (connection == null)
         {
 
-            generateConnection();
+            GenerateConnection();
         }
         connection.Close();
     }
 
-    public void updateLocalUserFromDatabase(string email)
+    public void UpdateLocalUserFromDatabase(string email)
     {
 
         //Start connection
-        openConnection();
+        OpenConnection();
 
         //Create query
         SqlCommand query = new SqlCommand("select * from winder.winder.[User] where email = @email", connection);
@@ -64,15 +64,17 @@ public SqlConnection connection;
                 var preferences = reader["preference"] as string;
                 var birthday = (DateTime)reader["birthday"];
                 var gender = reader["gender"] as string;
-                //var profilePicture = reader["profilePicture"] as string;
+                var profilePicture = reader["profilePicture"] as byte[];
                 var bio = reader["bio"] as string;
+                var school = reader["school"] as string;
+                var major = reader["education"] as string;
                 _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
-                    preferences, email, "", gender, bio);
+                    preferences, email, "", gender ,profilePicture, bio,school,major);
 
             }
 
             //Close connection
-            closeConnection();
+            CloseConnection();
 
         }
         catch (SqlException sql)
@@ -80,14 +82,14 @@ public SqlConnection connection;
             Console.WriteLine("Sql error: " + sql);
 
             //Close connection
-            closeConnection();
+            CloseConnection();
         }
 
         //Close connection
-        closeConnection();
+        CloseConnection();
     }
 
-    public bool checkLogin(string email, string password)
+    public bool CheckLogin(string email, string password)
     {
 
         Authentication authentication = new Authentication();
@@ -95,7 +97,7 @@ public SqlConnection connection;
         bool output = false;
 
         //Start connection
-        openConnection();
+        OpenConnection();
 
         //Create query
         SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email", connection);
@@ -113,15 +115,15 @@ public SqlConnection connection;
         }
 
         //Close connection
-        closeConnection();
-        updateLocalUserFromDatabase(email);
+        CloseConnection();
+        UpdateLocalUserFromDatabase(email);
         return output;
     }
 
     public List<string> GetEmailFromDataBase() {
 
         List<string> emails = new List<string>();
-        openConnection();
+        OpenConnection();
         string sql = "SELECT email FROM Winder.Winder.[User];";
         SqlCommand command = new SqlCommand(sql, connection);
         try
@@ -137,16 +139,16 @@ public SqlConnection connection;
         {
 
         }
-        closeConnection();
+        CloseConnection();
         return emails;
     }
 
-    public bool register(string firstname, string middlename, string lastname, string email,
+    public bool Register(string firstname, string middlename, string lastname, string email,
         string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active, string locatie, string opleiding) {
         Authentication authentication = new Authentication();
         string hashedpassword = authentication.HashPassword(password);
         //Start connection
-        openConnection();
+        OpenConnection();
 
         //Create query
         SqlCommand query = new SqlCommand("insert into winder.winder.[User] " +
@@ -170,23 +172,23 @@ public SqlConnection connection;
             query.ExecuteReader();
 
             //Close connection
-            closeConnection();
+            CloseConnection();
             return true;
         }
         catch(SqlException se) {
             Console.WriteLine(se.ToString());
             //Close connection
-            closeConnection();
+            CloseConnection();
             return false;
         }
 
     }
 
-    public bool toggleActivation(string email, bool activate)
+    public bool ToggleActivation(string email, bool activate)
     {
 
         //Open connectionn
-        openConnection();
+        OpenConnection();
 
         SqlCommand query = new SqlCommand("update winder.winder.[User] set active = @Active where email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
@@ -198,7 +200,7 @@ public SqlConnection connection;
             int rows = query.ExecuteNonQuery();
 
             //Close connection
-            closeConnection();
+            CloseConnection();
             if (rows != 0)
             {
                 return true;
@@ -208,7 +210,7 @@ public SqlConnection connection;
         catch (SqlException se)
         {
             //Close connection
-            closeConnection();
+            CloseConnection();
             return false;
         }
 
@@ -217,7 +219,7 @@ public SqlConnection connection;
     public List<string> GetInterestsFromDataBase()
     {
         List<string> interests = new List<string>();
-        openConnection();
+        OpenConnection();
         string sql = "SELECT * FROM Winder.Winder.[Interests];";
         SqlCommand command = new SqlCommand(sql, connection);
         try
@@ -231,16 +233,16 @@ public SqlConnection connection;
         }
         catch (SqlException e)
         {
-            closeConnection();
+            CloseConnection();
         }
-        closeConnection();
+        CloseConnection();
         return interests;
     }
 
     public User GetUserFromDatabase(string email)
     {
         User user = null;
-        openConnection();
+        OpenConnection();
         string sql = "SELECT * FROM Winder.Winder.[User] where email = @Email";
         SqlCommand command = new SqlCommand(sql, connection);
         command.Parameters.AddWithValue("@Email", email);
@@ -267,15 +269,15 @@ public SqlConnection connection;
         }
         catch (SqlException e)
         {
-            closeConnection();
+            CloseConnection();
         }
-        closeConnection();
+        CloseConnection();
         return user;
     }
 
     public void RegisterInterestInDatabase(string username, string interest)
     {
-        openConnection();
+        OpenConnection();
         string sql = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
         SqlCommand command = new SqlCommand(sql, connection);
         command.Parameters.AddWithValue("@Email", username);
@@ -286,14 +288,14 @@ public SqlConnection connection;
         }
         catch (SqlException e)
         {
-            closeConnection();
+            CloseConnection();
         }
-        closeConnection();
+        CloseConnection();
     }
 
-    public void removeInterestOutOfuserHasInterestTableDatabase(string username, string interest)
+    public void RemoveInterestOfUser(string username, string interest)
     {
-        openConnection();
+        OpenConnection();
         string sql = "Delete From winder.userHasInterest Where UID = @Email and interest = @Interest";
         SqlCommand command = new SqlCommand(sql, connection);
         command.Parameters.AddWithValue("@Email", username);
@@ -304,15 +306,14 @@ public SqlConnection connection;
         }
         catch (SqlException e)
         {
-            closeConnection();
+            CloseConnection();
         }
-        closeConnection();
+        CloseConnection();
     }
 
-    public string[] LoadInterestsFromDatabaseInListInteresses(string email)
-    {
+    public string[] LoadInterestsFromDatabaseInListInteresses(string email) {
         string[] interests = new string[10];
-        openConnection();
+        OpenConnection();
         string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
         SqlCommand command = new SqlCommand(sql, connection);
         command.Parameters.AddWithValue("@Email", email);
@@ -326,18 +327,16 @@ public SqlConnection connection;
         }
         catch (SqlException e)
         {
-            closeConnection();
+            CloseConnection();
         }
-        closeConnection();
+        CloseConnection();
         return interests;
     }
 
-    public void updateUserInDatabaseWithNewUserProfile(User user)
-    {
-        try
-        {
+    public void UpdateUserInDatabaseWithNewUserData(User user) {
+        try {
             //Start connection
-            openConnection();
+            OpenConnection();
             
             //Create query
             SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
@@ -353,20 +352,18 @@ public SqlConnection connection;
             //Execute query
             query.ExecuteNonQuery();
             //Close connection
-            closeConnection();
+            CloseConnection();
         }
-        catch (SqlException se)
-        {
+        catch (SqlException se) {
             Console.WriteLine(se.ToString());
             //Close connection
-            closeConnection();
+            CloseConnection();
         }
     }
 
-    public void registrationFunction(string firstname, string middlename, string lastname, string email, string preference, DateTime birthday, string gender,
-                                 string bio, string password, byte[] proficePicture, bool active, string locatie, string opleiding)
-    {
-        openConnection();
+    public void RegistrationFunction(string firstname, string middlename, string lastname, string email, string preference, DateTime birthday, string gender,
+                                 string bio, string password, byte[] proficePicture, bool active, string locatie, string opleiding) {
+        OpenConnection();
         SqlCommand command = new SqlCommand("INSERT INTO Winder.Winder.[User](firstname, middlename, lastname, birthday, preference, email, password, gender, profilePicture, bio, active, location, education)" +
                        "VALUES('" + firstname + "', '" + middlename + "', '" + lastname + "', @birthday, '" + preference + "', '" + email + "', '" + password + "', '" + gender + "', @img, '" + bio +
                        "', @active, '" + locatie + "', '" + opleiding + "')", connection);
@@ -377,22 +374,22 @@ public SqlConnection connection;
         {
             command.ExecuteReader();
             //Close connection
-            closeConnection();
+            CloseConnection();
         }
         catch (SqlException se)
         {
             Console.WriteLine(se.ToString());
             //Close connection
-            closeConnection();
+            CloseConnection();
         }
 
     }
 
     //<summary>Checks if there is a match between users.</summary>
-    public bool checkMatch(string emailCurrentUser, string emailLikedPerson)
+    public bool CheckMatch(string emailCurrentUser, string emailLikedPerson)
     {
         bool match;
-        openConnection();
+        OpenConnection();
 
         SqlCommand command = new SqlCommand("SELECT * FROM Winder.Winder.[Liked] WHERE person = @emailLikedPerson AND likedPerson = @emailCurrentUser AND liked = 1", connection);
         command.Parameters.AddWithValue("@emailLikedPerson", emailLikedPerson);
@@ -404,14 +401,14 @@ public SqlConnection connection;
             reader.Read();
             match = reader.HasRows;
             //Close connection
-            closeConnection();
+            CloseConnection();
         }
         catch (SqlException se)
         {
             Console.WriteLine(se.ToString());
             match = false;
             //Close connection
-            closeConnection();
+            CloseConnection();
         }
         
         return match;
@@ -420,7 +417,7 @@ public SqlConnection connection;
     public void NewLike(string emailCurrentUser, string emailLikedPerson)
     {
         //There is no match yet
-        openConnection();
+        OpenConnection();
         SqlCommand command = new SqlCommand("INSERT INTO Winder.Winder.[Liked] (person, likedPerson, liked) " +
                                             "VALUES (@currentUser, @likedUser, 1)", connection);
         command.Parameters.AddWithValue("@currentUser", emailCurrentUser);
@@ -430,14 +427,14 @@ public SqlConnection connection;
         {
             command.ExecuteReader();
             //Close connection
-            closeConnection();
+            CloseConnection();
         }
         catch (SqlException se)
         {
             //throw new Exception(se.ToString());
             Console.WriteLine(se.ToString());
             //Close connection
-            closeConnection();
+            CloseConnection();
         }
     }
 
@@ -445,7 +442,7 @@ public SqlConnection connection;
     public void NewDislike(string emailCurrentUser, string emailLikedPerson)
     {
         //There is no match yet
-        openConnection();
+        OpenConnection();
         SqlCommand command = new SqlCommand("INSERT INTO Winder.Winder.[Liked] (person, likedPerson, liked) " +
                                             "VALUES (@currentUser, @likedUser, 0)", connection);
         command.Parameters.AddWithValue("@currentUser", emailCurrentUser);
@@ -455,19 +452,19 @@ public SqlConnection connection;
         {
             command.ExecuteReader();
             //Close connection
-            closeConnection();
+            CloseConnection();
         }
         catch (SqlException se)
         {
             Console.WriteLine(se.ToString());
             //Close connection
-            closeConnection();
+            CloseConnection();
         }
     }
 
     public void NewMatch(string emailCurrentUser, string emailLikedPerson)
     {
-        openConnection();
+        OpenConnection();
 
         SqlCommand command = new SqlCommand("INSERT INTO winder.winder.[Match] (person1, person2) " +
                                             "VALUES (@currentUser, @likedUser)", connection);
@@ -477,17 +474,17 @@ public SqlConnection connection;
         try
         {
             command.ExecuteReader();
-            closeConnection();
+            CloseConnection();
         }
         catch (SqlException se)
         {
             Console.WriteLine(se.ToString());
-            closeConnection();
+            CloseConnection();
         }
     }
         public void deleteLikeOnMatch(string emailCurrentUser, string emailLikedUser)
     {
-        openConnection();
+        OpenConnection();
 
         SqlCommand command = new SqlCommand("DELETE FROM winder.winder.[Liked] " +
                                             "WHERE person = @emailLikedUser AND likedPerson = @emailCurrentUser ", connection);
@@ -497,23 +494,23 @@ public SqlConnection connection;
         try
         {
             command.ExecuteReader();
-            closeConnection();
+            CloseConnection();
         }
         catch (SqlException se)
         {
             Console.WriteLine(se.ToString());
-            closeConnection();
+            CloseConnection();
         }
     }
 
-    public Image[] getPicturesFromDatabase(string email) {
+    public Image[] GetPicturesFromDatabase(string email) {
 
         //TO-DO: Get pictures from database
         return null;
     }
 
     //User to get the profiles for the match(run async)
-    public Profile[] get5Profiles(string email) {
+    public Profile[] Get5Profiles(string email) {
         //The algorithm that determines who to get
         
         //The users to get
@@ -532,7 +529,7 @@ public SqlConnection connection;
             user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]);
 
             //Get the images of the user
-            Image[] images = getPicturesFromDatabase(usersToRetrief[i]);
+            Image[] images = GetPicturesFromDatabase(usersToRetrief[i]);
             var profile = new Profile(user, images);
             
             profiles.Append(profile);
