@@ -213,6 +213,124 @@ public class Database {
 
     }
 
+
+    public static Bitmap Base64StringToBitmap(string? base64String)
+    {
+        Bitmap bmpReturn = null;
+
+
+        byte[] byteBuffer = Convert.FromBase64String(base64String);
+        MemoryStream memoryStream = new MemoryStream(byteBuffer);
+
+
+        memoryStream.Position = 0;
+
+
+        bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
+
+
+        memoryStream.Close();
+        memoryStream = null;
+        byteBuffer = null;
+
+
+        return bmpReturn;
+    }
+
+    public void UpdatePassword(string email, string password)
+    {
+        Authentication a = new Authentication();
+        if (a.EmailIsUnique(email) == false) // checken of email in de database staat
+        {
+            // connectieopzetten en query maken
+            Authentication authentication = new Authentication();
+            string hashedpassword = authentication.HashPassword(password); // eerst het password hashen voor het updaten
+            OpenConnection();
+            SqlCommand query = new SqlCommand("update winder.winder.[User] set password = @password where email = @Email", connection);
+            query.Parameters.AddWithValue("@Email", email);
+            query.Parameters.AddWithValue("@password", hashedpassword);
+
+            //Execute query
+            try
+            {
+                query.ExecuteNonQuery();
+
+                //Close connection
+                CloseConnection();
+
+
+            }
+            catch (SqlException se)
+            {
+
+                //Close connection
+                CloseConnection();
+
+            }
+        }
+    }
+
+
+    public void DeleteUser(string email)
+    {
+        Authentication a = new Authentication();
+
+        if (a.EmailIsUnique(email) == false)
+        {
+
+
+            OpenConnection(); // connectie opzetten
+
+            email = email.ToLower();
+
+            //querys maken
+            SqlCommand queryLikedPerson = new SqlCommand("delete from winder.winder.Liked where person = @Email", connection);
+            queryLikedPerson.Parameters.AddWithValue("@Email", email);
+            SqlCommand queryLikedLikedPerson = new SqlCommand("delete from winder.winder.Liked where likedPerson = @Email", connection);
+            queryLikedLikedPerson.Parameters.AddWithValue("@Email", email);
+
+            SqlCommand queryMatchPerson1 = new SqlCommand("delete from winder.winder.Match where person1 = @Email", connection);
+            queryMatchPerson1.Parameters.AddWithValue("@Email", email);
+            SqlCommand queryMatchPerson2 = new SqlCommand("delete from winder.winder.Match where person2 = @Email", connection);
+            queryMatchPerson2.Parameters.AddWithValue("@Email", email);
+
+            SqlCommand queryuserHasInterest = new SqlCommand("delete from winder.winder.userHasInterest where UID = @Email", connection);
+            queryuserHasInterest.Parameters.AddWithValue("@Email", email);
+
+            SqlCommand queryUser = new SqlCommand("delete from winder.winder.[User] where email = @Email", connection);
+            queryUser.Parameters.AddWithValue("@Email", email);
+
+            //Execute querys
+            try
+            {
+                queryLikedPerson.ExecuteNonQuery();
+                queryLikedLikedPerson.ExecuteNonQuery();
+                queryMatchPerson1.ExecuteNonQuery();
+                queryMatchPerson2.ExecuteNonQuery();
+                queryuserHasInterest.ExecuteNonQuery();
+
+                queryUser.ExecuteNonQuery();
+
+                //Close connection
+                CloseConnection();
+            }
+            catch (SqlException se)
+            {
+
+                //Close connection
+                CloseConnection();
+
+            }
+        }
+
+    }
+    
+
+
+
+
+  
+
     public List<string> GetInterestsFromDataBase()
     {
         List<string> interests = new List<string>();
@@ -381,6 +499,7 @@ public class Database {
         }
 
     }
+
 
     //<summary>Checks if there is a match between users.</summary>
     public bool CheckMatch(string emailCurrentUser, string emailLikedPerson)
@@ -555,7 +674,6 @@ public class Database {
         
         return profiles;
     }
-
     public Image VarBinaryToImage(byte[] input) {
         Stream stream = new MemoryStream(input);
         Image image = new Image {
@@ -563,4 +681,5 @@ public class Database {
         };
         return image;
     }
+
 }
