@@ -1,3 +1,6 @@
+using System.Net;
+using System.Net.Mail;
+
 namespace DataModel;
 using System.Security.Cryptography;
 using System.Text;

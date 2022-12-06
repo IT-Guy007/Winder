@@ -1,10 +1,10 @@
+using System.Data.SqlClient;
 using Microsoft.Maui.Controls;
 
 namespace DataModel;
 
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 
 public class Database {
     private Authentication _authentication = new Authentication();
@@ -211,30 +211,6 @@ public class Database {
             return false;
         }
 
-    }
-
-
-    public static Bitmap Base64StringToBitmap(string? base64String)
-    {
-        Bitmap bmpReturn = null;
-
-
-        byte[] byteBuffer = Convert.FromBase64String(base64String);
-        MemoryStream memoryStream = new MemoryStream(byteBuffer);
-
-
-        memoryStream.Position = 0;
-
-
-        bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
-
-
-        memoryStream.Close();
-        memoryStream = null;
-        byteBuffer = null;
-
-
-        return bmpReturn;
     }
 
     public void UpdatePassword(string email, string password)
