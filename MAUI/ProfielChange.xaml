@@ -14,7 +14,7 @@
                MaxLength="15"
                Placeholder="Wessel"
                HorizontalOptions="Center"
-               TextChanged="Voornaam_TextChanged" />
+               TextChanged="FirstnameTextChanged" />
             <Label 
             x:Name="lblTussenvoegsel"
             Text="tussenvoegsel"
@@ -24,7 +24,7 @@
                MaxLength="10"
                Placeholder="de"
                HorizontalOptions="Center"
-               TextChanged="Tussenvoegsel_TextChanged" />
+               TextChanged="MiddlenameTextChanged" />
             <Label 
             x:Name="lblAchternaam"
             Text="Achternaam"
@@ -34,7 +34,7 @@
                MaxLength="15"
                Placeholder="Notulist"
                HorizontalOptions="Center"
-               TextChanged="Achternaam_TextChanged" />
+               TextChanged="LastnameTextChanged" />
         </HorizontalStackLayout>
 
         <Label 
@@ -43,8 +43,8 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <DatePicker x:Name="Geboortedatum"
-            DateSelected="Geboortedatum_DateSelected"
-                    HorizontalOptions="Center"
+            DateSelected="DateOfBirthSelectedDate"
+            HorizontalOptions="Center"
             />
         <Label 
             x:Name="lblOmschrijving"
@@ -56,7 +56,7 @@
                MaxLength="150"
                Placeholder="Hallo, mijn naam is Wessel"
                HorizontalOptions="Center"
-               TextChanged="Omschrijving_TextChanged"
+               TextChanged="BioTextChanged"
                />
         <Picker 
         Title="Gender"
@@ -82,7 +82,7 @@
             x:Name="interessePicker"
         Title="Interesses"
         HorizontalOptions="Center"
-        SelectedIndexChanged="interessePicker_SelectedIndexChanged">
+        SelectedIndexChanged="PickerIndexChanged">
             <Picker.Items>
 
             </Picker.Items>
@@ -93,9 +93,13 @@
                 </x:Array>
             </ListView.ItemsSource>
         </ListView>
-        <Button x:Name="DeleteItem" Text="Delete" Clicked="DeleteItem_Clicked" MaximumWidthRequest="100" MaximumHeightRequest="40"/>
+        <Button x:Name="DeleteItem" 
+                Text="Delete" 
+                Clicked="DeleteInterest" 
+                MaximumWidthRequest="100" 
+                MaximumHeightRequest="40"/>
         <Button x:Name="wijzigProfielKnop"             
                 Text="Opslaan"
-                Clicked="wijzigProfielGegevens"/>
+                Clicked="ChangeUserData"/>
     </VerticalStackLayout>
 </ContentPage>
