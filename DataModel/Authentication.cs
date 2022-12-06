@@ -7,7 +7,7 @@ using System.Text;
 
 public class Authentication {
     
-    public static User _currentUser { get; set; }
+    public User _currentUser { get; set; }
     private LoggedState _loggedState { get; set; }
     private AccountState _accountState { get; set; }
     

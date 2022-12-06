@@ -248,7 +248,7 @@ public SqlConnection connection;
             // connectieopzetten en query maken
             Authentication authentication = new Authentication();
             string hashedpassword = authentication.HashPassword(password); // eerst het password hashen voor het updaten
-            openConnection();
+            OpenConnection();
             SqlCommand query = new SqlCommand("update winder.winder.[User] set password = @password where email = @Email", connection);
             query.Parameters.AddWithValue("@Email", email);
             query.Parameters.AddWithValue("@password", hashedpassword);
@@ -259,7 +259,7 @@ public SqlConnection connection;
                 query.ExecuteNonQuery();
 
                 //Close connection
-                closeConnection();
+                CloseConnection();
 
 
             }
@@ -267,7 +267,7 @@ public SqlConnection connection;
             {
 
                 //Close connection
-                closeConnection();
+                CloseConnection();
 
             }
         }
@@ -282,7 +282,7 @@ public SqlConnection connection;
         {
 
 
-            openConnection(); // connectie opzetten
+            OpenConnection(); // connectie opzetten
 
             email = email.ToLower();
 
@@ -315,13 +315,13 @@ public SqlConnection connection;
                 queryUser.ExecuteNonQuery();
 
                 //Close connection
-                closeConnection();
+                CloseConnection();
             }
             catch (SqlException se)
             {
 
                 //Close connection
-                closeConnection();
+                CloseConnection();
 
             }
         }

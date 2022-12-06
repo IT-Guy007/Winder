@@ -10,18 +10,14 @@ public partial class LoginPage : ContentPage {
 
     public LoginPage() {
         InitializeComponent();
-<<<<<<< HEAD
-        b.Clicked += Inlog;
-//<<<<<<< HEAD:MAUI/LoginScherm.xaml.cs
         
-        
-//=======
-        b2.Clicked += WachtwoordVergeten;
-//>>>>>>> main:MAUI/LoginPage.xaml.cs
-=======
+        loginButton.Clicked += Login;
+
+        forgotPasswordButton.Clicked += WachtwoordVergeten;
+
         loginButton.Clicked += Login;
         forgotPasswordButton.Clicked += WachtwoordVergeten;
->>>>>>> preMain
+
     }
 
     private void Login(object sender, EventArgs e)
