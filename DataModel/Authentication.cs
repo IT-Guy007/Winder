@@ -7,7 +7,7 @@ using System.Text;
 
 public class Authentication {
     
-    public User _currentUser { get; set; }
+    public static User _currentUser { get; set; }
     private LoggedState _loggedState { get; set; }
     private AccountState _accountState { get; set; }
     
@@ -60,7 +60,7 @@ public class Authentication {
         {
             return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
         }
-        return "";
+        return null;
     }
 
     // Calculating the age by using date as parameter
@@ -121,8 +121,7 @@ public class Authentication {
         return res.ToString();
     }
 
-    
-//<<<<<<< HEAD
+
     //verstuurd de mail
     public void SendEmail(string email, string body, string subject)
     {
@@ -156,6 +155,4 @@ public class Authentication {
 
 
 
-//=======
-//>>>>>>> main
 }

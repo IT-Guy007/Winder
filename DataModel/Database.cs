@@ -214,7 +214,7 @@ public SqlConnection connection;
 
     }
 
-<<<<<<< HEAD
+
     public static Bitmap Base64StringToBitmap(string? base64String)
     {
         Bitmap bmpReturn = null;
@@ -331,8 +331,7 @@ public SqlConnection connection;
 
 
   
-=======
->>>>>>> preMain
+
     public List<string> GetInterestsFromDataBase()
     {
         List<string> interests = new List<string>();
@@ -507,8 +506,7 @@ public SqlConnection connection;
 
     }
 
-<<<<<<< HEAD
-=======
+
     //<summary>Checks if there is a match between users.</summary>
     public bool checkMatch(string emailCurrentUser, string emailLikedPerson)
     {
@@ -661,6 +659,6 @@ public SqlConnection connection;
         
         return profiles;
     }
->>>>>>> preMain
+
 
 }
