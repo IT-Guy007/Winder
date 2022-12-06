@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 public class Database
 {
-    private Authentication _authentication = new Authentication();
+    public Authentication _authentication = new Authentication();
 public SqlConnection connection;
     public void GenerateConnection()
     {
@@ -67,7 +67,7 @@ public SqlConnection connection;
                 var gender = reader["gender"] as string;
                 var profilePicture = reader["profilePicture"] as byte[];
                 var bio = reader["bio"] as string;
-                var school = reader["school"] as string;
+                var school = reader["location"] as string;
                 var major = reader["education"] as string;
                 _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
                     preferences, email, "", gender ,profilePicture, bio,school,major);
@@ -393,7 +393,7 @@ public SqlConnection connection;
     {
         // open connection
 
-        openConnection();
+        OpenConnection();
         string selectPreference = "SELECT preference FROM winder.[User] WHERE email = @Email";
         SqlCommand query = new SqlCommand(selectPreference, connection);
         query.Parameters.AddWithValue("@Email", email);
@@ -401,55 +401,55 @@ public SqlConnection connection;
         try
         {
             query.ExecuteReader();
-            closeConnection();
+            CloseConnection();
         }
         catch (SqlException se)
         {
-            closeConnection();
+            CloseConnection();
         }
 
 
         if (selectPreference.Equals(null))
         {
-            openConnection();
+            OpenConnection();
             SqlCommand query1 = new SqlCommand("INSERT INTO winder.[User] (preference) VALUES (@Preference) WHERE email = @Email", connection);
             query1.Parameters.AddWithValue("@Email", email);
             query1.Parameters.AddWithValue("@Preference", preference);
             try
             {
                 query1.ExecuteReader();
-                closeConnection();
+                CloseConnection();
             }
             catch (SqlException se)
             {
-                closeConnection();
+                CloseConnection();
             }
         }
         else
         {
-            openConnection();
+            OpenConnection();
             SqlCommand query2 = new SqlCommand("UPDATE winder.winder.[User] SET preference = @Preference WHERE email = @Email", connection);
             query2.Parameters.AddWithValue("@Email", email);
             query2.Parameters.AddWithValue("@Preference", preference);
             try
             {
                 query2.ExecuteReader();
-                closeConnection();
+                CloseConnection();
             }
             catch (SqlException se)
             {
-                closeConnection();
+                CloseConnection();
             }
         }
 
-        closeConnection();
+        CloseConnection();
     }
 
     public void insertLocation(string email, string location)
     {
         // open connection
 
-        openConnection();
+        OpenConnection();
        
         SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET location = @Location WHERE email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
@@ -458,11 +458,11 @@ public SqlConnection connection;
         try
         {
             query.ExecuteReader();
-            closeConnection();
+            CloseConnection();
         }
         catch (SqlException se)
         {
-            closeConnection();
+            CloseConnection();
         }
 
 
@@ -472,7 +472,7 @@ public SqlConnection connection;
     {
         // open connection
 
-        openConnection();
+        OpenConnection();
 
         SqlCommand query = new SqlCommand("SELECT preference FROM winder.winder.[User] WHERE email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
@@ -484,14 +484,14 @@ public SqlConnection connection;
             if (reader.Read())
             {
                 var preference = reader["preference"] as string;
-                closeConnection();
+                CloseConnection();
                 return preference;
 
             }
         }
         catch (SqlException se)
         {
-            closeConnection();
+            CloseConnection();
             return "";
         }
         return "";
@@ -501,7 +501,7 @@ public SqlConnection connection;
     {
         // open connection
 
-        openConnection();
+        OpenConnection();
 
         SqlCommand query = new SqlCommand("SELECT location FROM winder.winder.[User] WHERE email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
@@ -513,14 +513,14 @@ public SqlConnection connection;
             if (reader.Read())
             {
                 var location = reader["location"] as string;
-                closeConnection();
+                CloseConnection();
                 return location;
 
             }
         }
         catch (SqlException se)
         {
-            closeConnection();
+            CloseConnection();
             return "";
         }
         return "";
@@ -530,7 +530,7 @@ public SqlConnection connection;
     {
         // open connection
 
-        openConnection();
+        OpenConnection();
 
         SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET min = @minAge WHERE email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
@@ -539,11 +539,11 @@ public SqlConnection connection;
         try
         {
             query.ExecuteReader();
-            closeConnection();
+            CloseConnection();
         }
         catch (SqlException se)
         {
-            closeConnection();
+            CloseConnection();
         }
 
     }
@@ -552,7 +552,7 @@ public SqlConnection connection;
     {
         // open connection
 
-        openConnection();
+        OpenConnection();
 
         SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET max = @maxAge WHERE email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
@@ -561,11 +561,11 @@ public SqlConnection connection;
         try
         {
             query.ExecuteReader();
-            closeConnection();
+            CloseConnection();
         }
         catch (SqlException se)
         {
-            closeConnection();
+            CloseConnection();
         }
 
     }
@@ -574,7 +574,7 @@ public SqlConnection connection;
     {
         // open connection
 
-        openConnection();
+        OpenConnection();
 
         SqlCommand query = new SqlCommand("SELECT min FROM winder.winder.[User] WHERE email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
@@ -586,7 +586,7 @@ public SqlConnection connection;
             while (reader.Read())
             {
                 int? minAge = reader["min"] as int?;
-                closeConnection();
+                CloseConnection();
                 int minimalAge = minAge ?? 18;
                 return minimalAge;
 
@@ -594,7 +594,7 @@ public SqlConnection connection;
         }
         catch (SqlException se)
         {
-            closeConnection();
+            CloseConnection();
             return 0;
         }
         return 0;
@@ -604,7 +604,7 @@ public SqlConnection connection;
     {
         // open connection
 
-        openConnection();
+        OpenConnection();
 
         SqlCommand query = new SqlCommand("SELECT max FROM winder.winder.[User] WHERE email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
@@ -616,7 +616,7 @@ public SqlConnection connection;
             while (reader.Read())
             {
                 int? minAge = reader["max"] as int?;
-                closeConnection();
+                CloseConnection();
                 int minimalAge = minAge ?? 18;
                 return minimalAge;
 
@@ -624,7 +624,7 @@ public SqlConnection connection;
         }
         catch (SqlException se)
         {
-            closeConnection();
+            CloseConnection();
             return 0;
         }
         return 0;

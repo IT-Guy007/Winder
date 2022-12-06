@@ -5,8 +5,8 @@ namespace MAUI;
 public partial class Instellingen : ContentPage
 {
     Database database = new Database();
-    Authentication authentication = new Authentication();
-    string email = Authentication._currentUser.email;
+    Authentication _authentication = new Authentication();
+
 
     public Instellingen()
     {
@@ -36,16 +36,16 @@ public partial class Instellingen : ContentPage
     }
     public void setPreference()
     {
-
+        
         string preference = Preference.SelectedItem.ToString();
-        database.insertPreference(email, preference);
+        database.insertPreference(_authentication._currentUser.email, preference);
     }
 
     public void setLocation()
     {
-       
-            string location = Location.SelectedItem.ToString();
-            database.insertLocation(email, location);    
+        
+        string location = Location.SelectedItem.ToString();
+            database.insertLocation(_authentication._currentUser.email, location);    
     }
     
     public bool checkIfMinAgeLowerThenMax()
@@ -73,13 +73,15 @@ public partial class Instellingen : ContentPage
 
     public void placePreference( )
     {
-       string placePreference = database.placePreference(email);
+        
+        string placePreference = database.placePreference(_authentication._currentUser.email);
         Preference.SelectedItem = placePreference;
     }
     
     public void placeLocation()
     {
-        string placeLocation = database.placeLocation(email);
+        
+        string placeLocation = database.placeLocation(_authentication._currentUser.email);
         Location.SelectedItem = placeLocation;
         
         }
@@ -87,29 +89,32 @@ public partial class Instellingen : ContentPage
     public void placeMinAge()
     {
         
-            int placeMinAge = database.placeMinAge(email);
+        int placeMinAge = database.placeMinAge(_authentication._currentUser.email);
             minimaleLeeftijd.SelectedItem = placeMinAge;
         
     }
     
     public void placeMaxAge()
     {
-        int placeMaxAge = database.placeMaxAge(email);
+       
+        int placeMaxAge = database.placeMaxAge(_authentication._currentUser.email);
         maximaleLeeftijd.SelectedItem = placeMaxAge;
         
     }
 
     public void setMinAge()
     {
+       
         int minAge = (int)minimaleLeeftijd.SelectedItem;
-        database.insertMinAge(email, minAge);
+        database.insertMinAge(_authentication._currentUser.email, minAge);
 
     }
 
     public void setMaxAge()
     {
+       
         int maxAge = (int)maximaleLeeftijd.SelectedItem;
-        database.insertMaxAge(email, maxAge);
+        database.insertMaxAge(_authentication._currentUser.email, maxAge);
 
     }
 
