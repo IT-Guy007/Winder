@@ -24,7 +24,6 @@ public class TestAuthentication {
     [TestCase("langwachtwoordzonderhoofdletters", ExpectedResult = false)]
     [TestCase("LangWachtwoordMetHoofdLetters", ExpectedResult = false)]
     [TestCase("LangWachtwoordMetHoofdLettersEn123", ExpectedResult = true)]
-
     public bool AuthenticationPasswordCheck(string password) {
         return authentication.CheckPassword(password);
     }

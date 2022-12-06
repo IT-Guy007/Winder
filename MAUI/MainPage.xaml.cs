@@ -7,10 +7,10 @@ public partial class MainPage : ContentPage {
     }
 
     private void RegisterButton(object sender, EventArgs e) {
-        Navigation.PushAsync(new RegisterPage());
+        Navigation.PushAsync(new RegisterForm());
     }
 
     private void LoginButton(object sender, EventArgs e) {
-        Navigation.PushAsync(new MatchPage());
+        Navigation.PushAsync(new LoginScherm());
     }
 }

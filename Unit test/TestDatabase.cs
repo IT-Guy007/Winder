@@ -25,7 +25,7 @@ public class TestDatabase {
         
         Database database = new Database();
         try {
-            database.GenerateConnection();
+            database.generateConnection();
             Assert.Pass();
         } catch (SqlException e) {
             Assert.Fail(e.Message);
@@ -39,10 +39,10 @@ public class TestDatabase {
         
         Database database = new Database();
         try {
-            database.OpenConnection();
+            database.openConnection();
             Assert.Pass();
 
-            database.CloseConnection();
+            database.closeConnection();
         } catch(SqlException e) {
             Assert.Fail(e.Message);
         }
@@ -58,7 +58,7 @@ public class TestDatabase {
     [TestCase("Jeroen", "1234", ExpectedResult = false)]
     [TestCase("s1165707@student.windesheim.nl", "Qwerty1@", ExpectedResult = true)]
     public bool LoginTest(string email, string password) {
-        return _database.CheckLogin(email, password);
+        return _database.checkLogin(email, password);
 
     }
     
@@ -72,7 +72,7 @@ public class TestDatabase {
         Random random = new Random();
         var email1 = random.Next(0, 999999);
         string email2 = "s" + email1 + "@student.windesheim.nl";
-        return _database.Register(firstname, middlename, lastname, email2, preference, birthday, gender, bio,
+        return _database.register(firstname, middlename, lastname, email2, preference, birthday, gender, bio,
             password,profilePicture, active, locatie, opleiding);
     }
 
@@ -80,7 +80,7 @@ public class TestDatabase {
     [TestCase("1707@student.windesheim.nl",false, ExpectedResult = false)]
     [TestCase("s1165707@student.windesheim.nl",true, ExpectedResult = true)]
     public bool ToggleActivationTest(string email, bool activation) {
-        return _database.ToggleActivation(email, activation);
+        return _database.toggleActivation(email, activation);
     }
 
     [TestCase("Peter", "van", "Huizkes", "Vrouw", "1998/01/01", "Man", "bio info",  null, "s1416890@student.windesheim.nl", ExpectedResult = true)]
