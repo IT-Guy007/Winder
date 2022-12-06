@@ -1,16 +1,14 @@
+using System.Data.SqlClient;
+using Microsoft.Maui.Controls;
+
 namespace DataModel;
 
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Text.RegularExpressions;
 
-public class Database
-{
+public class Database {
     private Authentication _authentication = new Authentication();
-public SqlConnection connection;
+    public SqlConnection connection;
     public void GenerateConnection()
     {
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
@@ -43,8 +41,7 @@ public SqlConnection connection;
         connection.Close();
     }
 
-    public void UpdateLocalUserFromDatabase(string email)
-    {
+    public void UpdateLocalUserFromDatabase(string email) {
 
         //Start connection
         OpenConnection();
@@ -66,10 +63,10 @@ public SqlConnection connection;
                 var gender = reader["gender"] as string;
                 var profilePicture = reader["profilePicture"] as byte[];
                 var bio = reader["bio"] as string;
-                var location = reader["location"] as string;
+                var school = reader["location"] as string;
                 var major = reader["education"] as string;
                 _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
-                    preferences, email, "", gender ,profilePicture, bio,location,major);
+                    preferences, email, "", gender ,VarBinaryToImage(profilePicture), bio,school,major);
 
             }
 
@@ -216,30 +213,6 @@ public SqlConnection connection;
 
     }
 
-
-    public static Bitmap Base64StringToBitmap(string? base64String)
-    {
-        Bitmap bmpReturn = null;
-
-
-        byte[] byteBuffer = Convert.FromBase64String(base64String);
-        MemoryStream memoryStream = new MemoryStream(byteBuffer);
-
-
-        memoryStream.Position = 0;
-
-
-        bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
-
-
-        memoryStream.Close();
-        memoryStream = null;
-        byteBuffer = null;
-
-
-        return bmpReturn;
-    }
-
     public void UpdatePassword(string email, string password)
     {
         Authentication a = new Authentication();
@@ -382,7 +355,7 @@ public SqlConnection connection;
                 byte[] img = (byte[])(reader["profilePicture"]);
                 
                 DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
-                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, img, bio, school, major);
+                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, VarBinaryToImage(img), bio, school, major);
             }
         }
         catch (SqlException e)
@@ -623,9 +596,30 @@ public SqlConnection connection;
     }
 
     public Image[] GetPicturesFromDatabase(string email) {
+        
+        Image[] result = new Image[10];
 
         //TO-DO: Get pictures from database
-        return null;
+        //Start connection
+        OpenConnection();
+
+        //Create query
+        SqlCommand query = new SqlCommand("select * from winder.winder.[Photos] where email = @email", connection);
+        query.Parameters.AddWithValue("@email", email);
+
+        //Execute query
+        try {
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read()) {
+                
+            }
+        } catch(SqlException se) {
+            Console.WriteLine("Error retrieving pictures from database");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+        }
+
+        return result;
     }
 
     //User to get the profiles for the match(run async)
@@ -656,6 +650,12 @@ public SqlConnection connection;
         
         return profiles;
     }
-
+    public Image VarBinaryToImage(byte[] input) {
+        Stream stream = new MemoryStream(input);
+        Image image = new Image {
+            Source = ImageSource.FromStream(() => stream)
+        };
+        return image;
+    }
 
 }

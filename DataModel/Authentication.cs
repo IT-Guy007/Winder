@@ -1,7 +1,7 @@
-namespace DataModel;
-using System.Drawing;
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
+
+namespace DataModel;
 using System.Security.Cryptography;
 using System.Text;
 
