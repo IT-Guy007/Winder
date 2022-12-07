@@ -64,7 +64,7 @@ public class Database {
                 var bio = reader["bio"] as string;
                 var school = reader["location"] as string;
                 var major = reader["education"] as string;
-                _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
+                Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
                     preferences, email, "", gender ,VarBinaryToImage(profilePicture), bio,school,major);
 
                 }
@@ -212,30 +212,6 @@ public class Database {
             return false;
         }
 
-    }
-
-
-    public static Bitmap Base64StringToBitmap(string? base64String)
-    {
-        Bitmap bmpReturn = null;
-
-
-        byte[] byteBuffer = Convert.FromBase64String(base64String);
-        MemoryStream memoryStream = new MemoryStream(byteBuffer);
-
-
-        memoryStream.Position = 0;
-
-
-        bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
-
-
-        memoryStream.Close();
-        memoryStream = null;
-        byteBuffer = null;
-
-
-        return bmpReturn;
     }
 
     public void UpdatePassword(string email, string password)
@@ -651,7 +627,7 @@ public class Database {
     public Profile[] Get5Profiles(string email) {
         //The algorithm that determines who to get
         
-        //The users to get
+        //The users(email) to get
         string[] usersToRetrief = new string[5];
 
         //Results
@@ -675,6 +651,7 @@ public class Database {
         
         return profiles;
     }
+    
     private Image VarBinaryToImage(byte[] input) {
         Stream stream = new MemoryStream(input);
         Image image = new Image {
