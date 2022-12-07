@@ -1,10 +1,10 @@
+using System.Data.SqlClient;
 using Microsoft.Maui.Controls;
 
 namespace DataModel;
 
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 
 public class Database {
     private Authentication _authentication = new Authentication();
@@ -49,24 +49,23 @@ public class Database {
             SqlCommand query = new SqlCommand("select * from winder.winder.[User] where email = @email", connection);
             query.Parameters.AddWithValue("@email", email);
 
-            //Execute query
-            try
-            {
-                SqlDataReader reader = query.ExecuteReader();
-                while (reader.Read())
-                {
-                    var firstName = reader["firstName"] as string;
-                    var middleName = reader["middleName"] as string;
-                    var lastName = reader["lastName"] as string;
-                    var preferences = reader["preference"] as string;
-                    var birthday = (DateTime)reader["birthday"];
-                    var gender = reader["gender"] as string;
-                    var profilePicture = reader["profilePicture"] as byte[];
-                    var bio = reader["bio"] as string;
-                    var school = reader["school"] as string;
-                    var major = reader["education"] as string;
-                    _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
-                        preferences, email, "", gender, VarBinaryToImage(profilePicture), bio, school, major);
+        //Execute query
+        try
+        {
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read()) {
+                var firstName = reader["firstName"] as string;
+                var middleName = reader["middleName"] as string;
+                var lastName = reader["lastName"] as string;
+                var preferences = reader["preference"] as string;
+                var birthday = (DateTime)reader["birthday"];
+                var gender = reader["gender"] as string;
+                var profilePicture = reader["profilePicture"] as byte[];
+                var bio = reader["bio"] as string;
+                var school = reader["location"] as string;
+                var major = reader["education"] as string;
+                _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
+                    preferences, email, "", gender ,VarBinaryToImage(profilePicture), bio,school,major);
 
                 }
 
@@ -213,6 +212,30 @@ public class Database {
             return false;
         }
 
+    }
+
+
+    public static Bitmap Base64StringToBitmap(string? base64String)
+    {
+        Bitmap bmpReturn = null;
+
+
+        byte[] byteBuffer = Convert.FromBase64String(base64String);
+        MemoryStream memoryStream = new MemoryStream(byteBuffer);
+
+
+        memoryStream.Position = 0;
+
+
+        bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
+
+
+        memoryStream.Close();
+        memoryStream = null;
+        byteBuffer = null;
+
+
+        return bmpReturn;
     }
 
     public void UpdatePassword(string email, string password)
