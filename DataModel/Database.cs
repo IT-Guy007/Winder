@@ -400,14 +400,14 @@ public class Database {
         }
     }
 
-    public List<string> LoadInterestsFromDatabaseInListInteresses(string email) {
-        List<string> interests = new List<string>();
+    public string[] LoadInterestsFromDatabaseInListInteresses(string email) {
+        string[] interests = new string(10);
         OpenConnection();
-        string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
-        SqlCommand command = new SqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@Email", email);
         try {
             SqlDataReader reader = command.ExecuteReader();
+            string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Email", email);
             while (reader.Read())
             {
                 string item = reader["interest"] as string ?? "Unknown";

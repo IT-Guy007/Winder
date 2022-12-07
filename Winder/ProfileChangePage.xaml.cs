@@ -25,9 +25,19 @@ public partial class ProfileChange : ContentPage
         interesses = new List<string>();
         InterestSelection.ItemsSource = b.GetInterestsFromDataBase();
         b.LoadInterestsFromDatabaseInListInteresses(auth._currentUser.email);
-        interesses = b.LoadInterestsFromDatabaseInListInteresses(auth._currentUser.email);
+        interesses = fillListOfInterestsWithStringArray(b.LoadInterestsFromDatabaseInListInteresses(auth._currentUser.email));
         listInteresses.ItemsSource = interesses;
         changeLabelsTextSizeAndColor(9, new Color(0, 0, 0));
+    }
+
+    private List<string> fillListOfInterestsWithStringArray(string[] strings)
+    {
+        List<string> list = new List<string>();
+        foreach (string s in strings)
+        {
+            list.Add(s);
+        }
+        return list;
     }
 
     private void changeLabelsTextSizeAndColor(int size, Color color)
@@ -211,21 +221,26 @@ public partial class ProfileChange : ContentPage
 
     private void DateOfBirthSelectedDate(object sender, DateChangedEventArgs e)
     {
-        DateTime today = DateTime.Today;
-        int age = today.Year - Birthdate.Date.Year;
-        if (Birthdate.Date > today.AddYears(-age)) age--;
-        if (age >= 18)
-        {
-            birthday = true;
+                    DateTime today = DateTime.Today;
+            int age = today.Year - Birthdate.Date.Year;
+            if (Birthdate.Date > today.AddYears(-age)) age--;
+            if (age >= 18)
+            {
+                birthday = true;
             lblBirthdate.Text = "Leeftijd : " + age;
             lblBirthdate.BackgroundColor = default;
-        }
-        else
-        {
+            }
+            else
+            {
             birthday = false;
-            Color colorRed = new Color(238, 75, 43);
-            lblBirthdate.Text = "Je moet minimaal 18 jaar zijn";
-            lblBirthdate.BackgroundColor = colorRed;
-        }
+                Color colorRed = new Color(238, 75, 43);
+                lblBirthdate.Text = "Je moet minimaal 18 jaar zijn";
+                lblBirthdate.BackgroundColor = colorRed;
+            }
+    }
+
+    private void checkIfAgeOfBirthDateIsOver18()
+    {
+
     }
 }
