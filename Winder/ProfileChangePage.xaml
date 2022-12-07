@@ -10,10 +10,9 @@
             Text="Voornaam"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-            
             <Entry x:Name="Firstname"
                MaxLength="15"
-               Placeholder="Wessel"
+               Placeholder=""
                HorizontalOptions="Center"
                TextChanged="FirstnameTextChanged" />
             <Label 
@@ -23,7 +22,7 @@
             HorizontalOptions="Center" />
             <Entry x:Name="Middlename"
                MaxLength="10"
-               Placeholder="de"
+               Placeholder=""
                HorizontalOptions="Center"
                TextChanged="MiddlenameTextChanged" />
             <Label 
@@ -33,7 +32,7 @@
             HorizontalOptions="Center" />
             <Entry x:Name="Lastname"
                MaxLength="15"
-               Placeholder="Notulist"
+               Placeholder=""
                HorizontalOptions="Center"
                TextChanged="LastnameTextChanged" />
         </HorizontalStackLayout>
@@ -55,7 +54,7 @@
             />
         <Entry x:Name="Bio"
                MaxLength="150"
-               Placeholder="Hallo, mijn naam is Wessel"
+               Placeholder=""
                HorizontalOptions="Center"
                TextChanged="BioTextChanged"
                />
@@ -88,13 +87,13 @@
 
             </Picker.Items>
         </Picker>
-        <ListView MaximumHeightRequest="100" HorizontalOptions="Center" x:Name="listInteresses">
+        <ListView MaximumHeightRequest="100" HorizontalOptions="Center" x:Name="ListInterests" ItemSelected="ListInterests_ItemSelected">
             <ListView.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                 </x:Array>
             </ListView.ItemsSource>
         </ListView>
-        <Button x:Name="wijzigProfielKnop"             
+        <Button x:Name="ChangeProfile"             
                 Text="Opslaan"
                 Clicked="ChangeUserData"/>
     </VerticalStackLayout>

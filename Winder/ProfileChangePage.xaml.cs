@@ -8,9 +8,9 @@ namespace MAUI;
 public partial class ProfileChange : ContentPage
 {
     List<string> interesses;
-    Database b = new Database();
+    Database Database = new Database();
     Color ErrorColor = new Color(255, 243, 5);
-    Authentication auth = new Authentication();
+    User testuser;
     private bool firstname = true;
     private bool middlename = true;
     private bool lastname = true;
@@ -22,22 +22,13 @@ public partial class ProfileChange : ContentPage
     public ProfileChange()
     {
         InitializeComponent();
+        testuser = Database.GetUserFromDatabase("s1416890@student.windesheim.nl");
+        loadUserFromDatabaseInForm();
         interesses = new List<string>();
-        InterestSelection.ItemsSource = b.GetInterestsFromDataBase();
-        b.LoadInterestsFromDatabaseInListInteresses(auth._currentUser.email);
-        interesses = fillListOfInterestsWithStringArray(b.LoadInterestsFromDatabaseInListInteresses(auth._currentUser.email));
-        listInteresses.ItemsSource = interesses;
-        changeLabelsTextSizeAndColor(9, new Color(255,255,255));
-    }
-
-    private List<string> fillListOfInterestsWithStringArray(string[] strings)
-    {
-        List<string> list = new List<string>();
-        foreach (string s in strings)
-        {
-            list.Add(s);
-        }
-        return list;
+        InterestSelection.ItemsSource = Database.GetInterestsFromDataBase();
+        interesses = Database.LoadInterestsFromDatabaseInListInteresses(testuser.email);
+        ListInterests.ItemsSource = interesses;
+        changeLabelsTextSizeAndColor(9, default);
     }
 
     private void changeLabelsTextSizeAndColor(int size, Color color)
@@ -51,31 +42,96 @@ public partial class ProfileChange : ContentPage
         lblBirthdate.FontSize = size;
         lblBirthdate.TextColor = color;
         Gender.FontSize = size;
+        Gender.TitleColor = color;
+        Preference.TitleColor = color;
+        InterestSelection.TitleColor = color;
         Preference.FontSize = size;
         lblBio.FontSize = size;
         lblBio.TextColor = color;
         InterestSelection.FontSize = size;
+    }
+    private void loadUserFromDatabaseInForm()
+    {
+        if (testuser != null)
+        {
+            Firstname.Placeholder = testuser.firstName;
+            Middlename.Placeholder = testuser.middleName;
+            Lastname.Placeholder = testuser.lastName;
+            Birthdate.Date = testuser.birthDay;
+            Bio.Placeholder = testuser.bio;
+            Gender.SelectedIndex = GetGenderFromUser(testuser);
+            Preference.SelectedIndex = GetPreferenceFromUser(testuser);
+        }
+    }
+
+    private int GetPreferenceFromUser(User testuser)
+    {
+        if (testuser.preference == "Man") return 1;
+        if (testuser.preference == "Vrouw") return 2;
+        return 0;
+    }
+
+    private int GetGenderFromUser(User testuser)
+    {
+        if (testuser.gender == "Man") return 1;
+        if (testuser.gender == "Vrouw") return 2;
+        return 0;
     }
 
     private void ChangeUserData(object sender, EventArgs e)
     {
         if (firstname == true && middlename == true && lastname == true && birthday == true && preference == true && gender == true && bio == true && locatie == true)
         {
+            UpdateUserPropertiesPrepareForUpdateQuery();
+            Database.UpdateUserInDatabaseWithNewUserData(testuser);
+            RegisterInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
-            Firstname.Placeholder = Firstname.Text;
-            Middlename.Placeholder = Middlename.Text;
-            Lastname.Placeholder = Lastname.Text;
-            Bio.Placeholder = Bio.Text;
-            Firstname.Text = "";
-            Middlename.Text = "";
-            Lastname.Text = "";
-            Bio.Text = "";
+            ClearTextFromEntries();
+            UpdatePlaceholders();
         }
         else
         {
             DisplayAlert("Er is iets verkeerd gegaan...", "Vul alle gegevens in", "OK");
         }
     }
+
+    private void UpdatePlaceholders()
+    {
+
+        Firstname.Placeholder = testuser.firstName;
+        Middlename.Placeholder = testuser.middleName;
+        Lastname.Placeholder = testuser.lastName;
+        Birthdate.Date = (DateTime)testuser.birthDay;
+        Bio.Placeholder = testuser.bio;
+    }
+
+    private void ClearTextFromEntries()
+    {
+        Firstname.Text = "";
+        Middlename.Text = "";
+        Lastname.Text = "";
+        Bio.Text = "";
+    }
+
+    private void RegisterInterestsInDatabase()
+    {
+        foreach (var interest in interesses)
+        {
+            Database.RegisterInterestInDatabase(testuser.email, interest);
+        }
+    }
+
+    private void UpdateUserPropertiesPrepareForUpdateQuery()
+    {
+        if (testuser.firstName != Firstname.Text && Firstname.Text != null && Firstname.Text != "") testuser.firstName = Firstname.Text;
+        if (testuser.middleName != Middlename.Text && Middlename.Text != null && Middlename.Text != "") testuser.middleName = Middlename.Text;
+        if (testuser.lastName != Lastname.Text && Lastname.Text != null && Lastname.Text != "") testuser.lastName = Lastname.Text;
+        if (testuser.birthDay != Birthdate.Date) testuser.birthDay = Birthdate.Date;
+        if (testuser.bio != Bio.Text && Bio.Text != null && Bio.Text != "") testuser.bio = Bio.Text;
+        if (testuser.gender != Gender.SelectedItem.ToString()) testuser.gender = Gender.SelectedItem.ToString();
+        if (testuser.preference != Preference.SelectedItem.ToString()) testuser.preference = Preference.SelectedItem.ToString();
+    }
+
     private void FirstnameTextChanged(object sender, TextChangedEventArgs e)
     {
         if (Firstname.Text != "")
@@ -83,15 +139,14 @@ public partial class ProfileChange : ContentPage
             if (!checkIfTextIsOnlyLetters(Firstname.Text))
             {
                 firstname = false;
-                Color colorRed = new Color(238, 75, 43);
                 lblFirstname.Text = "Voornaam mag alleen letters bevatten";
-                lblFirstname.TextColor = colorRed;
+                lblFirstname.TextColor = ErrorColor;
             }
             else
             {
                 firstname = true;
                 lblFirstname.Text = "Voornaam";
-                lblFirstname.Text = default;
+                lblFirstname.TextColor = default;
                 Firstname.Text = Firstname.Text.First().ToString().ToUpper() + Firstname.Text[1..].ToLower();
             }
         }
@@ -103,9 +158,8 @@ public partial class ProfileChange : ContentPage
             if (!checkIfTextIsOnlyLetters(Middlename.Text))
             {
                 middlename = false;
-                Color colorRed = new Color(238, 75, 43);
                 lblMiddlename.Text = "Tussenvoegsel mag alleen letters bevatten";
-                lblMiddlename.TextColor = colorRed;
+                lblMiddlename.TextColor = ErrorColor;
             }
             else
             {
@@ -123,9 +177,9 @@ public partial class ProfileChange : ContentPage
             if (!checkIfTextIsOnlyLetters(Lastname.Text))
             {
                 lastname = false;
-                Color colorRed = new Color(238, 75, 43);
+                Color ErrorColor = new Color(238, 75, 43);
                 lblLastname.Text = "Achternaam mag alleen letters bevatten";
-                lblLastname.TextColor = colorRed;
+                lblLastname.TextColor = ErrorColor;
             }
             else
             {
@@ -143,9 +197,8 @@ public partial class ProfileChange : ContentPage
             if (!checkIfTextIsOnlyLettersAndSpaces(Bio.Text))
             {
                 bio = false;
-                Color colorRed = new Color(238, 75, 43);
                 lblBio.Text = "Bio mag alleen letters bevatten";
-                lblBio.TextColor = colorRed;
+                lblBio.TextColor = ErrorColor;
             }
             else
             {
@@ -190,31 +243,31 @@ public partial class ProfileChange : ContentPage
             if (!interesses.Contains(InterestSelection.SelectedItem.ToString()))
             {
                 interesses.Add(InterestSelection.SelectedItem.ToString());
-                listInteresses.ItemsSource = null;
-                listInteresses.ItemsSource = interesses;
+                ListInterests.ItemsSource = null;
+                ListInterests.ItemsSource = interesses;
             }
             else
             {
-                Color colorRed = new Color(238, 75, 43);
+                Color ErrorColor = new Color(238, 75, 43);
                 InterestSelection.Title = "Je hebt deze interesse al toegevoegd";
-                InterestSelection.TitleColor = colorRed;
+                InterestSelection.TitleColor = ErrorColor;
             }
         }
         else
         {
-            Color colorRed = new Color(238, 75, 43);
+            Color ErrorColor = new Color(238, 75, 43);
             InterestSelection.Title = "Je kunt maximaal 5 interesses selecteren";
-            InterestSelection.TitleColor = colorRed;
+            InterestSelection.TitleColor = ErrorColor;
         }
     }
     private void DeleteInterest(object sender, EventArgs e)
     {
-        if (listInteresses.SelectedItem != null) {
-            var item = listInteresses.SelectedItem.ToString();
+        if (ListInterests.SelectedItem != null) {
+            var item = ListInterests.SelectedItem.ToString();
             interesses.Remove(item);
-            listInteresses.ItemsSource = null;
-            listInteresses.ItemsSource = interesses;
-            listInteresses.SelectedItem = null;
+            ListInterests.ItemsSource = null;
+            ListInterests.ItemsSource = interesses;
+            ListInterests.SelectedItem = null;
         }
     }
 
@@ -233,14 +286,23 @@ public partial class ProfileChange : ContentPage
             else
             {
             birthday = false;
-                Color colorRed = new Color(238, 75, 43);
                 lblBirthdate.Text = "Je moet minimaal 18 jaar zijn";
-                lblBirthdate.BackgroundColor = colorRed;
+                lblBirthdate.BackgroundColor = ErrorColor;
             }
     }
 
-    private void checkIfAgeOfBirthDateIsOver18()
+    private void ListInterests_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-
+                if (ListInterests.SelectedItem != null)
+        {
+            InterestSelection.Title = "Interesse";
+            InterestSelection.TitleColor = default;
+            var interest = ListInterests.SelectedItem.ToString();
+            Database.RemoveInterestOfUser(testuser.email, interest);
+            interesses.Remove(interest);
+            ListInterests.ItemsSource = null;
+            ListInterests.ItemsSource = interesses;
+            ListInterests.SelectedItem = null;
+        }
     }
 }

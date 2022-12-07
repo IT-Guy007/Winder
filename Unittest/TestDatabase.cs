@@ -113,4 +113,47 @@ public class TestDatabase {
             return false;
         }
     }
+    [TestCase("Peter", "van", "Huizkes", "Vrouw", "1998/01/01", "Man", "bio info", "s1416890@student.windesheim.nl", ExpectedResult = true)]
+    public bool updateUserInDatabaseWithNewUserProfileTest(string firstname, string middlename, string lastname,
+    string preference, DateTime birthday, string gender, string bio, string email)
+    {
+        User testUser = new User();
+        testUser.firstName = firstname;
+        testUser.middleName = middlename;
+        testUser.lastName = lastname;
+        testUser.preference = preference;
+        testUser.birthDay = birthday;
+        testUser.gender = gender;
+        testUser.bio = bio;
+        testUser.email = email;
+        return _database.UpdateUserInDatabaseWithNewUserData(testUser);
+    }
+
+    [TestCase("@student.windesheim.nl", ExpectedResult = false)]
+    [TestCase("s1416890@student.windesheim.nl", ExpectedResult = true)]
+    public bool LoadInterestsFromDatabaseInListInteressesTest(string email)
+    {
+        return _database.LoadInterestsFromDatabaseInListInteresses(email).Count > 0;
+    }
+
+    [TestCase("s1416890@student.windesheim.nl", "Lezen", ExpectedResult = true)]
+    [TestCase("s1416890@student.windesheim.nl", "bestaat niet", ExpectedResult = false)]
+    public bool removeInterestOutOfuserHasInterestTableDatabaseTest(string email, string interest)
+    {
+        return _database.RemoveInterestOfUser(email, interest);
+    }
+
+    [TestCase("s1416890@student.windesheim.nl", "Roeien", ExpectedResult = false)]
+    [TestCase("s1416890@student.windesheim.nl", "Astrologie", ExpectedResult = true)]
+    [TestCase("s1416890@student.windesheim.nl", "Sportschool", ExpectedResult = false)]
+    [TestCase("NietBestaandeGebruiker@student.windesheim.nl", "Lezen", ExpectedResult = false)]
+    public bool addInterestToUserInterestsTest(string email, string interest)
+    {
+        return _database.RegisterInterestInDatabase(email, interest);
+    }
+    [TestCase(ExpectedResult = true)]
+    public bool GetInterestsFromDataBaseTest()
+    {
+        return _database.GetInterestsFromDataBase().Count > 0;
+    }
 }

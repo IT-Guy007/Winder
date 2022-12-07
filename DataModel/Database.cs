@@ -401,20 +401,20 @@ public class Database {
         }
     }
 
-    public string[] LoadInterestsFromDatabaseInListInteresses(string email) {
-        string[] interests = new string[5];
+    public List<string> LoadInterestsFromDatabaseInListInteresses(string email)
+    {
+        List<string> interests = new List<string>();
         OpenConnection();
-        try {
-            string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
-            SqlCommand command = new SqlCommand(sql, connection);
+        string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
+        SqlCommand command = new SqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@Email", email);
+        try
+        {
             SqlDataReader reader = command.ExecuteReader();
-
-        
-            command.Parameters.AddWithValue("@Email", email);
             while (reader.Read())
             {
-                string item = reader["interest"] as string ?? "Unknown";
-                interests.Append(item);
+                var iets1 = reader["interest"] as string;
+                interests.Add(iets1);
             }
         }
         catch (SqlException e)
@@ -424,8 +424,7 @@ public class Database {
         CloseConnection();
         return interests;
     }
-
-    public void UpdateUserInDatabaseWithNewUserData(User user) {
+    public bool UpdateUserInDatabaseWithNewUserData(User user) {
         try {
             //Start connection
             OpenConnection();
@@ -445,11 +444,13 @@ public class Database {
             query.ExecuteNonQuery();
             //Close connection
             CloseConnection();
+            return true;
         }
         catch (SqlException se) {
             Console.WriteLine(se.ToString());
             //Close connection
             CloseConnection();
+            return false;
         }
     }
 
@@ -639,8 +640,8 @@ public class Database {
             //Get the user
             User user = GetUserFromDatabase(usersToRetrief[i]);
             
-            //Get the interests of the user
-            user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]);
+            ////Get the interests of the user
+            //user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]);
 
             //Get the images of the user
             Image[] images = GetPicturesFromDatabase(usersToRetrief[i]);
