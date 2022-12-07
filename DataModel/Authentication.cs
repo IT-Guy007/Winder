@@ -14,6 +14,7 @@ public class Authentication {
     public Authentication() {
         _loggedState = LoggedState.signedOut;
         _accountState = AccountState.inactive;
+        _currentUser = new User();
     }
 
     //Defining state
