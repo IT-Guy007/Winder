@@ -64,11 +64,11 @@ public class Database {
                     var middleName = reader["middleName"] as string;
                     var lastName = reader["lastName"] as string;
                     var preferences = reader["preference"] as string;
-                    var birthday = (DateTime)reader["birthday"];
+                    var birthday  = (DateTime)reader["birthday"];
                     var gender = reader["gender"] as string;
                     var profilePicture = reader["profilePicture"] as byte[];
                     var bio = reader["bio"] as string;
-                    var school = reader["school"] as string;
+                    var school = reader["location"] as string;
                     var major = reader["education"] as string;
                     _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
                         preferences, email, "", gender, VarBinaryToImage(profilePicture), bio, school, major);

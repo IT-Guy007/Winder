@@ -151,6 +151,11 @@
                     Text="zie wachtwoord"
                     TextColor="Black"
                     VerticalOptions="Center" />
+                <Button
+                    Grid.Column="1"
+                    BackgroundColor="Gray"
+                    Text="Wijzig wachtwoord"
+                    />
             </Grid>
         </StackLayout>
 
