@@ -401,12 +401,14 @@ public class Database {
     }
 
     public string[] LoadInterestsFromDatabaseInListInteresses(string email) {
-        string[] interests = new string(10);
+        string[] interests = new string[5];
         OpenConnection();
         try {
-            SqlDataReader reader = command.ExecuteReader();
             string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
             SqlCommand command = new SqlCommand(sql, connection);
+            SqlDataReader reader = command.ExecuteReader();
+
+        
             command.Parameters.AddWithValue("@Email", email);
             while (reader.Read())
             {
