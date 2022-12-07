@@ -27,7 +27,7 @@ public partial class ProfileChange : ContentPage
         b.LoadInterestsFromDatabaseInListInteresses(auth._currentUser.email);
         interesses = fillListOfInterestsWithStringArray(b.LoadInterestsFromDatabaseInListInteresses(auth._currentUser.email));
         listInteresses.ItemsSource = interesses;
-        changeLabelsTextSizeAndColor(9, new Color(0, 0, 0));
+        changeLabelsTextSizeAndColor(9, new Color(255,255,255));
     }
 
     private List<string> fillListOfInterestsWithStringArray(string[] strings)
