@@ -20,7 +20,7 @@
                 
                 CornerRadius="50"
                 Grid.Row="0"
-                Clicked="Backbutton_Clicked"/>
+                />
         <VerticalStackLayout VerticalOptions="Center" >
         
         <Image 
