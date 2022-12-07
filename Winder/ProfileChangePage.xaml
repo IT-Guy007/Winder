@@ -6,31 +6,32 @@
     <VerticalStackLayout>
         <HorizontalStackLayout HorizontalOptions="Center">
             <Label 
-            x:Name="lblVoornaam"
+            x:Name="lblFirstname"
             Text="Voornaam"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-            <Entry x:Name="Voornaam"
+            
+            <Entry x:Name="Firstname"
                MaxLength="15"
                Placeholder="Wessel"
                HorizontalOptions="Center"
                TextChanged="FirstnameTextChanged" />
             <Label 
-            x:Name="lblTussenvoegsel"
+            x:Name="lblMiddlename"
             Text="tussenvoegsel"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-            <Entry x:Name="Tussenvoegsel"
+            <Entry x:Name="Middlename"
                MaxLength="10"
                Placeholder="de"
                HorizontalOptions="Center"
                TextChanged="MiddlenameTextChanged" />
             <Label 
-            x:Name="lblAchternaam"
+            x:Name="lblLastname"
             Text="Achternaam"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-            <Entry x:Name="Achternaam"
+            <Entry x:Name="Lastname"
                MaxLength="15"
                Placeholder="Notulist"
                HorizontalOptions="Center"
@@ -38,21 +39,21 @@
         </HorizontalStackLayout>
 
         <Label 
-            x:Name="lblGeboortedatum"  
+            x:Name="lblBirthdate"  
             Text="Leeftijd: "
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <DatePicker x:Name="Geboortedatum"
+        <DatePicker x:Name="Birthdate"
             DateSelected="DateOfBirthSelectedDate"
             HorizontalOptions="Center"
             />
         <Label 
-            x:Name="lblOmschrijving"
+            x:Name="lblBio"
             Text="Omschrijving"
             VerticalOptions="Center" 
             HorizontalOptions="Center"
             />
-        <Entry x:Name="Omschrijving"
+        <Entry x:Name="Bio"
                MaxLength="150"
                Placeholder="Hallo, mijn naam is Wessel"
                HorizontalOptions="Center"
@@ -70,7 +71,7 @@
         </Picker>
         <Picker         
         Title="Voorkeur"
-            x:Name="Voorkeur"
+            x:Name="Preference"
         HorizontalOptions="Center">
             <Picker.Items>
                 <x:String>Kies</x:String>
@@ -79,7 +80,7 @@
             </Picker.Items>
         </Picker>
         <Picker 
-            x:Name="interessePicker"
+            x:Name="InterestSelection"
         Title="Interesses"
         HorizontalOptions="Center"
         SelectedIndexChanged="PickerIndexChanged">
@@ -93,11 +94,6 @@
                 </x:Array>
             </ListView.ItemsSource>
         </ListView>
-        <Button x:Name="DeleteItem" 
-                Text="Delete" 
-                Clicked="DeleteInterest" 
-                MaximumWidthRequest="100" 
-                MaximumHeightRequest="40"/>
         <Button x:Name="wijzigProfielKnop"             
                 Text="Opslaan"
                 Clicked="ChangeUserData"/>

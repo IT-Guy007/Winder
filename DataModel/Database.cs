@@ -300,13 +300,6 @@ public class Database {
         }
 
     }
-    
-
-
-
-
-  
-
     public List<string> GetInterestsFromDataBase()
     {
         List<string> interests = new List<string>();
@@ -366,44 +359,49 @@ public class Database {
         return user;
     }
 
-    public void RegisterInterestInDatabase(string username, string interest)
+    public bool RegisterInterestInDatabase(string username, string interest)
     {
-        OpenConnection();
-        string sql = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
-        SqlCommand command = new SqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@Email", username);
-        command.Parameters.AddWithValue("@Interest", interest);
+
         try
         {
+            OpenConnection();
+            string sql = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Email", username);
+            command.Parameters.AddWithValue("@Interest", interest);
             command.ExecuteNonQuery();
+            CloseConnection();
+            return true;
         }
         catch (SqlException e)
         {
             CloseConnection();
+            return false;
         }
-        CloseConnection();
     }
 
-    public void RemoveInterestOfUser(string username, string interest)
+    public bool RemoveInterestOfUser(string username, string interest)
     {
-        OpenConnection();
-        string sql = "Delete From winder.userHasInterest Where UID = @Email and interest = @Interest";
-        SqlCommand command = new SqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@Email", username);
-        command.Parameters.AddWithValue("@Interest", interest);
         try
         {
+            OpenConnection();
+            string sql = "Delete From winder.userHasInterest Where UID = @Email and interest = @Interest";
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Email", username);
+            command.Parameters.AddWithValue("@Interest", interest);
             command.ExecuteNonQuery();
+            CloseConnection();
+            return true;
         }
         catch (SqlException e)
         {
             CloseConnection();
+            return false;
         }
-        CloseConnection();
     }
 
-    public string[] LoadInterestsFromDatabaseInListInteresses(string email) {
-        string[] interests = new string[10];
+    public List<string> LoadInterestsFromDatabaseInListInteresses(string email) {
+        List<string> interests = new List<string>();
         OpenConnection();
         string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
         SqlCommand command = new SqlCommand(sql, connection);
