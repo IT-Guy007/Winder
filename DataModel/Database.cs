@@ -64,7 +64,7 @@ public class Database {
                 var bio = reader["bio"] as string;
                 var school = reader["location"] as string;
                 var major = reader["education"] as string;
-                _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
+                Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
                     preferences, email, "", gender ,VarBinaryToImage(profilePicture), bio,school,major);
 
                 }
@@ -212,30 +212,6 @@ public class Database {
             return false;
         }
 
-    }
-
-
-    public static Bitmap Base64StringToBitmap(string? base64String)
-    {
-        Bitmap bmpReturn = null;
-
-
-        byte[] byteBuffer = Convert.FromBase64String(base64String);
-        MemoryStream memoryStream = new MemoryStream(byteBuffer);
-
-
-        memoryStream.Position = 0;
-
-
-        bmpReturn = (Bitmap)Bitmap.FromStream(memoryStream);
-
-
-        memoryStream.Close();
-        memoryStream = null;
-        byteBuffer = null;
-
-
-        return bmpReturn;
     }
 
     public void UpdatePassword(string email, string password)
@@ -653,6 +629,9 @@ public class Database {
         
         //The users to get
         string[] usersToRetrief = new string[5];
+        usersToRetrief[0] = ("sbananen@student.windesheim.nl");
+        usersToRetrief[1] = ("s8917312987@student.windesheim.nl");
+
 
         //Results
         Profile[] profiles = new Profile[5];
@@ -662,7 +641,7 @@ public class Database {
             
             //Get the user
             User user = GetUserFromDatabase(usersToRetrief[i]);
-            
+
             //Get the interests of the user
             user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]);
 
