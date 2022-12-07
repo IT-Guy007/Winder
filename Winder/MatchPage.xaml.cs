@@ -12,6 +12,7 @@ public partial class MatchPage : ContentPage {
     private int selectedImage = 0;
     
     public MatchPage() {
+        
         Title = "Make your match now!";
 
         StackLayout verticalStackLayout = new StackLayout {
