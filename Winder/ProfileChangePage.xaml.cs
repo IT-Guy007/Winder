@@ -28,11 +28,18 @@ public partial class ProfileChange : ContentPage
         interesses = Database.LoadInterestsFromDatabaseInListInteresses(testuser.email);
         ListInterests.ItemsSource = interesses;
         ChangeLabelsTextSizeAndColor(9, default);
-        ChangeSizeAndBackgroundColorOfEntries(9, new Color(255, 243, 5));
+        ChangeSizeAndBackgroundColorOfEntries(9,default, new Color(255, 243, 5));
     }
 
-    private void ChangeSizeAndBackgroundColorOfEntries(int size, Color bgColorOfEntry)
+    private void ChangeSizeAndBackgroundColorOfEntries(int size, Color fontColor,Color bgColorOfEntry)
     {
+        Firstname.PlaceholderColor = fontColor;
+        Middlename.PlaceholderColor = fontColor;
+        Lastname.PlaceholderColor = fontColor;
+        Bio.PlaceholderColor = fontColor;
+        Education.PlaceholderColor = fontColor;
+
+
         Firstname.FontSize = size;
         Middlename.FontSize = size;
         Lastname.FontSize = size;
@@ -51,6 +58,7 @@ public partial class ProfileChange : ContentPage
         Gender.BackgroundColor = bgColorOfEntry;
         Preference.BackgroundColor = bgColorOfEntry;
         InterestSelection.BackgroundColor = bgColorOfEntry;
+        
     }
 
     private void ChangeLabelsTextSizeAndColor(int size, Color color)
@@ -150,6 +158,7 @@ public partial class ProfileChange : ContentPage
         if (testuser.firstName != Firstname.Text && Firstname.Text != null && Firstname.Text != "") testuser.firstName = Firstname.Text;
         if (testuser.middleName != Middlename.Text && Middlename.Text != null && Middlename.Text != "") testuser.middleName = Middlename.Text;
         if (testuser.lastName != Lastname.Text && Lastname.Text != null && Lastname.Text != "") testuser.lastName = Lastname.Text;
+        if (testuser.major != Education.Text && Education.Text != null && Education.Text != "") testuser.major = Education.Text;
         if (testuser.birthDay != Birthdate.Date) testuser.birthDay = Birthdate.Date;
         if (testuser.bio != Bio.Text && Bio.Text != null && Bio.Text != "") testuser.bio = Bio.Text;
         if (testuser.gender != Gender.SelectedItem.ToString()) testuser.gender = Gender.SelectedItem.ToString();
@@ -247,7 +256,6 @@ public partial class ProfileChange : ContentPage
                 education = true;
                 lblEducation.Text = "Opleiding";
                 lblEducation.TextColor = default;
-                Education.Text = Education.Text.First().ToString().ToUpper() + Education.Text[1..].ToLower();
             }
         }
     }
@@ -255,7 +263,7 @@ public partial class ProfileChange : ContentPage
     {
         foreach (char c in text)
         {
-            if (!char.IsLetter(c) && c != ' ')
+            if (!char.IsLetter(c) && c != ' ' && c != '-')
             {
                 return false;
             }
@@ -332,7 +340,7 @@ public partial class ProfileChange : ContentPage
             }
     }
 
-    private void ListInterests_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    private void ListInterestsItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
                 if (ListInterests.SelectedItem != null)
         {

@@ -431,7 +431,7 @@ public class Database {
             
             //Create query
             SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
-            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, birthday = @birthday, bio = @bio " +
+            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname,education = @Education ,birthday = @birthday, bio = @bio " +
             "where email = @Email", connection);
             query.Parameters.AddWithValue("@firstname", user.firstName);
             query.Parameters.AddWithValue("@middlename", user.middleName);
@@ -440,6 +440,7 @@ public class Database {
             query.Parameters.AddWithValue("@preference", user.preference);
             query.Parameters.AddWithValue("@Email", user.email);
             query.Parameters.AddWithValue("@bio", user.bio);
+            query.Parameters.AddWithValue("@Education", user.major);
             //Execute query
             query.ExecuteNonQuery();
             //Close connection

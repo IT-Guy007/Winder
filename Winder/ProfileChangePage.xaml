@@ -62,7 +62,7 @@
                />
             <Label 
             x:Name="lblEducation"
-            Text="Omschrijving"
+            Text="Opleiding"
             VerticalOptions="Center" 
             HorizontalOptions="Center"
             />
@@ -102,7 +102,7 @@
 
                 </Picker.Items>
             </Picker>
-            <ListView MaximumHeightRequest="100" HorizontalOptions="Center" x:Name="ListInterests" ItemSelected="ListInterests_ItemSelected">
+            <ListView MaximumHeightRequest="100" HorizontalOptions="Center" x:Name="ListInterests" ItemSelected="ListInterestsItemSelected">
                 <ListView.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                     </x:Array>
