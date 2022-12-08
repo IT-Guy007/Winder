@@ -7,7 +7,7 @@ namespace MAUI;
 
 public partial class ProfileChange : ContentPage
 {
-    List<string> interesses;
+    List<string> interesses  =new List<string>();
     Database Database = new Database();
     Color ErrorColor = new Color(255, 243, 5);
     User testuser;
@@ -24,7 +24,6 @@ public partial class ProfileChange : ContentPage
         InitializeComponent();
         testuser = Database.GetUserFromDatabase("s1416890@student.windesheim.nl");
         LoadUserFromDatabaseInForm();
-        interesses = new List<string>();
         InterestSelection.ItemsSource = Database.GetInterestsFromDataBase();
         interesses = Database.LoadInterestsFromDatabaseInListInteresses(testuser.email);
         ListInterests.ItemsSource = interesses;
@@ -154,7 +153,7 @@ public partial class ProfileChange : ContentPage
         if (testuser.birthDay != Birthdate.Date) testuser.birthDay = Birthdate.Date;
         if (testuser.bio != Bio.Text && Bio.Text != null && Bio.Text != "") testuser.bio = Bio.Text;
         if (testuser.gender != Gender.SelectedItem.ToString()) testuser.gender = Gender.SelectedItem.ToString();
-        if (testuser.preference != Preference.SelectedItem.ToString()) testuser.preference = Preference.SelectedItem.ToString();
+        if (testuser.preference != Preference.SelectedItem.ToString()) testuser.preference = Preference.SelectedItem.ToString();   
     }
 
     private void FirstnameTextChanged(object sender, TextChangedEventArgs e)
@@ -202,7 +201,6 @@ public partial class ProfileChange : ContentPage
             if (!CheckIfTextIsOnlyLetters(Lastname.Text))
             {
                 lastname = false;
-                Color ErrorColor = new Color(238, 75, 43);
                 lblLastname.Text = "Achternaam mag alleen letters bevatten";
                 lblLastname.TextColor = ErrorColor;
             }
