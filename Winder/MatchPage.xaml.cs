@@ -1,11 +1,15 @@
 ﻿using DataModel;
+using Microsoft.Maui.Layouts;
+using System.Security.Cryptography.X509Certificates;
+using Winder;
 
 namespace MAUI;
 
 public partial class MatchPage : ContentPage {
     private Authentication _authentication= new Authentication();
     private Database _database = new Database();
-
+    public string originPage;
+    private const string pageName = "matchpage";
     private  Queue<Profile> _profileQueue = new Queue<Profile>();
     private Profile _currentProfile;
     private Image[] _images = new Image[10];
@@ -13,11 +17,54 @@ public partial class MatchPage : ContentPage {
     
     public MatchPage() {
         Title = "Make your match now!";
+        
+            
 
-        StackLayout verticalStackLayout = new StackLayout {
+
+        StackLayout verticalStackLayout = new StackLayout
+        {
             Orientation = StackOrientation.Vertical,
             VerticalOptions = LayoutOptions.Fill
         };
+
+        HorizontalStackLayout horizontalLayout = new HorizontalStackLayout()
+        {
+           
+        };
+        //matches button
+        var matchesButton = new Button();
+        matchesButton.Text = "Matches";
+        matchesButton.WidthRequest = 100;
+        matchesButton.HeightRequest = 50;
+        matchesButton.IsVisible = true;
+        matchesButton.Clicked += MatchesButton_Clicked;
+        matchesButton.HorizontalOptions = LayoutOptions.End;
+
+       
+
+        //my profile button
+        var myProfile = new Button();
+        myProfile.Text = "Mijn profiel";
+        myProfile.HeightRequest = 50;
+        myProfile.WidthRequest = 110;
+        myProfile.Clicked += MyProfile_Clicked;
+        myProfile.HorizontalOptions = LayoutOptions.End;
+
+        //instellingen
+        var instellingen = new Button();
+        instellingen.Text = "Instellingen";
+        instellingen.HeightRequest = 50;
+        instellingen.WidthRequest = 115;
+        instellingen.HorizontalOptions = LayoutOptions.End;
+
+
+        horizontalLayout.Children.Add(matchesButton);
+        horizontalLayout.Children.Add(myProfile);
+        horizontalLayout.Children.Add(instellingen);
+        verticalStackLayout.Add(horizontalLayout);
+
+        
+        
         StackLayout imageLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
         
         verticalStackLayout.Spacing = 10;
@@ -26,14 +73,14 @@ public partial class MatchPage : ContentPage {
             if(_authentication._currentUser != null) {
             //if(_authentication._currentUser.profilePicture.Height != 0 ) {
 
-                var profileImage = new Image
-                {
-                    Source = ImageSource.FromResource(_authentication._currentUser.profilePicture.ToString()),
-                    Aspect = Aspect.AspectFit,
-                    WidthRequest = 800,
-                    HeightRequest = 800
-                };
-                verticalStackLayout.Add(profileImage);
+                //var profileImage = new Image
+                //{
+                //    Source = ImageSource.FromResource(_authentication._currentUser.profilePicture.ToString()),
+                //    Aspect = Aspect.AspectFit,
+                //    WidthRequest = 800,
+                //    HeightRequest = 800
+                //};
+                //verticalStackLayout.Add(profileImage);
                 
             } else {
                 var profileImage = new Image {
@@ -173,6 +220,22 @@ public partial class MatchPage : ContentPage {
         
         verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
+    }
+
+    private void MyProfile_Clicked(object sender, EventArgs e)
+    {
+        ProfileChange myProfile = new ProfileChange();
+        myProfile.originPage = pageName;
+        Navigation.PushAsync(myProfile);
+    }
+
+    private void MatchesButton_Clicked(object obj, EventArgs e)
+    {
+
+        MatchesPage chats = new MatchesPage();
+        //declareert waar je vandaan komt
+        chats.originPage = pageName;
+        Navigation.PushAsync(chats);
     }
 
     private async Task UpdateQueue() {

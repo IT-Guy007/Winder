@@ -17,7 +17,7 @@
                 HeightRequest="40"
                 WidthRequest="40"
                 Aspect="AspectFill"
-                
+                Clicked="Backbutton_Clicked"
                 CornerRadius="50"
                 Grid.Row="0"
                 />

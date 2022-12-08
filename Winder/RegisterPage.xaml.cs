@@ -405,6 +405,10 @@ public partial class RegisterPage : ContentPage
         }
     }
 
+    private void Backbutton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new MainPage());
+    }
 }
 
 

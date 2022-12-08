@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using Winder;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace MAUI;
@@ -7,6 +8,8 @@ namespace MAUI;
 public partial class ProfileChange : ContentPage
 {
     List<string> interesses;
+    public string originPage;
+    private const string pageName = "profilepage";
     bool voornaam = true, tussenvoegsel = true, achternaam = true, geboortedatum = true,omschrijving = true, geslacht = true,voorkeur = true, interessesGekozen = true;
     public ProfileChange()
     {
@@ -118,6 +121,30 @@ public partial class ProfileChange : ContentPage
                 Omschrijving.Text = Omschrijving.Text.First().ToString().ToUpper() + Omschrijving.Text[1..].ToLower();
             }
         }
+    }
+
+    private void Backbutton_Clicked(object sender, EventArgs e)
+    {
+        switch (originPage)
+        {
+            case "matchpage":
+                Navigation.PushAsync(new MatchPage());
+                break;
+        }
+    }
+
+    private void matchesButton_clicked(object sender, EventArgs e)
+    {
+        MatchesPage matchespage = new MatchesPage();
+        matchespage.originPage = pageName;
+        Navigation.PushAsync(matchespage);
+    }
+
+    private void matchButton_Clicked(object sender, EventArgs e)
+    {
+        MatchPage matchpage = new MatchPage();
+        matchpage.originPage = pageName;
+        Navigation.PushAsync(matchpage);
     }
 
     private bool checkIfTextIsOnlyLettersAndSpaces(string text)
