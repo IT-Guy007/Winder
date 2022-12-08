@@ -11,15 +11,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="Fixed currentUser">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/0b745a1b-c007-48ba-b9f1-57e7b868ac3a.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/6c16701a-0329-4c2f-a729-ab4bb7db9f32.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/7f46be2a-230f-4f0f-b349-cf36dbaac72d.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/b0dac849-38f0-41c0-a5d6-ddc96192a9ad.vsidx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/3c735209-f2c0-43dc-ad86-deaced66bbd8.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/5470fbf2-acb9-40d5-9828-bd7221f9149f.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/70d637f9-bdc7-48a4-bbeb-d7bb5169060b.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/f25ce0ce-dc93-4b85-8d78-0b5642958a30.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/.wsuo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/.wsuo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vs/slnx.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/slnx.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Authentication.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/MauiProgram.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MauiProgram.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Winder.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,6 +126,7 @@
       <workItem from="1670411575246" duration="1034000" />
       <workItem from="1670503808689" duration="64000" />
       <workItem from="1670503908227" duration="500000" />
+      <workItem from="1670510576115" duration="159000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>

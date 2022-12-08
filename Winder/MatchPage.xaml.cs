@@ -63,15 +63,17 @@ public partial class MatchPage : ContentPage {
             if(_currentProfile == null) {
                 _currentProfile = _profileQueue.Dequeue();
             }
-            
+
+            MemoryStream ms = new MemoryStream(_currentProfile.profile_images[0]);
+
             //Image carousel
-            var currentImage = new Button
+            var currentImage = new ImageButton
             {
-                ImageSource = ImageSource.FromResource(_currentProfile.profile_images[selectedImage].ToString()),
+                Source = ImageSource.FromStream(() => ms),
                 WidthRequest = 800,
                 HeightRequest = 800,
-
             };
+
             currentImage.Clicked += (sender, args) => {
                 if(selectedImage < _currentProfile.profile_images.Length) {
                     selectedImage++;
@@ -79,8 +81,9 @@ public partial class MatchPage : ContentPage {
                     selectedImage = 0;
                 }
             };
-            
-            
+
+            infoStackLayout.Add(currentImage);
+
             //fullname
             StackLayout nameStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
             var fullnamelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };

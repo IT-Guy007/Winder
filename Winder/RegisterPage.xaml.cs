@@ -161,7 +161,6 @@ public partial class RegisterPage : ContentPage
 
     public void SaveEvent (object sender, EventArgs e)
     {
-
         if (SaveEventChecks())
         {
 
@@ -169,13 +168,15 @@ public partial class RegisterPage : ContentPage
             {
                 middlename = "";
             }
-             database.RegistrationFunction(firstname, middlename, lastname, email, preference, dateOfBirth, gender, "random tekst", password, profilePicture, true, school, major);
-            
-               foreach (string interesse in GekozenInteressesLijst)
-                {
-                    database.RegisterInterestInDatabase(email, interesse);
-                }
-                Navigation.PushAsync(new MainPage());
+
+            database.RegistrationFunction(firstname, middlename, lastname, email, preference, dateOfBirth, gender, "random tekst", password, profilePicture, true, school, major);
+            database.SaveProfilePictures(email, profilePicture);
+
+            foreach (string interesse in GekozenInteressesLijst)
+            {
+                database.RegisterInterestInDatabase(email, interesse);
+            }
+            Navigation.PushAsync(new MainPage());
         }
     }
 

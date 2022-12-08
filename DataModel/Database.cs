@@ -1,12 +1,10 @@
 using System.Data.SqlClient;
 using Microsoft.Maui.Controls;
-
-namespace DataModel;
-
 using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
 
+namespace DataModel;
 public class Database {
     private Authentication _authentication = new Authentication();
     public SqlConnection connection;
@@ -248,7 +246,6 @@ public class Database {
         }
     }
 
-
     public void DeleteUser(string email)
     {
         Authentication a = new Authentication();
@@ -302,12 +299,6 @@ public class Database {
         }
 
     }
-    
-
-
-
-
-  
 
     public List<string> GetInterestsFromDataBase()
     {
@@ -454,6 +445,30 @@ public class Database {
         }
     }
 
+    public bool SaveProfilePictures(string email, byte[] profilepicture)
+    {
+        OpenConnection();
+        string sql = "INSERT INTO winder.winder.Photos (winder.[user], winder.photo) VALUES(@Email, @profilepicture)";
+        SqlCommand command = new SqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@Email", email);
+        command.Parameters.AddWithValue("@profilepicture", profilepicture);
+        try
+        {
+            command.ExecuteNonQuery();
+            CloseConnection();
+            return true;
+        }
+        catch (SqlException se)
+        {
+            throw new Exception(se.Message);
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace.ToString());
+            //Close connection
+            CloseConnection();
+            return false;
+        }
+    }
+
     public void RegistrationFunction(string firstname, string middlename, string lastname, string email, string preference, DateTime birthday, string gender,
                                  string bio, string password, byte[] proficePicture, bool active, string locatie, string opleiding) {
         OpenConnection();
@@ -597,23 +612,27 @@ public class Database {
         }
     }
 
-    public Image[] GetPicturesFromDatabase(string email) {
+    public byte[][] GetPicturesFromDatabase(string email) {
         
-        Image[] result = new Image[10];
+        byte[][] result = new byte[10][];
 
         //TO-DO: Get pictures from database
         //Start connection
         OpenConnection();
 
         //Create query
-        SqlCommand query = new SqlCommand("select * from winder.winder.[Photos] where email = @email", connection);
+        SqlCommand query = new SqlCommand("select * from winder.Photos where [user] = @email", connection);
         query.Parameters.AddWithValue("@email", email);
 
         //Execute query
         try {
             SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read()) {
-                
+            int i = 0;
+            while(reader.Read())
+            {
+                var profilePicture = reader["photo"] as byte[];
+                result[i] = profilePicture;
+                i++;
             }
         } catch(SqlException se) {
             Console.WriteLine("Error retrieving pictures from database");
@@ -631,7 +650,7 @@ public class Database {
         
         //The users(email) to get
         string[] usersToRetrief = new string[5];
-        usersToRetrief[0] = "sbananen@student.windesheim.nl";
+        usersToRetrief[0] = "sghjkf@student.windesheim.nl";
 
         //Results
         Profile[] profiles = new Profile[5];
@@ -646,10 +665,10 @@ public class Database {
             user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]);
 
             //Get the images of the user
-            Image[] images = GetPicturesFromDatabase(usersToRetrief[i]);
+            byte[][] images = GetPicturesFromDatabase(usersToRetrief[i]);
             var profile = new Profile(user, images);
             
-            profiles.Append(profile);
+            profiles[i] = profile;
         }
         
         return profiles;
