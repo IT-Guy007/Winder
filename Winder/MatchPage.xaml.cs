@@ -11,6 +11,7 @@ public partial class MatchPage : ContentPage {
     private int selectedImage = 0;
     
     public MatchPage() {
+        CheckIfQueueNeedsMoreProfiles();
 
         Title = "Make your match now!";
 
@@ -175,11 +176,6 @@ public partial class MatchPage : ContentPage {
         verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
     }
-
-    private async Task UpdateQueue() {
-        Task gettingProfiles = GetProfiles();
-        await gettingProfiles;
-    }
     
     private async Task GetProfiles() {
         Profile[] profiles =  _database.Get5Profiles(Authentication._currentUser.email);
@@ -188,9 +184,13 @@ public partial class MatchPage : ContentPage {
         }
     }
     
-    private void CheckIfQueueNeedsMoreProfiles() {
+    private async void CheckIfQueueNeedsMoreProfiles() {
         if(_profileQueue.Count < 5) {
-            UpdateQueue();
+            await GetProfiles();
+        }
+        if (_currentProfile == null)
+        {
+            _currentProfile = _profileQueue.Dequeue();
         }
     }
 }

@@ -620,6 +620,7 @@ public class Database {
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
         }
+        CloseConnection();
 
         return result;
     }
@@ -630,12 +631,13 @@ public class Database {
         
         //The users(email) to get
         string[] usersToRetrief = new string[5];
+        usersToRetrief[0] = "sbananen@student.windesheim.nl";
 
         //Results
         Profile[] profiles = new Profile[5];
         
         //Retrieving
-        for(int i = 0;i != 4;i++) {
+        for(int i = 0;i != 1;i++) {
             
             //Get the user
             User user = GetUserFromDatabase(usersToRetrief[i]);
@@ -652,11 +654,5 @@ public class Database {
         
         return profiles;
     }
-    
-    private Image VarBinaryToImage(byte[] input) {
-        var image = new Image();
-        MemoryStream ms = new MemoryStream(input);
-        image.Source = ImageSource.FromStream(() => ms);
-        return image;
-    }
+
 }
