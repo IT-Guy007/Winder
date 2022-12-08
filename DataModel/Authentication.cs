@@ -7,14 +7,14 @@ using System.Text;
 
 public class Authentication {
     
-    public User _currentUser { get; set; }
+    public static User _currentUser { get; set; }
     private LoggedState _loggedState { get; set; }
     private AccountState _accountState { get; set; }
     
     public Authentication() {
         _loggedState = LoggedState.signedOut;
         _accountState = AccountState.inactive;
-        _currentUser = new User();
+        
 
     }
 

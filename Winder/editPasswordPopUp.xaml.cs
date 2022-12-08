@@ -24,7 +24,7 @@ public partial class editPasswordPopUp : Popup
         Authentication auth = new Authentication();
         var nieuwWachtwoord = NieuwWachtwoord.Text;
         var herhaalWachtwoord = HerhaalWachtwoord.Text;
-        string Email = auth._currentUser.email;
+        string Email = Authentication._currentUser.email;
 
         if (nieuwWachtwoord == null)
         {
@@ -38,7 +38,8 @@ public partial class editPasswordPopUp : Popup
 
             if (auth.CheckPassword(nieuwWachtwoord) == false) // checkt of het wachtwoord aan de eisen voldoet
             {
-                //DisplayAlert("", "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten", "OK"); // popup
+                foutMelding.Text = "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten!";
+                foutMelding.IsVisible = true;
             }
 
 

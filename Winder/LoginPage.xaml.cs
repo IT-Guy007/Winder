@@ -26,7 +26,8 @@ public partial class LoginPage : ContentPage {
         var Password = Wachtwoord.Text;
         if (database.CheckLogin(Email, Password)) {
             FoutmeldingInloggen.IsVisible = false;
-            Navigation.PushAsync(new Instellingen());
+            Navigation.PushAsync(new Instellingen
+                ());
         }
         else {
             FoutmeldingInloggen.IsVisible = true;

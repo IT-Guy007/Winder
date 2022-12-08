@@ -8,7 +8,7 @@ public partial class Instellingen : ContentPage
 {
     Database database = new Database();
     Authentication _authentication = new Authentication();
-
+    string email = Authentication._currentUser.email;
 
     public Instellingen()
     {
@@ -41,14 +41,14 @@ public partial class Instellingen : ContentPage
     {
         
         string preference = Preference.SelectedItem.ToString();
-        database.insertPreference(_authentication._currentUser.email, preference);
+        database.insertPreference(email, preference);
     }
 
     public void setLocation()
     {
         
         string location = Location.SelectedItem.ToString();
-            database.insertLocation(_authentication._currentUser.email, location);    
+            database.insertLocation(email, location);    
     }
     
     public bool checkIfMinAgeLowerThenMax()
@@ -77,14 +77,14 @@ public partial class Instellingen : ContentPage
     public void placePreference( )
     {
         
-        string placePreference = database.placePreference(_authentication._currentUser.email);
+        string placePreference = database.placePreference(email);
         Preference.SelectedItem = placePreference;
     }
     
     public void placeLocation()
     {
         
-        string placeLocation = database.placeLocation(_authentication._currentUser.email);
+        string placeLocation = database.placeLocation(email);
         Location.SelectedItem = placeLocation;
         
         }
@@ -92,7 +92,7 @@ public partial class Instellingen : ContentPage
     public void placeMinAge()
     {
         
-        int placeMinAge = database.placeMinAge(_authentication._currentUser.email);
+        int placeMinAge = database.placeMinAge(email);
             minimaleLeeftijd.SelectedItem = placeMinAge;
         
     }
@@ -100,7 +100,7 @@ public partial class Instellingen : ContentPage
     public void placeMaxAge()
     {
        
-        int placeMaxAge = database.placeMaxAge(_authentication._currentUser.email);
+        int placeMaxAge = database.placeMaxAge(email);
         maximaleLeeftijd.SelectedItem = placeMaxAge;
         
     }
@@ -109,7 +109,7 @@ public partial class Instellingen : ContentPage
     {
        
         int minAge = (int)minimaleLeeftijd.SelectedItem;
-        database.insertMinAge(_authentication._currentUser.email, minAge);
+        database.insertMinAge(email, minAge);
 
     }
 
@@ -117,7 +117,7 @@ public partial class Instellingen : ContentPage
     {
        
         int maxAge = (int)maximaleLeeftijd.SelectedItem;
-        database.insertMaxAge(_authentication._currentUser.email, maxAge);
+        database.insertMaxAge(email, maxAge);
 
     }
 
