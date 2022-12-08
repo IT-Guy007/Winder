@@ -18,20 +18,43 @@ public partial class ProfileChange : ContentPage
     private bool preference = true;
     private bool gender = true;
     private bool bio = true;
-    private bool locatie = true;
+    private bool education = true;
     public ProfileChange()
     {
         InitializeComponent();
         testuser = Database.GetUserFromDatabase("s1416890@student.windesheim.nl");
-        loadUserFromDatabaseInForm();
+        LoadUserFromDatabaseInForm();
         interesses = new List<string>();
         InterestSelection.ItemsSource = Database.GetInterestsFromDataBase();
         interesses = Database.LoadInterestsFromDatabaseInListInteresses(testuser.email);
         ListInterests.ItemsSource = interesses;
-        changeLabelsTextSizeAndColor(9, default);
+        ChangeLabelsTextSizeAndColor(9, default);
+        ChangeSizeAndBackgroundColorOfEntries(9, new Color(255, 243, 5));
     }
 
-    private void changeLabelsTextSizeAndColor(int size, Color color)
+    private void ChangeSizeAndBackgroundColorOfEntries(int size, Color bgColorOfEntry)
+    {
+        Firstname.FontSize = size;
+        Middlename.FontSize = size;
+        Lastname.FontSize = size;
+        Birthdate.FontSize = size;
+        Preference.FontSize = size;
+        Gender.FontSize = size;
+        Bio.FontSize = size;
+        Education.FontSize = size;
+        Firstname.BackgroundColor = bgColorOfEntry;
+        Middlename.BackgroundColor = bgColorOfEntry;
+        Lastname.BackgroundColor = bgColorOfEntry;
+        Birthdate.BackgroundColor = bgColorOfEntry;
+        Preference.BackgroundColor = bgColorOfEntry;
+        Education.BackgroundColor = bgColorOfEntry;
+        Bio.BackgroundColor = bgColorOfEntry;
+        Gender.BackgroundColor = bgColorOfEntry;
+        Preference.BackgroundColor = bgColorOfEntry;
+        InterestSelection.BackgroundColor = bgColorOfEntry;
+    }
+
+    private void ChangeLabelsTextSizeAndColor(int size, Color color)
     {
         lblFirstname.FontSize = size;
         lblFirstname.TextColor = color;
@@ -49,8 +72,10 @@ public partial class ProfileChange : ContentPage
         lblBio.FontSize = size;
         lblBio.TextColor = color;
         InterestSelection.FontSize = size;
+        lblEducation.FontSize = size;
+        lblEducation.TextColor = color;
     }
-    private void loadUserFromDatabaseInForm()
+    private void LoadUserFromDatabaseInForm()
     {
         if (testuser != null)
         {
@@ -80,7 +105,7 @@ public partial class ProfileChange : ContentPage
 
     private void ChangeUserData(object sender, EventArgs e)
     {
-        if (firstname == true && middlename == true && lastname == true && birthday == true && preference == true && gender == true && bio == true && locatie == true)
+        if (firstname == true && middlename == true && lastname == true && birthday == true && preference == true && gender == true && bio == true && education == true)
         {
             UpdateUserPropertiesPrepareForUpdateQuery();
             Database.UpdateUserInDatabaseWithNewUserData(testuser);
@@ -136,7 +161,7 @@ public partial class ProfileChange : ContentPage
     {
         if (Firstname.Text != "")
         {
-            if (!checkIfTextIsOnlyLetters(Firstname.Text))
+            if (!CheckIfTextIsOnlyLetters(Firstname.Text))
             {
                 firstname = false;
                 lblFirstname.Text = "Voornaam mag alleen letters bevatten";
@@ -155,7 +180,7 @@ public partial class ProfileChange : ContentPage
     {
         if (Middlename.Text != "")
         {
-            if (!checkIfTextIsOnlyLetters(Middlename.Text))
+            if (!CheckIfTextIsOnlyLetters(Middlename.Text))
             {
                 middlename = false;
                 lblMiddlename.Text = "Tussenvoegsel mag alleen letters bevatten";
@@ -174,7 +199,7 @@ public partial class ProfileChange : ContentPage
     {
         if (Lastname.Text != "")
         {
-            if (!checkIfTextIsOnlyLetters(Lastname.Text))
+            if (!CheckIfTextIsOnlyLetters(Lastname.Text))
             {
                 lastname = false;
                 Color ErrorColor = new Color(238, 75, 43);
@@ -194,7 +219,7 @@ public partial class ProfileChange : ContentPage
     {
         if (Bio.Text != "")
         {
-            if (!checkIfTextIsOnlyLettersAndSpaces(Bio.Text))
+            if (!CheckIfTextIsOnlyLettersAndSpaces(Bio.Text))
             {
                 bio = false;
                 lblBio.Text = "Bio mag alleen letters bevatten";
@@ -209,8 +234,26 @@ public partial class ProfileChange : ContentPage
             }
         }
     }
-
-    private bool checkIfTextIsOnlyLettersAndSpaces(string text)
+    private void EducationTextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (Education.Text != "")
+        {
+            if (!CheckIfTextIsOnlyLettersAndSpaces(Education.Text))
+            {
+                education = false;
+                lblEducation.Text = "Opleiding mag alleen letters bevatten";
+                lblEducation.TextColor = ErrorColor;
+            }
+            else
+            {
+                education = true;
+                lblEducation.Text = "Opleiding";
+                lblEducation.TextColor = default;
+                Education.Text = Education.Text.First().ToString().ToUpper() + Education.Text[1..].ToLower();
+            }
+        }
+    }
+    private bool CheckIfTextIsOnlyLettersAndSpaces(string text)
     {
         foreach (char c in text)
         {
@@ -222,7 +265,7 @@ public partial class ProfileChange : ContentPage
         return true;
     }
 
-    private bool checkIfTextIsOnlyLetters(string text)
+    private bool CheckIfTextIsOnlyLetters(string text)
     {
         if (text.All(char.IsLetter))
         {

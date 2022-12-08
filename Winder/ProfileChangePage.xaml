@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUI.ProfileChange"
-             Title="Profiel">
+             Title="Profiel"
+             BackgroundColor="#CC415F"
+             >
     <VerticalStackLayout>
         <HorizontalStackLayout HorizontalOptions="Center">
             <Label 
@@ -58,6 +60,19 @@
                HorizontalOptions="Center"
                TextChanged="BioTextChanged"
                />
+        <Label 
+            x:Name="lblEducation"
+            Text="Omschrijving"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            />
+        <Entry x:Name="Education"
+               MaxLength="150"
+               Placeholder=""
+               HorizontalOptions="Center"
+               TextChanged="EducationTextChanged"
+               />
+
         <Picker 
         Title="Gender"
         x:Name="Gender"
