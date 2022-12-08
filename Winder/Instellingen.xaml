@@ -44,10 +44,10 @@
                 <Picker
                     x:Name="minimaleLeeftijd"
                     Grid.Column="1"
-                    SelectedItem=""
                     Margin="160,0,0,0"
                     BackgroundColor="Gray"
                     IsVisible="True"
+                    SelectedItem=""
                     TextColor="White"
                     VerticalOptions="Center">
 
@@ -56,19 +56,21 @@
                 </Picker>
                 <Label
                     Grid.Column="1"
-                    Margin="0,10"
                     FontSize="20"
                     HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
                     Text="Maximale leeftijd"
-                    TextColor="Black" />
+                    TextColor="Black"
+                    VerticalOptions="Center" />
 
                 <Picker
                     x:Name="maximaleLeeftijd"
                     Grid.Column="1"
-                    SelectedItem=""
-                    Margin="400,0,0,0"
+                    Margin="250,0,0,0"
                     BackgroundColor="Gray"
+                    HorizontalOptions="Center"
                     IsVisible="True"
+                    SelectedItem=""
                     TextColor="White"
                     VerticalOptions="Center">
 
@@ -141,21 +143,15 @@
                 <Label
                     Margin="30,0,0,0"
                     FontSize="30"
-                    Text="Wachwoord"
+                    Text="Wachtwoord"
                     TextColor="Black"
                     VerticalOptions="Center" />
-                <Label
-                    Grid.Column="1"
-                    FontSize="20"
-                    HorizontalOptions="Start"
-                    Text="zie wachtwoord"
-                    TextColor="Black"
-                    VerticalOptions="Center" />
+
                 <Button
                     Grid.Column="1"
                     BackgroundColor="Gray"
-                    Text="Wijzig wachtwoord"
-                    />
+                    Clicked="editPasswordBtn"
+                    Text="Wijzig wachtwoord" />
             </Grid>
         </StackLayout>
 

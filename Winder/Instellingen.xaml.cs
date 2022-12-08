@@ -1,4 +1,6 @@
+using CommunityToolkit.Maui.Views;
 using DataModel;
+using Winder;
 
 namespace MAUI;
 
@@ -16,6 +18,7 @@ public partial class Instellingen : ContentPage
         placeLocation();
         placeMinAge();
         placeMaxAge();
+        
 
 
     }
@@ -145,7 +148,13 @@ public partial class Instellingen : ContentPage
 
            DisplayAlert("Melding", "Er zijn geen gegevens aangepast", "OK");
         }
-
-
     }
+
+    public void editPasswordBtn(object sender, EventArgs e)
+    {
+        
+        var popup = new editPasswordPopUp();
+        this.ShowPopup(popup);
+    }
+    
 }
