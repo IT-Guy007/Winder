@@ -11,6 +11,7 @@ public partial class MatchPage : ContentPage {
     private int selectedImage = 0;
     
     public MatchPage() {
+
         Title = "Make your match now!";
 
         StackLayout verticalStackLayout = new StackLayout {
@@ -22,11 +23,13 @@ public partial class MatchPage : ContentPage {
         verticalStackLayout.Spacing = 10;
         //Images
         if (_profileQueue.Count == 0) {
-            if(Authentication._currentUser.profilePicture.Height != 0 ) {
+            if(Authentication._currentUser.profilePicture != null ) {
+
+                MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
 
                 var profileImage = new Image
                 {
-                    Source = ImageSource.FromResource(Authentication._currentUser.profilePicture.ToString()),
+                    Source = ImageSource.FromStream(() => ms),
                     Aspect = Aspect.AspectFit,
                     WidthRequest = 800,
                     HeightRequest = 800
@@ -110,7 +113,7 @@ public partial class MatchPage : ContentPage {
             //Location
             StackLayout locationStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
             var locationlbl = new Label { Text = "Windesheim locatie: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };
-            var location = new Label { Text = _currentProfile.user.location , FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var location = new Label { Text = _currentProfile.user.school , FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             locationStackLayout.Add(locationlbl);
             locationStackLayout.Add(location);
             infoStackLayout.Add(locationStackLayout);

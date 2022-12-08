@@ -5,6 +5,7 @@ namespace DataModel;
 
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 
 public class Database {
     private Authentication _authentication = new Authentication();
@@ -65,7 +66,7 @@ public class Database {
                 var school = reader["location"] as string;
                 var major = reader["education"] as string;
                 Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
-                    preferences, email, "", gender ,VarBinaryToImage(profilePicture), bio,school,major);
+                    preferences, email, "", gender ,profilePicture, bio,school,major);
 
                 }
 
@@ -356,7 +357,7 @@ public class Database {
                 byte[] img = (byte[])(reader["profilePicture"]);
                 
                 DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
-                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, VarBinaryToImage(img), bio, school, major);
+                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, img, bio, school, major);
             }
         }
         catch (SqlException e)
@@ -653,10 +654,9 @@ public class Database {
     }
     
     private Image VarBinaryToImage(byte[] input) {
-        Stream stream = new MemoryStream(input);
-        Image image = new Image {
-            Source = ImageSource.FromStream(() => stream)
-        };
+        var image = new Image();
+        MemoryStream ms = new MemoryStream(input);
+        image.Source = ImageSource.FromStream(() => ms);
         return image;
     }
 }
