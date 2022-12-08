@@ -4,7 +4,7 @@
              Title="Profiel"
              BackgroundColor="#CC415F"
              >
-    <HorizontalStackLayout>
+    <HorizontalStackLayout BackgroundColor="AliceBlue" WidthRequest="400">
         <VerticalStackLayout>
             <Label 
             x:Name="lblFirstname"
@@ -18,7 +18,7 @@
                TextChanged="FirstnameTextChanged" />
             <Label 
             x:Name="lblMiddlename"
-            Text="tussenvoegsel"
+            Text="Tussenvoegsel"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
             <Entry x:Name="Middlename"
