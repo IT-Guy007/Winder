@@ -1,4 +1,6 @@
-﻿namespace MAUI;
+﻿using DataModel;
+
+namespace MAUI;
 
 public partial class MainPage : ContentPage {
 
@@ -11,6 +13,8 @@ public partial class MainPage : ContentPage {
     }
 
     private void LoginButton(object sender, EventArgs e) {
+        Database b = new Database();
+        b.GetUsersWhoLikedYou("s12@student.windesheim.nl");
         Navigation.PushAsync(new LoginPage());
     }
 }

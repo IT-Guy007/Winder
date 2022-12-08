@@ -5,6 +5,8 @@ namespace DataModel;
 
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Text.RegularExpressions;
 
 public class Database {
     private Authentication _authentication = new Authentication();
@@ -404,7 +406,8 @@ public class Database {
     }
 
     public string[] LoadInterestsFromDatabaseInListInteresses(string email) {
-        string[] interests = new string[10];
+        
+        List<string> interests = new List<string>();
         OpenConnection();
         string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
         SqlCommand command = new SqlCommand(sql, connection);
@@ -414,7 +417,7 @@ public class Database {
             while (reader.Read())
             {
                 string item = reader["interest"] as string ?? "Unknown";
-                interests.Append(item);
+                interests.Add(item);
             }
         }
         catch (SqlException e)
@@ -422,7 +425,8 @@ public class Database {
             CloseConnection();
         }
         CloseConnection();
-        return interests;
+
+        return interests.ToArray();
     }
 
     public void UpdateUserInDatabaseWithNewUserData(User user) {
@@ -491,6 +495,7 @@ public class Database {
         try
         {
             SqlDataReader reader = command.ExecuteReader();
+            
             reader.Read();
             match = reader.HasRows;
             //Close connection
@@ -623,10 +628,103 @@ public class Database {
         return result;
     }
 
+    public string[] GetUsersWhoLikedYou(String email)
+    {
+        List<string> users = new List<string>();
+        OpenConnection();
+
+    
+        SqlCommand command = new SqlCommand("SELECT person FROM Winder.Winder.Liked WHERE likedPerson = @email AND liked = 1 " + // selects the users that have liked the given user
+            "AND person not in (select likedPerson from Winder.Winder.Liked where person = @email and liked = 0)", connection); // except the ones that the given user has disliked
+        command.Parameters.AddWithValue("@email", email);
+        
+        try
+        {
+            SqlDataReader reader = command.ExecuteReader(); // execute het command
+            
+            while (reader.Read())
+            {
+                string person = reader["person"] as string ?? "Unknown";   
+                users.Add(person);   // zet elk persoon in de users 
+            }
+            //Close connection
+            CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            //Close connection
+            CloseConnection();
+            
+            
+        }
+
+        return users.ToArray();
+    }
+
+
+
+    public string[] GetUsersWithCommonInterest(String email)
+    {
+        List<string> users = new List<string>();
+
+        List<string> interestsgivenuser = LoadInterestsFromDatabaseInListInteresses(email).ToList();
+
+
+        string query = "SELECT UID FROM Winder.Winder.UserHasInterest WHERE UID != @email AND (interest = @interest"; // selects the users which have a common interest
+        
+        for (int i = 1; i < interestsgivenuser.Count; i++)
+        {
+            query = query + " or interest =" + " '" + interestsgivenuser[i] + "' ";
+        }
+        query = query + ") AND UID not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + // selects the users which have not disliked the given user
+                        "and UID not in (select likedPerson from Winder.Winder.Liked where person = @email and liked = 0)";     // selects the users that the given user had not disliked
+
+        OpenConnection();
+
+        // selects every user which has common interests except the ones which have disliked the given user or the given user has disliked
+        SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@email", email);
+        command.Parameters.AddWithValue("@interest", interestsgivenuser[0]);
+        
+       
+        try
+        {
+            SqlDataReader reader = command.ExecuteReader(); // execute het command
+            while (reader.Read())
+            {
+                string person = reader["UID"] as string ?? "Unknown";
+                users.Add(person);   // zet elk persoon in de users tot het maxamount is bereikt of er niks meer te readen valt
+            }
+            //Close connection
+            CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            //Close connection
+            CloseConnection();
+
+
+        }
+
+        return users.ToArray();
+    }
+    public string[] AlgorithmForSwiping(String email)
+    {
+        /*SELECT TOP 1 column FROM table
+ORDER BY NEWID()*/
+
+        LoadInterestsFromDatabaseInListInteresses(email);
+        return null;
+    }
     //User to get the profiles for the match(run async)
     public Profile[] Get5Profiles(string email) {
         //The algorithm that determines who to get
+
         
+
+
         //The users(email) to get
         string[] usersToRetrief = new string[5];
 
@@ -638,9 +736,9 @@ public class Database {
             
             //Get the user
             User user = GetUserFromDatabase(usersToRetrief[i]);
-            
+
             //Get the interests of the user
-            user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]);
+            user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]).ToArray();
 
             //Get the images of the user
             Image[] images = GetPicturesFromDatabase(usersToRetrief[i]);

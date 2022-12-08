@@ -23,7 +23,7 @@ public partial class MatchPage : ContentPage {
         verticalStackLayout.Spacing = 10;
         //Images
         if (_profileQueue.Count == 0) {
-            if(Authentication._currentUser.firstName == null ) {
+            if(Authentication._currentUser.profilePicture != null ) {
 
                 var profileImage = new Image
                 {
