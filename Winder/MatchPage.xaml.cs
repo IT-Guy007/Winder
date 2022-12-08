@@ -154,7 +154,7 @@ public partial class MatchPage : ContentPage {
                     _database.NewLike(emailCurrentUser, emailLikedUser);
                 }
 
-                //en krijg een pop-up dat je een match hebt
+                //krijg een pop-up dat je een match hebt
 
                 //en daarna door naar de volgende persoon
             };
@@ -188,7 +188,7 @@ public partial class MatchPage : ContentPage {
         if(_profileQueue.Count < 5) {
             await GetProfiles();
         }
-        if (_currentProfile == null)
+        if (_currentProfile != null)
         {
             _currentProfile = _profileQueue.Dequeue();
         }
