@@ -806,7 +806,7 @@ public class Database {
                 users[4] = userswithcommoninterests[4];
             }
         }
-        if (users[4] == null)
+        else if (users[4] == null)
         {
             if (userswithcommoninterests.Length > 4)
             {
