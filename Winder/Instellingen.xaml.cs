@@ -23,6 +23,7 @@ public partial class Instellingen : ContentPage
 
     }
 
+    // puts the min and max age in the picker.
     public void getMinimaleLeeftijd()
     {
         int[] leeftijd = new int[82];
@@ -37,13 +38,14 @@ public partial class Instellingen : ContentPage
 
 
     }
+    //sets the preference in the database
     public void setPreference()
     {
         
         string preference = Preference.SelectedItem.ToString();
         database.insertPreference(email, preference);
     }
-
+    //sets the location in the database
     public void setLocation()
     {
         
@@ -51,6 +53,7 @@ public partial class Instellingen : ContentPage
             database.insertLocation(email, location);    
     }
     
+    // checks if the min age is lower then the max age
     public bool checkIfMinAgeLowerThenMax()
     {
         try
@@ -73,14 +76,14 @@ public partial class Instellingen : ContentPage
             return false;
         }
     }
-
+    //sets preference in the picker what the user already has in the database
     public void placePreference( )
     {
         
         string placePreference = database.placePreference(email);
         Preference.SelectedItem = placePreference;
     }
-    
+    //sets location in the picker what the user already has in the database
     public void placeLocation()
     {
         
@@ -88,7 +91,7 @@ public partial class Instellingen : ContentPage
         Location.SelectedItem = placeLocation;
         
         }
-
+    //sets minimum age in the picker what the user already has in the database
     public void placeMinAge()
     {
         
@@ -96,7 +99,7 @@ public partial class Instellingen : ContentPage
             minimaleLeeftijd.SelectedItem = placeMinAge;
         
     }
-    
+    //sets maximum age in the picker what the user already has in the database
     public void placeMaxAge()
     {
        
@@ -104,7 +107,7 @@ public partial class Instellingen : ContentPage
         maximaleLeeftijd.SelectedItem = placeMaxAge;
         
     }
-
+    //sets the minimum age of what the user chose in the database
     public void setMinAge()
     {
        
@@ -112,7 +115,7 @@ public partial class Instellingen : ContentPage
         database.insertMinAge(email, minAge);
 
     }
-
+    //sets the maximum age of what the user chose in the database
     public void setMaxAge()
     {
        
@@ -120,7 +123,7 @@ public partial class Instellingen : ContentPage
         database.insertMaxAge(email, maxAge);
 
     }
-
+    //all the data that has been changed will be replaced in the database
     public void editDataBtn(object sender, EventArgs e)
     {
        
@@ -149,7 +152,7 @@ public partial class Instellingen : ContentPage
            DisplayAlert("Melding", "Er zijn geen gegevens aangepast", "OK");
         }
     }
-
+    // shows a popup where you can edit your password
     public void editPasswordBtn(object sender, EventArgs e)
     {
         
