@@ -1,7 +1,7 @@
 using System.Data.SqlClient;
-using Microsoft.Maui.Controls;
 
 namespace DataModel;
+
 
 using Microsoft.Maui.Controls.Shapes;
 using System;
@@ -16,6 +16,7 @@ public class Database {
     private Authentication _authentication = new Authentication();
     public SqlConnection connection;
     public void GenerateConnection() {
+
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
         builder.DataSource = "192.168.1.106,1433";
@@ -48,12 +49,15 @@ public class Database {
 
         if (!string.IsNullOrWhiteSpace(email))
         {
+
             //Start connection
             OpenConnection();
+
 
             //Create query
             SqlCommand query = new SqlCommand("select * from winder.winder.[User] where email = @email", connection);
             query.Parameters.AddWithValue("@email", email);
+
 
         //Execute query
         try
@@ -71,7 +75,8 @@ public class Database {
                 var school = reader["location"] as string;
                 var major = reader["education"] as string;
                 Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
-                    preferences, email, "", gender ,VarBinaryToImage(profilePicture), bio,school,major);
+                    preferences, email, "", gender ,profilePicture, bio,school,major);
+
 
                 }
 
@@ -147,6 +152,7 @@ public class Database {
 
     public bool Register(string firstname, string middlename, string lastname, string email,
         string preference, DateTime birthday, string gender, string bio, string password, string proficePicture, bool active, string locatie, string opleiding) {
+
         Authentication authentication = new Authentication();
         string hashedpassword = authentication.HashPassword(password);
         //Start connection
@@ -177,7 +183,8 @@ public class Database {
             CloseConnection();
             return true;
         }
-        catch(SqlException se) {
+        catch (SqlException se)
+        {
             Console.WriteLine(se.ToString());
             //Close connection
             CloseConnection();
@@ -253,7 +260,6 @@ public class Database {
         }
     }
 
-
     public void DeleteUser(string email)
     {
         Authentication a = new Authentication();
@@ -307,12 +313,6 @@ public class Database {
         }
 
     }
-    
-
-
-
-
-  
 
     public List<string> GetInterestsFromDataBase()
     {
@@ -362,7 +362,9 @@ public class Database {
                 byte[] img = (byte[])(reader["profilePicture"]);
                 
                 DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
-                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, VarBinaryToImage(img), bio, school, major);
+
+                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, img, bio, school, major);
+
             }
         }
         catch (SqlException e)
@@ -461,6 +463,30 @@ public class Database {
         }
     }
 
+    public bool SaveProfilePictures(string email, byte[] profilepicture)
+    {
+        OpenConnection();
+        string sql = "INSERT INTO winder.winder.Photos (winder.[user], winder.photo) VALUES(@Email, @profilepicture)";
+        SqlCommand command = new SqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@Email", email);
+        command.Parameters.AddWithValue("@profilepicture", profilepicture);
+        try
+        {
+            command.ExecuteNonQuery();
+            CloseConnection();
+            return true;
+        }
+        catch (SqlException se)
+        {
+            throw new Exception(se.Message);
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace.ToString());
+            //Close connection
+            CloseConnection();
+            return false;
+        }
+    }
+
     public void RegistrationFunction(string firstname, string middlename, string lastname, string email, string preference, DateTime birthday, string gender,
                                  string bio, string password, byte[] proficePicture, bool active, string locatie, string opleiding) {
         OpenConnection();
@@ -483,6 +509,248 @@ public class Database {
             CloseConnection();
         }
 
+    }
+
+
+    public void insertPreference(string email, string preference)
+    {
+        // open connection
+
+        OpenConnection();
+        string selectPreference = "SELECT preference FROM winder.[User] WHERE email = @Email";
+        SqlCommand query = new SqlCommand(selectPreference, connection);
+        query.Parameters.AddWithValue("@Email", email);
+
+        try
+        {
+            query.ExecuteReader();
+            CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            CloseConnection();
+        }
+
+
+        if (selectPreference.Equals(null))
+        {
+            OpenConnection();
+            SqlCommand query1 = new SqlCommand("INSERT INTO winder.[User] (preference) VALUES (@Preference) WHERE email = @Email", connection);
+            query1.Parameters.AddWithValue("@Email", email);
+            query1.Parameters.AddWithValue("@Preference", preference);
+            try
+            {
+                query1.ExecuteReader();
+                CloseConnection();
+            }
+            catch (SqlException se)
+            {
+                CloseConnection();
+            }
+        }
+        else
+        {
+            OpenConnection();
+            SqlCommand query2 = new SqlCommand("UPDATE winder.winder.[User] SET preference = @Preference WHERE email = @Email", connection);
+            query2.Parameters.AddWithValue("@Email", email);
+            query2.Parameters.AddWithValue("@Preference", preference);
+            try
+            {
+                query2.ExecuteReader();
+                CloseConnection();
+            }
+            catch (SqlException se)
+            {
+                CloseConnection();
+            }
+        }
+
+        CloseConnection();
+    }
+
+    public void insertLocation(string email, string location)
+    {
+        // open connection
+
+        OpenConnection();
+       
+        SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET location = @Location WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+        query.Parameters.AddWithValue("@Location", location);
+        
+        try
+        {
+            query.ExecuteReader();
+            CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            CloseConnection();
+        }
+
+
+    }
+
+    public string placePreference(string email)
+    {
+        // open connection
+
+        OpenConnection();
+
+        SqlCommand query = new SqlCommand("SELECT preference FROM winder.winder.[User] WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+
+
+        try
+        {
+            SqlDataReader reader = query.ExecuteReader();
+            if (reader.Read())
+            {
+                var preference = reader["preference"] as string;
+                CloseConnection();
+                return preference;
+
+            }
+        }
+        catch (SqlException se)
+        {
+            CloseConnection();
+            return "";
+        }
+        return "";
+    }
+
+    public string placeLocation(string email)
+    {
+        // open connection
+
+        OpenConnection();
+
+        SqlCommand query = new SqlCommand("SELECT location FROM winder.winder.[User] WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+
+
+        try
+        {
+            SqlDataReader reader = query.ExecuteReader();
+            if (reader.Read())
+            {
+                var location = reader["location"] as string;
+                CloseConnection();
+                return location;
+
+            }
+        }
+        catch (SqlException se)
+        {
+            CloseConnection();
+            return "";
+        }
+        return "";
+    }
+
+    public void insertMinAge(string email, int minAge)
+    {
+        // open connection
+
+        OpenConnection();
+
+        SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET min = @minAge WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+        query.Parameters.AddWithValue("@minAge", minAge);
+
+        try
+        {
+            query.ExecuteReader();
+            CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            CloseConnection();
+        }
+
+    }
+
+    public void insertMaxAge(string email, int maxAge)
+    {
+        // open connection
+
+        OpenConnection();
+
+        SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET max = @maxAge WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+        query.Parameters.AddWithValue("@maxAge", maxAge);
+
+        try
+        {
+            query.ExecuteReader();
+            CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            CloseConnection();
+        }
+
+    }
+
+    public int placeMinAge(string email)
+    {
+        // open connection
+
+        OpenConnection();
+
+        SqlCommand query = new SqlCommand("SELECT min FROM winder.winder.[User] WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+
+        
+        try
+        {
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read())
+            {
+                int? minAge = reader["min"] as int?;
+                CloseConnection();
+                int minimalAge = minAge ?? 18;
+                return minimalAge;
+
+            }
+        }
+        catch (SqlException se)
+        {
+            CloseConnection();
+            return 0;
+        }
+        return 0;
+    }
+
+    public int placeMaxAge(string email)
+    {
+        // open connection
+
+        OpenConnection();
+
+        SqlCommand query = new SqlCommand("SELECT max FROM winder.winder.[User] WHERE email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", email);
+
+
+        try
+        {
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read())
+            {
+                int? minAge = reader["max"] as int?;
+                CloseConnection();
+                int minimalAge = minAge ?? 18;
+                return minimalAge;
+
+            }
+        }
+        catch (SqlException se)
+        {
+            CloseConnection();
+            return 0;
+        }
+        return 0;
     }
 
 
@@ -605,23 +873,27 @@ public class Database {
         }
     }
 
-    public Image[] GetPicturesFromDatabase(string email) {
+    public byte[][] GetPicturesFromDatabase(string email) {
         
-        Image[] result = new Image[10];
+        byte[][] result = new byte[10][];
 
         //TO-DO: Get pictures from database
         //Start connection
         OpenConnection();
 
         //Create query
-        SqlCommand query = new SqlCommand("select * from winder.winder.[Photos] where email = @email", connection);
+        SqlCommand query = new SqlCommand("select * from winder.Photos where [user] = @email", connection);
         query.Parameters.AddWithValue("@email", email);
 
         //Execute query
         try {
             SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read()) {
-                
+            int i = 0;
+            while(reader.Read())
+            {
+                var profilePicture = reader["photo"] as byte[];
+                result[i] = profilePicture;
+                i++;
             }
         } catch(SqlException se) {
             Console.WriteLine("Error retrieving pictures from database");
@@ -829,6 +1101,7 @@ public class Database {
 
         //The users(email) to get
         string[] usersToRetrief = new string[5];
+        usersToRetrief[0] = "sghjkf@student.windesheim.nl";
 
         usersToRetrief = AlgorithmForSwiping(email);
 
@@ -836,7 +1109,8 @@ public class Database {
         Profile[] profiles = new Profile[5];
         
         //Retrieving
-        for(int i = 0; i < usersToRetrief.Length; i++) {
+        for(int i = 0;i != 1;i++) {
+
             
             //Get the user
             User user = GetUserFromDatabase(usersToRetrief[i]);
@@ -845,20 +1119,14 @@ public class Database {
             user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]).ToArray();
 
             //Get the images of the user
-            Image[] images = GetPicturesFromDatabase(usersToRetrief[i]);
+            byte[][] images = GetPicturesFromDatabase(usersToRetrief[i]);
             var profile = new Profile(user, images);
             
-            profiles.Append(profile);
+            profiles[i] = profile;
         }
         
         return profiles;
     }
-    
-    private Image VarBinaryToImage(byte[] input) {
-        Stream stream = new MemoryStream(input);
-        Image image = new Image {
-            Source = ImageSource.FromStream(() => stream)
-        };
-        return image;
-    }
+
 }
+
