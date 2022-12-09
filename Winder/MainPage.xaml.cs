@@ -13,9 +13,6 @@ public partial class MainPage : ContentPage {
     }
 
     private void LoginButton(object sender, EventArgs e) {
-        Database b = new Database();
-
-        b.AlgorithmForSwiping("s12@student.windesheim.nl");
         Navigation.PushAsync(new LoginPage());
     }
 }

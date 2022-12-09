@@ -627,8 +627,9 @@ public class Database {
             Console.WriteLine("Error retrieving pictures from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
+            CloseConnection();
         }
-
+        CloseConnection();
         return result;
     }
     
@@ -653,7 +654,7 @@ public class Database {
                 users.Add(person);   // zet elk persoon in de users 
             }
             //Close connection
-            CloseConnection();
+            
         }
         catch (SqlException se)
         {
@@ -663,7 +664,7 @@ public class Database {
             
             
         }
-
+        CloseConnection();
         return users.ToArray();
     }
 
@@ -692,7 +693,7 @@ public class Database {
                 string person = reader["email"] as string ?? "Unknown";
                 userslist.Add(person);   // zet elk persoon in de users 
             }
-            CloseConnection(); 
+             
         }
         catch (SqlException se)
         {
@@ -703,7 +704,7 @@ public class Database {
         string[] users = userslist.ToArray();
         users = users.Except(userswholikedyou).ToArray();
         users = users.Except(userswithcommoninterests).ToArray();  // makes it so the rest of users does not contain the users that liked you or have common interests because we have different methods for them
-
+        CloseConnection();
         return users;
     }
 
@@ -742,7 +743,7 @@ public class Database {
                 users.Add(person);   // zet elk persoon in de users tot het maxamount is bereikt of er niks meer te readen valt
             }
             //Close connection
-            CloseConnection();
+            
         }
         catch (SqlException se)
         {
@@ -752,7 +753,7 @@ public class Database {
 
 
         }
-
+        CloseConnection();
         return users.ToArray();
     }
 
@@ -773,7 +774,7 @@ public class Database {
         userswithcommoninterests = userswithcommoninterests.OrderBy(x => rnd.Next()).ToArray();     // shuffle the arrays randomly instead of how they are sorted in the database
         restofusers = restofusers.OrderBy(x => rnd.Next()).ToArray();
 
-        userswithcommoninterests = userswithcommoninterests.GroupBy(x => x).ToList().OrderByDescending(g => g.Count()).Select(g => g.Key).ToArray();
+        userswithcommoninterests = userswithcommoninterests.GroupBy(x => x).ToList().OrderByDescending(g => g.Count()).Select(g => g.Key).ToArray(); // sorts so that the values with the most duplicates are in front and removes the duplicates
 
         /*//this is needed so the users with the most interests in common are picked first
         string[] uniqueuserswithcommoninterests = userswithcommoninterests.Distinct().ToArray();            // gets all the unique values
