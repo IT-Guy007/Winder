@@ -1,4 +1,4 @@
-﻿using DataModel;
+using DataModel;
 namespace MAUI;
 
 public partial class MatchPage : ContentPage {
@@ -40,7 +40,7 @@ public partial class MatchPage : ContentPage {
                 if (Authentication._currentUser.profilePicture.Length > 1000) {
 
                     MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
-
+                    
                     var profileImage = new Image
                     {
                         Source = ImageSource.FromStream(() => ms),
@@ -81,6 +81,7 @@ public partial class MatchPage : ContentPage {
 
                 //Data binding
                 currentImage.SetBinding(ImageButton.SourceProperty, new Binding() {Source = ImageSource.FromStream(() => ms)});
+
             }
             currentImage.WidthRequest = 600;
             currentImage.HeightRequest = 600;
@@ -103,8 +104,10 @@ public partial class MatchPage : ContentPage {
             var namelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start};
 
             //Binding
+
             var name = new Label {Text = Authentication._currentProfile.user.firstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start};
             name.SetBinding(Label.TextProperty, new Binding() { Source = Authentication._currentProfile.user.firstName });
+
             
             name.FontSize = 20;
             name.HorizontalOptions = LayoutOptions.Start;
