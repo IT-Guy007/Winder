@@ -1,3 +1,4 @@
+
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DataModel;
 using Microsoft.Maui;
+
 using Microsoft.Maui.Controls;
 namespace MAUI;
 
@@ -52,6 +54,7 @@ public partial class MatchPage : ContentPage {
                 MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
 
                 var profileImage = new Image {
+
                     Source = ImageSource.FromStream(() => ms),
                     Aspect = Aspect.AspectFit,
                     WidthRequest = 800,
@@ -59,7 +62,7 @@ public partial class MatchPage : ContentPage {
                     BackgroundColor = Color.FromArgb("#ffffff")
                 };
                 verticalStackLayout.Add(profileImage);
-                
+
             }
 
             var label = new Label { Text = "No more profiles to match with for now", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
@@ -85,6 +88,7 @@ public partial class MatchPage : ContentPage {
 
                 //Data binding
                 currentImage.SetBinding(ImageButton.SourceProperty, new Binding() {Source = ImageSource.FromStream(() => ms)});
+
             }
             currentImage.WidthRequest = 600;
             currentImage.HeightRequest = 600;
@@ -108,6 +112,7 @@ public partial class MatchPage : ContentPage {
 
             //Binding
             var name = new Label {Text = _currentProfile.user.firstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start};
+
             name.SetBinding(Label.TextProperty, new Binding() { Source = _currentProfile.user.firstName });
             
             name.FontSize = 20;
