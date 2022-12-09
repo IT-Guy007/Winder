@@ -776,12 +776,6 @@ public class Database {
 
         userswithcommoninterests = userswithcommoninterests.GroupBy(x => x).ToList().OrderByDescending(g => g.Count()).Select(g => g.Key).ToArray(); // sorts so that the values with the most duplicates are in front and removes the duplicates
 
-        /*//this is needed so the users with the most interests in common are picked first
-        string[] uniqueuserswithcommoninterests = userswithcommoninterests.Distinct().ToArray();            // gets all the unique values
-        string[] duplicateusers = userswithcommoninterests.GroupBy(x => x).Where(g => g.Count() > 1).Select(g => g.Key).ToArray();    // gets all the duplicates
-        userswithcommoninterests = duplicateusers.Concat(uniqueuserswithcommoninterests).ToArray();     // sorts so the duplicates are first
-        userswithcommoninterests = userswithcommoninterests.Distinct().ToArray();                       // removes the duplicates*/
-
 
         for (int i = 0; i < 5; i++)
         {
