@@ -1103,7 +1103,7 @@ public class Database {
         string[] usersToRetrief = new string[5];
         usersToRetrief[0] = "sghjkf@student.windesheim.nl";
 
-        usersToRetrief = AlgorithmForSwiping(email);
+        /* usersToRetrief = AlgorithmForSwiping(email);*/
 
         //Results
         Profile[] profiles = new Profile[5];
