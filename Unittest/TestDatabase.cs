@@ -156,4 +156,69 @@ public class TestDatabase {
     {
         return _database.GetInterestsFromDataBase().Count > 0;
     }
+    [TestCase("jannieandes@gmail.com", ExpectedResult = true)]
+    [TestCase("japiejaap@gmail.com",  ExpectedResult = false)]
+    [TestCase(" ", ExpectedResult = false)]
+    public bool DatabaseGetUsersWhoLikedYou(string email)
+    {
+        try
+        {
+            _database.GetUsersWhoLikedYou(email);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+
+    [TestCase("jannieandes@gmail.com", ExpectedResult = true)]
+    [TestCase("japiejaap@gmail.com", ExpectedResult = false)]
+    [TestCase(" ", ExpectedResult = false)]
+    public bool GetUsersWithCommonInterest(string email)
+    {
+        try
+        {
+            _database.GetUsersWithCommonInterest(email);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+       
+    }
+
+    [TestCase("jannieandes@gmail.com", ExpectedResult = true)]
+    [TestCase("japiejaap@gmail.com", ExpectedResult = false)]
+    [TestCase(" ", ExpectedResult = false)]
+    public bool DatabaseGetRestOfUsers(string email)
+    {
+        try
+        {
+            _database.GetRestOfUsers(email);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    [TestCase("jannieandes@gmail.com", ExpectedResult = true)]
+    [TestCase("japiejaap@gmail.com", ExpectedResult = false)]
+    [TestCase(" ", ExpectedResult = false)]
+    public bool DatabaseAlgorithmForSwiping(string email)
+    {
+        try
+        {
+            _database.AlgorithmForSwiping(email);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }

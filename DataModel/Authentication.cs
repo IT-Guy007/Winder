@@ -123,11 +123,9 @@ public class Authentication {
 
 
     //verstuurd de mail
-    public void SendEmail(string email, string body, string subject)
-    {
+    public void SendEmail(string email, string body, string subject) {
         //zet de client op
-        SmtpClient smtpClient = new SmtpClient("smtp.gmail.com")
-        {
+        SmtpClient smtpClient = new SmtpClient("smtp.gmail.com") {
             Port = 587,
             UseDefaultCredentials = false,
             Credentials = new NetworkCredential("thewinderapp@gmail.com", "xltbqbsyderpqsxp"),
@@ -136,8 +134,7 @@ public class Authentication {
         };
 
         // maakt de mail aan
-        MailMessage mailMessage = new MailMessage
-        {
+        MailMessage mailMessage = new MailMessage {
             From = new MailAddress("thewinderapp@gmail.com"),
             Subject = subject,
             Body = body,    
