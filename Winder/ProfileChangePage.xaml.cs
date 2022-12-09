@@ -3,8 +3,10 @@ using DataModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.PlatformConfiguration.TizenSpecific;
 using System.ComponentModel.DataAnnotations;
-using static System.Net.Mime.MediaTypeNames;
-
+using System.Drawing.Drawing2D;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace MAUI;
 
 public partial class ProfileChange : ContentPage
