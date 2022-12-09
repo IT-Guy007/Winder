@@ -10,6 +10,7 @@ using System.Data.Common;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class Database {
     private Authentication _authentication = new Authentication();
@@ -632,14 +633,14 @@ public class Database {
     }
     
 
-    public string[] GetUsersWhoLikedYou(String email)
+    public string[] GetUsersWhoLikedYou(string email)
     {
         List<string> users = new List<string>();
         OpenConnection();
 
     
         SqlCommand command = new SqlCommand("SELECT person FROM Winder.Winder.Liked WHERE likedPerson = @email AND liked = 1 " + // selects the users that have liked the given user
-            "AND person not in (select likedPerson from Winder.Winder.Liked where person = @email and liked = 0)", connection); // except the ones that the given user has disliked
+            "AND person not in (select likedPerson from Winder.Winder.Liked where person = @email) ", connection); // except the ones that the given user has already disliked or liked
         command.Parameters.AddWithValue("@email", email);
         
         try
@@ -666,7 +667,7 @@ public class Database {
         return users.ToArray();
     }
 
-    public string[] GetRestOfUsers(String email)
+    public string[] GetRestOfUsers(string email)
     {
         List<string> userslist = new List<string>();
 
@@ -677,9 +678,9 @@ public class Database {
 
         SqlCommand command = new SqlCommand("SELECT email FROM Winder.Winder.[User] WHERE email != @email " +
         "AND email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + // selects the users which have not disliked the given user
-        "AND email not in (select likedPerson from Winder.Winder.Liked where person = @email and liked = 0) " +// selects the users that the given user had not disliked
+        "AND email not in (select likedPerson from Winder.Winder.Liked where person = @email) " +// selects the users that the given user had not disliked or already liked
         "AND email not in (select person1 from Winder.Winder.Match where person2 = @email) " +
-        "AND email not in (select person2 from Winder.Winder.Match where person1 = @email)", connection);          // selects the users that the given user has not already matched with 
+        "AND email not in (select person2 from Winder.Winder.Match where person1 = @email) ", connection);          // selects the users that the given user has not already matched with 
         command.Parameters.AddWithValue("@email", email);
 
         try
@@ -706,7 +707,7 @@ public class Database {
         return users;
     }
 
-    public string[] GetUsersWithCommonInterest(String email)
+    public string[] GetUsersWithCommonInterest(string email)
     {
         List<string> users = new List<string>();
 
@@ -720,9 +721,9 @@ public class Database {
             query = query + " or interest =" + " '" + interestsgivenuser[i] + "' ";
         }
         query = query + ") AND UID not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + // selects the users which have not disliked the given user
-                        "and UID not in (select likedPerson from Winder.Winder.Liked where person = @email and liked = 0)" +// selects the users that the given user had not disliked
-                        "and UID not in (select person1 from Winder.Winder.Match where person2 = @email)" +
-                        "and UID not in (select person2 from Winder.Winder.Match where person1 = @email)";          // selects the users that the given user has not matched with
+                        "and UID not in (select likedPerson from Winder.Winder.Liked where person = @email) " +// selects the users that the given user has not already disliked or liked
+                        "and UID not in (select person1 from Winder.Winder.Match where person2 = @email) " +
+                        "and UID not in (select person2 from Winder.Winder.Match where person1 = @email) ";          // selects the users that the given user has not matched with
 
         OpenConnection();
 
@@ -754,14 +755,76 @@ public class Database {
 
         return users.ToArray();
     }
-    public string[] AlgorithmForSwiping(String email)
-    {
-        /*SELECT TOP 1 column FROM table
-ORDER BY NEWID()*/
 
-        LoadInterestsFromDatabaseInListInteresses(email);
-        return null;
+ 
+    
+    public string[] AlgorithmForSwiping(string email)
+    {
+        string[] userswholikedyou = GetUsersWhoLikedYou(email);
+        string[] userswithcommoninterests = GetUsersWithCommonInterest(email);
+        userswithcommoninterests = userswithcommoninterests.Where(x => !userswholikedyou.Contains(x)).ToArray(); // is needed because they could have duplicates between the lists and is done this way because users who likedyou has a higher priority in the algorithm
+
+        string[] restofusers = GetRestOfUsers(email);
+
+        string[] users = new string[5];
+
+        Random rnd = new Random();
+        userswholikedyou = userswholikedyou.OrderBy(x => rnd.Next()).ToArray();
+        userswithcommoninterests = userswithcommoninterests.OrderBy(x => rnd.Next()).ToArray();     // shuffle the arrays randomly instead of how they are sorted in the database
+        restofusers = restofusers.OrderBy(x => rnd.Next()).ToArray();
+
+        //this is needed so the users with the most interests in common are picked first
+        string[] uniqueuserswithcommoninterests = userswithcommoninterests.Distinct().ToArray();            // gets all the unique values
+        string[] duplicateusers = userswithcommoninterests.Except(uniqueuserswithcommoninterests).ToArray();    // gets all the duplicates
+        userswithcommoninterests = duplicateusers.Concat(uniqueuserswithcommoninterests).ToArray();     // sorts so the duplicates are first
+        userswithcommoninterests = userswithcommoninterests.Distinct().ToArray();                       // removes the duplicates
+
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (i < userswithcommoninterests.Length && i < 3)       // preferebaly we want 3 people with common interests
+            {
+                users[i] = userswithcommoninterests[i];
+            }
+            else if (i < userswholikedyou.Length && i < 4)      // and 1 person who has liked
+            {
+                users[i] = userswholikedyou[i];
+            }
+            else if (i < restofusers.Length && i < 5)           // and preferably 1 random person
+            {
+                users[i] = restofusers[i];
+            }
+        }
+        if(users[3] == null)
+        {
+            if(userswithcommoninterests.Length > 3)
+            {
+                users[3] = userswithcommoninterests[3];        // that however is not always possible so it needs to be filled otherwise sometimes 
+            }
+            if (userswithcommoninterests.Length > 4)            // if value 3 is empty it means userswholiked and rest of users are empty to we need to check if userswith commoninterests has more values to use
+            {
+                users[4] = userswithcommoninterests[4];
+            }
+        }
+        if (users[4] == null)
+        {
+            if (userswithcommoninterests.Length > 4)
+            {
+                users[4] = userswithcommoninterests[4];        // if the last value is null it means restofusers is empty so it needs to be filled with other
+            }
+            else if (restofusers.Length > 4)
+            {
+                users[4] = userswholikedyou[4];
+            }
+        }
+
+        return users;
     }
+
+
+
+        
+    
     //User to get the profiles for the match(run async)
     public Profile[] Get5Profiles(string email) {
         //The algorithm that determines who to get
