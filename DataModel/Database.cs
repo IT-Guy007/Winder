@@ -1,12 +1,5 @@
-using Microsoft.Maui.Controls;
-
-namespace DataModel;
-
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-
-
+namespace DataModel;
 
 public class Database {
     private Authentication _authentication = new Authentication();
@@ -54,24 +47,25 @@ public class Database {
             SqlCommand query = new SqlCommand("select * from winder.winder.[User] where email = @email", connection);
             query.Parameters.AddWithValue("@email", email);
 
-            //Execute query
-            try
-            {
-                SqlDataReader reader = query.ExecuteReader();
-                while (reader.Read())
-                {
-                    var firstName = reader["firstName"] as string;
-                    var middleName = reader["middleName"] as string;
-                    var lastName = reader["lastName"] as string;
-                    var preferences = reader["preference"] as string;
-                    var birthday  = (DateTime)reader["birthday"];
-                    var gender = reader["gender"] as string;
-                    var profilePicture = reader["profilePicture"] as byte[];
-                    var bio = reader["bio"] as string;
-                    var school = reader["location"] as string;
-                    var major = reader["education"] as string;
-                    Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
-                        preferences, email, "", gender, VarBinaryToImage(profilePicture), bio, school, major);
+
+        //Execute query
+        try
+        {
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read()) {
+                var firstName = reader["firstName"] as string;
+                var middleName = reader["middleName"] as string;
+                var lastName = reader["lastName"] as string;
+                var preferences = reader["preference"] as string;
+                var birthday = (DateTime)reader["birthday"];
+                var gender = reader["gender"] as string;
+                var profilePicture = reader["profilePicture"] as byte[];
+                var bio = reader["bio"] as string;
+                var school = reader["location"] as string;
+                var major = reader["education"] as string;
+                Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
+                    preferences, email, "", gender ,profilePicture, bio,school,major);
+
 
                 }
 
@@ -255,7 +249,6 @@ public class Database {
         }
     }
 
-
     public void DeleteUser(string email)
     {
         Authentication a = new Authentication();
@@ -309,12 +302,6 @@ public class Database {
         }
 
     }
-    
-
-
-
-
-  
 
     public List<string> GetInterestsFromDataBase()
     {
@@ -365,7 +352,7 @@ public class Database {
                 
                 DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
 
-                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, VarBinaryToImage(img), bio, school, major);
+                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, img, bio, school, major);
 
             }
         }
@@ -460,6 +447,30 @@ public class Database {
             Console.WriteLine(se.ToString());
             //Close connection
             CloseConnection();
+        }
+    }
+
+    public bool SaveProfilePictures(string email, byte[] profilepicture)
+    {
+        OpenConnection();
+        string sql = "INSERT INTO winder.winder.Photos (winder.[user], winder.photo) VALUES(@Email, @profilepicture)";
+        SqlCommand command = new SqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@Email", email);
+        command.Parameters.AddWithValue("@profilepicture", profilepicture);
+        try
+        {
+            command.ExecuteNonQuery();
+            CloseConnection();
+            return true;
+        }
+        catch (SqlException se)
+        {
+            throw new Exception(se.Message);
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace.ToString());
+            //Close connection
+            CloseConnection();
+            return false;
         }
     }
 
@@ -848,29 +859,34 @@ public class Database {
         }
     }
 
-    public Image[] GetPicturesFromDatabase(string email) {
+    public byte[][] GetPicturesFromDatabase(string email) {
         
-        Image[] result = new Image[10];
+        byte[][] result = new byte[10][];
 
         //TO-DO: Get pictures from database
         //Start connection
         OpenConnection();
 
         //Create query
-        SqlCommand query = new SqlCommand("select * from winder.winder.[Photos] where email = @email", connection);
+        SqlCommand query = new SqlCommand("select * from winder.Photos where [user] = @email", connection);
         query.Parameters.AddWithValue("@email", email);
 
         //Execute query
         try {
             SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read()) {
-                
+            int i = 0;
+            while(reader.Read())
+            {
+                var profilePicture = reader["photo"] as byte[];
+                result[i] = profilePicture;
+                i++;
             }
         } catch(SqlException se) {
             Console.WriteLine("Error retrieving pictures from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
         }
+        CloseConnection();
 
         return result;
     }
@@ -879,14 +895,15 @@ public class Database {
     public Profile[] Get5Profiles(string email) {
         //The algorithm that determines who to get
         
-        //The users to get
+        //The users(email) to get
         string[] usersToRetrief = new string[5];
+        usersToRetrief[0] = "sghjkf@student.windesheim.nl";
 
         //Results
         Profile[] profiles = new Profile[5];
         
         //Retrieving
-        for(int i = 0;i != 4;i++) {
+        for(int i = 0;i != 1;i++) {
             
             //Get the user
             User user = GetUserFromDatabase(usersToRetrief[i]);
@@ -895,21 +912,14 @@ public class Database {
             user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]);
 
             //Get the images of the user
-            Image[] images = GetPicturesFromDatabase(usersToRetrief[i]);
+            byte[][] images = GetPicturesFromDatabase(usersToRetrief[i]);
             var profile = new Profile(user, images);
             
-            profiles.Append(profile);
+            profiles[i] = profile;
         }
         
         return profiles;
     }
 
-    private Image VarBinaryToImage(byte[] input) {
-        Stream stream = new MemoryStream(input);
-        Image image = new Image {
-            Source = ImageSource.FromStream(() => stream)
-        };
-        return image;
-    }
+}
 
-} 
