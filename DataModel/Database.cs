@@ -1,8 +1,4 @@
 using System.Data.SqlClient;
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
 
 namespace DataModel;
 public class Database {

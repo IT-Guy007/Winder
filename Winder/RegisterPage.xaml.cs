@@ -3,8 +3,7 @@
 
 namespace MAUI;
 
-public partial class RegisterPage : ContentPage
-{
+public partial class RegisterPage : ContentPage {
 	private string email;
     private string firstname;
     private string middlename;
@@ -27,25 +26,21 @@ public partial class RegisterPage : ContentPage
 
         InitializeComponent();
         interesseslist = database.GetInterestsFromDataBase();
-        foreach (string interest in interesseslist)
-        {
+        foreach (string interest in interesseslist) {
             Interesses.Items.Add(interest);
         }
     }
 
 
     //Gebruiker verwijdert een " interesse " uit de selectie door erop te klikken
-    public void SelectedItemsOfInterests(object sender, EventArgs e)
-    {
-        if (Gekozeninteresses.SelectedItem != null)
-        {
+    public void SelectedItemsOfInterests(object sender, EventArgs e) {
+        if (Gekozeninteresses.SelectedItem != null) {
             GekozenInteressesLijst.Remove(Gekozeninteresses.SelectedItem.ToString());
 
         }
         Gekozeninteresses.ItemsSource = null;
         Gekozeninteresses.IsVisible = false;
-        if (GekozenInteressesLijst.Count > 0)
-        {
+        if (GekozenInteressesLijst.Count > 0) {
             Gekozeninteresses.IsVisible = true;
             Gekozeninteresses.ItemsSource = GekozenInteressesLijst;
         }
@@ -55,17 +50,13 @@ public partial class RegisterPage : ContentPage
     }
 
     // Voegt geselecteerde items toe aan listbox zodat de gebruiker zijn selectie kan zien
-    public void OnSelectedItems(object sender, EventArgs e)
-    {
-        if (GekozenInteressesLijst.Count() < 5 && Interesses.SelectedItem != null)
-        {
-            if (GekozenInteressesLijst.Contains(Interesses.SelectedItem.ToString()))
-            {
+    public void OnSelectedItems(object sender, EventArgs e) {
+        if (GekozenInteressesLijst.Count() < 5 && Interesses.SelectedItem != null) {
+            if (GekozenInteressesLijst.Contains(Interesses.SelectedItem.ToString())) {
                 Foutinteresses.Text = "interesse is al toegevoegd";
                 Foutinteresses.IsVisible = true;
             }
-            else
-            {
+            else {
                 Foutinteresses.IsVisible = false;
                 GekozenInteressesLijst.Add(Interesses.SelectedItem.ToString());
                 Gekozeninteresses.ItemsSource = null;
@@ -80,8 +71,7 @@ public partial class RegisterPage : ContentPage
     }
     //Declaring objects by "Opslaan" button
     // checks
-    public bool SaveEventChecks()
-    {
+    public bool SaveEventChecks() {
         int aantalchecks = 0;
         
         #region voorkeur check
@@ -149,31 +139,24 @@ public partial class RegisterPage : ContentPage
         }
         #endregion
 
-        if (aantalchecks == 5)
-        {
+        if (aantalchecks == 5) {
             return true;
-        }else
-        {
+        }else {
             return false;
         }
 
     }
 
-    public void SaveEvent (object sender, EventArgs e)
-    {
-        if (SaveEventChecks())
-        {
-
-            if (middlename == null)
-            {
+    public void SaveEvent (object sender, EventArgs e) {
+        if (SaveEventChecks()) {
+            if (middlename == null) {
                 middlename = "";
             }
 
             database.RegistrationFunction(firstname, middlename, lastname, email, preference, dateOfBirth, gender, "random tekst", password, profilePicture, true, school, major);
             database.SaveProfilePictures(email, profilePicture);
 
-            foreach (string interesse in GekozenInteressesLijst)
-            {
+            foreach (string interesse in GekozenInteressesLijst) {
                 database.RegisterInterestInDatabase(email, interesse);
             }
             Navigation.PushAsync(new MainPage());
@@ -182,8 +165,7 @@ public partial class RegisterPage : ContentPage
 
 
     //checkt of waardes naar eisen voldoen en declareert de variabelen
-    public bool RegisterBtnEventCheck()
-    {
+    public bool RegisterBtnEventCheck() {
         int aantalchecks = 0;
         Authentication auth = new Authentication();
        
@@ -325,23 +307,18 @@ public partial class RegisterPage : ContentPage
         }
         #endregion
 
-        if (aantalchecks == 7)
-        {
+        if (aantalchecks == 7) {
             return true;
         }
-        else
-        {
+        else {
             return false;
         }
     }
 
     // maakt gegevens van gebruiker zichtbaar en onzichtbaar
-    public void RegisterBtnEvent(object sender, EventArgs e)
-    {
-       
+    public void RegisterBtnEvent(object sender, EventArgs e) {
 
-        if (RegisterBtnEventCheck())
-        {
+        if (RegisterBtnEventCheck()) {
             //setting objects visible to proceed the registerform
             LblVoorkeur.IsVisible = true;
             Voorkeur.IsVisible = true;
@@ -377,18 +354,14 @@ public partial class RegisterPage : ContentPage
         }
     }
 
-    private async void OnProfilePictureClicked(object sender, EventArgs e)
-    {
-        try
-        {
-            var image = await FilePicker.PickAsync(new PickOptions
-            {
+    private async void OnProfilePictureClicked(object sender, EventArgs e) {
+        try {
+            var image = await FilePicker.PickAsync(new PickOptions {
                 PickerTitle = "Kies een profielfoto",
                 FileTypes = FilePickerFileType.Images
             });
 
-            if (image == null)
-            {
+            if (image == null) {
                 return;
             }
             string imgLocation = image.FullPath;
