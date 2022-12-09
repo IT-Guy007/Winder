@@ -1,4 +1,5 @@
 using System.Data.SqlClient;
+
 namespace DataModel;
 
 public class Database {

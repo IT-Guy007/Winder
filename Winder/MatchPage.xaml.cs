@@ -1,5 +1,12 @@
-﻿using System.Windows.Input;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using System.Windows.Input; 
+
 using DataModel;
+using Microsoft.Maui;
+
 using Microsoft.Maui.Controls;
 namespace MAUI;
 
@@ -7,14 +14,12 @@ public partial class MatchPage : ContentPage {
 
     private Database _database = new Database();
 
-    private  Queue<Profile> _profileQueue = new Queue<Profile>();
+    private Queue<Profile> _profileQueue = new Queue<Profile>();
     private Profile _currentProfile;
     private Image[] _images = new Image[10];
     private int selectedImage = 0;
     
     public MatchPage() {
-
-
 
         //Get profiles to swipe
         CheckIfQueueNeedsMoreProfiles();
@@ -49,32 +54,16 @@ public partial class MatchPage : ContentPage {
 
                 MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
 
-                var profileImage = new Image
-                {
+                var profileImage = new Image {
+
                     Source = ImageSource.FromStream(() => ms),
                     Aspect = Aspect.AspectFit,
                     WidthRequest = 800,
                     HeightRequest = 800,
                     BackgroundColor = Color.FromArgb("#ffffff")
+                };
+                verticalStackLayout.Add(profileImage);
 
-                };
-                verticalStackLayout.Add(profileImage);
-                
-            } else {
-                var profileImage = new Image {
-                    Source = "noprofile.jpg",
-                    Aspect = Aspect.AspectFit,
-                    WidthRequest = 200,
-                    HeightRequest = 200,
-                    HorizontalOptions = LayoutOptions.Center
-                };
-                verticalStackLayout.Add(profileImage);
-                var noProfileImage = new Label {
-                    Text = "You have no profilepicture yet, add one to get more matches",
-                    HorizontalOptions = LayoutOptions.Center
-                };
-                verticalStackLayout.Add(noProfileImage);
-                
             }
 
             var label = new Label { Text = "No more profiles to match with for now", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
@@ -99,8 +88,8 @@ public partial class MatchPage : ContentPage {
                 currentImage.Source = ImageSource.FromStream(() => ms);
 
                 //Data binding
-                var imageBinding = new Binding() {Source = nameof(_currentProfile.profile_images)};
-                currentImage.SetBinding(ImageButton.SourceProperty, imageBinding);
+                currentImage.SetBinding(ImageButton.SourceProperty, new Binding() {Source = ImageSource.FromStream(() => ms)});
+
             }
             currentImage.WidthRequest = 600;
             currentImage.HeightRequest = 600;
@@ -123,7 +112,8 @@ public partial class MatchPage : ContentPage {
             var namelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start};
 
             //Binding
-            var name = new Label();
+            var name = new Label {Text = _currentProfile.user.firstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start};
+
             name.SetBinding(Label.TextProperty, new Binding() { Source = _currentProfile.user.firstName });
             
             name.FontSize = 20;
@@ -134,6 +124,7 @@ public partial class MatchPage : ContentPage {
             nameStackLayout.Add(name);
             infoStackLayout.Add(nameStackLayout);
             
+
             //Gender
             StackLayout genderStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             var genderlbl = new Label { Text = "Geslacht: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
@@ -148,7 +139,8 @@ public partial class MatchPage : ContentPage {
             genderStackLayout.Add(genderlbl);
             genderStackLayout.Add(gender);
             infoStackLayout.Add(genderStackLayout);
-               
+            
+            
             //Age
             StackLayout ageStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
             var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };
@@ -165,11 +157,11 @@ public partial class MatchPage : ContentPage {
             ageStackLayout.Add(agelbl);
             ageStackLayout.Add(age);
             infoStackLayout.Add(ageStackLayout);
-             
+            
+            
             //Location
             StackLayout locationStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
             var locationlbl = new Label { Text = "Windesheim locatie: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };
-
             var location = new Label { Text = _currentProfile.user.school , FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Data binding
@@ -182,6 +174,7 @@ public partial class MatchPage : ContentPage {
             locationStackLayout.Add(location);
             infoStackLayout.Add(locationStackLayout);
             
+
             //Education
             StackLayout educationStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
             var educationlbl = new Label { Text = "Opleiding: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };

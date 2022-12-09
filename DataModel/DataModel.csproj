@@ -16,7 +16,6 @@
       <PackageReference Include="Microsoft.QualityTools.Testing.Fakes" Version="16.11.230815" />
       <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
 
-
     </ItemGroup>
 
     <ItemGroup>
