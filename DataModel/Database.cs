@@ -433,7 +433,7 @@ public class Database {
         }
         CloseConnection();
 
-        return interests.ToArray();
+        return interests;
     }
     public bool UpdateUserInDatabaseWithNewUserData(User user) {
         try {
