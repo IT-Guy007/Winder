@@ -15,7 +15,13 @@ public class Authentication {
         _loggedState = LoggedState.signedOut;
         _accountState = AccountState.inactive;
     }
-
+    
+    //Match
+    public static Queue<Profile> _profileQueue = new Queue<Profile>();
+    public static Profile _currentProfile;
+    public static int selectedImage = 0;
+    
+    
     //Defining state
     enum LoggedState {
         signedIn,

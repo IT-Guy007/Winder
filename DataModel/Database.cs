@@ -645,14 +645,15 @@ public class Database {
         //The algorithm that determines who to get
         
         //The users(email) to get
-        string[] usersToRetrief = new string[5];
-        usersToRetrief[0] = "sghjkf@student.windesheim.nl";
+        List<string> usersToRetrief = new List<string>();
+        usersToRetrief.Add("sghjkf@student.windesheim.nl");
+        usersToRetrief.Add("s1165707@student.windesheim.nl");
 
         //Results
         Profile[] profiles = new Profile[5];
         
         //Retrieving
-        for(int i = 0;i != 1;i++) {
+        for(int i = 0;i != usersToRetrief.Count();i++) {
             
             //Get the user
             User user = GetUserFromDatabase(usersToRetrief[i]);
@@ -666,7 +667,6 @@ public class Database {
             
             profiles[i] = profile;
         }
-        
         return profiles;
     }
 
