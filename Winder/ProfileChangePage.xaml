@@ -67,13 +67,21 @@
             </Picker>
         </VerticalStackLayout>
         <VerticalStackLayout>
+            <ImageButton
+                Clicked="OnProfilePictureClicked"
+                x:Name="ProfileImage"
+                HeightRequest="100"
+                WidthRequest="100"
+                Aspect="AspectFill"
+                CornerRadius="50"
+                IsVisible="true"/>
             <Label 
             x:Name="lblBio"
             Text="Bio"
             VerticalOptions="Center" 
             HorizontalOptions="Center"/>
             <Editor x:Name="Bio"
-                    MaxLength="150"
+                    MaxLength="125"
                     WidthRequest="200"
                     HeightRequest="100"
                     TextChanged="BioTextChanged"/>
@@ -84,7 +92,7 @@
             HorizontalOptions="Center"
             />
             <Entry x:Name="Education"
-               MaxLength="150"
+               MaxLength="30"
                Placeholder=""
                TextChanged="EducationTextChanged"
                />
@@ -103,14 +111,13 @@
                     </x:Array>
                 </ListView.ItemsSource>
             </ListView>
-        </VerticalStackLayout>
-        <Button x:Name="ChangeProfile"             
+            <Button x:Name="ChangeProfile"             
                 Text="Opslaan"
                 BackgroundColor="#CC415F"
                 WidthRequest="200"
                 HeightRequest="40"
                 Clicked="ChangeUserData"
-                Margin="-250,250,0,0"
                 />
+        </VerticalStackLayout>
     </HorizontalStackLayout>
 </ContentPage>

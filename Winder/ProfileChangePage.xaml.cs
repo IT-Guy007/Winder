@@ -216,6 +216,34 @@ public partial class ProfileChange : ContentPage
             return false;
         }
     }
+    private async void OnProfilePictureClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var image = await FilePicker.PickAsync(new PickOptions
+            {
+                PickerTitle = "Kies een profielfoto",
+                FileTypes = FilePickerFileType.Images
+            });
+
+            if (image == null)
+            {
+                return;
+            }
+            string imgLocation = image.FullPath;
+            byte[] imageArr = null;
+            FileStream fileStream = new FileStream(imgLocation, FileMode.Open, FileAccess.Read);
+            Stream stream = await image.OpenReadAsync();
+            BinaryReader binary = new BinaryReader(fileStream);
+            imageArr = binary.ReadBytes((int)fileStream.Length);
+            ProfileImage.Source = ImageSource.FromStream(() => stream);
+
+        }
+        catch (Exception ex)
+        {
+            DisplayAlert("Error", "Er is iets fout gegaan", "Ok");
+        }
+    }
     //Handles the selected interests and adds them to the listview of interests
     private void PickerIndexChanged(object sender, EventArgs e)
     {
@@ -237,7 +265,6 @@ public partial class ProfileChange : ContentPage
         }
         else
         {
-            Color ErrorColor = new Color(238, 75, 43);
             InterestSelection.Title = "Je kunt maximaal 5 interesses selecteren";
             InterestSelection.TitleColor = ErrorColor;
         }
@@ -293,12 +320,6 @@ public partial class ProfileChange : ContentPage
     {
         if (Bio.Text != "")
         {
-            if (Bio.Text.Length > 100)
-            {
-                lblBio.Text = "Bio mag maximaal 100 karakters bevatten";
-            }
-            else
-            {
                 if (!CheckIfTextIsOnlyLettersAndSpaces(Bio.Text))
                 {
                     bio = false;
@@ -311,7 +332,6 @@ public partial class ProfileChange : ContentPage
                     lblBio.Text = "Bio";
                     lblBio.TextColor = default;
                 }
-            }
         }
     }
 }
