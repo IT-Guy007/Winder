@@ -18,6 +18,7 @@ public partial class ProfileChange : ContentPage
     private bool gender = true;
     private bool bio = true;
     private bool education = true;
+    //Load all necessary components to the page
     public ProfileChange()
     {
         InitializeComponent();
@@ -26,39 +27,7 @@ public partial class ProfileChange : ContentPage
         interesses = Database.LoadInterestsFromDatabaseInListInteresses(Authentication._currentUser.email);
         ListInterests.ItemsSource = interesses;
     }
-
-    private List<string> convertStringArrayToList(string[] strings)
-    {
-        List<string> list = new List<string>();
-        foreach (var item in strings)
-        {
-            list.Add(item);
-        }
-
-        return list;
-    }
-
-    private void ChangeSizeEntriesAndLabels(int size)
-    {
-        Firstname.FontSize = size;
-        Middlename.FontSize = size;
-        Lastname.FontSize = size;
-        Birthdate.FontSize = size;
-        Preference.FontSize = size;
-        Gender.FontSize = size;
-        Bio.FontSize = size;
-        Education.FontSize = size;
-        lblFirstname.FontSize = size;
-        lblMiddlename.FontSize = size;
-        lblLastname.FontSize = size;
-        lblBirthdate.FontSize = size;
-        Gender.FontSize = size;
-        Preference.FontSize = size;
-        lblBio.FontSize = size;
-        InterestSelection.FontSize = size;
-        lblEducation.FontSize = size;
-    }
-
+    //Fills the form inputs placeholders with the user data
     private void LoadUserFromDatabaseInForm()
     {
         if (Authentication._currentUser != null)
@@ -73,21 +42,21 @@ public partial class ProfileChange : ContentPage
             Preference.SelectedIndex = GetPreferenceFromUser();
         }
     }
-
+    //Gets the preference of user
     private int GetPreferenceFromUser()
     {
         if (Authentication._currentUser.preference == "Man") return 1;
         if (Authentication._currentUser.preference == "Vrouw") return 2;
         return 0;
     }
-
+    //Gets the gender of user
     private int GetGenderFromUser()
     {
         if (Authentication._currentUser.gender == "Man") return 1;
         if (Authentication._currentUser.gender == "Vrouw") return 2;
         return 0;
     }
-
+    //Changes the userdata en updates the form
     private void ChangeUserData(object sender, EventArgs e)
     {
         if (firstname == true && middlename == true && lastname == true && birthday == true && preference == true && gender == true && bio == true && education == true)
@@ -104,7 +73,7 @@ public partial class ProfileChange : ContentPage
             DisplayAlert("Er is iets verkeerd gegaan...", "Vul alle gegevens in", "OK");
         }
     }
-
+    //Updates the placeholders value after a change has been made
     private void UpdatePlaceholders()
     {
 
@@ -115,7 +84,7 @@ public partial class ProfileChange : ContentPage
         Bio.Placeholder = Authentication._currentUser.bio;
         Education.Placeholder = Authentication._currentUser.major;
     }
-
+    //Clears all text from input after profile change
     private void ClearTextFromEntries()
     {
         Firstname.Text = "";
@@ -124,7 +93,7 @@ public partial class ProfileChange : ContentPage
         Bio.Text = "";
         Education.Text = "";
     }
-
+    //Adds all interests to users list of interests
     private void RegisterInterestsInDatabase()
     {
         foreach (var interest in interesses)
@@ -132,7 +101,7 @@ public partial class ProfileChange : ContentPage
             Database.RegisterInterestInDatabase(Authentication._currentUser.email, interest);
         }
     }
-
+    //Update the users data 
     private void UpdateUserPropertiesPrepareForUpdateQuery()
     {
         if (Authentication._currentUser.firstName != Firstname.Text && Firstname.Text != null && Firstname.Text != "") Authentication._currentUser.firstName = Firstname.Text;
@@ -144,7 +113,7 @@ public partial class ProfileChange : ContentPage
         if (Authentication._currentUser.gender != Gender.SelectedItem.ToString()) Authentication._currentUser.gender = Gender.SelectedItem.ToString();
         if (Authentication._currentUser.preference != Preference.SelectedItem.ToString()) Authentication._currentUser.preference = Preference.SelectedItem.ToString();   
     }
-
+    //Checks if the firstname input is valid
     private void FirstnameTextChanged(object sender, TextChangedEventArgs e)
     {
         if (Firstname.Text != "")
@@ -164,6 +133,7 @@ public partial class ProfileChange : ContentPage
             }
         }
     }
+    //Checks if the middlename input is valid
     private void MiddlenameTextChanged(object sender, TextChangedEventArgs e)
     {
         if (Middlename.Text != "")
@@ -183,6 +153,7 @@ public partial class ProfileChange : ContentPage
             }
         }
     }
+    //Checks if the lastname input is valid
     private void LastnameTextChanged(object sender, TextChangedEventArgs e)
     {
         if (Lastname.Text != "")
@@ -202,10 +173,7 @@ public partial class ProfileChange : ContentPage
             }
         }
     }
-    private void BioTextChanged(object sender, TextChangedEventArgs e)
-    {
-        
-    }
+    //Checks if the education input is valid
     private void EducationTextChanged(object sender, TextChangedEventArgs e)
     {
         if (Education.Text != "")
@@ -224,21 +192,19 @@ public partial class ProfileChange : ContentPage
             }
         }
     }
+    //Checks if input has spaces, letters or dashes
     private bool CheckIfTextIsOnlyLettersAndSpaces(string text)
     {
         foreach (char c in text)
         {
-            if (!char.IsLetter(c) && c != ' ' && c != '-')
-            {
-                return false;
-            }
+            if (!char.IsLetter(c) && c != ' ' && c != '-' && c != '\n' && c != '\r')
             {
                 return false;
             }
         }
         return true;
     }
-
+    //Check if input only consists of letters
     private bool CheckIfTextIsOnlyLetters(string text)
     {
         if (text.All(char.IsLetter))
@@ -250,7 +216,7 @@ public partial class ProfileChange : ContentPage
             return false;
         }
     }
-
+    //Handles the selected interests and adds them to the listview of interests
     private void PickerIndexChanged(object sender, EventArgs e)
     {
         if (InterestSelection.SelectedItem != null && interesses.Count < 5)
@@ -276,6 +242,7 @@ public partial class ProfileChange : ContentPage
             InterestSelection.TitleColor = ErrorColor;
         }
     }
+    //Deletes the selected item in listview of interests
     private void DeleteInterest(object sender, EventArgs e)
     {
         if (ListInterests.SelectedItem != null) {
@@ -287,7 +254,7 @@ public partial class ProfileChange : ContentPage
         }
     }
 
-
+    //Checks if selected birthdate is a birthdate that is 18 years or older
     private void DateOfBirthSelectedDate(object sender, DateChangedEventArgs e)
     {
                     DateTime today = DateTime.Today;
@@ -306,7 +273,7 @@ public partial class ProfileChange : ContentPage
                 lblBirthdate.BackgroundColor = ErrorColor;
             }
     }
-
+    //Check if an item has been selected and delete the selected item of ListInterests
     private void ListInterestsItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
                 if (ListInterests.SelectedItem != null)
@@ -319,6 +286,32 @@ public partial class ProfileChange : ContentPage
             ListInterests.ItemsSource = null;
             ListInterests.ItemsSource = interesses;
             ListInterests.SelectedItem = null;
+        }
+    }
+
+    private void BioTextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (Bio.Text != "")
+        {
+            if (Bio.Text.Length > 100)
+            {
+                lblBio.Text = "Bio mag maximaal 100 karakters bevatten";
+            }
+            else
+            {
+                if (!CheckIfTextIsOnlyLettersAndSpaces(Bio.Text))
+                {
+                    bio = false;
+                    lblBio.Text = "Bio mag alleen letters bevatten";
+                    lblBio.TextColor = ErrorColor;
+                }
+                else
+                {
+                    bio = true;
+                    lblBio.Text = "Bio";
+                    lblBio.TextColor = default;
+                }
+            }
         }
     }
 }

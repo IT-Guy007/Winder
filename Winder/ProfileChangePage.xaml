@@ -4,8 +4,8 @@
              Title="Profiel"
              BackgroundColor="#CC415F"
              >
-    <HorizontalStackLayout BackgroundColor="RosyBrown" WidthRequest="500" Spacing="10">
-        <VerticalStackLayout VerticalOptions="StartAndExpand" Spacing="5" Margin="90,0,0,0">
+    <HorizontalStackLayout BackgroundColor="RosyBrown" WidthRequest="500">
+        <VerticalStackLayout VerticalOptions="StartAndExpand" Margin="90,0,0,0">
             <Label 
             x:Name="lblFirstname"
             Text="Voornaam"
@@ -45,33 +45,6 @@
             DateSelected="DateOfBirthSelectedDate"
             HorizontalOptions="Center"
             />
-        </VerticalStackLayout>
-        <VerticalStackLayout VerticalOptions="StartAndExpand" Spacing="5">
-
-            <Label 
-            x:Name="lblBio"
-            Text="Omschrijving"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            />
-            <Editor x:Name="Bio"
-                    TextChanged="BioTextChanged"
-                    MaxLength="150"
-                    HeightRequest="100"
-                    />
-            <Label 
-            x:Name="lblEducation"
-            Text="Opleiding"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            />
-            <Entry x:Name="Education"
-               MaxLength="150"
-               Placeholder=""
-               HorizontalOptions="Center"
-               TextChanged="EducationTextChanged"
-               />
-
             <Picker 
         Title="Gender"
         x:Name="Gender"
@@ -92,6 +65,29 @@
                     <x:String>Vrouw</x:String>
                 </Picker.Items>
             </Picker>
+        </VerticalStackLayout>
+        <VerticalStackLayout>
+            <Label 
+            x:Name="lblBio"
+            Text="Bio"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"/>
+            <Editor x:Name="Bio"
+                    MaxLength="150"
+                    WidthRequest="200"
+                    HeightRequest="100"
+                    TextChanged="BioTextChanged"/>
+            <Label 
+            x:Name="lblEducation"
+            Text="Opleiding"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            />
+            <Entry x:Name="Education"
+               MaxLength="150"
+               Placeholder=""
+               TextChanged="EducationTextChanged"
+               />
             <Picker 
             x:Name="InterestSelection"
         Title="Interesses"
@@ -101,17 +97,20 @@
 
                 </Picker.Items>
             </Picker>
-            <ListView MaximumHeightRequest="100" HorizontalOptions="Center" x:Name="ListInterests" ItemSelected="ListInterestsItemSelected">
+            <ListView MaximumHeightRequest="100" x:Name="ListInterests" ItemSelected="ListInterestsItemSelected">
                 <ListView.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                     </x:Array>
                 </ListView.ItemsSource>
             </ListView>
-            <Button x:Name="ChangeProfile"             
-                Text="Opslaan"
-                BackgroundColor="Salmon"
-                WidthRequest="200"
-                Clicked="ChangeUserData"/>
         </VerticalStackLayout>
+        <Button x:Name="ChangeProfile"             
+                Text="Opslaan"
+                BackgroundColor="#CC415F"
+                WidthRequest="200"
+                HeightRequest="40"
+                Clicked="ChangeUserData"
+                Margin="-250,250,0,0"
+                />
     </HorizontalStackLayout>
 </ContentPage>
