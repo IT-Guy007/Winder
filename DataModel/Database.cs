@@ -636,6 +636,7 @@ public class Database {
 
     public string[] GetUsersWhoLikedYou(string email)
     {
+        
         List<string> users = new List<string>();
         OpenConnection();
 
@@ -756,7 +757,7 @@ public class Database {
         CloseConnection();
         return users.ToArray();
     }
-
+        
  
     
     public string[] AlgorithmForSwiping(string email)
