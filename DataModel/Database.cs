@@ -5,6 +5,7 @@ namespace DataModel;
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public class Database {
     private Authentication _authentication = new Authentication();
@@ -401,9 +402,9 @@ public class Database {
         }
     }
 
-    public List<string> LoadInterestsFromDatabaseInListInteresses(string email)
+    public string[] LoadInterestsFromDatabaseInListInteresses(string email)
     {
-        List<string> interests = new List<string>();
+        string[] strings = new string[10];
         OpenConnection();
         string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
         SqlCommand command = new SqlCommand(sql, connection);
@@ -414,7 +415,7 @@ public class Database {
             while (reader.Read())
             {
                 var iets1 = reader["interest"] as string;
-                interests.Add(iets1);
+                strings.Append(iets1);
             }
         }
         catch (SqlException e)
@@ -422,7 +423,7 @@ public class Database {
             CloseConnection();
         }
         CloseConnection();
-        return interests;
+        return strings;
     }
     public bool UpdateUserInDatabaseWithNewUserData(User user) {
         try {

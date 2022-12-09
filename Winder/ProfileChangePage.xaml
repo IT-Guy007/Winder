@@ -4,8 +4,8 @@
              Title="Profiel"
              BackgroundColor="#CC415F"
              >
-    <HorizontalStackLayout BackgroundColor="AliceBlue" WidthRequest="400">
-        <VerticalStackLayout>
+    <HorizontalStackLayout BackgroundColor="RosyBrown" WidthRequest="400" Spacing="10">
+        <VerticalStackLayout VerticalOptions="StartAndExpand" Spacing="5" Margin="90,0,0,0">
             <Label 
             x:Name="lblFirstname"
             Text="Voornaam"
@@ -46,7 +46,7 @@
             HorizontalOptions="Center"
             />
         </VerticalStackLayout>
-        <VerticalStackLayout>
+        <VerticalStackLayout VerticalOptions="StartAndExpand" Spacing="5">
 
             <Label 
             x:Name="lblBio"
@@ -110,6 +110,8 @@
             </ListView>
             <Button x:Name="ChangeProfile"             
                 Text="Opslaan"
+                BackgroundColor="Salmon"
+                Margin="-90,0,0,0"
                 Clicked="ChangeUserData"/>
         </VerticalStackLayout>
     </HorizontalStackLayout>

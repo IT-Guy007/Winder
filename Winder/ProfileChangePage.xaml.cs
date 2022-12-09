@@ -25,21 +25,24 @@ public partial class ProfileChange : ContentPage
         testuser = Database.GetUserFromDatabase("s1416890@student.windesheim.nl");
         LoadUserFromDatabaseInForm();
         InterestSelection.ItemsSource = Database.GetInterestsFromDataBase();
-        interesses = Database.LoadInterestsFromDatabaseInListInteresses(testuser.email);
+        interesses = convertStringArrayToList(Database.LoadInterestsFromDatabaseInListInteresses(testuser.email));
         ListInterests.ItemsSource = interesses;
-        ChangeLabelsTextSizeAndColor(9, default);
-        ChangeSizeAndBackgroundColorOfEntries(9,default, new Color(255, 243, 5));
+        ChangeSizeEntriesAndLabels(9);
     }
 
-    private void ChangeSizeAndBackgroundColorOfEntries(int size, Color fontColor,Color bgColorOfEntry)
+    private List<string> convertStringArrayToList(string[] strings)
     {
-        Firstname.PlaceholderColor = fontColor;
-        Middlename.PlaceholderColor = fontColor;
-        Lastname.PlaceholderColor = fontColor;
-        Bio.PlaceholderColor = fontColor;
-        Education.PlaceholderColor = fontColor;
+        List<string> list = new List<string>();
+        foreach (var item in strings)
+        {
+            list.Add(item);
+        }
 
+        return list;
+    }
 
+    private void ChangeSizeEntriesAndLabels(int size)
+    {
         Firstname.FontSize = size;
         Middlename.FontSize = size;
         Lastname.FontSize = size;
@@ -48,40 +51,17 @@ public partial class ProfileChange : ContentPage
         Gender.FontSize = size;
         Bio.FontSize = size;
         Education.FontSize = size;
-        Firstname.BackgroundColor = bgColorOfEntry;
-        Middlename.BackgroundColor = bgColorOfEntry;
-        Lastname.BackgroundColor = bgColorOfEntry;
-        Birthdate.BackgroundColor = bgColorOfEntry;
-        Preference.BackgroundColor = bgColorOfEntry;
-        Education.BackgroundColor = bgColorOfEntry;
-        Bio.BackgroundColor = bgColorOfEntry;
-        Gender.BackgroundColor = bgColorOfEntry;
-        Preference.BackgroundColor = bgColorOfEntry;
-        InterestSelection.BackgroundColor = bgColorOfEntry;
-        
-    }
-
-    private void ChangeLabelsTextSizeAndColor(int size, Color color)
-    {
         lblFirstname.FontSize = size;
-        lblFirstname.TextColor = color;
         lblMiddlename.FontSize = size;
-        lblMiddlename.TextColor = color;
         lblLastname.FontSize = size;
-        lblLastname.TextColor = color;
         lblBirthdate.FontSize = size;
-        lblBirthdate.TextColor = color;
         Gender.FontSize = size;
-        Gender.TitleColor = color;
-        Preference.TitleColor = color;
-        InterestSelection.TitleColor = color;
         Preference.FontSize = size;
         lblBio.FontSize = size;
-        lblBio.TextColor = color;
         InterestSelection.FontSize = size;
         lblEducation.FontSize = size;
-        lblEducation.TextColor = color;
     }
+
     private void LoadUserFromDatabaseInForm()
     {
         if (testuser != null)
@@ -135,6 +115,7 @@ public partial class ProfileChange : ContentPage
         Lastname.Placeholder = testuser.lastName;
         Birthdate.Date = (DateTime)testuser.birthDay;
         Bio.Placeholder = testuser.bio;
+        Education.Placeholder = testuser.major;
     }
 
     private void ClearTextFromEntries()
@@ -143,6 +124,7 @@ public partial class ProfileChange : ContentPage
         Middlename.Text = "";
         Lastname.Text = "";
         Bio.Text = "";
+        Education.Text = "";
     }
 
     private void RegisterInterestsInDatabase()
@@ -297,7 +279,6 @@ public partial class ProfileChange : ContentPage
             }
             else
             {
-                Color ErrorColor = new Color(238, 75, 43);
                 InterestSelection.Title = "Je hebt deze interesse al toegevoegd";
                 InterestSelection.TitleColor = ErrorColor;
             }
