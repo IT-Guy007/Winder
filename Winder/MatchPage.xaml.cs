@@ -1,12 +1,19 @@
-﻿using System.Windows.Input;
+
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using DataModel;
+using Microsoft.Maui;
+
 using Microsoft.Maui.Controls;
 namespace MAUI;
 
 public partial class MatchPage : ContentPage {
     private Database _database = new Database();
 
-    private  Queue<Profile> _profileQueue = new Queue<Profile>();
+    private Queue<Profile> _profileQueue = new Queue<Profile>();
     private Profile _currentProfile;
     private Image[] _images = new Image[10];
     private int selectedImage = 0;
@@ -46,8 +53,8 @@ public partial class MatchPage : ContentPage {
 
                 MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
 
-                var profileImage = new Image
-                {
+                var profileImage = new Image {
+
                     Source = ImageSource.FromStream(() => ms),
                     Aspect = Aspect.AspectFit,
                     WidthRequest = 800,
@@ -55,22 +62,7 @@ public partial class MatchPage : ContentPage {
                     BackgroundColor = Color.FromArgb("#ffffff")
                 };
                 verticalStackLayout.Add(profileImage);
-                
-            } else {
-                var profileImage = new Image {
-                    Source = "noprofile.jpg",
-                    Aspect = Aspect.AspectFit,
-                    WidthRequest = 200,
-                    HeightRequest = 200,
-                    HorizontalOptions = LayoutOptions.Center
-                };
-                verticalStackLayout.Add(profileImage);
-                var noProfileImage = new Label {
-                    Text = "You have no profilepicture yet, add one to get more matches",
-                    HorizontalOptions = LayoutOptions.Center
-                };
-                verticalStackLayout.Add(noProfileImage);
-                
+
             }
 
             var label = new Label { Text = "No more profiles to match with for now", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
@@ -95,8 +87,8 @@ public partial class MatchPage : ContentPage {
                 currentImage.Source = ImageSource.FromStream(() => ms);
 
                 //Data binding
-                var imageBinding = new Binding() {Source = nameof(_currentProfile.profile_images)};
-                currentImage.SetBinding(ImageButton.SourceProperty, imageBinding);
+                currentImage.SetBinding(ImageButton.SourceProperty, new Binding() {Source = ImageSource.FromStream(() => ms)});
+
             }
             currentImage.WidthRequest = 600;
             currentImage.HeightRequest = 600;
@@ -119,7 +111,8 @@ public partial class MatchPage : ContentPage {
             var namelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start};
 
             //Binding
-            var name = new Label();
+            var name = new Label {Text = _currentProfile.user.firstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start};
+
             name.SetBinding(Label.TextProperty, new Binding() { Source = _currentProfile.user.firstName });
             
             name.FontSize = 20;

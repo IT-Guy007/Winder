@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\DataModel"
   ],
-  "SelectedNode": "\\Console.sln",
+  "SelectedNode": "\\DataModel\\Database.cs",
   "PreviewInSolutionExplorer": false
 }
