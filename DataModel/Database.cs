@@ -65,7 +65,7 @@ public class Database {
                 var bio = reader["bio"] as string;
                 var school = reader["location"] as string;
                 var major = reader["education"] as string;
-                _authentication._currentUser = new User(firstName, middleName, lastName, birthday,
+                Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
                     preferences, email, "", gender ,VarBinaryToImage(profilePicture), bio,school,major);
 
                 }
@@ -404,7 +404,7 @@ public class Database {
 
     public List<string> LoadInterestsFromDatabaseInListInteresses(string email)
     {
-        List<string> interest = new List<string>();
+        List<string> interests = new List<string>();
         OpenConnection();
         string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
         SqlCommand command = new SqlCommand(sql, connection);

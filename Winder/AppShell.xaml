@@ -9,7 +9,7 @@
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate maui:ProfileChange}"
+        ContentTemplate="{DataTemplate maui:MainPage}"
         Route="MainPage" />
 
 </Shell>

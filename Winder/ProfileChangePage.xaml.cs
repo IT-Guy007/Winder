@@ -10,7 +10,6 @@ public partial class ProfileChange : ContentPage
     List<string> interesses  =new List<string>();
     Database Database = new Database();
     Color ErrorColor = new Color(255, 243, 5);
-    User testuser;
     private bool firstname = true;
     private bool middlename = true;
     private bool lastname = true;
@@ -22,12 +21,10 @@ public partial class ProfileChange : ContentPage
     public ProfileChange()
     {
         InitializeComponent();
-        testuser = Database.GetUserFromDatabase("s1416890@student.windesheim.nl");
         LoadUserFromDatabaseInForm();
         InterestSelection.ItemsSource = Database.GetInterestsFromDataBase();
-        interesses = Database.LoadInterestsFromDatabaseInListInteresses(testuser.email);
+        interesses = Database.LoadInterestsFromDatabaseInListInteresses(Authentication._currentUser.email);
         ListInterests.ItemsSource = interesses;
-        ChangeSizeEntriesAndLabels(9);
     }
 
     private List<string> convertStringArrayToList(string[] strings)
@@ -64,29 +61,30 @@ public partial class ProfileChange : ContentPage
 
     private void LoadUserFromDatabaseInForm()
     {
-        if (testuser != null)
+        if (Authentication._currentUser != null)
         {
-            Firstname.Placeholder = testuser.firstName;
-            Middlename.Placeholder = testuser.middleName;
-            Lastname.Placeholder = testuser.lastName;
-            Birthdate.Date = testuser.birthDay;
-            Bio.Placeholder = testuser.bio;
-            Gender.SelectedIndex = GetGenderFromUser(testuser);
-            Preference.SelectedIndex = GetPreferenceFromUser(testuser);
+            Firstname.Placeholder = Authentication._currentUser.firstName;
+            Middlename.Placeholder = Authentication._currentUser.middleName;
+            Lastname.Placeholder = Authentication._currentUser.lastName;
+            Birthdate.Date = Authentication._currentUser.birthDay;
+            Bio.Placeholder = Authentication._currentUser.bio;
+            Education.Placeholder = Authentication._currentUser.major;
+            Gender.SelectedIndex = GetGenderFromUser();
+            Preference.SelectedIndex = GetPreferenceFromUser();
         }
     }
 
-    private int GetPreferenceFromUser(User testuser)
+    private int GetPreferenceFromUser()
     {
-        if (testuser.preference == "Man") return 1;
-        if (testuser.preference == "Vrouw") return 2;
+        if (Authentication._currentUser.preference == "Man") return 1;
+        if (Authentication._currentUser.preference == "Vrouw") return 2;
         return 0;
     }
 
-    private int GetGenderFromUser(User testuser)
+    private int GetGenderFromUser()
     {
-        if (testuser.gender == "Man") return 1;
-        if (testuser.gender == "Vrouw") return 2;
+        if (Authentication._currentUser.gender == "Man") return 1;
+        if (Authentication._currentUser.gender == "Vrouw") return 2;
         return 0;
     }
 
@@ -95,7 +93,7 @@ public partial class ProfileChange : ContentPage
         if (firstname == true && middlename == true && lastname == true && birthday == true && preference == true && gender == true && bio == true && education == true)
         {
             UpdateUserPropertiesPrepareForUpdateQuery();
-            Database.UpdateUserInDatabaseWithNewUserData(testuser);
+            Database.UpdateUserInDatabaseWithNewUserData(Authentication._currentUser);
             RegisterInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             ClearTextFromEntries();
@@ -110,12 +108,12 @@ public partial class ProfileChange : ContentPage
     private void UpdatePlaceholders()
     {
 
-        Firstname.Placeholder = testuser.firstName;
-        Middlename.Placeholder = testuser.middleName;
-        Lastname.Placeholder = testuser.lastName;
-        Birthdate.Date = (DateTime)testuser.birthDay;
-        Bio.Placeholder = testuser.bio;
-        Education.Placeholder = testuser.major;
+        Firstname.Placeholder = Authentication._currentUser.firstName;
+        Middlename.Placeholder = Authentication._currentUser.middleName;
+        Lastname.Placeholder = Authentication._currentUser.lastName;
+        Birthdate.Date = (DateTime)Authentication._currentUser.birthDay;
+        Bio.Placeholder = Authentication._currentUser.bio;
+        Education.Placeholder = Authentication._currentUser.major;
     }
 
     private void ClearTextFromEntries()
@@ -131,20 +129,20 @@ public partial class ProfileChange : ContentPage
     {
         foreach (var interest in interesses)
         {
-            Database.RegisterInterestInDatabase(testuser.email, interest);
+            Database.RegisterInterestInDatabase(Authentication._currentUser.email, interest);
         }
     }
 
     private void UpdateUserPropertiesPrepareForUpdateQuery()
     {
-        if (testuser.firstName != Firstname.Text && Firstname.Text != null && Firstname.Text != "") testuser.firstName = Firstname.Text;
-        if (testuser.middleName != Middlename.Text && Middlename.Text != null && Middlename.Text != "") testuser.middleName = Middlename.Text;
-        if (testuser.lastName != Lastname.Text && Lastname.Text != null && Lastname.Text != "") testuser.lastName = Lastname.Text;
-        if (testuser.major != Education.Text && Education.Text != null && Education.Text != "") testuser.major = Education.Text;
-        if (testuser.birthDay != Birthdate.Date) testuser.birthDay = Birthdate.Date;
-        if (testuser.bio != Bio.Text && Bio.Text != null && Bio.Text != "") testuser.bio = Bio.Text;
-        if (testuser.gender != Gender.SelectedItem.ToString()) testuser.gender = Gender.SelectedItem.ToString();
-        if (testuser.preference != Preference.SelectedItem.ToString()) testuser.preference = Preference.SelectedItem.ToString();   
+        if (Authentication._currentUser.firstName != Firstname.Text && Firstname.Text != null && Firstname.Text != "") Authentication._currentUser.firstName = Firstname.Text;
+        if (Authentication._currentUser.middleName != Middlename.Text && Middlename.Text != null && Middlename.Text != "") Authentication._currentUser.middleName = Middlename.Text;
+        if (Authentication._currentUser.lastName != Lastname.Text && Lastname.Text != null && Lastname.Text != "") Authentication._currentUser.lastName = Lastname.Text;
+        if (Authentication._currentUser.major != Education.Text && Education.Text != null && Education.Text != "") Authentication._currentUser.major = Education.Text;
+        if (Authentication._currentUser.birthDay != Birthdate.Date) Authentication._currentUser.birthDay = Birthdate.Date;
+        if (Authentication._currentUser.bio != Bio.Text && Bio.Text != null && Bio.Text != "") Authentication._currentUser.bio = Bio.Text;
+        if (Authentication._currentUser.gender != Gender.SelectedItem.ToString()) Authentication._currentUser.gender = Gender.SelectedItem.ToString();
+        if (Authentication._currentUser.preference != Preference.SelectedItem.ToString()) Authentication._currentUser.preference = Preference.SelectedItem.ToString();   
     }
 
     private void FirstnameTextChanged(object sender, TextChangedEventArgs e)
@@ -206,22 +204,7 @@ public partial class ProfileChange : ContentPage
     }
     private void BioTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (Bio.Text != "")
-        {
-            if (!CheckIfTextIsOnlyLettersAndSpaces(Bio.Text))
-            {
-                bio = false;
-                lblBio.Text = "Bio mag alleen letters bevatten";
-                lblBio.TextColor = ErrorColor;
-            }
-            else
-            {
-                bio = true;
-                lblBio.Text = "Bio";
-                lblBio.TextColor = default;
-                Bio.Text = Bio.Text.First().ToString().ToUpper() + Bio.Text[1..].ToLower();
-            }
-        }
+        
     }
     private void EducationTextChanged(object sender, TextChangedEventArgs e)
     {
@@ -246,6 +229,9 @@ public partial class ProfileChange : ContentPage
         foreach (char c in text)
         {
             if (!char.IsLetter(c) && c != ' ' && c != '-')
+            {
+                return false;
+            }
             {
                 return false;
             }
@@ -328,7 +314,7 @@ public partial class ProfileChange : ContentPage
             InterestSelection.Title = "Interesse";
             InterestSelection.TitleColor = default;
             var interest = ListInterests.SelectedItem.ToString();
-            Database.RemoveInterestOfUser(testuser.email, interest);
+            Database.RemoveInterestOfUser(Authentication._currentUser.email, interest);
             interesses.Remove(interest);
             ListInterests.ItemsSource = null;
             ListInterests.ItemsSource = interesses;

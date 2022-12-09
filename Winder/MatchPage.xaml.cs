@@ -23,12 +23,12 @@ public partial class MatchPage : ContentPage {
         verticalStackLayout.Spacing = 10;
         //Images
         if (_profileQueue.Count == 0) {
-            if(_authentication._currentUser != null) {
+            if(Authentication._currentUser != null) {
             //if(_authentication._currentUser.profilePicture.Height != 0 ) {
 
                 var profileImage = new Image
                 {
-                    Source = ImageSource.FromResource(_authentication._currentUser.profilePicture.ToString()),
+                    Source = ImageSource.FromResource(Authentication._currentUser.profilePicture.ToString()),
                     Aspect = Aspect.AspectFit,
                     WidthRequest = 800,
                     HeightRequest = 800
@@ -141,7 +141,7 @@ public partial class MatchPage : ContentPage {
             
             likeButton.Clicked += (sender, args) => {
                 CheckIfQueueNeedsMoreProfiles();
-                string emailCurrentUser = _authentication._currentUser.email;
+                string emailCurrentUser = Authentication._currentUser.email;
                 string emailLikedUser = _currentProfile.user.email;
                 if (_database.CheckMatch(emailCurrentUser, emailLikedUser))
                 {
@@ -159,7 +159,7 @@ public partial class MatchPage : ContentPage {
             dislikeButton.Clicked += (sender, args) =>
             {
                 CheckIfQueueNeedsMoreProfiles();
-                string emailCurrentUser = _authentication._currentUser.email;
+                string emailCurrentUser = Authentication._currentUser.email;
                 string emaildDislikedUser = _currentProfile.user.email;
 
                 _database.NewDislike(emailCurrentUser, emaildDislikedUser);
@@ -181,7 +181,7 @@ public partial class MatchPage : ContentPage {
     }
     
     private async Task GetProfiles() {
-        Profile[] profiles =  _database.Get5Profiles(_authentication._currentUser.email);
+        Profile[] profiles =  _database.Get5Profiles(Authentication._currentUser.email);
         foreach (var profile in profiles) {
             _profileQueue.Enqueue(profile);
         }

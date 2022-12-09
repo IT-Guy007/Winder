@@ -4,7 +4,7 @@
              Title="Profiel"
              BackgroundColor="#CC415F"
              >
-    <HorizontalStackLayout BackgroundColor="RosyBrown" WidthRequest="400" Spacing="10">
+    <HorizontalStackLayout BackgroundColor="RosyBrown" WidthRequest="500" Spacing="10">
         <VerticalStackLayout VerticalOptions="StartAndExpand" Spacing="5" Margin="90,0,0,0">
             <Label 
             x:Name="lblFirstname"
@@ -54,12 +54,11 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center"
             />
-            <Entry x:Name="Bio"
-               MaxLength="150"
-               Placeholder=""
-               HorizontalOptions="Center"
-               TextChanged="BioTextChanged"
-               />
+            <Editor x:Name="Bio"
+                    TextChanged="BioTextChanged"
+                    MaxLength="150"
+                    HeightRequest="100"
+                    />
             <Label 
             x:Name="lblEducation"
             Text="Opleiding"
@@ -111,7 +110,7 @@
             <Button x:Name="ChangeProfile"             
                 Text="Opslaan"
                 BackgroundColor="Salmon"
-                Margin="-90,0,0,0"
+                WidthRequest="200"
                 Clicked="ChangeUserData"/>
         </VerticalStackLayout>
     </HorizontalStackLayout>
