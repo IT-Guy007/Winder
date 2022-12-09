@@ -647,10 +647,10 @@ public class Database {
         //The users(email) to get
         List<string> usersToRetrief = new List<string>();
         usersToRetrief.Add("sghjkf@student.windesheim.nl");
-        usersToRetrief.Add("s1165707@student.windesheim.nl");
+        usersToRetrief.Add("s891237645@student.windesheim.nl");
 
         //Results
-        Profile[] profiles = new Profile[5];
+        Profile[] profiles = new Profile[usersToRetrief.Count()];
         
         //Retrieving
         for(int i = 0;i != usersToRetrief.Count();i++) {

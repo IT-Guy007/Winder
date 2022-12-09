@@ -1,4 +1,6 @@
 using DataModel;
+using System.Drawing;
+using static System.Drawing.Graphics;
 namespace MAUI;
 
 public partial class MatchPage : ContentPage {
@@ -41,23 +43,23 @@ public partial class MatchPage : ContentPage {
 
                     MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
                     
-                    var profileImage = new Image
+                    var profileImage = new Microsoft.Maui.Controls.Image
                     {
                         Source = ImageSource.FromStream(() => ms),
                         Aspect = Aspect.AspectFit,
                         WidthRequest = 800,
                         HeightRequest = 800,
-                        BackgroundColor = Color.FromArgb("#ffffff")
+                        BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#ffffff")
                     };
                     verticalStackLayout.Add(profileImage);
                 } else {
-                    var profileImage = new Image
+                    var profileImage = new Microsoft.Maui.Controls.Image
                     {
                         Source = "noprofile.jpg",
                         Aspect = Aspect.AspectFit,
                         WidthRequest = 800,
                         HeightRequest = 800,
-                        BackgroundColor = Color.FromArgb("#ffffff")
+                        BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#ffffff")
                     };
                     verticalStackLayout.Add(profileImage);
                 }
@@ -108,7 +110,6 @@ public partial class MatchPage : ContentPage {
             var name = new Label {Text = Authentication._currentProfile.user.firstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start};
             name.SetBinding(Label.TextProperty, new Binding() { Source = Authentication._currentProfile.user.firstName });
 
-            
             name.FontSize = 20;
             name.HorizontalOptions = LayoutOptions.Start;
 
@@ -158,7 +159,7 @@ public partial class MatchPage : ContentPage {
 
             //Data binding
             var locationBinding = new Binding() { Source = Authentication._currentProfile.user.school };
-            gender.SetBinding(Label.TextProperty, locationBinding);
+            location.SetBinding(Label.TextProperty, locationBinding);
 
             //Add to Stack
             locationStackLayout.Add(locationlbl);
@@ -173,7 +174,7 @@ public partial class MatchPage : ContentPage {
 
             //Data binding
             var educationbinding = new Binding() { Source = Authentication._currentProfile.user.major };
-            gender.SetBinding(Label.TextProperty, educationbinding);
+            education.SetBinding(Label.TextProperty, educationbinding);
 
             //Add to stack
             educationStackLayout.Add(educationlbl);
@@ -239,7 +240,7 @@ public partial class MatchPage : ContentPage {
         verticalStackLayout.Add(imageLayout);
         verticalStackLayout.Add(buttonStackLayout);
 
-        verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
+        verticalStackLayout.BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
 ;
     }
@@ -247,7 +248,10 @@ public partial class MatchPage : ContentPage {
     private async Task GetProfiles() {
         Profile[] profiles =  _database.Get5Profiles(Authentication._currentUser.email);
         foreach (var profile in profiles) {
-            Authentication._profileQueue.Enqueue(profile);
+            if (profile != null)
+            {
+                Authentication._profileQueue.Enqueue(profile);
+            }
         }
     }
     
@@ -260,7 +264,6 @@ public partial class MatchPage : ContentPage {
     private void NextProfile() {
         if(Authentication._profileQueue.Count != 0) {
             Authentication.selectedImage = 0;
-            Authentication._currentProfile = Authentication._profileQueue.Dequeue();
             Navigation.PushAsync(new MatchPage());
             
             
