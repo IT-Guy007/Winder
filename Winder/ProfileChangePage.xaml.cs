@@ -25,7 +25,7 @@ public partial class ProfileChange : ContentPage
         testuser = Database.GetUserFromDatabase("s1416890@student.windesheim.nl");
         LoadUserFromDatabaseInForm();
         InterestSelection.ItemsSource = Database.GetInterestsFromDataBase();
-        interesses = convertStringArrayToList(Database.LoadInterestsFromDatabaseInListInteresses(testuser.email));
+        interesses = Database.LoadInterestsFromDatabaseInListInteresses(testuser.email);
         ListInterests.ItemsSource = interesses;
         ChangeSizeEntriesAndLabels(9);
     }

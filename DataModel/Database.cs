@@ -402,9 +402,9 @@ public class Database {
         }
     }
 
-    public string[] LoadInterestsFromDatabaseInListInteresses(string email)
+    public List<string> LoadInterestsFromDatabaseInListInteresses(string email)
     {
-        string[] strings = new string[10];
+        List<string> interest = new List<string>();
         OpenConnection();
         string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
         SqlCommand command = new SqlCommand(sql, connection);
@@ -415,7 +415,7 @@ public class Database {
             while (reader.Read())
             {
                 var iets1 = reader["interest"] as string;
-                strings.Append(iets1);
+                interests.Add(iets1);
             }
         }
         catch (SqlException e)
@@ -423,7 +423,7 @@ public class Database {
             CloseConnection();
         }
         CloseConnection();
-        return strings;
+        return interests;
     }
     public bool UpdateUserInDatabaseWithNewUserData(User user) {
         try {
