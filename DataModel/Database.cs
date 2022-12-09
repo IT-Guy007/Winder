@@ -773,11 +773,13 @@ public class Database {
         userswithcommoninterests = userswithcommoninterests.OrderBy(x => rnd.Next()).ToArray();     // shuffle the arrays randomly instead of how they are sorted in the database
         restofusers = restofusers.OrderBy(x => rnd.Next()).ToArray();
 
-        //this is needed so the users with the most interests in common are picked first
+        userswithcommoninterests = userswithcommoninterests.GroupBy(x => x).ToList().OrderByDescending(g => g.Count()).Select(g => g.Key).ToArray();
+
+        /*//this is needed so the users with the most interests in common are picked first
         string[] uniqueuserswithcommoninterests = userswithcommoninterests.Distinct().ToArray();            // gets all the unique values
-        string[] duplicateusers = userswithcommoninterests.Except(uniqueuserswithcommoninterests).ToArray();    // gets all the duplicates
+        string[] duplicateusers = userswithcommoninterests.GroupBy(x => x).Where(g => g.Count() > 1).Select(g => g.Key).ToArray();    // gets all the duplicates
         userswithcommoninterests = duplicateusers.Concat(uniqueuserswithcommoninterests).ToArray();     // sorts so the duplicates are first
-        userswithcommoninterests = userswithcommoninterests.Distinct().ToArray();                       // removes the duplicates
+        userswithcommoninterests = userswithcommoninterests.Distinct().ToArray();                       // removes the duplicates*/
 
 
         for (int i = 0; i < 5; i++)
@@ -829,17 +831,16 @@ public class Database {
     public Profile[] Get5Profiles(string email) {
         //The algorithm that determines who to get
 
-        
-
-
         //The users(email) to get
         string[] usersToRetrief = new string[5];
+
+        usersToRetrief = AlgorithmForSwiping(email);
 
         //Results
         Profile[] profiles = new Profile[5];
         
         //Retrieving
-        for(int i = 0;i != 4;i++) {
+        for(int i = 0; i < usersToRetrief.Length; i++) {
             
             //Get the user
             User user = GetUserFromDatabase(usersToRetrief[i]);
