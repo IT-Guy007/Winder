@@ -11,25 +11,48 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="Fixed currentUser">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387/storage_v2/_src_/database/master.YiqNvw/schema/dbo.sYMBAA.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/1a885be1-5a4a-4320-96d6-8c34a9e619ca.vsidx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/1f37efcb-e648-46a4-b144-e074c314d26f.vsidx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/8a706107-beca-4778-ab55-c5a9f63147f4.vsidx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/b3cdaa63-57a3-4a09-9635-47d2365f66f7.vsidx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Profile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Profile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/RegisterPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/RegisterPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/R.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/Resource.designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/Winder.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/Winder.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/Winder.csproj.CopyComplete" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/Winder.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/Winder.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/Winder.runtimeconfig.json.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/XamlC.stamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/android-arm/.Winder.csproj.AssemblyReference.cache.icloud" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/android-x86/.Winder.csproj.AssemblyReference.cache.icloud" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/mauiimage.inputs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/res.flag" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/resolvedassemblies.hash" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-android/static.flag" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-maccatalyst/maccatalyst-x64/AppManifest.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-maccatalyst/maccatalyst-x64/PublishOutputs.7c4c2d9161.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-maccatalyst/maccatalyst-x64/Winder.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-maccatalyst/maccatalyst-x64/Winder.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-maccatalyst/maccatalyst-x64/Winder.GlobalUsings.g.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-maccatalyst/maccatalyst-x64/Winder.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-maccatalyst/maccatalyst-x64/Winder.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-maccatalyst/maccatalyst-x64/custom-linker-options.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-maccatalyst/maccatalyst-x64/mauiimage.inputs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Debug 2/net7.0-maccatalyst/maccatalyst-x64/mtouch-symbols.list" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/obj 2/Winder.csproj.nuget.g.props" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/DataModel/Database.cs" root0="FORCE_HIGHLIGHTING" />
