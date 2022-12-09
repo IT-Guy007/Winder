@@ -1,5 +1,7 @@
 ﻿
 using DataModel;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.PlatformConfiguration.TizenSpecific;
 using System.ComponentModel.DataAnnotations;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -38,10 +40,15 @@ public partial class ProfileChange : ContentPage
             Birthdate.Date = Authentication._currentUser.birthDay;
             Bio.Placeholder = Authentication._currentUser.bio;
             Education.Placeholder = Authentication._currentUser.major;
+            MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
+            ProfileImage.Source = ImageSource.FromStream(() => ms);
             Gender.SelectedIndex = GetGenderFromUser();
             Preference.SelectedIndex = GetPreferenceFromUser();
         }
     }
+
+
+
     //Gets the preference of user
     private int GetPreferenceFromUser()
     {
@@ -111,7 +118,7 @@ public partial class ProfileChange : ContentPage
         if (Authentication._currentUser.birthDay != Birthdate.Date) Authentication._currentUser.birthDay = Birthdate.Date;
         if (Authentication._currentUser.bio != Bio.Text && Bio.Text != null && Bio.Text != "") Authentication._currentUser.bio = Bio.Text;
         if (Authentication._currentUser.gender != Gender.SelectedItem.ToString()) Authentication._currentUser.gender = Gender.SelectedItem.ToString();
-        if (Authentication._currentUser.preference != Preference.SelectedItem.ToString()) Authentication._currentUser.preference = Preference.SelectedItem.ToString();   
+        if (Authentication._currentUser.preference != Preference.SelectedItem.ToString()) Authentication._currentUser.preference = Preference.SelectedItem.ToString();
     }
     //Checks if the firstname input is valid
     private void FirstnameTextChanged(object sender, TextChangedEventArgs e)
@@ -236,8 +243,8 @@ public partial class ProfileChange : ContentPage
             Stream stream = await image.OpenReadAsync();
             BinaryReader binary = new BinaryReader(fileStream);
             imageArr = binary.ReadBytes((int)fileStream.Length);
+            Authentication._currentUser.profilePicture = imageArr;
             ProfileImage.Source = ImageSource.FromStream(() => stream);
-
         }
         catch (Exception ex)
         {
@@ -320,18 +327,18 @@ public partial class ProfileChange : ContentPage
     {
         if (Bio.Text != "")
         {
-                if (!CheckIfTextIsOnlyLettersAndSpaces(Bio.Text))
-                {
-                    bio = false;
-                    lblBio.Text = "Bio mag alleen letters bevatten";
-                    lblBio.TextColor = ErrorColor;
-                }
-                else
-                {
-                    bio = true;
-                    lblBio.Text = "Bio";
-                    lblBio.TextColor = default;
-                }
+            if (!CheckIfTextIsOnlyLettersAndSpaces(Bio.Text))
+            {
+                bio = false;
+                lblBio.Text = "Bio mag alleen letters bevatten";
+                lblBio.TextColor = ErrorColor;
+            }
+            else
+            {
+                bio = true;
+                lblBio.Text = "Bio";
+                lblBio.TextColor = default;
+            }
         }
     }
 }

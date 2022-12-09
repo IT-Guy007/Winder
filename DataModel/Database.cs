@@ -66,7 +66,7 @@ public class Database {
                 var school = reader["location"] as string;
                 var major = reader["education"] as string;
                 Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
-                    preferences, email, "", gender ,VarBinaryToImage(profilePicture), bio,school,major);
+                    preferences, email, "", gender ,profilePicture, bio,school,major);
 
                 }
 
@@ -350,7 +350,7 @@ public class Database {
                 byte[] img = (byte[])(reader["profilePicture"]);
                 
                 DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
-                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, VarBinaryToImage(img), bio, school, major);
+                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, img, bio, school, major);
             }
         }
         catch (SqlException e)
@@ -432,7 +432,7 @@ public class Database {
             
             //Create query
             SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
-            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname,education = @Education ,birthday = @birthday, bio = @bio " +
+            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, education = @Education,birthday = @birthday, bio = @bio, profilePicture = @profilepicture " +
             "where email = @Email", connection);
             query.Parameters.AddWithValue("@firstname", user.firstName);
             query.Parameters.AddWithValue("@middlename", user.middleName);
@@ -442,6 +442,7 @@ public class Database {
             query.Parameters.AddWithValue("@Email", user.email);
             query.Parameters.AddWithValue("@bio", user.bio);
             query.Parameters.AddWithValue("@Education", user.major);
+            query.Parameters.AddWithValue("@profilePicture", user.profilePicture);
             //Execute query
             query.ExecuteNonQuery();
             //Close connection
