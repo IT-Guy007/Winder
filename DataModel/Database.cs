@@ -3,9 +3,12 @@ using Microsoft.Maui.Controls;
 
 namespace DataModel;
 
+using Microsoft.Maui.Controls.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Reflection;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 public class Database {
@@ -627,6 +630,7 @@ public class Database {
 
         return result;
     }
+    
 
     public string[] GetUsersWhoLikedYou(String email)
     {
@@ -662,7 +666,45 @@ public class Database {
         return users.ToArray();
     }
 
+    public string[] GetRestOfUsers(String email)
+    {
+        List<string> userslist = new List<string>();
 
+        string[] userswholikedyou = GetUsersWhoLikedYou(email);
+        string[] userswithcommoninterests = GetUsersWithCommonInterest(email);
+        
+        OpenConnection();
+
+        SqlCommand command = new SqlCommand("SELECT email FROM Winder.Winder.[User] WHERE email != @email " +
+        "AND email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + // selects the users which have not disliked the given user
+        "AND email not in (select likedPerson from Winder.Winder.Liked where person = @email and liked = 0) " +// selects the users that the given user had not disliked
+        "AND email not in (select person1 from Winder.Winder.Match where person2 = @email) " +
+        "AND email not in (select person2 from Winder.Winder.Match where person1 = @email)", connection);          // selects the users that the given user has not already matched with 
+        command.Parameters.AddWithValue("@email", email);
+
+        try
+        {
+            SqlDataReader reader = command.ExecuteReader(); // execute het command
+
+            while (reader.Read())
+            {
+                string person = reader["email"] as string ?? "Unknown";
+                userslist.Add(person);   // zet elk persoon in de users 
+            }
+            CloseConnection(); 
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            CloseConnection();
+        }
+        
+        string[] users = userslist.ToArray();
+        users = users.Except(userswholikedyou).ToArray();
+        users = users.Except(userswithcommoninterests).ToArray();  // makes it so the rest of users does not contain the users that liked you or have common interests because we have different methods for them
+
+        return users;
+    }
 
     public string[] GetUsersWithCommonInterest(String email)
     {
@@ -672,13 +714,15 @@ public class Database {
 
 
         string query = "SELECT UID FROM Winder.Winder.UserHasInterest WHERE UID != @email AND (interest = @interest"; // selects the users which have a common interest
-        
+
         for (int i = 1; i < interestsgivenuser.Count; i++)
         {
             query = query + " or interest =" + " '" + interestsgivenuser[i] + "' ";
         }
         query = query + ") AND UID not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + // selects the users which have not disliked the given user
-                        "and UID not in (select likedPerson from Winder.Winder.Liked where person = @email and liked = 0)";     // selects the users that the given user had not disliked
+                        "and UID not in (select likedPerson from Winder.Winder.Liked where person = @email and liked = 0)" +// selects the users that the given user had not disliked
+                        "and UID not in (select person1 from Winder.Winder.Match where person2 = @email)" +
+                        "and UID not in (select person2 from Winder.Winder.Match where person1 = @email)";          // selects the users that the given user has not matched with
 
         OpenConnection();
 
@@ -686,8 +730,8 @@ public class Database {
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@email", email);
         command.Parameters.AddWithValue("@interest", interestsgivenuser[0]);
-        
-       
+
+
         try
         {
             SqlDataReader reader = command.ExecuteReader(); // execute het command

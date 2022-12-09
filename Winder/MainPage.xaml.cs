@@ -14,7 +14,8 @@ public partial class MainPage : ContentPage {
 
     private void LoginButton(object sender, EventArgs e) {
         Database b = new Database();
-        b.GetUsersWhoLikedYou("s12@student.windesheim.nl");
+        
+        b.GetRestOfUsers("s12@student.windesheim.nl");
         Navigation.PushAsync(new LoginPage());
     }
 }
