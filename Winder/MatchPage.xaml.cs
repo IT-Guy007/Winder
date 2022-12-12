@@ -4,6 +4,7 @@ using static System.Drawing.Graphics;
 namespace MAUI;
 
 public partial class MatchPage : ContentPage {
+
     private Database _database = new Database();
 
     
@@ -17,7 +18,7 @@ public partial class MatchPage : ContentPage {
         //Main stacklayout
         StackLayout verticalStackLayout = new StackLayout {Orientation = StackOrientation.Vertical,VerticalOptions = LayoutOptions.Fill};
         verticalStackLayout.Spacing = 10;
-
+        
         //The stack with left the image and right the info.
         StackLayout imageLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
         imageLayout.Spacing = 10;
@@ -118,7 +119,7 @@ public partial class MatchPage : ContentPage {
             nameStackLayout.Add(name);
             infoStackLayout.Add(nameStackLayout);
             
-            
+
             //Gender
             StackLayout genderStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             var genderlbl = new Label { Text = "Geslacht: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
@@ -129,6 +130,7 @@ public partial class MatchPage : ContentPage {
             gender.SetBinding(Label.TextProperty,genderBinding);
 
             //Add to Stack
+
             genderStackLayout.Add(genderlbl);
             genderStackLayout.Add(gender);
             infoStackLayout.Add(genderStackLayout);
@@ -162,6 +164,7 @@ public partial class MatchPage : ContentPage {
             location.SetBinding(Label.TextProperty, locationBinding);
 
             //Add to Stack
+
             locationStackLayout.Add(locationlbl);
             locationStackLayout.Add(location);
             infoStackLayout.Add(locationStackLayout);
@@ -180,7 +183,6 @@ public partial class MatchPage : ContentPage {
             educationStackLayout.Add(educationlbl);
             educationStackLayout.Add(education);
             infoStackLayout.Add(educationStackLayout);
-
 
             //Data binding
             var bioBinding = new Binding() { Source = Authentication._currentProfile.user.bio };
@@ -279,4 +281,5 @@ public partial class MatchPage : ContentPage {
     private async void MatchPopup() {
         await DisplayAlert("Match", "You have a match", "OK");
     }
+
 }
