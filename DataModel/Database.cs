@@ -1100,18 +1100,15 @@ public class Database {
         //The algorithm that determines who to get
 
         //The users(email) to get
-        string[] usersToRetrief = new string[5];
-        usersToRetrief[0] = "sghjkf@student.windesheim.nl";
+        List<string> usersToRetrief = new List<string>();
 
-        // usersToRetrief = AlgorithmForSwiping(email); 
+        usersToRetrief = AlgorithmForSwiping(email); 
 
         //Results
-        Profile[] profiles = new Profile[5];
+        Profile[] profiles = new Profile[usersToRetrief.Count()];
         
         //Retrieving
-        for(int i = 0;i != 1;i++) {
 
-            
             //Get the user
             User user = GetUserFromDatabase(usersToRetrief[i]);
 
@@ -1124,7 +1121,6 @@ public class Database {
             
             profiles[i] = profile;
         }
-        
         return profiles;
     }
 

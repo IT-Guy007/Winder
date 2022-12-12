@@ -1,23 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using System.Windows.Input; 
-
 using DataModel;
-using Microsoft.Maui;
-
-using Microsoft.Maui.Controls;
+using System.Drawing;
+using static System.Drawing.Graphics;
 namespace MAUI;
 
 public partial class MatchPage : ContentPage {
 
     private Database _database = new Database();
 
-    private Queue<Profile> _profileQueue = new Queue<Profile>();
-    private Profile _currentProfile;
-    private Image[] _images = new Image[10];
-    private int selectedImage = 0;
     
     public MatchPage() {
 
@@ -40,7 +29,7 @@ public partial class MatchPage : ContentPage {
         
 
         try {
-            _currentProfile = _profileQueue.Dequeue();
+            Authentication._currentProfile = Authentication._profileQueue.Dequeue();
         } catch (Exception e) {
             //No profiles found
             Console.WriteLine("Couldn't find a new profile");
@@ -48,22 +37,33 @@ public partial class MatchPage : ContentPage {
         }
 
         //Images
-        if (_currentProfile == null) {
+        if (Authentication._currentProfile == null) {
             
             if(Authentication._currentUser.profilePicture != null ) {
+                if (Authentication._currentUser.profilePicture.Length > 1000) {
 
-                MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
-
-                var profileImage = new Image {
-
-                    Source = ImageSource.FromStream(() => ms),
-                    Aspect = Aspect.AspectFit,
-                    WidthRequest = 800,
-                    HeightRequest = 800,
-                    BackgroundColor = Color.FromArgb("#ffffff")
-                };
-                verticalStackLayout.Add(profileImage);
-
+                    MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
+                    
+                    var profileImage = new Microsoft.Maui.Controls.Image
+                    {
+                        Source = ImageSource.FromStream(() => ms),
+                        Aspect = Aspect.AspectFit,
+                        WidthRequest = 800,
+                        HeightRequest = 800,
+                        BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#ffffff")
+                    };
+                    verticalStackLayout.Add(profileImage);
+                } else {
+                    var profileImage = new Microsoft.Maui.Controls.Image
+                    {
+                        Source = "noprofile.jpg",
+                        Aspect = Aspect.AspectFit,
+                        WidthRequest = 800,
+                        HeightRequest = 800,
+                        BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#ffffff")
+                    };
+                    verticalStackLayout.Add(profileImage);
+                }
             }
 
             var label = new Label { Text = "No more profiles to match with for now", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
@@ -71,20 +71,15 @@ public partial class MatchPage : ContentPage {
             
         } else {
             StackLayout infoStackLayout = new StackLayout{Orientation = StackOrientation.Vertical};
-            if(_currentProfile == null) {
-                _currentProfile = _profileQueue.Dequeue();
-            }
 
             //Image carousel
-
-            //placeholder als geen image
             var currentImage = new ImageButton();
 
-            if (_currentProfile == null) {
+            if (Authentication._currentProfile == null) {
                 currentImage.Source = ImageSource.FromFile("noprofile.jpg");
 
             } else {
-                MemoryStream ms = new MemoryStream(_currentProfile.profile_images[0]);
+                MemoryStream ms = new MemoryStream(Authentication._currentProfile.profile_images[Authentication.selectedImage]);
                 currentImage.Source = ImageSource.FromStream(() => ms);
 
                 //Data binding
@@ -95,11 +90,11 @@ public partial class MatchPage : ContentPage {
             currentImage.HeightRequest = 600;
 
             currentImage.Clicked += (sender, args) => {
-                if(_currentProfile != null) {
-                    if (selectedImage < _currentProfile.profile_images.Length) {
-                        selectedImage++;
+                if(Authentication._currentProfile != null) {
+                    if (Authentication.selectedImage < Authentication._currentProfile.profile_images.Length) {
+                        Authentication.selectedImage++;
                     } else {
-                        selectedImage = 0;
+                        Authentication.selectedImage = 0;
                     }
                 }
             };
@@ -112,10 +107,10 @@ public partial class MatchPage : ContentPage {
             var namelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start};
 
             //Binding
-            var name = new Label {Text = _currentProfile.user.firstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start};
 
-            name.SetBinding(Label.TextProperty, new Binding() { Source = _currentProfile.user.firstName });
-            
+            var name = new Label {Text = Authentication._currentProfile.user.firstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start};
+            name.SetBinding(Label.TextProperty, new Binding() { Source = Authentication._currentProfile.user.firstName });
+
             name.FontSize = 20;
             name.HorizontalOptions = LayoutOptions.Start;
 
@@ -128,10 +123,10 @@ public partial class MatchPage : ContentPage {
             //Gender
             StackLayout genderStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             var genderlbl = new Label { Text = "Geslacht: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var gender = new Label {Text = _currentProfile.user.gender, FontSize = 20, HorizontalOptions = LayoutOptions.Start};
+            var gender = new Label {Text = Authentication._currentProfile.user.gender, FontSize = 20, HorizontalOptions = LayoutOptions.Start};
             
             //Data binding
-            var genderBinding = new Binding() {Source = _currentProfile.user.gender};
+            var genderBinding = new Binding() {Source = Authentication._currentProfile.user.gender};
             gender.SetBinding(Label.TextProperty,genderBinding);
 
             //Add to Stack
@@ -144,7 +139,7 @@ public partial class MatchPage : ContentPage {
             //Age
             StackLayout ageStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
             var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };
-            var birthday = int.Parse(_currentProfile.user.birthDay.ToString("yyyyMMdd"));
+            var birthday = int.Parse(Authentication._currentProfile.user.birthDay.ToString("yyyyMMdd"));
             var today = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
             var age = new Label { Text = ((today - birthday) /1000).ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
@@ -162,11 +157,11 @@ public partial class MatchPage : ContentPage {
             //Location
             StackLayout locationStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
             var locationlbl = new Label { Text = "Windesheim locatie: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };
-            var location = new Label { Text = _currentProfile.user.school , FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var location = new Label { Text = Authentication._currentProfile.user.school , FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Data binding
-            var locationBinding = new Binding() { Source = _currentProfile.user.school };
-            gender.SetBinding(Label.TextProperty, locationBinding);
+            var locationBinding = new Binding() { Source = Authentication._currentProfile.user.school };
+            location.SetBinding(Label.TextProperty, locationBinding);
 
             //Add to Stack
 
@@ -178,11 +173,11 @@ public partial class MatchPage : ContentPage {
             //Education
             StackLayout educationStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
             var educationlbl = new Label { Text = "Opleiding: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start  };
-            var education = new Label { Text = _currentProfile.user.major , FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var education = new Label { Text = Authentication._currentProfile.user.major , FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Data binding
-            var educationbinding = new Binding() { Source = _currentProfile.user.major };
-            gender.SetBinding(Label.TextProperty, educationbinding);
+            var educationbinding = new Binding() { Source = Authentication._currentProfile.user.major };
+            education.SetBinding(Label.TextProperty, educationbinding);
 
             //Add to stack
             educationStackLayout.Add(educationlbl);
@@ -190,7 +185,7 @@ public partial class MatchPage : ContentPage {
             infoStackLayout.Add(educationStackLayout);
 
             //Data binding
-            var bioBinding = new Binding() { Source = _currentProfile.user.bio };
+            var bioBinding = new Binding() { Source = Authentication._currentProfile.user.bio };
 
             //Bio
             StackLayout bioStackLayout = new StackLayout{Orientation = StackOrientation.Horizontal};
@@ -213,9 +208,9 @@ public partial class MatchPage : ContentPage {
             imageLayout.Add(infoStackLayout);
 
             likeButton.Clicked += (sender, args) => {
-                if(_currentProfile != null) {
+                if(Authentication._currentProfile != null) {
                     string emailCurrentUser = Authentication._currentUser.email;
-                    string emailLikedUser = _currentProfile.user.email;
+                    string emailLikedUser = Authentication._currentProfile.user.email;
                     //krijg een pop-up dat je een match hebt
                     if (_database.CheckMatch(emailCurrentUser, emailLikedUser)){
                         _database.NewMatch(emailLikedUser, emailCurrentUser);
@@ -230,9 +225,9 @@ public partial class MatchPage : ContentPage {
                 }
             };
             dislikeButton.Clicked += (sender, args) => {
-                if(_currentProfile != null) {
+                if(Authentication._currentProfile != null) {
                     string emailCurrentUser = Authentication._currentUser.email;
-                    string emaildDislikedUser = _currentProfile.user.email;
+                    string emaildDislikedUser = Authentication._currentProfile.user.email;
                     _database.NewDislike(emailCurrentUser, emaildDislikedUser);
                 }
                 CheckIfQueueNeedsMoreProfiles();
@@ -247,7 +242,7 @@ public partial class MatchPage : ContentPage {
         verticalStackLayout.Add(imageLayout);
         verticalStackLayout.Add(buttonStackLayout);
 
-        verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
+        verticalStackLayout.BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
 ;
     }
@@ -255,25 +250,30 @@ public partial class MatchPage : ContentPage {
     private async Task GetProfiles() {
         Profile[] profiles =  _database.Get5Profiles(Authentication._currentUser.email);
         foreach (var profile in profiles) {
-            _profileQueue.Enqueue(profile);
+            if (profile != null)
+            {
+                Authentication._profileQueue.Enqueue(profile);
+            }
         }
     }
     
     private async void CheckIfQueueNeedsMoreProfiles() {
-        if(_profileQueue.Count < 5) {
+        if(Authentication._profileQueue.Count < 5) {
             await GetProfiles();
-        }
-        if (_currentProfile != null)
-        {
-            _currentProfile = _profileQueue.Dequeue();
         }
     }
 
     private void NextProfile() {
-        if(_profileQueue.Count != 0) {
-            _currentProfile = _profileQueue.Dequeue();
+        if(Authentication._profileQueue.Count != 0) {
+            Authentication.selectedImage = 0;
+            Navigation.PushAsync(new MatchPage());
+            
+            
+            //Works better but doesn't work yet
+            //Application.Current.Dispatcher.Dispatch(() => Authentication._currentProfile = Authentication._profileQueue.Dequeue());
+
         } else {
-            _currentProfile = null;
+            Authentication._currentProfile = null;
         }
     }
 
