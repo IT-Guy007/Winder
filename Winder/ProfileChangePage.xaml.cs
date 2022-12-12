@@ -214,6 +214,9 @@ public partial class ProfileChange : ContentPage
             case "matchpage":
                 Navigation.PushAsync(new MatchPage());
                 break;
+            case "settingspage":
+                Navigation.PushAsync(new Instellingen());
+                break;
         }
     }
 
@@ -226,9 +229,16 @@ public partial class ProfileChange : ContentPage
 
     private void matchButton_Clicked(object sender, EventArgs e)
     {
-        // MatchPage matchpage = new MatchPage();
-        // matchpage.originPage = pageName;
+        MatchPage matchpage = new MatchPage();
+        matchpage.originPage = pageName;
         Navigation.PushAsync(new MatchPage());
+    }
+
+    private void Settings_Clicked(object sender, EventArgs e)
+    {
+        Instellingen settings = new Instellingen();
+        settings.originPage = pageName;
+        Navigation.PushAsync(settings); 
     }
 
     //Checks if input has spaces, letters or dashes
@@ -373,4 +383,6 @@ public partial class ProfileChange : ContentPage
             }
         }
     }
+
+    
 }

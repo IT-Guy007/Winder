@@ -9,7 +9,8 @@ public partial class Instellingen : ContentPage
     Database database = new Database();
     Authentication _authentication = new Authentication();
     string email = Authentication._currentUser.email;
-
+    private const string pageName = "settingspage";
+    public string originPage;
     public Instellingen()
     {
         InitializeComponent();
@@ -159,5 +160,42 @@ public partial class Instellingen : ContentPage
         var popup = new editPasswordPopUp();
         this.ShowPopup(popup);
     }
-    
+
+    private void MyProfile_Clicked(object sender, EventArgs e)
+    {
+        ProfileChange myProfile = new ProfileChange();
+        
+        myProfile.originPage = pageName;
+        Navigation.PushAsync(myProfile);
+
+    }
+
+    private void Backbutton_Clicked(object sender, EventArgs e)
+    {
+        switch (originPage)
+        {
+            case "matchpage":
+                MatchPage matchPage = new MatchPage();
+                matchPage.backButtonVisible = true;
+                Navigation.PushAsync(new MatchPage());
+                break;
+            case "profilepage":
+                Navigation.PushAsync(new ProfileChange());
+                break;
+        }
+
+    }
+
+    private void matchesbutton_Clicked(object sender, EventArgs e)
+    {
+
+    }
+
+    private void matchPage_Clicked(object sender, EventArgs e)
+    {
+        MatchPage matchPage = new MatchPage();
+        matchPage.originPage= pageName;
+        Navigation.PushAsync(matchPage);
+
+    }
 }

@@ -3,6 +3,8 @@ using DataModel;
 using Microsoft.Maui.Layouts;
 using System.Security.Cryptography.X509Certificates;
 using Winder;
+using System.IO;
+using Microsoft.Maui.Graphics.Text;
 
 namespace MAUI;
 
@@ -14,7 +16,7 @@ public partial class MatchPage : ContentPage
     public string originPage;
     public const string pageName = "matchpage";
     public const string backbuttonImage = "backbutton.png";
-    
+    public bool backButtonVisible = false;
 
     public MatchPage() {
         //Get profiles to swipe
@@ -52,6 +54,11 @@ public partial class MatchPage : ContentPage
         backButton.CornerRadius = 50;
         backButton.Aspect = Aspect.AspectFill;
         backButton.IsVisible = false;
+        if (backButtonVisible)
+        {
+            backButton.IsVisible = true;
+        }
+        backButton.Clicked += BackButton_Clicked;
         gridLayout.Add(backButton,0);
         
         
@@ -61,6 +68,7 @@ public partial class MatchPage : ContentPage
         matchesButton.WidthRequest = 100;
         matchesButton.HeightRequest = 50;
         matchesButton.IsVisible = true;
+        matchesButton.TextColor = Microsoft.Maui.Graphics.Color.FromRgb(0, 0, 0);
         matchesButton.Clicked += MatchesButton_Clicked;
         matchesButton.HorizontalOptions = LayoutOptions.End;
 
@@ -70,6 +78,7 @@ public partial class MatchPage : ContentPage
         var myProfile = new Button();
         myProfile.Text = "Mijn profiel";
         myProfile.HeightRequest = 50;
+        myProfile.TextColor = Microsoft.Maui.Graphics.Color.FromRgb(0, 0, 0);
         myProfile.WidthRequest = 110;
         myProfile.Clicked += MyProfile_Clicked;
         myProfile.HorizontalOptions = LayoutOptions.End;
@@ -77,9 +86,11 @@ public partial class MatchPage : ContentPage
         //settings button
         var instellingen = new Button();
         instellingen.Text = "Instellingen";
+        instellingen.TextColor = Microsoft.Maui.Graphics.Color.FromRgb(0, 0, 0);
         instellingen.HeightRequest = 50;
         instellingen.WidthRequest = 115;
         instellingen.HorizontalOptions = LayoutOptions.End;
+        instellingen.Clicked += Settings_Clicked;
 
 
         horizontalLayout.Children.Add(matchesButton);
@@ -346,12 +357,27 @@ public partial class MatchPage : ContentPage
         Content = verticalStackLayout;
         ;
     }
-    
+
+    private void BackButton_Clicked(object sender, EventArgs e)
+    {
+        switch (originPage)
+        {
+            case "profilepage":
+                Navigation.PushAsync(new ProfileChange());
+                break;
+            case "settingspage":
+                Navigation.PushAsync(new Instellingen());
+                break;
+        }
+
+    }
+
     // myprofile button clicked
     private void MyProfile_Clicked(object sender, EventArgs e)
     {
         //declares origin page, in the my profile page
         ProfileChange myProfile = new ProfileChange();
+        backButtonVisible = true;
         myProfile.originPage = pageName;
         Navigation.PushAsync(myProfile);
     }
@@ -360,9 +386,18 @@ public partial class MatchPage : ContentPage
     {
 
         MatchesPage chats = new MatchesPage();
+        backButtonVisible = true;
         //declares origin page, in the matches page
         chats.originPage = pageName;
         Navigation.PushAsync(chats);
+    }
+
+    private void Settings_Clicked(object sender, EventArgs e)
+    {
+        Instellingen Instellingen = new Instellingen();
+        backButtonVisible = true;
+        Instellingen.originPage = pageName;
+        Navigation.PushAsync(Instellingen);
     }
 
     private async Task UpdateQueue() {
@@ -416,17 +451,26 @@ public partial class MatchPage : ContentPage
         await DisplayAlert("Match", "You have a match", "OK");
     }
 
+    
     byte[] ScaleImage(byte[] bytes)
     {
-        using var memoryStream = new MemoryStream();
-        memoryStream.Write(bytes, 0, Convert.ToInt32(bytes.Length));
-        memoryStream.Seek(0, SeekOrigin.Begin);
-        using var originalImage = new Bitmap(memoryStream);
-        var resized = new Bitmap(600, 600);
-        using var graphics = System.Drawing.Graphics.FromImage(resized);
-        graphics.DrawImage(originalImage, 0, 0, 600, 600);
-        using var stream = new MemoryStream();
-        resized.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-        return stream.ToArray();
+        if (Authentication.isscaled == false)
+        {
+            Authentication.isscaled = true;
+
+            using var memoryStream = new MemoryStream();
+            memoryStream.Write(bytes, 0, Convert.ToInt32(bytes.Length));
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            using var originalImage = new Bitmap(memoryStream);
+            var resized = new Bitmap(600, 600);
+            using var graphics = System.Drawing.Graphics.FromImage(resized);
+            graphics.DrawImage(originalImage, 0, 0, 600, 600);
+            using var stream = new MemoryStream();
+            resized.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+            return stream.ToArray();
+        }
+        
+            return bytes;
+        
     }
 }

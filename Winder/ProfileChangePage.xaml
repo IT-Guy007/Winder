@@ -65,7 +65,7 @@
                 WidthRequest="120"
                 FontSize="15"
                 HeightRequest="50"
-                
+                Clicked="Settings_Clicked"
                 TextColor="Black"
             >
 
