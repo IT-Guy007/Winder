@@ -27,13 +27,11 @@ public partial class MatchPage : ContentPage
         StackLayout buttonStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.Center };
         buttonStackLayout.Spacing = 10;
 
-        try
-        {
+        try {
             Authentication._currentProfile = Authentication._profileQueue.Dequeue();
         }
         catch (Exception e)
         {
-
             //No profiles found
             Console.WriteLine("Couldn't find a new profile");
             Console.WriteLine(e.StackTrace);

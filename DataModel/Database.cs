@@ -5,12 +5,6 @@ namespace DataModel;
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Data.Common;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class Database {
     private Authentication _authentication = new Authentication();
@@ -139,7 +133,6 @@ public class Database {
         CloseConnection();
         return emails;
     }
-    
 
     public bool ToggleActivation(string email, bool activate) {
 
@@ -447,7 +440,7 @@ public class Database {
     }
 
 
-    public void insertPreference(string email, string preference) {
+    public void InsertPreference(string email, string preference) {
         // open connection
 
         OpenConnection();
@@ -499,7 +492,7 @@ public class Database {
         CloseConnection();
     }
 
-    public void insertLocation(string email, string location) {
+    public void InsertLocation(string email, string location) {
         // open connection
 
         OpenConnection();
@@ -521,7 +514,7 @@ public class Database {
 
     }
 
-    public string placePreference(string email) {
+    public string GetPreference(string email) {
         // open connection
 
         OpenConnection();
@@ -549,7 +542,7 @@ public class Database {
         return "";
     }
 
-    public string placeLocation(string email) {
+    public string GetLocation(string email) {
         // open connection
 
         OpenConnection();
@@ -576,7 +569,7 @@ public class Database {
         return "";
     }
 
-    public void insertMinAge(string email, int minAge) {
+    public void SetMinAge(string email, int minAge) {
         // open connection
 
         OpenConnection();
@@ -597,7 +590,7 @@ public class Database {
 
     }
 
-    public void insertMaxAge(string email, int maxAge) {
+    public void SetMaxAge(string email, int maxAge) {
         
         // open connection
         OpenConnection();
@@ -618,7 +611,7 @@ public class Database {
 
     }
 
-    public int placeMinAge(string email) {
+    public int GetMinAge(string email) {
         // open connection
 
         OpenConnection();
@@ -646,7 +639,7 @@ public class Database {
         return 0;
     }
 
-    public int placeMaxAge(string email) {
+    public int GetMaxAge(string email) {
         // open connection
 
         OpenConnection();
@@ -935,8 +928,7 @@ public class Database {
         CloseConnection();
         return users.ToArray();
     }
-
-
+    
 
     public List<string> AlgorithmForSwiping(string email) {
         Random rnd = new Random();
