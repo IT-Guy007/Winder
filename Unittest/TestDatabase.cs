@@ -70,8 +70,14 @@ public class TestDatabase {
         Random random = new Random();
         var email1 = random.Next(0, 999999);
         string email2 = "s" + email1 + "@student.windesheim.nl";
-        return _database.Register(firstname, middlename, lastname, email2, preference, birthday, gender, bio,
-            password,profilePicture, active, locatie, opleiding);
+        try {
+            _database.RegistrationFunction(firstname, middlename, lastname, email2, preference, birthday, gender, bio,
+                password, new byte[] { 0x20, 0x20 }, active, locatie, opleiding);
+            return true;
+        } catch
+        {
+            return false;
+        }
     }
 
     [TestCase("s1165707@student.windesheim.nl",false, ExpectedResult = true)]
