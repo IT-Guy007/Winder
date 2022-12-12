@@ -6,6 +6,7 @@ namespace DataModel;
 using Microsoft.Maui.Controls.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Data.Common;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -76,8 +77,6 @@ public class Database {
                 var major = reader["education"] as string;
                 Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
                     preferences, email, "", gender ,profilePicture, bio,school,major);
-
-
                 }
 
                 //Close connection
@@ -313,7 +312,6 @@ public class Database {
         }
 
     }
-
     public List<string> GetInterestsFromDataBase()
     {
         List<string> interests = new List<string>();
@@ -362,9 +360,7 @@ public class Database {
                 byte[] img = (byte[])(reader["profilePicture"]);
                 
                 DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
-
                 user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, img, bio, school, major);
-
             }
         }
         catch (SqlException e)
@@ -375,55 +371,60 @@ public class Database {
         return user;
     }
 
-    public void RegisterInterestInDatabase(string username, string interest)
+    public bool RegisterInterestInDatabase(string username, string interest)
     {
-        OpenConnection();
-        string sql = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
-        SqlCommand command = new SqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@Email", username);
-        command.Parameters.AddWithValue("@Interest", interest);
+
         try
         {
+            OpenConnection();
+            string sql = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Email", username);
+            command.Parameters.AddWithValue("@Interest", interest);
             command.ExecuteNonQuery();
+            CloseConnection();
+            return true;
         }
         catch (SqlException e)
         {
             CloseConnection();
+            return false;
         }
-        CloseConnection();
     }
 
-    public void RemoveInterestOfUser(string username, string interest)
+    public bool RemoveInterestOfUser(string username, string interest)
     {
-        OpenConnection();
-        string sql = "Delete From winder.userHasInterest Where UID = @Email and interest = @Interest";
-        SqlCommand command = new SqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@Email", username);
-        command.Parameters.AddWithValue("@Interest", interest);
         try
         {
+            OpenConnection();
+            string sql = "Delete From winder.userHasInterest Where UID = @Email and interest = @Interest";
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Email", username);
+            command.Parameters.AddWithValue("@Interest", interest);
             command.ExecuteNonQuery();
+            CloseConnection();
+            return true;
         }
         catch (SqlException e)
         {
             CloseConnection();
+            return false;
         }
-        CloseConnection();
     }
-
-    public string[] LoadInterestsFromDatabaseInListInteresses(string email) {
-        
+    public List<string> LoadInterestsFromDatabaseInListInteresses(string email)
+    {
         List<string> interests = new List<string>();
         OpenConnection();
         string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
         SqlCommand command = new SqlCommand(sql, connection);
         command.Parameters.AddWithValue("@Email", email);
-        try {
+        try
+        {
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                string item = reader["interest"] as string ?? "Unknown";
-                interests.Add(item);
+                var iets1 = reader["interest"] as string;
+                interests.Add(iets1);
             }
         }
         catch (SqlException e)
@@ -432,17 +433,16 @@ public class Database {
         }
         CloseConnection();
 
-        return interests.ToArray();
+        return interests;
     }
-
-    public void UpdateUserInDatabaseWithNewUserData(User user) {
+    public bool UpdateUserInDatabaseWithNewUserData(User user) {
         try {
             //Start connection
             OpenConnection();
             
             //Create query
             SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
-            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, birthday = @birthday, bio = @bio " +
+            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, education = @Education,birthday = @birthday, bio = @bio, profilePicture = @profilepicture " +
             "where email = @Email", connection);
             query.Parameters.AddWithValue("@firstname", user.firstName);
             query.Parameters.AddWithValue("@middlename", user.middleName);
@@ -451,15 +451,19 @@ public class Database {
             query.Parameters.AddWithValue("@preference", user.preference);
             query.Parameters.AddWithValue("@Email", user.email);
             query.Parameters.AddWithValue("@bio", user.bio);
+            query.Parameters.AddWithValue("@Education", user.major);
+            query.Parameters.AddWithValue("@profilePicture", user.profilePicture);
             //Execute query
             query.ExecuteNonQuery();
             //Close connection
             CloseConnection();
+            return true;
         }
         catch (SqlException se) {
             Console.WriteLine(se.ToString());
             //Close connection
             CloseConnection();
+            return false;
         }
     }
 
