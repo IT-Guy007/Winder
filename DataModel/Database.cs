@@ -951,7 +951,7 @@ public class Database {
                 userToAdd = usersWithCommonInterests[i];
 
             } else if (i == 3 & usersWhoLikedYou.Length > 0) {      //1 person who has liked
-                userToAdd = usersWhoLikedYou[i];
+                userToAdd = usersWhoLikedYou.First();
 
             } else {          //Fill up with random people
                 if(restOfUsers.Count > 0) {
