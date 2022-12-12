@@ -304,7 +304,7 @@ public partial class MatchPage : ContentPage {
             _database.NewLike(emailCurrentUser, emailLikedUser);
         }
 
-        MatchPopup()
+        MatchPopup();
 
         NextProfile();
     }
