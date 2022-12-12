@@ -14,23 +14,47 @@ public partial class MatchPage : ContentPage {
     private Profile _currentProfile;
     private Image[] _images = new Image[10];
     private int selectedImage = 0;
+    private const string backbuttonImgage = "backbutton.png";
     
     public MatchPage() {
         Title = "Make your match now!";
-        
+        Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
             
 
 
         StackLayout verticalStackLayout = new StackLayout
         {
+            
             Orientation = StackOrientation.Vertical,
             VerticalOptions = LayoutOptions.Fill
         };
-
+        Grid gridLayout = new Grid()
+        {
+            ColumnDefinitions =
+            {
+                new ColumnDefinition(),
+                new ColumnDefinition(),
+                new ColumnDefinition()
+                
+            }
+        };
         HorizontalStackLayout horizontalLayout = new HorizontalStackLayout()
         {
-           
+           HorizontalOptions = LayoutOptions.End
         };
+        
+        // backbutton
+        var backButton = new ImageButton();
+        backButton.Source = backbuttonImgage;
+        backButton.WidthRequest = 40;
+        backButton.HeightRequest = 40;
+        backButton.HorizontalOptions = LayoutOptions.Start;
+        backButton.CornerRadius = 50;
+        backButton.Aspect = Aspect.AspectFill;
+        backButton.IsVisible = false;
+        gridLayout.Add(backButton,0);
+        
+        
         //matches button
         var matchesButton = new Button();
         matchesButton.Text = "Matches";
@@ -50,7 +74,7 @@ public partial class MatchPage : ContentPage {
         myProfile.Clicked += MyProfile_Clicked;
         myProfile.HorizontalOptions = LayoutOptions.End;
 
-        //instellingen
+        //settings button
         var instellingen = new Button();
         instellingen.Text = "Instellingen";
         instellingen.HeightRequest = 50;
@@ -61,7 +85,8 @@ public partial class MatchPage : ContentPage {
         horizontalLayout.Children.Add(matchesButton);
         horizontalLayout.Children.Add(myProfile);
         horizontalLayout.Children.Add(instellingen);
-        verticalStackLayout.Add(horizontalLayout);
+        gridLayout.Add(horizontalLayout,2);
+        verticalStackLayout.Add(gridLayout);
 
         
         
@@ -222,18 +247,20 @@ public partial class MatchPage : ContentPage {
         Content = verticalStackLayout;
     }
 
+    // myprofile button clicked
     private void MyProfile_Clicked(object sender, EventArgs e)
     {
+        //declares origin page, in the my profile page
         ProfileChange myProfile = new ProfileChange();
         myProfile.originPage = pageName;
         Navigation.PushAsync(myProfile);
     }
-
+    // matches button clicked
     private void MatchesButton_Clicked(object obj, EventArgs e)
     {
 
         MatchesPage chats = new MatchesPage();
-        //declareert waar je vandaan komt
+        //declares origin page, in the matches page
         chats.originPage = pageName;
         Navigation.PushAsync(chats);
     }
