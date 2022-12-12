@@ -1,5 +1,4 @@
-﻿
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUI.ProfileChange"
              Title="Profiel">
@@ -75,103 +74,121 @@
 
         </Grid>
 
-        <HorizontalStackLayout HorizontalOptions="Center">
-           
+    <HorizontalStackLayout BackgroundColor="RosyBrown" WidthRequest="500">
+        <VerticalStackLayout VerticalOptions="StartAndExpand" Margin="90,0,0,0">
             <Label 
-            x:Name="lblVoornaam"
+            x:Name="lblFirstname"
             Text="Voornaam"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-            <Entry x:Name="Voornaam"
+            <Entry x:Name="Firstname"
                MaxLength="15"
-               Placeholder="Wessel"
+               Placeholder=""
                HorizontalOptions="Center"
                TextChanged="FirstnameTextChanged" />
             <Label 
-            x:Name="lblTussenvoegsel"
-            Text="tussenvoegsel"
+            x:Name="lblMiddlename"
+            Text="Tussenvoegsel"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-            <Entry x:Name="Tussenvoegsel"
+            <Entry x:Name="Middlename"
                MaxLength="10"
-               Placeholder="de"
+               Placeholder=""
                HorizontalOptions="Center"
                TextChanged="MiddlenameTextChanged" />
             <Label 
-            x:Name="lblAchternaam"
+            x:Name="lblLastname"
             Text="Achternaam"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-            <Entry x:Name="Achternaam"
+            <Entry x:Name="Lastname"
                MaxLength="15"
-               Placeholder="Notulist"
+               Placeholder=""
                HorizontalOptions="Center"
                TextChanged="LastnameTextChanged" />
-        </HorizontalStackLayout>
-
-        <Label 
-            x:Name="lblGeboortedatum"  
+            <Label 
+            x:Name="lblBirthdate"  
             Text="Leeftijd: "
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <DatePicker x:Name="Geboortedatum"
+            <DatePicker x:Name="Birthdate"
             DateSelected="DateOfBirthSelectedDate"
             HorizontalOptions="Center"
             />
-        <Label 
-            x:Name="lblOmschrijving"
-            Text="Omschrijving"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            />
-        <Entry x:Name="Omschrijving"
-               MaxLength="150"
-               Placeholder="Hallo, mijn naam is Wessel"
-               HorizontalOptions="Center"
-               TextChanged="BioTextChanged"
-               />
-        <Picker 
+            <Picker 
         Title="Gender"
         x:Name="Gender"
         HorizontalOptions="Center">
-            <Picker.Items>
-                <x:String>Kies</x:String>
-                <x:String>Man</x:String>
-                <x:String>Vrouw</x:String>
-            </Picker.Items>
-        </Picker>
-        <Picker         
+                <Picker.Items>
+                    <x:String>Kies</x:String>
+                    <x:String>Man</x:String>
+                    <x:String>Vrouw</x:String>
+                </Picker.Items>
+            </Picker>
+            <Picker         
         Title="Voorkeur"
-            x:Name="Voorkeur"
+            x:Name="Preference"
         HorizontalOptions="Center">
-            <Picker.Items>
-                <x:String>Kies</x:String>
-                <x:String>Man</x:String>
-                <x:String>Vrouw</x:String>
-            </Picker.Items>
-        </Picker>
-        <Picker 
-            x:Name="interessePicker"
+                <Picker.Items>
+                    <x:String>Kies</x:String>
+                    <x:String>Man</x:String>
+                    <x:String>Vrouw</x:String>
+                </Picker.Items>
+            </Picker>
+        </VerticalStackLayout>
+        <VerticalStackLayout>
+            <ImageButton
+                Clicked="OnProfilePictureClicked"
+                x:Name="ProfileImage"
+                HeightRequest="100"
+                WidthRequest="100"
+                Aspect="AspectFill"
+                CornerRadius="50"
+                IsVisible="true"/>
+            <Label 
+            x:Name="lblBio"
+            Text="Bio"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"/>
+            <Editor x:Name="Bio"
+                    MaxLength="125"
+                    WidthRequest="200"
+                    HeightRequest="100"
+                    TextChanged="BioTextChanged"/>
+            <Label 
+            x:Name="lblEducation"
+            Text="Opleiding"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            />
+            <Entry x:Name="Education"
+               MaxLength="30"
+               Placeholder=""
+               TextChanged="EducationTextChanged"
+               />
+            <Picker 
+            x:Name="InterestSelection"
         Title="Interesses"
         HorizontalOptions="Center"
         SelectedIndexChanged="PickerIndexChanged">
-            <Picker.Items>
+                <Picker.Items>
 
-            </Picker.Items>
-        </Picker>
-        <ListView MaximumHeightRequest="100" HorizontalOptions="Center" x:Name="listInteresses">
-            <ListView.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                </x:Array>
-            </ListView.ItemsSource>
-        </ListView>
-        <Button x:Name="DeleteItem" 
-                Text="Delete" 
-                Clicked="DeleteInterest" 
-                MaximumWidthRequest="100" 
-                MaximumHeightRequest="40"/>
-        <Button x:Name="wijzigProfielKnop"             
+                </Picker.Items>
+            </Picker>
+            <ListView MaximumHeightRequest="100" x:Name="ListInterests" ItemSelected="ListInterestsItemSelected">
+                <ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                    </x:Array>
+                </ListView.ItemsSource>
+            </ListView>
+            <Button x:Name="ChangeProfile"             
                 Text="Opslaan"
-                Clicked="ChangeUserData"/>
+                BackgroundColor="#CC415F"
+                WidthRequest="200"
+                HeightRequest="40"
+                Clicked="ChangeUserData"
+                />
+        </VerticalStackLayout>
+     </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

@@ -1,127 +1,211 @@
 ﻿
+using DataModel;
+using Microsoft.Maui.Controls;
 using System.ComponentModel.DataAnnotations;
 using Winder;
-using static System.Net.Mime.MediaTypeNames;
-
+using System.Drawing.Drawing2D;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace MAUI;
 
 public partial class ProfileChange : ContentPage
 {
-    List<string> interesses;
     public string originPage;
     private const string pageName = "profilepage";
-    bool voornaam = true, tussenvoegsel = true, achternaam = true, geboortedatum = true,omschrijving = true, geslacht = true,voorkeur = true, interessesGekozen = true;
+  
+    List<string> interesses  =new List<string>();
+    Database Database = new Database();
+    Color ErrorColor = new Color(255, 243, 5);
+    private bool firstname = true;
+    private bool middlename = true;
+    private bool lastname = true;
+    private bool birthday = true;
+    private bool preference = true;
+    private bool gender = true;
+    private bool bio = true;
+    private bool education = true;
+    //Load all necessary components to the page
+
     public ProfileChange()
     {
         InitializeComponent();
-        interesses = new List<string>();
-        listInteresses.ItemsSource = interesses;
+        LoadUserFromDatabaseInForm();
+        InterestSelection.ItemsSource = Database.GetInterestsFromDataBase();
+        interesses = Database.LoadInterestsFromDatabaseInListInteresses(Authentication._currentUser.email);
+        ListInterests.ItemsSource = interesses;
     }
+    //Fills the form inputs placeholders with the user data
+    private void LoadUserFromDatabaseInForm()
+    {
+        if (Authentication._currentUser != null)
+        {
+            Firstname.Placeholder = Authentication._currentUser.firstName;
+            Middlename.Placeholder = Authentication._currentUser.middleName;
+            Lastname.Placeholder = Authentication._currentUser.lastName;
+            Birthdate.Date = Authentication._currentUser.birthDay;
+            Bio.Placeholder = Authentication._currentUser.bio;
+            Education.Placeholder = Authentication._currentUser.major;
+            MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
+            ProfileImage.Source = ImageSource.FromStream(() => ms);
+            Gender.SelectedIndex = GetGenderFromUser();
+            Preference.SelectedIndex = GetPreferenceFromUser();
+        }
+    }
+
+
+
+    //Gets the preference of user
+    private int GetPreferenceFromUser()
+    {
+        if (Authentication._currentUser.preference == "Man") return 1;
+        if (Authentication._currentUser.preference == "Vrouw") return 2;
+        return 0;
+    }
+    //Gets the gender of user
+    private int GetGenderFromUser()
+    {
+        if (Authentication._currentUser.gender == "Man") return 1;
+        if (Authentication._currentUser.gender == "Vrouw") return 2;
+        return 0;
+    }
+    //Changes the userdata en updates the form
     private void ChangeUserData(object sender, EventArgs e)
     {
-        checkAllInput();
-    }
-
-    private void checkAllInput()
-    {
-        if (voornaam && tussenvoegsel && achternaam && geboortedatum && omschrijving && geslacht && voorkeur && interessesGekozen)
+        if (firstname == true && middlename == true && lastname == true && birthday == true && preference == true && gender == true && bio == true && education == true)
         {
+            UpdateUserPropertiesPrepareForUpdateQuery();
+            Database.UpdateUserInDatabaseWithNewUserData(Authentication._currentUser);
+            RegisterInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
-            Voornaam.Placeholder = Voornaam.Text;
-            Tussenvoegsel.Placeholder = Tussenvoegsel.Text;
-            Achternaam.Placeholder = Achternaam.Text;
-            Omschrijving.Placeholder = Omschrijving.Text;
-            Voornaam.Text = "";
-            Tussenvoegsel.Text = "";
-            Achternaam.Text = "";
-            Omschrijving.Text = "";
+            ClearTextFromEntries();
+            UpdatePlaceholders();
         }
-        else {
+        else
+        {
             DisplayAlert("Er is iets verkeerd gegaan...", "Vul alle gegevens in", "OK");
         }
-
     }
+    //Updates the placeholders value after a change has been made
+    private void UpdatePlaceholders()
+    {
 
+        Firstname.Placeholder = Authentication._currentUser.firstName;
+        Middlename.Placeholder = Authentication._currentUser.middleName;
+        Lastname.Placeholder = Authentication._currentUser.lastName;
+        Birthdate.Date = (DateTime)Authentication._currentUser.birthDay;
+        Bio.Placeholder = Authentication._currentUser.bio;
+        Education.Placeholder = Authentication._currentUser.major;
+    }
+    //Clears all text from input after profile change
+    private void ClearTextFromEntries()
+    {
+        Firstname.Text = "";
+        Middlename.Text = "";
+        Lastname.Text = "";
+        Bio.Text = "";
+        Education.Text = "";
+    }
+    //Adds all interests to users list of interests
+    private void RegisterInterestsInDatabase()
+    {
+        foreach (var interest in interesses)
+        {
+            Database.RegisterInterestInDatabase(Authentication._currentUser.email, interest);
+        }
+    }
+    //Update the users data 
+    private void UpdateUserPropertiesPrepareForUpdateQuery()
+    {
+        if (Authentication._currentUser.firstName != Firstname.Text && Firstname.Text != null && Firstname.Text != "") Authentication._currentUser.firstName = Firstname.Text;
+        if (Authentication._currentUser.middleName != Middlename.Text && Middlename.Text != null && Middlename.Text != "") Authentication._currentUser.middleName = Middlename.Text;
+        if (Authentication._currentUser.lastName != Lastname.Text && Lastname.Text != null && Lastname.Text != "") Authentication._currentUser.lastName = Lastname.Text;
+        if (Authentication._currentUser.major != Education.Text && Education.Text != null && Education.Text != "") Authentication._currentUser.major = Education.Text;
+        if (Authentication._currentUser.birthDay != Birthdate.Date) Authentication._currentUser.birthDay = Birthdate.Date;
+        if (Authentication._currentUser.bio != Bio.Text && Bio.Text != null && Bio.Text != "") Authentication._currentUser.bio = Bio.Text;
+        if (Authentication._currentUser.gender != Gender.SelectedItem.ToString()) Authentication._currentUser.gender = Gender.SelectedItem.ToString();
+        if (Authentication._currentUser.preference != Preference.SelectedItem.ToString()) Authentication._currentUser.preference = Preference.SelectedItem.ToString();
+    }
+    //Checks if the firstname input is valid
     private void FirstnameTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (Voornaam.Text != "")
+        if (Firstname.Text != "")
         {
-            if (!checkIfTextIsOnlyLetters(Voornaam.Text))
+            if (!CheckIfTextIsOnlyLetters(Firstname.Text))
             {
-                voornaam = false;
-                Color colorRed = new Color(238, 75, 43);
-                lblVoornaam.Text = "Voornaam mag alleen letters bevatten";
-                lblVoornaam.TextColor = colorRed;
+                firstname = false;
+                lblFirstname.Text = "Voornaam mag alleen letters bevatten";
+                lblFirstname.TextColor = ErrorColor;
             }
             else
             {
-                voornaam = true;
-                lblVoornaam.Text = "Voornaam";
-                lblVoornaam.Text = default;
-                Voornaam.Text = Voornaam.Text.First().ToString().ToUpper() + Voornaam.Text[1..].ToLower();
+                firstname = true;
+                lblFirstname.Text = "Voornaam";
+                lblFirstname.TextColor = default;
+                Firstname.Text = Firstname.Text.First().ToString().ToUpper() + Firstname.Text[1..].ToLower();
             }
         }
     }
+    //Checks if the middlename input is valid
     private void MiddlenameTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (Tussenvoegsel.Text != "")
+        if (Middlename.Text != "")
         {
-            if (!checkIfTextIsOnlyLetters(Tussenvoegsel.Text))
+            if (!CheckIfTextIsOnlyLetters(Middlename.Text))
             {
-                tussenvoegsel = false;
-                Color colorRed = new Color(238, 75, 43);
-                lblTussenvoegsel.Text = "Tussenvoegsel mag alleen letters bevatten";
-                lblTussenvoegsel.TextColor = colorRed;
+                middlename = false;
+                lblMiddlename.Text = "Tussenvoegsel mag alleen letters bevatten";
+                lblMiddlename.TextColor = ErrorColor;
             }
             else
             {
-                tussenvoegsel = true;
-                lblTussenvoegsel.Text = "Tussenvoegsel";
-                lblTussenvoegsel.TextColor = default;
-                Tussenvoegsel.Text = Tussenvoegsel.Text.First().ToString().ToUpper() + Tussenvoegsel.Text[1..].ToLower();
+                middlename = true;
+                lblMiddlename.Text = "Tussenvoegsel";
+                lblMiddlename.TextColor = default;
+                Middlename.Text = Middlename.Text.First().ToString().ToUpper() + Middlename.Text[1..].ToLower();
             }
         }
     }
+    //Checks if the lastname input is valid
     private void LastnameTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (Achternaam.Text != "")
+        if (Lastname.Text != "")
         {
-            if (!checkIfTextIsOnlyLetters(Achternaam.Text))
+            if (!CheckIfTextIsOnlyLetters(Lastname.Text))
             {
-                achternaam = false;
-                Color colorRed = new Color(238, 75, 43);
-                lblAchternaam.Text = "Achternaam mag alleen letters bevatten";
-                lblAchternaam.TextColor = colorRed;
+                lastname = false;
+                lblLastname.Text = "Achternaam mag alleen letters bevatten";
+                lblLastname.TextColor = ErrorColor;
             }
             else
             {
-                achternaam = true;
-                lblAchternaam.Text = "Tussenvoegsel";
-                lblAchternaam.TextColor = default;
-                Achternaam.Text = Achternaam.Text.First().ToString().ToUpper() + Achternaam.Text[1..].ToLower();
+                lastname = true;
+                lblLastname.Text = "Achternaam";
+                lblLastname.TextColor = default;
+                Lastname.Text = Lastname.Text.First().ToString().ToUpper() + Lastname.Text[1..].ToLower();
             }
         }
     }
-    private void BioTextChanged(object sender, TextChangedEventArgs e)
+    //Checks if the education input is valid
+    private void EducationTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (Omschrijving.Text != "")
+        if (Education.Text != "")
         {
-            if (!checkIfTextIsOnlyLettersAndSpaces(Omschrijving.Text))
+            if (!CheckIfTextIsOnlyLettersAndSpaces(Education.Text))
             {
-                omschrijving = false;
-                Color colorRed = new Color(238, 75, 43);
-                lblOmschrijving.Text = "Omschrijving mag alleen letters bevatten";
-                lblOmschrijving.TextColor = colorRed;
+                education = false;
+                lblEducation.Text = "Opleiding mag alleen letters bevatten";
+                lblEducation.TextColor = ErrorColor;
             }
             else
             {
-                omschrijving = true;
-                lblOmschrijving.Text = "Omschrijving";
-                lblOmschrijving.TextColor = default;
-                Omschrijving.Text = Omschrijving.Text.First().ToString().ToUpper() + Omschrijving.Text[1..].ToLower();
+                education = true;
+                lblEducation.Text = "Opleiding";
+                lblEducation.TextColor = default;
             }
         }
     }
+
 
     private void Backbutton_Clicked(object sender, EventArgs e)
     {
@@ -147,19 +231,20 @@ public partial class ProfileChange : ContentPage
         Navigation.PushAsync(matchpage);
     }
 
-    private bool checkIfTextIsOnlyLettersAndSpaces(string text)
+    //Checks if input has spaces, letters or dashes
+    private bool CheckIfTextIsOnlyLettersAndSpaces(string text)
     {
         foreach (char c in text)
         {
-            if (!char.IsLetter(c) && c != ' ')
+            if (!char.IsLetter(c) && c != ' ' && c != '-' && c != '\n' && c != '\r')
             {
                 return false;
             }
         }
         return true;
     }
-
-    private bool checkIfTextIsOnlyLetters(string text)
+    //Check if input only consists of letters
+    private bool CheckIfTextIsOnlyLetters(string text)
     {
         if (text.All(char.IsLetter))
         {
@@ -170,72 +255,122 @@ public partial class ProfileChange : ContentPage
             return false;
         }
     }
+    private async void OnProfilePictureClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var image = await FilePicker.PickAsync(new PickOptions
+            {
+                PickerTitle = "Kies een profielfoto",
+                FileTypes = FilePickerFileType.Images
+            });
 
+            if (image == null)
+            {
+                return;
+            }
+            string imgLocation = image.FullPath;
+            byte[] imageArr = null;
+            FileStream fileStream = new FileStream(imgLocation, FileMode.Open, FileAccess.Read);
+            Stream stream = await image.OpenReadAsync();
+            BinaryReader binary = new BinaryReader(fileStream);
+            imageArr = binary.ReadBytes((int)fileStream.Length);
+            Authentication._currentUser.profilePicture = imageArr;
+            ProfileImage.Source = ImageSource.FromStream(() => stream);
+        }
+        catch (Exception ex)
+        {
+            DisplayAlert("Error", "Er is iets fout gegaan", "Ok");
+        }
+    }
+    //Handles the selected interests and adds them to the listview of interests
     private void PickerIndexChanged(object sender, EventArgs e)
     {
-        addSelectedValueToListInteresses();
-    }
-
-    private void addSelectedValueToListInteresses()
-    {
-        if (interessePicker.SelectedItem != null && interesses.Count < 5)
+        if (InterestSelection.SelectedItem != null && interesses.Count < 5)
         {
-            interessePicker.Title = "Interesse";
-            interessePicker.TitleColor = default;
-            if (!interesses.Contains(interessePicker.SelectedItem.ToString()))
+            InterestSelection.Title = "Interesse";
+            InterestSelection.TitleColor = default;
+            if (!interesses.Contains(InterestSelection.SelectedItem.ToString()))
             {
-                interesses.Add(interessePicker.SelectedItem.ToString());
-                listInteresses.ItemsSource = null;
-                listInteresses.ItemsSource = interesses;
+                interesses.Add(InterestSelection.SelectedItem.ToString());
+                ListInterests.ItemsSource = null;
+                ListInterests.ItemsSource = interesses;
             }
-            else {
-                Color colorRed = new Color(238, 75, 43);
-                interessePicker.Title = "Je hebt deze interesse al toegevoegd";
-                interessePicker.TitleColor = colorRed;
+            else
+            {
+                InterestSelection.Title = "Je hebt deze interesse al toegevoegd";
+                InterestSelection.TitleColor = ErrorColor;
             }
         }
         else
         {
-            Color colorRed = new Color(238, 75, 43);
-            interessePicker.Title = "Je kunt maximaal 5 interesses selecteren";
-            interessePicker.TitleColor = colorRed;
+            InterestSelection.Title = "Je kunt maximaal 5 interesses selecteren";
+            InterestSelection.TitleColor = ErrorColor;
         }
     }
-
+    //Deletes the selected item in listview of interests
     private void DeleteInterest(object sender, EventArgs e)
     {
-        if (listInteresses.SelectedItem != null) {
-            var item = listInteresses.SelectedItem.ToString();
+        if (ListInterests.SelectedItem != null) {
+            var item = ListInterests.SelectedItem.ToString();
             interesses.Remove(item);
-            listInteresses.ItemsSource = null;
-            listInteresses.ItemsSource = interesses;
-            listInteresses.SelectedItem = null;
+            ListInterests.ItemsSource = null;
+            ListInterests.ItemsSource = interesses;
+            ListInterests.SelectedItem = null;
         }
     }
 
-
+    //Checks if selected birthdate is a birthdate that is 18 years or older
     private void DateOfBirthSelectedDate(object sender, DateChangedEventArgs e)
     {
-        checkIfAgeOfBirthDateIsOver18();
-    }
-
-    private void checkIfAgeOfBirthDateIsOver18()
-    {
-            DateTime today = DateTime.Today;
-            int age = today.Year - Geboortedatum.Date.Year;
-            if (Geboortedatum.Date > today.AddYears(-age)) age--;
+                    DateTime today = DateTime.Today;
+            int age = today.Year - Birthdate.Date.Year;
+            if (Birthdate.Date > today.AddYears(-age)) age--;
             if (age >= 18)
             {
-                geboortedatum = true;
-            lblGeboortedatum.Text = "Leeftijd : " + age;
-            lblGeboortedatum.BackgroundColor = default;
+                birthday = true;
+            lblBirthdate.Text = "Leeftijd : " + age;
+            lblBirthdate.BackgroundColor = default;
             }
             else
             {
-                geboortedatum = false;
-                Color colorRed = new Color(238, 75, 43);
-                lblGeboortedatum.Text = "Je moet minimaal 18 jaar zijn";
-                lblGeboortedatum.BackgroundColor = colorRed;
+            birthday = false;
+                lblBirthdate.Text = "Je moet minimaal 18 jaar zijn";
+                lblBirthdate.BackgroundColor = ErrorColor;
             }
+    }
+    //Check if an item has been selected and delete the selected item of ListInterests
+    private void ListInterestsItemSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+                if (ListInterests.SelectedItem != null)
+        {
+            InterestSelection.Title = "Interesse";
+            InterestSelection.TitleColor = default;
+            var interest = ListInterests.SelectedItem.ToString();
+            Database.RemoveInterestOfUser(Authentication._currentUser.email, interest);
+            interesses.Remove(interest);
+            ListInterests.ItemsSource = null;
+            ListInterests.ItemsSource = interesses;
+            ListInterests.SelectedItem = null;
+        }
+    }
+
+    private void BioTextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (Bio.Text != "")
+        {
+            if (!CheckIfTextIsOnlyLettersAndSpaces(Bio.Text))
+            {
+                bio = false;
+                lblBio.Text = "Bio mag alleen letters bevatten";
+                lblBio.TextColor = ErrorColor;
+            }
+            else
+            {
+                bio = true;
+                lblBio.Text = "Bio";
+                lblBio.TextColor = default;
+            }
+        }
     }
 }
