@@ -320,17 +320,25 @@ public partial class MatchPage : ContentPage
         await DisplayAlert("Match", "You have a match", "OK");
     }
 
-    byte[] ScaleImage(byte[] bytes)
-    {
+    byte[] ScaleImage(byte[] bytes) {
         using var memoryStream = new MemoryStream();
         memoryStream.Write(bytes, 0, Convert.ToInt32(bytes.Length));
         memoryStream.Seek(0, SeekOrigin.Begin);
-        using var originalImage = new Bitmap(memoryStream);
-        var resized = new Bitmap(600, 600);
-        using var graphics = System.Drawing.Graphics.FromImage(resized);
-        graphics.DrawImage(originalImage, 0, 0, 600, 600);
-        using var stream = new MemoryStream();
-        resized.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-        return stream.ToArray();
+        if (memoryStream != null)
+        {
+            using var originalImage = new Bitmap(memoryStream);
+            var resized = new Bitmap(600, 600);
+            using var graphics = System.Drawing.Graphics.FromImage(resized);
+            graphics.DrawImage(originalImage, 0, 0, 600, 600);
+            using var stream = new MemoryStream();
+            resized.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+            return stream.ToArray();
+        }
+        else
+        {
+            return bytes;
+        }
+
+        
     }
 }
