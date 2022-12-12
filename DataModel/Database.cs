@@ -852,7 +852,8 @@ public class Database {
             CloseConnection();
         }
     }
-        public void deleteLikeOnMatch(string emailCurrentUser, string emailLikedUser)
+
+    public void deleteLikeOnMatch(string emailCurrentUser, string emailLikedUser)
     {
         OpenConnection();
 
@@ -1100,8 +1101,8 @@ public class Database {
         //The algorithm that determines who to get
 
         //The users(email) to get
-        string[] usersToRetrief = new string[5];
-        usersToRetrief[0] = "sghjkf@student.windesheim.nl";
+        List<string> usersToRetrief = new List<string>();
+        usersToRetrief.Add("s1167488@student.windesheim.nl");
 
         // usersToRetrief = AlgorithmForSwiping(email); 
 
