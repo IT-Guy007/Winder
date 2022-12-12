@@ -226,9 +226,9 @@ public partial class ProfileChange : ContentPage
 
     private void matchButton_Clicked(object sender, EventArgs e)
     {
-        MatchPage matchpage = new MatchPage();
-        matchpage.originPage = pageName;
-        Navigation.PushAsync(matchpage);
+        // MatchPage matchpage = new MatchPage();
+        // matchpage.originPage = pageName;
+        Navigation.PushAsync(new MatchPage());
     }
 
     //Checks if input has spaces, letters or dashes

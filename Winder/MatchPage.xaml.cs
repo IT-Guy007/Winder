@@ -1,4 +1,5 @@
-﻿using DataModel;
+﻿using System.Drawing;
+using DataModel;
 using Microsoft.Maui.Layouts;
 using System.Security.Cryptography.X509Certificates;
 using Winder;
@@ -7,11 +8,12 @@ namespace MAUI;
 
 public partial class MatchPage : ContentPage
 {
+    
     private Database _database = new Database();
 
     public string originPage;
-    public static const string pageName = "matchpage";
-    public static const string backbuttonImage = "backbutton.png";
+    public const string pageName = "matchpage";
+    public const string backbuttonImage = "backbutton.png";
     
 
     public MatchPage() {
@@ -43,7 +45,7 @@ public partial class MatchPage : ContentPage
         
         // backbutton
         var backButton = new ImageButton();
-        backButton.Source = backbuttonImgage;
+        backButton.Source = backbuttonImage;
         backButton.WidthRequest = 40;
         backButton.HeightRequest = 40;
         backButton.HorizontalOptions = LayoutOptions.Start;

@@ -11,18 +11,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/1e894b2b-9294-437e-9cfb-aa449ca565b1.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/7072c225-e66a-4b03-9800-1bf9597ce15c.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/88257a10-b8eb-43ae-a734-003d42350908.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/9a0df294-71e3-4cdf-9a92-9221014f26bb.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +23,8 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ee116d1b35c4432581d5e38969982be1fa7c0/77/e5c75b71/SqlConnection.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DataModel/Database.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="InvalidFacetManager">
     <ignored-facets>
@@ -146,5 +140,24 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Winder/ProfileChangePage.xaml.cs</url>
+          <line>230</line>
+          <properties documentPath="C:\Users\Gebruiker\source\repos\Winder\Winder\ProfileChangePage.xaml.cs" initialLine="230" containingFunctionPresentation="method 'matchButton_Clicked'">
+            <startOffsets>
+              <option value="9237" />
+            </startOffsets>
+            <endOffsets>
+              <option value="9275" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
