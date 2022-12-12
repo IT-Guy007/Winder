@@ -1,4 +1,6 @@
-﻿namespace MAUI;
+﻿using DataModel;
+
+namespace MAUI;
 
 public partial class MainPage : ContentPage {
 
