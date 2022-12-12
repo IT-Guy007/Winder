@@ -3,7 +3,6 @@ using System.Data.SqlClient;
 namespace DataModel;
 
 
-using Microsoft.Maui.Controls.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -909,7 +908,6 @@ public class Database {
         return result;
     }
     
-
     public string[] GetUsersWhoLikedYou(string email)
     {
         
@@ -945,7 +943,7 @@ public class Database {
         return users.ToArray();
     }
 
-    public string[] GetRestOfUsers(string email)
+    public Queue<string> GetRestOfUsers(string email)
     {
         List<string> userslist = new List<string>();
 
@@ -954,11 +952,11 @@ public class Database {
         
         OpenConnection();
 
-        SqlCommand command = new SqlCommand("SELECT email FROM Winder.Winder.[User] WHERE email != @email " +
+        SqlCommand command = new SqlCommand("SELECT TOP 10 email FROM Winder.Winder.[User] WHERE email != @email " +
         "AND email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + // selects the users which have not disliked the given user
-        "AND email not in (select likedPerson from Winder.Winder.Liked where person = @email) " +// selects the users that the given user had not disliked or already liked
-        "AND email not in (select person1 from Winder.Winder.Match where person2 = @email) " +
-        "AND email not in (select person2 from Winder.Winder.Match where person1 = @email) ", connection);          // selects the users that the given user has not already matched with 
+        "AND email not in (select likedPerson from Winder.Winder.Liked where person = @email) " +               // selects the users that the given user had not disliked or already liked
+        "AND email not in (select person1 from Winder.Winder.Match where person2 = @email) " +                  // selects the users that the given user has not already matched with 
+        "AND email not in (select person2 from Winder.Winder.Match where person1 = @email) ", connection);                                                                                 //Limit to 5
         command.Parameters.AddWithValue("@email", email);
 
         try
@@ -981,8 +979,14 @@ public class Database {
         string[] users = userslist.ToArray();
         users = users.Except(userswholikedyou).ToArray();
         users = users.Except(userswithcommoninterests).ToArray();  // makes it so the rest of users does not contain the users that liked you or have common interests because we have different methods for them
+        
+        Queue<string> queue = new Queue<string>();                 //make a queue from the users
+        foreach (string user in users) {
+            queue.Enqueue(user);
+        }
+
         CloseConnection();
-        return users;
+        return queue;
     }
 
     public string[] GetUsersWithCommonInterest(string email)
@@ -1033,72 +1037,66 @@ public class Database {
         CloseConnection();
         return users.ToArray();
     }
-        
- 
-    
-    public string[] AlgorithmForSwiping(string email)
-    {
-        string[] userswholikedyou = GetUsersWhoLikedYou(email);
-        string[] userswithcommoninterests = GetUsersWithCommonInterest(email);
-        userswithcommoninterests = userswithcommoninterests.Where(x => !userswholikedyou.Contains(x)).ToArray(); // is needed because they could have duplicates between the lists and is done this way because users who likedyou has a higher priority in the algorithm
 
-        string[] restofusers = GetRestOfUsers(email);
 
-        string[] users = new string[5];
 
+    public List<string> AlgorithmForSwiping(string email) {
         Random rnd = new Random();
-        userswholikedyou = userswholikedyou.OrderBy(x => rnd.Next()).ToArray();
-        userswithcommoninterests = userswithcommoninterests.OrderBy(x => rnd.Next()).ToArray();     // shuffle the arrays randomly instead of how they are sorted in the database
-        restofusers = restofusers.OrderBy(x => rnd.Next()).ToArray();
 
-        userswithcommoninterests = userswithcommoninterests.GroupBy(x => x).ToList().OrderByDescending(g => g.Count()).Select(g => g.Key).ToArray(); // sorts so that the values with the most duplicates are in front and removes the duplicates
+        string[] usersWhoLikedYou = GetUsersWhoLikedYou(email); //Users that liked you
+        string[] usersWithCommonInterests = GetUsersWithCommonInterest(email);
 
+        usersWithCommonInterests = usersWithCommonInterests.Where(x => !usersWhoLikedYou.Contains(x)).ToArray(); // is needed because they could have duplicates between the lists and is done this way because users who likedyou has a higher priority in the algorithm
 
-        for (int i = 0; i < 5; i++)
-        {
-            if (i < userswithcommoninterests.Length && i < 3)       // preferebaly we want 3 people with common interests
-            {
-                users[i] = userswithcommoninterests[i];
+        Queue<string> restOfUsers = GetRestOfUsers(email); //Random Users
+        usersWhoLikedYou = usersWhoLikedYou.OrderBy(x => rnd.Next()).ToArray(); 
+        usersWithCommonInterests = usersWithCommonInterests.OrderBy(x => rnd.Next()).ToArray();     // shuffle the arrays randomly instead of how they are sorted in the database
+
+        usersWithCommonInterests = usersWithCommonInterests.GroupBy(x => x).ToList().OrderByDescending(g => g.Count()).Select(g => g.Key).ToArray(); // sorts so that the values with the most duplicates are in front and removes the duplicates
+
+        List<string> users = new List<string>(); //Result
+        for (int i = 0; i < 5; i++) {
+            var userToAdd = "";
+            if (i < 3 && usersWithCommonInterests.Length >= 3) {    // preferebaly we want 3 people with common interests{
+                userToAdd = usersWithCommonInterests[i];
+
+            } else if (i == 3 & usersWhoLikedYou.Length > 0) {      //1 person who has liked
+                userToAdd = usersWhoLikedYou[i];
+
+            } else {          //Fill up with random people
+                if(restOfUsers.Count > 0) {
+                    userToAdd = restOfUsers.Dequeue();
+                }
             }
-            else if (i < userswholikedyou.Length && i < 4)      // and 1 person who has liked
-            {
-                users[i] = userswholikedyou[i];
-            }
-            else if (i < restofusers.Length && i < 5)           // and preferably 1 random person
-            {
-                users[i] = restofusers[i];
+
+            //Check if already exists in current Queue, otherwise add random
+            var alreadyExists = Authentication._profileQueue.Where(i => i.user.email == userToAdd);
+            if (alreadyExists.Count() <= 0 && alreadyExists != null) {
+                users.Add(userToAdd);
+            } else { 
+                while (string.IsNullOrWhiteSpace(userToAdd) && restOfUsers.Count != 0) {
+                    var nextUsers = restOfUsers.Dequeue();
+                    var alreadyExistsLoop = Authentication._profileQueue.Where(i => i.user.email == nextUsers);
+                    if(alreadyExistsLoop.Count() == 0) {
+                        userToAdd = nextUsers;
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(userToAdd) && userToAdd != "") {
+                users.Add(userToAdd);
+                }
             }
         }
-        if(users[3] == null)
-        {
-            if(userswithcommoninterests.Length > 3)
-            {
-                users[3] = userswithcommoninterests[3];        // that however is not always possible so it needs to be filled otherwise sometimes 
-            }
-            if (userswithcommoninterests.Length > 4)            // if value 3 is empty it means userswholiked and rest of users are empty to we need to check if userswith commoninterests has more values to use
-            {
-                users[4] = userswithcommoninterests[4];
-            }
-        }
-        else if (users[4] == null)
-        {
-            if (userswithcommoninterests.Length > 4)
-            {
-                users[4] = userswithcommoninterests[4];        // if the last value is null it means restofusers is empty so it needs to be filled with other
-            }
-            else if (restofusers.Length > 4)
-            {
-                users[4] = userswholikedyou[4];
-            }
-        }
 
-        return users;
+        //Check if users contains empty strings
+        List<string> result = new List<string>();
+        foreach (var user in users) {
+            if(user != "") {
+                result.Add(user);
+            }
+        }
+        return result;
     }
 
-
-
-        
-    
     //User to get the profiles for the match(run async)
     public Profile[] Get5Profiles(string email) {
         //The algorithm that determines who to get
@@ -1112,6 +1110,7 @@ public class Database {
         Profile[] profiles = new Profile[usersToRetrief.Count()];
         
         //Retrieving
+        for (int i = 0; i < usersToRetrief.Count(); i++) {
 
             //Get the user
             User user = GetUserFromDatabase(usersToRetrief[i]);

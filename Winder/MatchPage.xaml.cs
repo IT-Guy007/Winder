@@ -57,7 +57,7 @@ public partial class MatchPage : ContentPage
                         Aspect = Aspect.AspectFit,
                         WidthRequest = 800,
                         HeightRequest = 800,
-                        BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#ffffff")
+                        BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#CC415F")
                     };
                     verticalStackLayout.Add(profileImage);
 
@@ -71,7 +71,7 @@ public partial class MatchPage : ContentPage
                         Aspect = Aspect.AspectFit,
                         WidthRequest = 800,
                         HeightRequest = 800,
-                        BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#ffffff")
+                        BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#CC415F")
                     };
                     verticalStackLayout.Add(profileImage);
                 }
@@ -305,17 +305,15 @@ public partial class MatchPage : ContentPage
         {
             Authentication.selectedImage = 0;
             Navigation.PushAsync(new MatchPage());
-
-
+            
             //Works better but doesn't work yet
             //Application.Current.Dispatcher.Dispatch(() => Authentication._currentProfile = Authentication._profileQueue.Dequeue());
 
+        } else {
+            Authentication._profileQueue = new Queue<Profile>();
+            Navigation.PushAsync(new MatchPage());
         }
-        else
-        {
 
-            Authentication._currentProfile = null;
-        }
     }
 
     //Give match popup
