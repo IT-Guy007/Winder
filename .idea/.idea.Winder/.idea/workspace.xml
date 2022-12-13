@@ -11,7 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="Fixed currentUser">
-      <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +21,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="Jeroen" />
       </map>
     </option>
   </component>
@@ -161,5 +161,37 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Fixed currentUser" />
     <option name="LAST_COMMIT_MESSAGE" value="Fixed currentUser" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DataModel/Database.cs</url>
+          <line>87</line>
+          <properties documentPath="$PROJECT_DIR$/DataModel/Database.cs" initialLine="87" containingFunctionPresentation="method 'CheckLogin'">
+            <startOffsets>
+              <option value="2733" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2734" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/DataModel/Database.cs</url>
+          <line>760</line>
+          <properties documentPath="$PROJECT_DIR$/DataModel/Database.cs" initialLine="760" containingFunctionPresentation="method 'deleteLikeOnMatch'">
+            <startOffsets>
+              <option value="28564" />
+            </startOffsets>
+            <endOffsets>
+              <option value="28565" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
