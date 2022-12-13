@@ -166,9 +166,13 @@ public class Database {
 
     }
 
-    public void UpdatePassword(string email, string password) {
-        Authentication authentication = new Authentication();
-        if (authentication.EmailIsUnique(email) == false) { // checken of email in de database staat
+
+    public void UpdatePassword(string email, string password)
+    {
+        Authentication a = new Authentication();
+        if (a.EmailIsUnique(email) == false) // checken of email in de database staat
+        {
+
             // connectieopzetten en query maken
             
             string hashedpassword = authentication.HashPassword(password); // eerst het password hashen voor het updaten
@@ -933,8 +937,6 @@ public class Database {
             Console.WriteLine(se.StackTrace);
             //Close connection
             CloseConnection();
-                                                                                        
-
         }
         CloseConnection();
         return users.ToArray();
