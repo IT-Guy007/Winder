@@ -883,6 +883,17 @@ public class Database {
         return queue;
     }
 
+    /*public string[] GetUsersWhoMatchPreferences(string email)
+    {
+        List<string> users = new List<string>();
+
+        OpenConnection();
+
+        SqlCommand command = new SqlCommand("select email from Winder.Winder.[User] where email != @email &" +
+
+        return users.ToArray();
+    }*/
+
     public string[] GetUsersWithCommonInterest(string email) {
         List<string> users = new List<string>();
 
@@ -922,7 +933,7 @@ public class Database {
             Console.WriteLine(se.StackTrace);
             //Close connection
             CloseConnection();
-
+                                                                                        
 
         }
         CloseConnection();
