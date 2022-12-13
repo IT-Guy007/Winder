@@ -175,7 +175,7 @@ public class Database {
 
             // connectieopzetten en query maken
             
-            string hashedpassword = authentication.HashPassword(password); // eerst het password hashen voor het updaten
+            string hashedpassword = _authentication.HashPassword(password); // eerst het password hashen voor het updaten
             OpenConnection();
             SqlCommand query = new SqlCommand("update winder.winder.[User] set password = @password where email = @Email", connection);
             query.Parameters.AddWithValue("@Email", email);
