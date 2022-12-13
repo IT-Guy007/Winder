@@ -339,6 +339,7 @@ public partial class MatchPage : ContentPage
         Task gettingProfiles = GetProfiles();
         await gettingProfiles;
     }
+    
 
     private void BackButton_Clicked(object sender, EventArgs e)
     {
@@ -382,10 +383,7 @@ public partial class MatchPage : ContentPage
         Navigation.PushAsync(Instellingen);
     }
 
-    private async Task UpdateQueue() {
-        Task gettingProfiles = GetProfiles();
-        await gettingProfiles;
-    }
+   
     
 
     private async Task GetProfiles()
