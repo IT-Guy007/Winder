@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Winder.LaunchView"
              Title="LaunchView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid x:Name="rootGrid">
+        <!-- This is the logo image -->
+        <Image x:Name="logoImage" HorizontalOptions="Center" VerticalOptions="Center" />
+        <!-- This is the loading animation -->
+        <!-- <ProgressBar x:Name="loadingAnimation" IsIndeterminate="True" /> -->
+    </Grid>
 </ContentPage>
