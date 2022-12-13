@@ -349,7 +349,7 @@ public partial class MatchPage : ContentPage
     {
         CheckIfQueueNeedsMoreProfiles();
         string emailCurrentUser = Authentication._currentUser.email;
-        string emailLikedUser = _currentProfile.user.email;
+        string emailLikedUser = Authentication._currentProfile.user.email;
         if (_database.CheckMatch(emailCurrentUser, emailLikedUser))
         {
             _database.NewMatch(emailLikedUser, emailCurrentUser);
@@ -369,7 +369,7 @@ public partial class MatchPage : ContentPage
     {
         CheckIfQueueNeedsMoreProfiles();
         string emailCurrentUser = Authentication._currentUser.email;
-        string emaildDislikedUser = _currentProfile.user.email;
+        string emaildDislikedUser = Authentication._currentProfile.user.email;
 
         _database.NewDislike(emailCurrentUser, emaildDislikedUser);
 
