@@ -308,43 +308,22 @@ public partial class MatchPage : ContentPage
             //Buttons
             var likeButton = new Button { Text = "Like", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
             var dislikeButton = new Button { Text = "Dislike", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
+            var rightSwipe = new SwipeGestureRecognizer { Direction = SwipeDirection.Right };
+            var leftSwipe = new SwipeGestureRecognizer { Direction = SwipeDirection.Left };
+
+            rightSwipe.Swiped += OnSwipe;
+            leftSwipe.Swiped += OnSwipe;
+            likeButton.Clicked += OnLike;
+            dislikeButton.Clicked += OnDislike;
 
             //Add info to ImageLayout
             imageLayout.Add(infoStackLayout);
 
-            likeButton.Clicked += (sender, args) => {
-                if (Authentication._currentProfile != null)
-                {
-                    string emailCurrentUser = Authentication._currentUser.email;
-                    string emailLikedUser = Authentication._currentProfile.user.email;
-                    //krijg een pop-up dat je een match hebt
-                    if (_database.CheckMatch(emailCurrentUser, emailLikedUser))
-                    {
-                        _database.NewMatch(emailLikedUser, emailCurrentUser);
-                        _database.deleteLikeOnMatch(emailCurrentUser, emailLikedUser);
-                        MatchPopup();
-                    }
-                    else
-                    {
-                        _database.NewLike(emailCurrentUser, emailLikedUser);
-                    }
-                    CheckIfQueueNeedsMoreProfiles();
-                    NextProfile();
-                }
-            };
-            dislikeButton.Clicked += (sender, args) => {
-                if (Authentication._currentProfile != null)
-                {
-                    string emailCurrentUser = Authentication._currentUser.email;
-                    string emaildDislikedUser = Authentication._currentProfile.user.email;
-                    _database.NewDislike(emailCurrentUser, emaildDislikedUser);
-                }
-                CheckIfQueueNeedsMoreProfiles();
-                NextProfile();
-            };
             buttonStackLayout.Add(dislikeButton);
             buttonStackLayout.Add(likeButton);
-
+            verticalStackLayout.GestureRecognizers.Add(rightSwipe);
+            verticalStackLayout.GestureRecognizers.Add(leftSwipe);
+            
         }
 
         //Add the different stacklayouts
@@ -353,7 +332,12 @@ public partial class MatchPage : ContentPage
 
         verticalStackLayout.BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
-        ;
+    }
+
+    private async Task UpdateQueue()
+    {
+        Task gettingProfiles = GetProfiles();
+        await gettingProfiles;
     }
 
     private void BackButton_Clicked(object sender, EventArgs e)
@@ -448,10 +432,12 @@ public partial class MatchPage : ContentPage
     {
         await DisplayAlert("Match", "You have a match", "OK");
     }
+
     
     byte[] ScaleImage(byte[] bytes)
     {
         if (Authentication.isscaled == false)
+
         {
             Authentication.isscaled = true;
 
@@ -471,5 +457,56 @@ public partial class MatchPage : ContentPage
             return bytes;
 
         
+    }
+    
+    int swipes = 0;
+    private void OnSwipe(object sender, SwipedEventArgs e)
+    {
+        switch (e.Direction)
+        {
+            case SwipeDirection.Right:
+                if (swipes % 2 == 0)
+                {
+                    OnLike(sender, e);
+                }
+                break;
+            case SwipeDirection.Left:
+                if (swipes % 2 == 0)
+                {
+                    OnDislike(sender, e);
+                }
+                break;
+        }
+    }
+    
+    private void OnLike(object sender, EventArgs e)
+    {
+        CheckIfQueueNeedsMoreProfiles();
+        string emailCurrentUser = Authentication._currentUser.email;
+        string emailLikedUser = Authentication._currentProfile.user.email;
+        if (_database.CheckMatch(emailCurrentUser, emailLikedUser))
+        {
+            _database.NewMatch(emailLikedUser, emailCurrentUser);
+            _database.deleteLikeOnMatch(emailCurrentUser, emailLikedUser);
+        }
+        else
+        {
+            _database.NewLike(emailCurrentUser, emailLikedUser);
+        }
+
+        MatchPopup();
+
+        NextProfile();
+    }
+
+    private void OnDislike(object sender, EventArgs e)
+    {
+        CheckIfQueueNeedsMoreProfiles();
+        string emailCurrentUser = Authentication._currentUser.email;
+        string emaildDislikedUser = Authentication._currentProfile.user.email;
+
+        _database.NewDislike(emailCurrentUser, emaildDislikedUser);
+
+        NextProfile();
     }
 }
