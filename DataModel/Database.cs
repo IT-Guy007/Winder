@@ -166,12 +166,16 @@ public class Database {
 
     }
 
-    public void UpdatePassword(string email, string password) {
-        Authentication authentication = new Authentication();
-        if (authentication.EmailIsUnique(email) == false) { // checken of email in de database staat
+
+    public void UpdatePassword(string email, string password)
+    {
+        Authentication a = new Authentication();
+        if (a.EmailIsUnique(email) == false) // checken of email in de database staat
+        {
+
             // connectieopzetten en query maken
             
-            string hashedpassword = authentication.HashPassword(password); // eerst het password hashen voor het updaten
+            string hashedpassword = _authentication.HashPassword(password); // eerst het password hashen voor het updaten
             OpenConnection();
             SqlCommand query = new SqlCommand("update winder.winder.[User] set password = @password where email = @Email", connection);
             query.Parameters.AddWithValue("@Email", email);
@@ -883,6 +887,17 @@ public class Database {
         return queue;
     }
 
+    /*public string[] GetUsersWhoMatchPreferences(string email)
+    {
+        List<string> users = new List<string>();
+
+        OpenConnection();
+
+        SqlCommand command = new SqlCommand("select email from Winder.Winder.[User] where email != @email &" +
+
+        return users.ToArray();
+    }*/
+
     public string[] GetUsersWithCommonInterest(string email) {
         List<string> users = new List<string>();
 
@@ -922,8 +937,6 @@ public class Database {
             Console.WriteLine(se.StackTrace);
             //Close connection
             CloseConnection();
-
-
         }
         CloseConnection();
         return users.ToArray();
