@@ -71,6 +71,9 @@
       <MauiXaml Update="MatchPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
+      <MauiXaml Update="VideTemplate.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
       <MauiXaml Update="ProfileChangePage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
@@ -90,6 +93,9 @@
       <Compile Update="MatchPage.xaml.cs">
         <DependentUpon>MatchPage.xaml</DependentUpon>
         <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="VideTemplate.xaml.cs">
+        <DependentUpon>VideTemplate.xaml</DependentUpon>
       </Compile>
       <Compile Update="ProfileChangePage.xaml.cs">
         <DependentUpon>ProfileChangePage.xaml</DependentUpon>
