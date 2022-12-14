@@ -1,17 +1,23 @@
+using CommunityToolkit.Maui.Core.Extensions;
+using DataModel;
 using MAUI;
+using System.Collections.ObjectModel;
 
 namespace Winder;
 
 public partial class MatchesPage : ContentPage
 {
 	public string originPage;
+    Database Database = new Database();
 	public MatchesPage()
 	{
 		InitializeComponent();
-	}
+        List<User> MatchedStudents = Database.GetMatchesFromUser(Authentication._currentUser.email);
+        xamlList.ItemsSource = MatchedStudents;
+    }
 
 
-	private void Backbutton_Clicked(object sender, EventArgs e)
+    private void Backbutton_Clicked(object sender, EventArgs e)
 	{
 
 		
