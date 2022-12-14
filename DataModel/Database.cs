@@ -289,8 +289,8 @@ public class Database {
                 var school = reader["location"] as string;
                 var major = reader["education"] as string;
                 byte[] img = (byte[])(reader["profilePicture"]);
-
-                DateTime birthday = Authentication.CalculateAge(bday);
+                
+                DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
                 user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, img, bio, school, major);
             }
         } catch (SqlException e) {
