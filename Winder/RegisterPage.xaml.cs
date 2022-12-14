@@ -159,13 +159,17 @@ public partial class RegisterPage : ContentPage {
                 middlename = "";
             }
 
-            database.RegistrationFunction(firstname, middlename, lastname, email, preference, dateOfBirth, gender, "random tekst", password, profilePicture, true, school, major);
+            database.RegistrationFunction(firstname, middlename, lastname, email, preference, dateOfBirth, gender, " ", password, profilePicture, true, school, major);
             database.SaveProfilePictures(email, profilePicture);
+            User currentUser = new User(firstname, middlename, lastname, dateOfBirth, preference, email, password, gender, profilePicture, " ", school, major);
+            Authentication._currentUser = currentUser;
 
             foreach (string interesse in GekozenInteressesLijst) {
                 database.RegisterInterestInDatabase(email, interesse);
             }
-            Navigation.PushAsync(new MainPage());
+
+            Navigation.PushAsync(new StartPage());
+
         }
     }
 
@@ -385,6 +389,10 @@ public partial class RegisterPage : ContentPage {
         }
     }
 
+    private void Backbutton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new MainPage());
+    }
 }
 
 
