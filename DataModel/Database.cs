@@ -655,10 +655,10 @@ public class Database {
         try {
             SqlDataReader reader = query.ExecuteReader();
             while (reader.Read()) {
-                int? minAge = reader["max"] as int?;
+                int? maxAge = reader["max"] as int?;
                 CloseConnection();
-                int minimalAge = minAge ?? 18;
-                return minimalAge;
+                int maximalAge = maxAge ?? 99;
+                return maximalAge;
 
             }
         }
@@ -887,16 +887,93 @@ public class Database {
         return queue;
     }
 
-    /*public string[] GetUsersWhoMatchPreferences(string email)
+    public string[] GetUsersWhoMatchPreferences(string email)
+    {
+        List<string> users = new List<string>();
+        string preference = GetUserFromDatabase(email).preference;
+        string gender = GetUserFromDatabase(email).gender;
+
+        OpenConnection();
+
+        SqlCommand command = new SqlCommand("select email from Winder.Winder.[User] where email != @email and gender = @preference " +  // gets all the users whos gender is the same as the set preference
+            "and email in (select email from  Winder.Winder.[User] where email != @email and preference = @gender)", connection);   // gets all the users whos preference is your gender
+        command.Parameters.AddWithValue("@email", email);
+        command.Parameters.AddWithValue("@preference", preference);
+        command.Parameters.AddWithValue("@gender", gender);
+
+        try
+        {
+            SqlDataReader reader = command.ExecuteReader(); // execute het command
+            while (reader.Read())
+            {
+                string person = reader["email"] as string ?? "Unknown";
+                users.Add(person);
+
+            }
+            CloseConnection();
+
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+        }
+
+        CloseConnection();
+        return users.ToArray();
+    }
+
+
+
+    public string[] GetUsersInAgeRange(string email)
     {
         List<string> users = new List<string>();
 
         OpenConnection();
 
-        SqlCommand command = new SqlCommand("select email from Winder.Winder.[User] where email != @email &" +
+        SqlCommand command = new SqlCommand("select email from Winder.Winder.[User] where email != @email", connection);    // selects the users except the given user
+        command.Parameters.AddWithValue("@email", email);
 
-        return users.ToArray();
-    }*/
+        try
+        {
+            SqlDataReader reader = command.ExecuteReader(); // execute het command
+            while (reader.Read())
+            {
+                string person = reader["email"] as string ?? "Unknown";
+                users.Add(person);
+            }
+            CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+        }
+
+        List<string> userswhosageisright = new List<string>();
+
+        Authentication auth = new Authentication();
+        User givenuser = GetUserFromDatabase(email);
+        int mingivenage = GetMinAge(email);
+        int maxgivenage = GetMaxAge(email);
+        foreach (var user in users)
+        {
+            User arrayuser = GetUserFromDatabase(user);
+            int minage = GetMinAge(user);
+            int maxage = GetMaxAge(user);
+            if (!(auth.CalculateAge(arrayuser.birthDay) < mingivenage || auth.CalculateAge(arrayuser.birthDay) > maxgivenage         // checkt of de leeftijd van de user in de array binnen de range van de gegvene user valt
+                || minage > auth.CalculateAge(givenuser.birthDay) || maxage < auth.CalculateAge(givenuser.birthDay)))      // checks if the age of the given user is in the range of the user in the array
+            {
+                userswhosageisright.Add(user);
+            }
+        }
+
+        CloseConnection();
+        return userswhosageisright.ToArray();
+    }
+
 
     public string[] GetUsersWithCommonInterest(string email) {
         List<string> users = new List<string>();
@@ -945,17 +1022,39 @@ public class Database {
 
     public List<string> AlgorithmForSwiping(string email) {
         Random rnd = new Random();
+        string[] userswhomatch = GetUsersWhoMatchPreferences(email);
+        userswhomatch = userswhomatch.Intersect(GetUsersInAgeRange(email)).ToArray();  // list of all users who are optentail matches based on preference, gender, age and age preference
 
         string[] usersWhoLikedYou = GetUsersWhoLikedYou(email); //Users that liked you
+        usersWhoLikedYou = usersWhoLikedYou.Intersect(userswhomatch).ToArray();
         string[] usersWithCommonInterests = GetUsersWithCommonInterest(email);
+        usersWithCommonInterests = usersWithCommonInterests.Intersect(userswhomatch).ToArray();     // bij alle arrays intersecten om alleen de users te krijgen die wel met elkaar willen matchen qua voorkeur
 
         usersWithCommonInterests = usersWithCommonInterests.Where(x => !usersWhoLikedYou.Contains(x)).ToArray(); // is needed because they could have duplicates between the lists and is done this way because users who likedyou has a higher priority in the algorithm
 
         Queue<string> restOfUsers = GetRestOfUsers(email); //Random Users
-        usersWhoLikedYou = usersWhoLikedYou.OrderBy(x => rnd.Next()).ToArray(); 
-        usersWithCommonInterests = usersWithCommonInterests.OrderBy(x => rnd.Next()).ToArray();     // shuffle the arrays randomly instead of how they are sorted in the database
+                                                           // Create a list to store the values that we want to keep in the queue., which is the users who are potential matches
+        List<string> valuesToKeepinrestOfUsers = new List<string>();
 
-        usersWithCommonInterests = usersWithCommonInterests.GroupBy(x => x).ToList().OrderByDescending(g => g.Count()).Select(g => g.Key).ToArray(); // sorts so that the values with the most duplicates are in front and removes the duplicates
+        // Iterate over the values in the queue and add the ones that are in the array to the list.
+        while (restOfUsers.Count > 0)
+        {
+            string value = restOfUsers.Dequeue();
+            if (userswhomatch.Contains(value))
+            {
+                valuesToKeepinrestOfUsers.Add(value);
+            }
+        }
+
+        // Clear the queue and add the values from the list back to the queue.
+        restOfUsers.Clear();
+        foreach (string value in valuesToKeepinrestOfUsers)
+        {
+            restOfUsers.Enqueue(value);
+        }
+
+
+
 
         List<string> users = new List<string>(); //Result
         for (int i = 0; i < 5; i++) {
