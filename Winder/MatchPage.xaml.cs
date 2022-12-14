@@ -162,12 +162,11 @@ public partial class MatchPage : ContentPage
             //Age
             StackLayout ageStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var birthday = int.Parse(Authentication._currentProfile.user.birthDay.ToString("yyyyMMdd"));
-            var today = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
-            var age = new Label { Text = ((today - birthday) / 1000).ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            Authentication auth = new Authentication();
+            var age = new Label { Text = auth.CalculateAge(Authentication._currentUser.birthDay).ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to Stack
-            var ageBinding = new Binding() { Source = ((today - birthday) / 1000).ToString() };
+            var ageBinding = new Binding() { Source = auth.CalculateAge(Authentication._currentUser.birthDay).ToString() };
             age.SetBinding(Label.TextProperty, ageBinding);
 
 
