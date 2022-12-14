@@ -1,26 +1,18 @@
-using MAUI;
-using System;
-using System.Threading.Tasks;
+﻿using DataModel;
+
 namespace MAUI;
 
+public partial class MainPage : ContentPage {
 
-public partial class MainPage : ContentPage
-{
-
-   
-    public MainPage()
-    {
+    public MainPage() {
         InitializeComponent();
         
-
     }
-    
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-        await Task.Delay(4000); // wait for 4 seconds
-        await Navigation.PushAsync(new StartPage());
+    private void RegisterButton(object sender, EventArgs e) {
+        Navigation.PushAsync(new RegisterPage());
+    }
+
+    private void LoginButton(object sender, EventArgs e) {
+        Navigation.PushAsync(new LoginPage());
     }
 }
-
-

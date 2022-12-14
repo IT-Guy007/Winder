@@ -5,34 +5,15 @@
              Title="RegisterForm"
              BackgroundImageSource="backgr.jpeg">
 
-    <Shell.BackButtonBehavior >
-        <BackButtonBehavior IsVisible="False" IsEnabled="False"></BackButtonBehavior>
-    </Shell.BackButtonBehavior>
     <Grid>
-
-       
-        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
         <Rectangle Grid.Column="0" Fill="Black" Opacity="0.6"  HorizontalOptions="Fill" VerticalOptions="Start"></Rectangle>
-        <ImageButton
-                x:Name="Backbutton"
-                Source="backbutton.png"
-                HorizontalOptions="Start"
-                VerticalOptions="Start"
-                HeightRequest="40"
-                WidthRequest="40"
-                Aspect="AspectFill"
-                Clicked="Backbutton_Clicked"
-                CornerRadius="50"
-                
-                />
         <VerticalStackLayout Grid.Column="0"  Spacing="10" Padding="20" HorizontalOptions="Center" >
-            
+
             <ImageButton
                 Clicked="OnProfilePictureClicked"
                 x:Name="ProfileImage"
