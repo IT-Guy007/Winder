@@ -508,54 +508,10 @@ public partial class MatchPage : ContentPage
         NextProfile();
     }
     
-    int swipes = 0;
-    private void OnSwipe(object sender, SwipedEventArgs e)
-    {
-        switch (e.Direction)
-        {
-            case SwipeDirection.Right:
-                if (swipes % 2 == 0)
-                {
-                    OnLike(sender, e);
-                }
-                break;
-            case SwipeDirection.Left:
-                if (swipes % 2 == 0)
-                {
-                    OnDislike(sender, e);
-                }
-                break;
-        }
-    }
     
-    private void OnLike(object sender, EventArgs e)
-    {
-        CheckIfQueueNeedsMoreProfiles();
-        string emailCurrentUser = Authentication._currentUser.email;
-        string emailLikedUser = Authentication._currentProfile.user.email;
-        if (_database.CheckMatch(emailCurrentUser, emailLikedUser))
-        {
-            _database.NewMatch(emailLikedUser, emailCurrentUser);
-            _database.deleteLikeOnMatch(emailCurrentUser, emailLikedUser);
-        }
-        else
-        {
-            _database.NewLike(emailCurrentUser, emailLikedUser);
-        }
+  
+    
+   
 
-        MatchPopup();
-
-        NextProfile();
-    }
-
-    private void OnDislike(object sender, EventArgs e)
-    {
-        CheckIfQueueNeedsMoreProfiles();
-        string emailCurrentUser = Authentication._currentUser.email;
-        string emaildDislikedUser = Authentication._currentProfile.user.email;
-
-        _database.NewDislike(emailCurrentUser, emaildDislikedUser);
-
-        NextProfile();
-    }
+  
 }
