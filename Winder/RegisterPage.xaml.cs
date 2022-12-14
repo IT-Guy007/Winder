@@ -167,7 +167,9 @@ public partial class RegisterPage : ContentPage {
             foreach (string interesse in GekozenInteressesLijst) {
                 database.RegisterInterestInDatabase(email, interesse);
             }
-            Navigation.PushAsync(new MatchPage());
+
+            Navigation.PushAsync(new StartPage());
+
         }
     }
 
