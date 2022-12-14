@@ -1032,7 +1032,7 @@ public class Database {
         return profiles;
     }
 
-    public List<User> GetMatchesFromUser(string email)
+    public List<User> GetMatchedStudentsFromUser(string email)
     {
         List<User> users = new List<User>();
         List<string> emails = new List<string>();
