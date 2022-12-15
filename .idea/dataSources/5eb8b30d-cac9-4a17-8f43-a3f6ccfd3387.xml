@@ -189,73 +189,130 @@
       <ObjectId>4</ObjectId>
     </schema>
     <schema id="47" parent="6" name="winder">
-      <IntrospectionTimestamp>2022-12-12.17:11:09.677</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2022-12-15.13:22:15.603</IntrospectionTimestamp>
       <ObjectId>5</ObjectId>
     </schema>
-    <table id="48" parent="47" name="Interests">
+    <table id="48" parent="47" name="ChatMessage">
+      <CreatedTimestamp>2022-12-13.13:04:15.707</CreatedTimestamp>
+      <ModifiedTimestamp>2022-12-13.14:33:48.620</ModifiedTimestamp>
+      <ObjectId>1701581100</ObjectId>
+    </table>
+    <table id="49" parent="47" name="Interests">
       <CreatedTimestamp>2022-11-21.15:53:24.330</CreatedTimestamp>
       <ModifiedTimestamp>2022-11-28.14:36:41.560</ModifiedTimestamp>
       <ObjectId>901578250</ObjectId>
     </table>
-    <table id="49" parent="47" name="Liked">
+    <table id="50" parent="47" name="Liked">
       <CreatedTimestamp>2022-11-24.11:11:09.227</CreatedTimestamp>
       <ModifiedTimestamp>2022-12-05.16:04:10.440</ModifiedTimestamp>
       <ObjectId>1333579789</ObjectId>
     </table>
-    <table id="50" parent="47" name="Match">
+    <table id="51" parent="47" name="Match">
       <CreatedTimestamp>2022-11-21.15:53:24.400</CreatedTimestamp>
       <ModifiedTimestamp>2022-11-29.12:25:35.520</ModifiedTimestamp>
       <ObjectId>917578307</ObjectId>
     </table>
-    <table id="51" parent="47" name="Photos">
+    <table id="52" parent="47" name="Photos">
       <CreatedTimestamp>2022-12-12.12:13:13.200</CreatedTimestamp>
       <ModifiedTimestamp>2022-12-12.12:13:13.200</ModifiedTimestamp>
       <ObjectId>1669580986</ObjectId>
     </table>
-    <table id="52" parent="47" name="User">
+    <table id="53" parent="47" name="User">
       <CreatedTimestamp>2022-11-21.15:53:24.450</CreatedTimestamp>
-      <ModifiedTimestamp>2022-12-12.12:13:13.203</ModifiedTimestamp>
+      <ModifiedTimestamp>2022-12-13.14:33:48.623</ModifiedTimestamp>
       <ObjectId>933578364</ObjectId>
     </table>
-    <table id="53" parent="47" name="UserHasInterest">
+    <table id="54" parent="47" name="UserHasInterest">
       <CreatedTimestamp>2022-11-21.15:53:24.493</CreatedTimestamp>
       <ModifiedTimestamp>2022-12-05.15:23:40.877</ModifiedTimestamp>
       <ObjectId>949578421</ObjectId>
     </table>
-    <column id="54" parent="48" name="name">
+    <column id="55" parent="48" name="personFrom">
+      <DataType>varchar(100 char)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="56" parent="48" name="personTo">
+      <DataType>varchar(100 char)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="57" parent="48" name="sendDate">
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="58" parent="48" name="chatMessage">
+      <DataType>varchar(1000 char)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <foreign-key id="59" parent="48" name="ChatMessage_User_from_fk">
+      <ColNames>personFrom</ColNames>
+      <CreatedTimestamp>2022-12-13.14:33:48.557</CreatedTimestamp>
+      <ModifiedTimestamp>2022-12-13.14:33:48.557</ModifiedTimestamp>
+      <ObjectId>1733581214</ObjectId>
+      <RefColNames>email</RefColNames>
+      <RefTableId>933578364</RefTableId>
+      <RefTableName>User</RefTableName>
+    </foreign-key>
+    <foreign-key id="60" parent="48" name="ChatMessage_User_to_fk">
+      <ColNames>personTo</ColNames>
+      <CreatedTimestamp>2022-12-13.14:33:48.620</CreatedTimestamp>
+      <ModifiedTimestamp>2022-12-13.14:33:48.620</ModifiedTimestamp>
+      <ObjectId>1749581271</ObjectId>
+      <RefColNames>email</RefColNames>
+      <RefTableId>933578364</RefTableId>
+      <RefTableName>User</RefTableName>
+    </foreign-key>
+    <index id="61" parent="48" name="ChatMessage_pk">
+      <Clustering>1</Clustering>
+      <ColNames>personFrom
+sendDate</ColNames>
+      <Position>1</Position>
+      <Unique>1</Unique>
+    </index>
+    <key id="62" parent="48" name="ChatMessage_pk">
+      <CreatedTimestamp>2022-12-13.14:32:48.960</CreatedTimestamp>
+      <ModifiedTimestamp>2022-12-13.14:32:48.960</ModifiedTimestamp>
+      <ObjectId>1717581157</ObjectId>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>ChatMessage_pk</UnderlyingIndexName>
+    </key>
+    <column id="63" parent="49" name="name">
       <DataType>varchar(50 char)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <index id="55" parent="48" name="Interests_pk">
+    <index id="64" parent="49" name="Interests_pk">
       <Clustering>1</Clustering>
       <ColNames>name</ColNames>
       <Position>1</Position>
       <Unique>1</Unique>
     </index>
-    <key id="56" parent="48" name="Interests_pk">
+    <key id="65" parent="49" name="Interests_pk">
       <CreatedTimestamp>2022-11-28.14:35:23.413</CreatedTimestamp>
       <ModifiedTimestamp>2022-11-28.14:35:23.413</ModifiedTimestamp>
       <ObjectId>1397580017</ObjectId>
       <Primary>1</Primary>
       <UnderlyingIndexName>Interests_pk</UnderlyingIndexName>
     </key>
-    <column id="57" parent="49" name="person">
+    <column id="66" parent="50" name="person">
       <DataType>varchar(100 char)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="58" parent="49" name="likedPerson">
+    <column id="67" parent="50" name="likedPerson">
       <DataType>varchar(100 char)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="59" parent="49" name="liked">
+    <column id="68" parent="50" name="liked">
       <DataType>tinyint|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <foreign-key id="60" parent="49" name="Liked_User_person_fk">
+    <foreign-key id="69" parent="50" name="Liked_User_person_fk">
       <ColNames>person</ColNames>
       <CreatedTimestamp>2022-11-24.11:12:25.120</CreatedTimestamp>
       <ModifiedTimestamp>2022-11-24.11:12:25.120</ModifiedTimestamp>
@@ -264,7 +321,7 @@
       <RefTableId>933578364</RefTableId>
       <RefTableName>User</RefTableName>
     </foreign-key>
-    <foreign-key id="61" parent="49" name="Liked_User_null_fk">
+    <foreign-key id="70" parent="50" name="Liked_User_null_fk">
       <ColNames>likedPerson</ColNames>
       <CreatedTimestamp>2022-11-24.11:12:25.110</CreatedTimestamp>
       <ModifiedTimestamp>2022-11-24.11:12:25.110</ModifiedTimestamp>
@@ -273,31 +330,31 @@
       <RefTableId>933578364</RefTableId>
       <RefTableName>User</RefTableName>
     </foreign-key>
-    <index id="62" parent="49" name="Liked_pk">
+    <index id="71" parent="50" name="Liked_pk">
       <Clustering>1</Clustering>
       <ColNames>person
 likedPerson</ColNames>
       <Position>1</Position>
       <Unique>1</Unique>
     </index>
-    <key id="63" parent="49" name="Liked_pk">
+    <key id="72" parent="50" name="Liked_pk">
       <CreatedTimestamp>2022-11-24.11:11:09.230</CreatedTimestamp>
       <ModifiedTimestamp>2022-11-24.11:11:09.230</ModifiedTimestamp>
       <ObjectId>1349579846</ObjectId>
       <Primary>1</Primary>
       <UnderlyingIndexName>Liked_pk</UnderlyingIndexName>
     </key>
-    <column id="64" parent="50" name="person1">
+    <column id="73" parent="51" name="person1">
       <DataType>varchar(100 char)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="65" parent="50" name="person2">
+    <column id="74" parent="51" name="person2">
       <DataType>varchar(100 char)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <foreign-key id="66" parent="50" name="Match_User_person1_fk">
+    <foreign-key id="75" parent="51" name="Match_User_person1_fk">
       <ColNames>person1</ColNames>
       <CreatedTimestamp>2022-11-29.12:25:35.460</CreatedTimestamp>
       <ModifiedTimestamp>2022-11-29.12:25:35.460</ModifiedTimestamp>
@@ -306,7 +363,7 @@ likedPerson</ColNames>
       <RefTableId>933578364</RefTableId>
       <RefTableName>User</RefTableName>
     </foreign-key>
-    <foreign-key id="67" parent="50" name="Match_User_person2_fk">
+    <foreign-key id="76" parent="51" name="Match_User_person2_fk">
       <ColNames>person2</ColNames>
       <CreatedTimestamp>2022-11-29.12:25:35.520</CreatedTimestamp>
       <ModifiedTimestamp>2022-11-29.12:25:35.520</ModifiedTimestamp>
@@ -315,30 +372,30 @@ likedPerson</ColNames>
       <RefTableId>933578364</RefTableId>
       <RefTableName>User</RefTableName>
     </foreign-key>
-    <index id="68" parent="50" name="Match_pk">
+    <index id="77" parent="51" name="Match_pk">
       <Clustering>1</Clustering>
       <ColNames>person1
 person2</ColNames>
       <Position>1</Position>
       <Unique>1</Unique>
     </index>
-    <key id="69" parent="50" name="Match_pk">
+    <key id="78" parent="51" name="Match_pk">
       <CreatedTimestamp>2022-11-29.12:23:15.130</CreatedTimestamp>
       <ModifiedTimestamp>2022-11-29.12:23:15.130</ModifiedTimestamp>
       <ObjectId>1429580131</ObjectId>
       <Primary>1</Primary>
       <UnderlyingIndexName>Match_pk</UnderlyingIndexName>
     </key>
-    <column id="70" parent="51" name="user">
+    <column id="79" parent="52" name="user">
       <DataType>varchar(100 char)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="71" parent="51" name="photo">
+    <column id="80" parent="52" name="photo">
       <DataType>varbinary(max)|0s</DataType>
       <Position>2</Position>
     </column>
-    <foreign-key id="72" parent="51" name="Photos_User_email_fk">
+    <foreign-key id="81" parent="52" name="Photos_User_email_fk">
       <ColNames>user</ColNames>
       <CreatedTimestamp>2022-12-12.12:13:13.200</CreatedTimestamp>
       <ModifiedTimestamp>2022-12-12.12:13:13.200</ModifiedTimestamp>
@@ -347,93 +404,93 @@ person2</ColNames>
       <RefTableId>933578364</RefTableId>
       <RefTableName>User</RefTableName>
     </foreign-key>
-    <column id="73" parent="52" name="firstname">
+    <column id="82" parent="53" name="firstname">
       <DataType>varchar(50 char)|0s</DataType>
       <Position>2</Position>
     </column>
-    <column id="74" parent="52" name="middlename">
+    <column id="83" parent="53" name="middlename">
       <DataType>varchar(50 char)|0s</DataType>
       <Position>3</Position>
     </column>
-    <column id="75" parent="52" name="lastname">
+    <column id="84" parent="53" name="lastname">
       <DataType>varchar(50 char)|0s</DataType>
       <Position>4</Position>
     </column>
-    <column id="76" parent="52" name="birthday">
+    <column id="85" parent="53" name="birthday">
       <DataType>datetime|0s</DataType>
       <Position>5</Position>
     </column>
-    <column id="77" parent="52" name="preference">
+    <column id="86" parent="53" name="preference">
       <DataType>varchar(50 char)|0s</DataType>
       <Position>6</Position>
     </column>
-    <column id="78" parent="52" name="email">
+    <column id="87" parent="53" name="email">
       <DataType>varchar(100 char)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <column id="79" parent="52" name="password">
+    <column id="88" parent="53" name="password">
       <DataType>varchar(150 char)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>8</Position>
     </column>
-    <column id="80" parent="52" name="gender">
+    <column id="89" parent="53" name="gender">
       <DataType>varchar(50 char)|0s</DataType>
       <Position>9</Position>
     </column>
-    <column id="81" parent="52" name="profilePicture">
+    <column id="90" parent="53" name="profilePicture">
       <DataType>varbinary(max)|0s</DataType>
       <Position>10</Position>
     </column>
-    <column id="82" parent="52" name="bio">
+    <column id="91" parent="53" name="bio">
       <DataType>varchar(max)|0s</DataType>
       <Position>12</Position>
     </column>
-    <column id="83" parent="52" name="active">
+    <column id="92" parent="53" name="active">
       <DataType>tinyint|0s</DataType>
       <NotNull>1</NotNull>
       <Position>13</Position>
     </column>
-    <column id="84" parent="52" name="location">
+    <column id="93" parent="53" name="location">
       <DataType>varchar(6 char)|0s</DataType>
       <Position>14</Position>
     </column>
-    <column id="85" parent="52" name="education">
+    <column id="94" parent="53" name="education">
       <DataType>varchar(100 char)|0s</DataType>
       <Position>15</Position>
     </column>
-    <column id="86" parent="52" name="min">
+    <column id="95" parent="53" name="min">
       <DataType>int|0s</DataType>
       <Position>16</Position>
     </column>
-    <column id="87" parent="52" name="max">
+    <column id="96" parent="53" name="max">
       <DataType>int|0s</DataType>
       <Position>17</Position>
     </column>
-    <index id="88" parent="52" name="User_pk">
+    <index id="97" parent="53" name="User_pk">
       <Clustering>1</Clustering>
       <ColNames>email</ColNames>
       <Position>1</Position>
       <Unique>1</Unique>
     </index>
-    <key id="89" parent="52" name="User_pk">
+    <key id="98" parent="53" name="User_pk">
       <CreatedTimestamp>2022-11-24.10:44:24.870</CreatedTimestamp>
       <ModifiedTimestamp>2022-11-24.10:44:24.870</ModifiedTimestamp>
       <ObjectId>1157579162</ObjectId>
       <Primary>1</Primary>
       <UnderlyingIndexName>User_pk</UnderlyingIndexName>
     </key>
-    <column id="90" parent="53" name="UID">
+    <column id="99" parent="54" name="UID">
       <DataType>varchar(100 char)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="91" parent="53" name="interest">
+    <column id="100" parent="54" name="interest">
       <DataType>varchar(50 char)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <foreign-key id="92" parent="53" name="userHasInterest_User_null_fk">
+    <foreign-key id="101" parent="54" name="userHasInterest_User_null_fk">
       <ColNames>UID</ColNames>
       <CreatedTimestamp>2022-11-24.11:07:48.870</CreatedTimestamp>
       <ModifiedTimestamp>2022-11-24.11:07:48.870</ModifiedTimestamp>
@@ -442,7 +499,7 @@ person2</ColNames>
       <RefTableId>933578364</RefTableId>
       <RefTableName>User</RefTableName>
     </foreign-key>
-    <foreign-key id="93" parent="53" name="userHasInterest_Interests_null_fk">
+    <foreign-key id="102" parent="54" name="userHasInterest_Interests_null_fk">
       <ColNames>interest</ColNames>
       <CreatedTimestamp>2022-11-28.14:36:41.560</CreatedTimestamp>
       <ModifiedTimestamp>2022-11-28.14:36:41.560</ModifiedTimestamp>
@@ -451,14 +508,14 @@ person2</ColNames>
       <RefTableId>901578250</RefTableId>
       <RefTableName>Interests</RefTableName>
     </foreign-key>
-    <index id="94" parent="53" name="userHasInterest_pk">
+    <index id="103" parent="54" name="userHasInterest_pk">
       <Clustering>1</Clustering>
       <ColNames>UID
 interest</ColNames>
       <Position>1</Position>
       <Unique>1</Unique>
     </index>
-    <key id="95" parent="53" name="userHasInterest_pk">
+    <key id="104" parent="54" name="userHasInterest_pk">
       <CreatedTimestamp>2022-11-29.12:32:58.003</CreatedTimestamp>
       <ModifiedTimestamp>2022-11-29.12:32:58.003</ModifiedTimestamp>
       <ObjectId>1477580302</ObjectId>
