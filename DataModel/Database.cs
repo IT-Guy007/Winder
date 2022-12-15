@@ -13,7 +13,6 @@ public class Database {
     
     public static void Initialize() {
        GenerateConnection();
-       connection.Open();
     }
     public static void GenerateConnection() {
 
