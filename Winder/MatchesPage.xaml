@@ -6,9 +6,8 @@
     <Shell.BackButtonBehavior >
         <BackButtonBehavior IsVisible="False" IsEnabled="False"></BackButtonBehavior>
     </Shell.BackButtonBehavior>
-    <VerticalStackLayout>
-        
-              <Grid>
+    <VerticalStackLayout BackgroundColor="#CC415F">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -30,9 +29,6 @@
                 Grid.Column="0"
                 />
             <HorizontalStackLayout Grid.Column="2" HorizontalOptions="End" >
-
-
-
                 <Button 
                     x:Name="matchesbutton"
                 Text="Matches"
@@ -41,10 +37,7 @@
                 WidthRequest="120"
                 FontSize="15"
                 HeightRequest="50"
-                TextColor="Black"
-                  
-                
-            >
+                TextColor="Black">
                 </Button>
                 <Button 
                 x:Name="matchPage"
@@ -72,7 +65,28 @@
 
                 </Button>
             </HorizontalStackLayout>
-
         </Grid>
+        <StackLayout WidthRequest="800" Padding="0,0,0,10" >
+            <ListView x:Name="ListOfMatches" Grid.Row="1" ItemTapped="ListOfMatches_ItemTapped" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame x:Name="FrameBox" HasShadow="True" BorderColor="Black" BackgroundColor="#d1546f" HeightRequest="100">
+                                <StackLayout Orientation="Horizontal">
+                                    <Image Source="{Binding ProfilePicture}" HeightRequest="100" WidthRequest="100"/>
+                                    <StackLayout Orientation="Vertical" Padding="12,0">
+                                        <Label Text="{Binding FirstName}" TextColor="Black" FontAttributes="Bold" />
+                                        <Label Text="{Binding LastName}" TextColor="FloralWhite" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                        <ImageButton Source="chat.png" HeightRequest="50" WidthRequest="50" BackgroundColor="Transparent" HorizontalOptions="End"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </VerticalStackLayout>
 </ContentPage>

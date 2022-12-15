@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 
 namespace DataModel;
 
-
+using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
 
@@ -31,7 +31,6 @@ public class Database {
     public void CloseConnection() {
 
         if (connection == null) {
-
             GenerateConnection();
         }
         connection.Close();
@@ -275,11 +274,11 @@ public class Database {
 
     public User GetUserFromDatabase(string email) {
         User user = null;
-        OpenConnection();
-        string sql = "SELECT * FROM Winder.Winder.[User] where email = @Email";
-        SqlCommand command = new SqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@Email", email);
         try {
+            OpenConnection();
+            string sql = "SELECT * FROM Winder.Winder.[User] where email = @Email";
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Email", email);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read()) {
                 string? username = reader["email"] as string;
@@ -297,6 +296,7 @@ public class Database {
                 DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
                 user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, img, bio, school, major);
             }
+            CloseConnection();
         } catch (SqlException e) {
             Console.WriteLine("Error retrieving user from database");
             Console.WriteLine(e.ToString());
@@ -347,16 +347,18 @@ public class Database {
     }
     public List<string> LoadInterestsFromDatabaseInListInteresses(string email) {
         List<string> interests = new List<string>();
-        OpenConnection();
-        string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
-        SqlCommand command = new SqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@Email", email);
+
         try {
+            OpenConnection();
+            string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Email", email);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read()) {
                 var iets1 = reader["interest"] as string;
                 interests.Add(iets1);
             }
+            CloseConnection();
         } catch (SqlException e) {
             Console.WriteLine("Error retrieving interests from database");
             Console.WriteLine(e.ToString());
@@ -1030,5 +1032,42 @@ public class Database {
         return profiles;
     }
 
+    public List<User> GetMatchedStudentsFromUser(string email)
+    {
+        List<User> users = new List<User>();
+        List<string> emails = new List<string>();
+        try
+        {
+            OpenConnection();
+            string query = "SELECT person1, person2 FROM Winder.Winder.Match WHERE person1 = @email OR person2 = @email";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@email", email);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string person1 = reader["person1"] as string ?? "Unknown";
+                string person2 = reader["person2"] as string ?? "Unknown";
+                if (person1 == email)
+                {
+                    emails.Add(person2);
+                }
+                else
+                {
+                    emails.Add(person1);
+                }
+            }
+            CloseConnection();
+            emails.ForEach(x => users.Add(GetUserFromDatabase(x)));
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine("Error retrieving matches from database");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+        }
+        CloseConnection();
+        return users;
+    }
 }
 
