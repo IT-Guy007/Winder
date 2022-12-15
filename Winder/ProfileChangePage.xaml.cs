@@ -217,14 +217,17 @@ public partial class ProfileChange : ContentPage
             case "settingspage":
                 Navigation.PushAsync(new Instellingen());
                 break;
+            case "chatpage":
+            Navigation.PushAsync(new ChatPage());
+                break;
         }
     }
 
-    private void matchesButton_clicked(object sender, EventArgs e)
+    private void ChatButton_Clicked(object sender, EventArgs e)
     {
-        MatchesPage matchespage = new MatchesPage();
-        matchespage.originPage = pageName;
-        Navigation.PushAsync(matchespage);
+        ChatPage chats = new ChatPage();
+        chats.originPage = pageName;
+        Navigation.PushAsync(chats);
     }
 
     private void matchButton_Clicked(object sender, EventArgs e)

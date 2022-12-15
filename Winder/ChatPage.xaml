@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Winder.MatchesPage"
-             Title="MatchesPage">
+             x:Class="Winder.ChatPage"
+             >
     <Shell.BackButtonBehavior >
         <BackButtonBehavior IsVisible="False" IsEnabled="False"></BackButtonBehavior>
     </Shell.BackButtonBehavior>
@@ -30,14 +30,17 @@
                 />
             <HorizontalStackLayout Grid.Column="2" HorizontalOptions="End" >
                 <Button 
-                    x:Name="matchesbutton"
-                Text="Matches"
+                    x:Name="myProfile"
+                Text="Mijn Profiel"
                 VerticalOptions="Start" 
                 HorizontalOptions="Start"
                 WidthRequest="120"
                 FontSize="15"
                 HeightRequest="50"
-                TextColor="Black">
+                TextColor="Black"
+                Clicked="MyProfile_Clicked"
+            >
+
                 </Button>
                 <Button 
                 x:Name="matchPage"
@@ -48,6 +51,7 @@
                 FontSize="15"
                 HeightRequest="50"
                 TextColor="Black"
+                 Clicked="MatchPage_Clicked"
                
                 
             >
@@ -59,7 +63,7 @@
                 WidthRequest="120"
                 FontSize="15"
                 HeightRequest="50"
-               
+               Clicked="Settings_Clicked"
                 TextColor="Black"
             >
 

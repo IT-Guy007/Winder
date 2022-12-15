@@ -182,12 +182,18 @@ public partial class Instellingen : ContentPage
             case "profilepage":
                 Navigation.PushAsync(new ProfileChange());
                 break;
+            case "chatpage":
+                Navigation.PushAsync(new ChatPage());
+                break;
         }
 
     }
 
-    private void matchesbutton_Clicked(object sender, EventArgs e)
+    private void ChatButton_Clicked(object sender, EventArgs e)
     {
+        ChatPage chats = new ChatPage();
+        chats.originPage = pageName;
+        Navigation.PushAsync(chats);
 
     }
 
