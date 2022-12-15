@@ -764,7 +764,7 @@ public class Database {
             CloseConnection();
         }
     }
-        public void deleteLikeOnMatch(string emailCurrentUser, string emailLikedUser) {
+    public void deleteLikeOnMatch(string emailCurrentUser, string emailLikedUser) {
         OpenConnection();
 
         SqlCommand command = new SqlCommand("DELETE FROM winder.winder.[Liked] " +

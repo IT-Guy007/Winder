@@ -83,9 +83,15 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Compile Update="MainPage.xaml.cs">
+        <DependentUpon>MainPage.xaml</DependentUpon>
+      </Compile>
       <Compile Update="LoginPage.xaml.cs">
         <DependentUpon>LoginPage.xaml</DependentUpon>
         <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="StartPage.xaml.cs">
+        <DependentUpon>StartPage.xaml</DependentUpon>
       </Compile>
       <Compile Update="MatchPage.xaml.cs">
         <DependentUpon>MatchPage.xaml</DependentUpon>
