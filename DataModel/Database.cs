@@ -1,4 +1,5 @@
 using System.Data.SqlClient;
+using Microsoft.Maui.Storage;
 
 namespace DataModel;
 
@@ -9,6 +10,11 @@ using System.Collections.Generic;
 public class Database {
     private Authentication _authentication = new Authentication();
     public SqlConnection connection;
+    
+    public void Initialize() {
+       GenerateConnection();
+        connection.Open();
+    }
     public void GenerateConnection() {
 
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
@@ -22,9 +28,6 @@ public class Database {
     }
 
     public void OpenConnection() {
-        if (connection == null) {
-            GenerateConnection();
-        }
         connection.Open();
     }
 
@@ -38,7 +41,7 @@ public class Database {
     }
 
     public void UpdateLocalUserFromDatabase(string email) {
-
+        Console.WriteLine("Update current user from database");
         if (!string.IsNullOrWhiteSpace(email)) {
 
             //Start connection
@@ -86,7 +89,7 @@ public class Database {
     }
 
     public bool CheckLogin(string email, string password) {
-        
+        Console.WriteLine("Check login");
         string hashed = _authentication.HashPassword(password);
         bool output = false;
 
@@ -100,9 +103,12 @@ public class Database {
         //Execute query
         SqlDataReader reader = query.ExecuteReader();
 
+        Console.WriteLine("Checking login");
         while (reader.Read()) {
             if (hashed == reader["password"] as string) {
+                Console.WriteLine("Getting password");
                 output = true;
+                //SetLoginEmail(email);
             }
         }
 
@@ -762,7 +768,7 @@ public class Database {
             CloseConnection();
         }
     }
-    public void deleteLikeOnMatch(string emailCurrentUser, string emailLikedUser) {
+    public void DeleteLikeOnMatch(string emailCurrentUser, string emailLikedUser) {
         OpenConnection();
 
         SqlCommand command = new SqlCommand("DELETE FROM winder.winder.[Liked] " +
@@ -1021,51 +1027,58 @@ public class Database {
     
 
     public List<string> AlgorithmForSwiping(string email) {
-        Random rnd = new Random();
-        string[] userswhomatch = GetUsersWhoMatchPreferences(email);
-        userswhomatch = userswhomatch.Intersect(GetUsersInAgeRange(email)).ToArray();  // list of all users who are optentail matches based on preference, gender, age and age preference
-
+        
+        string[] userswhomatchPreferences = GetUsersWhoMatchPreferences(email); //Users with the same preferences
         string[] usersWhoLikedYou = GetUsersWhoLikedYou(email); //Users that liked you
-        usersWhoLikedYou = usersWhoLikedYou.Intersect(userswhomatch).ToArray();
-        string[] usersWithCommonInterests = GetUsersWithCommonInterest(email);
-        usersWithCommonInterests = usersWithCommonInterests.Intersect(userswhomatch).ToArray();     // bij alle arrays intersecten om alleen de users te krijgen die wel met elkaar willen matchen qua voorkeur
-
-        usersWithCommonInterests = usersWithCommonInterests.Where(x => !usersWhoLikedYou.Contains(x)).ToArray(); // is needed because they could have duplicates between the lists and is done this way because users who likedyou has a higher priority in the algorithm
-
+        string[] usersWithCommonInterests = GetUsersWithCommonInterest(email); //Common interests
+        string[] usersInAgeRange = GetUsersInAgeRange(email); //Users in age range
         Queue<string> restOfUsers = GetRestOfUsers(email); //Random Users
-                                                           // Create a list to store the values that we want to keep in the queue., which is the users who are potential matches
-        List<string> valuesToKeepinrestOfUsers = new List<string>();
-
-        // Iterate over the values in the queue and add the ones that are in the array to the list.
-        while (restOfUsers.Count > 0)
-        {
+        
+        //Users who have a higher chance of liking you
+        string[] usersWithHigherChance;
+        
+        //Users who match preferences and in wanted age range
+        usersWithHigherChance = userswhomatchPreferences.Intersect(usersInAgeRange).ToArray();  
+        
+        //Users who match preferences and in wanted age range and have common interests
+        usersWithHigherChance = usersWithHigherChance.Intersect(usersWithCommonInterests).ToArray();     
+        
+        //Remove duplicates from users who didn't like you
+        usersWithHigherChance = usersWithHigherChance.Where(x => !usersWhoLikedYou.Contains(x)).ToArray(); 
+        
+        //Create a list to store the values that we want to keep in the queue, which are the users who are potential matches
+        List<string> valuesToKeepinrestOfUsers = new List<string>(); 
+        
+        
+        //Removing the random users who are in the usersWithHigherChange list
+        while (restOfUsers.Count > 0) {
             string value = restOfUsers.Dequeue();
-            if (userswhomatch.Contains(value))
-            {
+            if (usersWithHigherChance.Contains(value)) {
                 valuesToKeepinrestOfUsers.Add(value);
             }
         }
-
-        // Clear the queue and add the values from the list back to the queue.
+        
         restOfUsers.Clear();
-        foreach (string value in valuesToKeepinrestOfUsers)
-        {
+        
+        foreach (string value in valuesToKeepinrestOfUsers) {
             restOfUsers.Enqueue(value);
         }
 
-
-
-
-        List<string> users = new List<string>(); //Result
+        //Result
+        List<string> users = new List<string>(); 
+        
+        //Wanted is 5 users
         for (int i = 0; i < 5; i++) {
             var userToAdd = "";
-            if (i < 3 && usersWithCommonInterests.Length >= 3) {    // preferebaly we want 3 people with common interests{
-                userToAdd = usersWithCommonInterests[i];
+            //3 users with a higher chance of liking you
+            if (i < 3 && usersWithCommonInterests.Length >= 3) {    
+                userToAdd = usersWithHigherChance[i];
+                
+            //1 person who has liked
+            } else if (i == 3 & usersWhoLikedYou.Length > 0) {      
+                userToAdd = usersWhoLikedYou.Last();
 
-            } else if (i == 3 & usersWhoLikedYou.Length > 0) {      //1 person who has liked
-                userToAdd = usersWhoLikedYou.First();
-
-            } else {          //Fill up with random people
+            } else {  //Fill up with random people
                 if(restOfUsers.Count > 0) {
                     userToAdd = restOfUsers.Dequeue();
                 }
@@ -1074,15 +1087,22 @@ public class Database {
             //Check if already exists in current Queue, otherwise add random
             var alreadyExists = Authentication._profileQueue.Where(i => i.user.email == userToAdd);
             if (alreadyExists.Count() <= 0 && alreadyExists != null) {
+                //If is not in queue add to queue
                 users.Add(userToAdd);
             } else { 
+                //if not add random from queue and check if not exists in local queue
                 while (string.IsNullOrWhiteSpace(userToAdd) && restOfUsers.Count != 0) {
+                    //Get new user from random queue
                     var nextUsers = restOfUsers.Dequeue();
+                    
+                    //Check if already exists in current Queue, otherwise add random
                     var alreadyExistsLoop = Authentication._profileQueue.Where(i => i.user.email == nextUsers);
                     if(alreadyExistsLoop.Count() == 0) {
+                        //Add to local queue
                         userToAdd = nextUsers;
                     }
                 }
+                //Check for empties
                 if (!string.IsNullOrWhiteSpace(userToAdd) && userToAdd != "") {
                 users.Add(userToAdd);
                 }
@@ -1127,6 +1147,11 @@ public class Database {
             profiles[i] = profile;
         }
         return profiles;
+    }
+    
+    private async Task SetLoginEmail(string email) {
+        Console.WriteLine("Setting login email");
+        await SecureStorage.SetAsync("email", email);
     }
 
 }

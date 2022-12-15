@@ -9,53 +9,18 @@ public class Authentication
 {
 
     public static User _currentUser { get; set; }
-    private LoggedState _loggedState { get; set; }
-    private AccountState _accountState { get; set; }
-
-    public Authentication()
-    {
-        _loggedState = LoggedState.signedOut;
-        _accountState = AccountState.inactive;
-    }
-
+    
     //Match
-    public static Queue<Profile> _profileQueue = new Queue<Profile>();
+    public static Queue<Profile> _profileQueue;
     public static Profile _currentProfile;
-    public static int selectedImage = 0;
-
-    //Defining state
-    enum LoggedState
-    {
-        signedIn,
-        signedOut,
+    public static int selectedImage;
+    
+    public static void Initialize() {
+       _profileQueue = new Queue<Profile>();
+       selectedImage = 0;
+       _currentUser = new User();
     }
-
-    enum AccountState
-    {
-        active,
-        inactive,
-    }
-
-    public void UpdateUserSetting(bool activation, bool signedIN)
-    {
-        if (activation)
-        {
-            this._accountState = AccountState.active;
-        }
-        else
-        {
-            this._accountState = AccountState.inactive;
-        }
-
-        if (signedIN)
-        {
-            this._loggedState = LoggedState.signedIn;
-        }
-        else
-        {
-            this._loggedState = LoggedState.signedOut;
-        }
-    }
+    
 
     // checking if email is already in database, returns true if unique
     public bool EmailIsUnique(string email)

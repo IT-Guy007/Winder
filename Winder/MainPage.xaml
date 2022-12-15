@@ -7,8 +7,7 @@
              Shell.NavBarIsVisible="False"
 
              BackgroundColor="#CC415F"
-             xmlns:Winder="clr-namespace:MAUI.MainPage"
-    >
+>
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
         <Image HeightRequest="400"
             HorizontalOptions="Center"

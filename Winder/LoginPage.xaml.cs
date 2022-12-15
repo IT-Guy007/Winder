@@ -12,18 +12,14 @@ public partial class LoginPage : ContentPage {
         InitializeComponent();
         
         loginButton.Clicked += Login;
-
-        forgotPasswordButton.Clicked += WachtwoordVergeten;
-
-        loginButton.Clicked += Login;
         forgotPasswordButton.Clicked += WachtwoordVergeten;
 
     }
 
-    private void Login(object sender, EventArgs e)
-    {
+    private void Login(object sender, EventArgs e) {
         var Email = Emailadres.Text;
         var Password = Wachtwoord.Text;
+        Console.WriteLine(Email);
         if (database.CheckLogin(Email, Password)) {
             FoutmeldingInloggen.IsVisible = false;
             Navigation.PushAsync(new MatchPage());
@@ -41,6 +37,6 @@ public partial class LoginPage : ContentPage {
 
     private void Backbutton_Clicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new MainPage());
+        Navigation.PushAsync(new StartPage());
     }
 }

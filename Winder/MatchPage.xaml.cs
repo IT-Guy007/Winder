@@ -1,10 +1,6 @@
 ﻿using System.Drawing;
 using DataModel;
-using Microsoft.Maui.Layouts;
-using System.Security.Cryptography.X509Certificates;
 using Winder;
-using System.IO;
-using Microsoft.Maui.Graphics.Text;
 
 namespace MAUI;
 
@@ -54,8 +50,7 @@ public partial class MatchPage : ContentPage
         backButton.CornerRadius = 50;
         backButton.Aspect = Aspect.AspectFill;
         backButton.IsVisible = false;
-        if (backButtonVisible)
-        {
+        if (backButtonVisible) {
             backButton.IsVisible = true;
         }
         backButton.Clicked += BackButton_Clicked;
@@ -64,7 +59,7 @@ public partial class MatchPage : ContentPage
         
         //matches button
         var matchesButton = new Button();
-        matchesButton.Text = "Matches";
+        matchesButton.Text = "Chat's";
         matchesButton.WidthRequest = 100;
         matchesButton.HeightRequest = 50;
         matchesButton.IsVisible = true;
@@ -408,10 +403,10 @@ public partial class MatchPage : ContentPage
         }
     }
 
-    private void NextProfile()
-    {
-        if (Authentication._profileQueue.Count != 0)
-        {
+    private void NextProfile() {
+        Console.WriteLine("Next profile, current amount in queue");
+        Console.WriteLine(Authentication._profileQueue.Count);
+        if (Authentication._profileQueue.Count != 0) {
             Authentication.selectedImage = 0;
             Navigation.PushAsync(new MatchPage());
             
@@ -419,9 +414,11 @@ public partial class MatchPage : ContentPage
             //Application.Current.Dispatcher.Dispatch(() => Authentication._currentProfile = Authentication._profileQueue.Dequeue());
 
         } else {
-            Authentication._profileQueue = new Queue<Profile>();
             Navigation.PushAsync(new MatchPage());
         }
+        
+        Console.WriteLine("After next profile, current amount in queue");
+        Console.WriteLine(Authentication._profileQueue.Count);
 
     }
 
@@ -485,7 +482,7 @@ public partial class MatchPage : ContentPage
         if (_database.CheckMatch(emailCurrentUser, emailLikedUser))
         {
             _database.NewMatch(emailLikedUser, emailCurrentUser);
-            _database.deleteLikeOnMatch(emailCurrentUser, emailLikedUser);
+            _database.DeleteLikeOnMatch(emailCurrentUser, emailLikedUser);
         }
         else
         {
@@ -507,11 +504,5 @@ public partial class MatchPage : ContentPage
 
         NextProfile();
     }
-    
-    
-  
-    
-   
 
-  
 }
