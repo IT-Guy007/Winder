@@ -100,10 +100,12 @@ public partial class MatchPage : ContentPage
         buttonStackLayout.Spacing = 10;
 
         try {
-            Authentication._currentProfile = Authentication._profileQueue.Dequeue();
-        }
-        catch (Exception e)
-        {
+            if (Authentication._profileQueue.Count > 0) {
+                Authentication._currentProfile = Authentication._profileQueue.Dequeue();
+            } else {
+                Console.WriteLine("Couldn't find a new profile");
+            }
+        } catch (Exception e) {
             //No profiles found
             Console.WriteLine("Couldn't find a new profile");
             Console.WriteLine(e.StackTrace);

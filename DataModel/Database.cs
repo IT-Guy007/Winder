@@ -870,16 +870,19 @@ public class Database {
         
         DateTime minDate = DateTime.Now.AddYears(0 - Authentication._currentUser.minAge);
         DateTime maxDate = DateTime.Now.AddYears(0 - Authentication._currentUser.maxAge);
+        var formattedMin = minDate.ToString("yyyy-MM-dd HH:mm:ss");
+        var formattedMax = maxDate.ToString("yyyy-MM-dd HH:mm:ss");
         List<string> interestsgivenuser = LoadInterestsFromDatabaseInListInteresses(email).ToList(); //Every interest of the current user
 
-        string query = "select top 10 email from winder.[User] " +
+        string query = "select top 10 email " +
+                       "from winder.[User] " +
                        "where email != @email " + //Not themself
                        "and email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 1) " + //Not disliked
-                       "and gender = (select preference from winder.winder.[User] where email = @email " + //gender check
+                       "and gender = (select preference from winder.winder.[User] where email = @email) " + //gender check
                        "and email not in (select winder.winder.Match.person1 from Winder.Winder.Match where person1 = @email) " + //Not matched
                        "and email not in (select winder.winder.Match.person2 from Winder.Winder.Match where person2 = @email) " + //Not matched
-                       "and birthday >= @minAge and birthday <= @maxAge " + //In age range
-                       "and email not in (select winder.winder.person1 from Winder.Winder.Match where person1 = @email)"; // location check
+                       "and birthday >= '" + formattedMax +"' and birthday <= '" + formattedMin + "' " + //In age range
+                       "And location = (select location from winder.winder.[User] where email = @email)"; // location check
 
         //Add interests
         query = query + "AND email in (select email from winder.winder.UserHasInterest where interest = @interest";
@@ -888,16 +891,15 @@ public class Database {
         }
         //Random people
         query = query + ") ORDER BY NEWID()";
+        
         Console.WriteLine(query);
-
+        
         OpenConnection();
 
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@email", email);
-        command.Parameters.AddWithValue("@minAge", minDate);
-        command.Parameters.AddWithValue("@maxAge", maxDate);
         command.Parameters.AddWithValue("@interest", interestsgivenuser[0]);
-        
+
         try {
             SqlDataReader reader = command.ExecuteReader(); // execute het command
             while (reader.Read())
