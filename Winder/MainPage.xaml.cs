@@ -1,19 +1,12 @@
-using MAUI;
-using System;
 using System.Data.SqlClient;
-using System.Threading.Tasks;
-using CoreFoundation;
 using DataModel;
 
 namespace MAUI;
 
 
-public partial class MainPage : ContentPage
-{
+public partial class MainPage : ContentPage {
 
-   
-    public MainPage()
-    {
+    public MainPage() {
         InitializeComponent();
         
     }
@@ -24,19 +17,20 @@ public partial class MainPage : ContentPage
         await Task.Delay(4000);
         Console.WriteLine("App started");
         Authentication.Initialize();
-        
+        Database.Initialize();
+
         Database db = new Database();
         try {
             
             Console.WriteLine("Testing database connection");
-            db.OpenConnection();
+            Database.OpenConnection();
             Console.WriteLine("Successful connection");
         } catch (SqlException se) {
             Console.WriteLine("Failed to open connection");
             Console.WriteLine(se.Message);
             Console.WriteLine(se.StackTrace);
         }
-        db.CloseConnection();
+        Database.CloseConnection();
         
         
         //Check if user was previously logged in
@@ -56,7 +50,7 @@ public partial class MainPage : ContentPage
             Console.WriteLine("Pushing the startPage");
             await Navigation.PushAsync(new StartPage());
         }
-        //base.OnAppearing();
+
     }
 }
 

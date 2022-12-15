@@ -9,13 +9,13 @@ using System.Collections.Generic;
 
 public class Database {
     private Authentication _authentication = new Authentication();
-    public SqlConnection connection;
+    public static SqlConnection connection;
     
-    public void Initialize() {
+    public static void Initialize() {
        GenerateConnection();
-        connection.Open();
+       connection.Open();
     }
-    public void GenerateConnection() {
+    public static void GenerateConnection() {
 
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
@@ -27,11 +27,11 @@ public class Database {
         connection = new SqlConnection(builder.ConnectionString);
     }
 
-    public void OpenConnection() {
+    public static void OpenConnection() {
         connection.Open();
     }
 
-    public void CloseConnection() {
+    public static void CloseConnection() {
 
         if (connection == null) {
 

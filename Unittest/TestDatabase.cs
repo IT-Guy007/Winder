@@ -20,10 +20,9 @@ public class TestDatabase {
     
     [Test]
     public void TestCreateDatabaseConnection() {
-        
-        Database database = new Database();
+
         try {
-            database.GenerateConnection();
+            Database.GenerateConnection();
             Assert.Pass();
         } catch (SqlException e) {
             Assert.Fail(e.Message);
@@ -34,12 +33,11 @@ public class TestDatabase {
     [Test]
     public void TestDatabaseConnection() {
         
-        Database database = new Database();
         try {
-            database.OpenConnection();
+            Database.OpenConnection();
             Assert.Pass();
 
-            database.CloseConnection();
+            Database.CloseConnection();
         } catch(SqlException e) {
             Assert.Fail(e.Message);
         }
