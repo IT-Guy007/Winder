@@ -44,14 +44,14 @@ public partial class Instellingen : ContentPage
     {
         
         string preference = Preference.SelectedItem.ToString();
-        database.insertPreference(email, preference);
+        database.InsertPreference(email, preference);
     }
     //sets the location in the database
     public void setLocation()
     {
         
         string location = Location.SelectedItem.ToString();
-            database.insertLocation(email, location);    
+            database.InsertLocation(email, location);    
     }
     
     // checks if the min age is lower then the max age
@@ -81,14 +81,14 @@ public partial class Instellingen : ContentPage
     public void placePreference( )
     {
         
-        string placePreference = database.placePreference(email);
+        string placePreference = database.GetPreference(email);
         Preference.SelectedItem = placePreference;
     }
     //sets location in the picker what the user already has in the database
     public void placeLocation()
     {
         
-        string placeLocation = database.placeLocation(email);
+        string placeLocation = database.GetLocation(email);
         Location.SelectedItem = placeLocation;
         
         }
@@ -96,7 +96,7 @@ public partial class Instellingen : ContentPage
     public void placeMinAge()
     {
         
-        int placeMinAge = database.placeMinAge(email);
+        int placeMinAge = database.GetMinAge(email);
             minimaleLeeftijd.SelectedItem = placeMinAge;
         
     }
@@ -104,7 +104,7 @@ public partial class Instellingen : ContentPage
     public void placeMaxAge()
     {
        
-        int placeMaxAge = database.placeMaxAge(email);
+        int placeMaxAge = database.GetMaxAge(email);
         maximaleLeeftijd.SelectedItem = placeMaxAge;
         
     }
@@ -113,7 +113,7 @@ public partial class Instellingen : ContentPage
     {
        
         int minAge = (int)minimaleLeeftijd.SelectedItem;
-        database.insertMinAge(email, minAge);
+        database.SetMinAge(email, minAge);
 
     }
     //sets the maximum age of what the user chose in the database
@@ -121,7 +121,7 @@ public partial class Instellingen : ContentPage
     {
        
         int maxAge = (int)maximaleLeeftijd.SelectedItem;
-        database.insertMaxAge(email, maxAge);
+        database.SetMaxAge(email, maxAge);
 
     }
     //all the data that has been changed will be replaced in the database
