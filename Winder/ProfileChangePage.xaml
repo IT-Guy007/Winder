@@ -6,15 +6,8 @@
     <Shell.BackButtonBehavior >
         <BackButtonBehavior IsVisible="False" IsEnabled="False"></BackButtonBehavior>
     </Shell.BackButtonBehavior>
-    <VerticalStackLayout>
+    <VerticalStackLayout BackgroundColor="#CC415F">
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                
-
-            </Grid.ColumnDefinitions>
             <ImageButton
                 x:Name="Backbutton"
                 Source="backbutton.png"
@@ -25,7 +18,7 @@
                 Clicked="Backbutton_Clicked"
                 Aspect="AspectFill"
                 IsVisible="true"
-                CornerRadius="50"
+                CornerRadius="10"
                 Grid.Row="0"
                 />
             <HorizontalStackLayout Grid.Column="2" HorizontalOptions="End" >
@@ -73,122 +66,259 @@
             </HorizontalStackLayout>
 
         </Grid>
+        <Frame HasShadow="True" BorderColor="Black" WidthRequest="658" BackgroundColor="#d1546f" Margin="0,0,0,0" HeightRequest="800">
+            <HorizontalStackLayout BackgroundColor="#d1546f" HeightRequest="750" WidthRequest="700">
+                <VerticalStackLayout>
+                    <Grid ColumnSpacing="5" RowSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-    <HorizontalStackLayout BackgroundColor="RosyBrown" WidthRequest="500">
-        <VerticalStackLayout VerticalOptions="StartAndExpand" Margin="90,0,0,0">
-            <Label 
-            x:Name="lblFirstname"
-            Text="Voornaam"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-            <Entry x:Name="Firstname"
-               MaxLength="15"
-               Placeholder=""
-               HorizontalOptions="Center"
-               TextChanged="FirstnameTextChanged" />
-            <Label 
-            x:Name="lblMiddlename"
-            Text="Tussenvoegsel"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-            <Entry x:Name="Middlename"
-               MaxLength="10"
-               Placeholder=""
-               HorizontalOptions="Center"
-               TextChanged="MiddlenameTextChanged" />
-            <Label 
-            x:Name="lblLastname"
-            Text="Achternaam"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-            <Entry x:Name="Lastname"
-               MaxLength="15"
-               Placeholder=""
-               HorizontalOptions="Center"
-               TextChanged="LastnameTextChanged" />
-            <Label 
-            x:Name="lblBirthdate"  
-            Text="Leeftijd: "
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-            <DatePicker x:Name="Birthdate"
-            DateSelected="DateOfBirthSelectedDate"
-            HorizontalOptions="Center"
-            />
-            <Picker 
-        Title="Gender"
-        x:Name="Gender"
-        HorizontalOptions="Center">
-                <Picker.Items>
-                    <x:String>Kies</x:String>
-                    <x:String>Man</x:String>
-                    <x:String>Vrouw</x:String>
-                </Picker.Items>
-            </Picker>
-            <Picker         
-        Title="Voorkeur"
-            x:Name="Preference"
-        HorizontalOptions="Center">
-                <Picker.Items>
-                    <x:String>Kies</x:String>
-                    <x:String>Man</x:String>
-                    <x:String>Vrouw</x:String>
-                </Picker.Items>
-            </Picker>
-        </VerticalStackLayout>
-        <VerticalStackLayout>
-            <ImageButton
-                Clicked="OnProfilePictureClicked"
-                x:Name="ProfileImage"
-                HeightRequest="100"
-                WidthRequest="100"
-                Aspect="AspectFill"
-                CornerRadius="50"
-                IsVisible="true"/>
-            <Label 
+                        <!-- First row -->
+                        <ImageButton
+        Clicked="OnProfilePictureClicked"
+        x:Name="ProfileImage1"
+        HeightRequest="100"
+        WidthRequest="80"
+        Aspect="AspectFill"
+        CornerRadius="5"
+        IsVisible="true"
+        Grid.Row="0"
+        Grid.Column="0"
+        Source="plus.png"
+    />
+                        <ImageButton
+        Clicked="OnProfilePictureClicked"
+        x:Name="ProfileImage2"
+        HeightRequest="100"
+        WidthRequest="80"
+        Aspect="AspectFill"
+        CornerRadius="5"
+        IsVisible="true"
+        Grid.Row="0"
+        Grid.Column="1"
+        Source="plus.png"
+    />
+                        <ImageButton
+        Clicked="OnProfilePictureClicked"
+        x:Name="ProfileImage3"
+        HeightRequest="100"
+        WidthRequest="80"
+        Aspect="AspectFill"
+        CornerRadius="5"
+        IsVisible="true"
+        Grid.Row="0"
+        Grid.Column="2"
+        Source="plus.png"
+    />
+
+                        <!-- Second row -->
+                        <ImageButton
+        Clicked="OnProfilePictureClicked"
+        x:Name="ProfileImage4"
+        HeightRequest="100"
+        WidthRequest="80"
+        Aspect="AspectFill"
+        CornerRadius="5"
+        IsVisible="true"
+        Grid.Row="1"
+        Grid.Column="0"
+        Source="plus.png"
+    />
+                        <ImageButton
+        Clicked="OnProfilePictureClicked"
+        x:Name="ProfileImage5"
+        HeightRequest="100"
+        WidthRequest="80"
+        Aspect="AspectFill"
+        CornerRadius="5"
+        IsVisible="true"
+        Grid.Row="1"
+        Grid.Column="1"
+        Source="plus.png" 
+    />
+                        <ImageButton
+        Clicked="OnProfilePictureClicked"
+        x:Name="ProfileImage6"
+        HeightRequest="100"
+        WidthRequest="80"
+        Aspect="AspectFill"
+        CornerRadius="5"
+        IsVisible="true"
+        Grid.Row="1"
+        BorderColor="Black"
+        Grid.Column="2"
+        Source="plus.png" 
+    />
+                    </Grid>
+                    <Label 
             x:Name="lblBio"
             Text="Bio"
             VerticalOptions="Center" 
             HorizontalOptions="Center"/>
-            <Editor x:Name="Bio"
+                    <Editor x:Name="Bio"
+                    BackgroundColor="#d1d1d1"
                     MaxLength="125"
                     WidthRequest="200"
                     HeightRequest="100"
                     TextChanged="BioTextChanged"/>
-            <Label 
+                    <Label 
             x:Name="lblEducation"
             Text="Opleiding"
             VerticalOptions="Center" 
             HorizontalOptions="Center"
             />
-            <Entry x:Name="Education"
+                    <Entry x:Name="Education"
+               BackgroundColor="#d1d1d1"
                MaxLength="30"
                Placeholder=""
+               WidthRequest="200"
                TextChanged="EducationTextChanged"
                />
-            <Picker 
-            x:Name="InterestSelection"
+                    <Picker 
+        x:Name="InterestSelection"
+        WidthRequest="200"
+        BackgroundColor="#d1d1d1"
         Title="Interesses"
-        HorizontalOptions="Center"
+        HorizontalOptions="Center"                    
         SelectedIndexChanged="PickerIndexChanged">
-                <Picker.Items>
+                        <Picker.Items>
 
-                </Picker.Items>
-            </Picker>
-            <ListView MaximumHeightRequest="100" x:Name="ListInterests" ItemSelected="ListInterestsItemSelected">
-                <ListView.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                    </x:Array>
-                </ListView.ItemsSource>
-            </ListView>
-            <Button x:Name="ChangeProfile"             
+                        </Picker.Items>
+                    </Picker>
+                    <Frame CornerRadius="5" BorderColor="Black" HasShadow="true" Padding="0,0,0,0" Margin="0,0,0,0" WidthRequest="200">
+                        <ListView MaximumHeightRequest="100" x:Name="ListInterests" ItemSelected="ListInterestsItemSelected"
+          HeightRequest="200" HorizontalOptions="Center" WidthRequest="200" BackgroundColor="#d1d1d1">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Label Text="{Binding}" VerticalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="200"/>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                </x:Array>
+                            </ListView.ItemsSource>
+                        </ListView>
+
+                    </Frame>
+                    <Button x:Name="ChangeProfile"             
                 Text="Opslaan"
-                BackgroundColor="#CC415F"
+                TextColor="Black"
+                BackgroundColor="FloralWhite"
                 WidthRequest="200"
                 HeightRequest="40"
                 Clicked="ChangeUserData"
                 />
-        </VerticalStackLayout>
-     </HorizontalStackLayout>
+                </VerticalStackLayout>
+                <VerticalStackLayout Margin="10, 10, 10, 10">
+                    <Label
+            x:Name="lblFirstname"
+            Text="Voornaam"
+            WidthRequest="100"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            FontSize="10"
+            TextColor="Black"
+            Margin="0, 10, 0, 0" />
+                    <Entry x:Name="Firstname"
+            MaxLength="15"
+            WidthRequest="100"
+            Placeholder=""
+            HorizontalOptions="Center"
+            TextChanged="FirstnameTextChanged"
+            BackgroundColor="#d1d1d1"
+            TextColor="Black"
+            FontSize="20"
+            Margin="0, 10, 0, 0"
+            HeightRequest="40" />
+                    <Label
+            x:Name="lblMiddlename"
+            Text="Tussenvoegsel"
+            WidthRequest="100"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            FontSize="10"
+            TextColor="Black"
+            Margin="0, 10, 0, 0" />
+                    <Entry x:Name="Middlename"
+            WidthRequest="5"
+            MaxLength="10"
+            Placeholder=""
+            HorizontalOptions="Center"
+            TextChanged="MiddlenameTextChanged"
+            BackgroundColor="#d1d1d1"
+            TextColor="Black"
+            FontSize="20"
+            Margin="0, 10, 0, 0"
+            HeightRequest="40" />
+                    <Label
+            x:Name="lblLastname"
+            Text="Achternaam"
+            WidthRequest="100"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            FontSize="10"
+            TextColor="Black"
+            Margin="0, 10, 0, 0" />
+                    <Entry x:Name="Lastname"
+            WidthRequest="100"
+            MaxLength="15"
+            Placeholder=""
+            HorizontalOptions="Center"
+            BackgroundColor="#d1d1d1"
+            TextColor="Black"
+            FontSize="20"
+            Margin="0, 10, 0, 0"
+            TextChanged="LastnameTextChanged" />
+    <Label
+        x:Name="lblBirthdate"
+        Text="Leeftijd: "
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        WidthRequest="100"
+    />
+    <DatePicker
+        x:Name="Birthdate"
+        DateSelected="DateOfBirthSelectedDate"
+        HorizontalOptions="Center"
+        BackgroundColor="#d1d1d1"
+    />
+    <Picker
+        x:Name="Gender"
+        Title="Gender"
+        WidthRequest="100"
+        HorizontalOptions="Center"
+        BackgroundColor="#d1d1d1"
+    >
+        <Picker.Items>
+            <x:String>Kies</x:String>
+            <x:String>Man</x:String>
+            <x:String>Vrouw</x:String>
+        </Picker.Items>
+    </Picker>
+    <Picker
+        x:Name="Preference"
+        Title="Voorkeur"
+        BackgroundColor="#d1d1d1"
+        WidthRequest="100"
+        HorizontalOptions="Center"
+    >
+        <Picker.Items>
+            <x:String>Kies</x:String>
+            <x:String>Man</x:String>
+            <x:String>Vrouw</x:String>
+        </Picker.Items>
+    </Picker>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </Frame>
     </VerticalStackLayout>
 </ContentPage>

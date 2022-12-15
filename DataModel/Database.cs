@@ -921,9 +921,7 @@ public class Database {
         // selects every user which has common interests except the ones which have disliked the given user or the given user has disliked
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@email", email);
-        command.Parameters.AddWithValue("@interest", interestsgivenuser[0]);
-
-
+        if (interestsgivenuser.Count > 0)command.Parameters.AddWithValue("@interest", interestsgivenuser[0]);
         try {
             SqlDataReader reader = command.ExecuteReader(); // execute het command
             while (reader.Read())

@@ -46,8 +46,8 @@ public partial class ProfileChange : ContentPage
             Birthdate.Date = Authentication._currentUser.birthDay;
             Bio.Placeholder = Authentication._currentUser.bio;
             Education.Placeholder = Authentication._currentUser.major;
-            MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
-            ProfileImage.Source = ImageSource.FromStream(() => ms);
+            //MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
+            //ProfileImage2.Source = ImageSource.FromStream(() => ms);
             Gender.SelectedIndex = GetGenderFromUser();
             Preference.SelectedIndex = GetPreferenceFromUser();
         }
@@ -289,7 +289,7 @@ public partial class ProfileChange : ContentPage
             BinaryReader binary = new BinaryReader(fileStream);
             imageArr = binary.ReadBytes((int)fileStream.Length);
             Authentication._currentUser.profilePicture = imageArr;
-            ProfileImage.Source = ImageSource.FromStream(() => stream);
+            ProfileImage2.Source = ImageSource.FromStream(() => stream);
         }
         catch (Exception ex)
         {
