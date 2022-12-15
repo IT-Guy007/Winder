@@ -10,27 +10,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/DataModel-Debug.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Unittest-Debug.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-ios.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-maccatalyst.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/UserPrefs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/UserPrefs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Authentication.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/.idea/.idea.Winder.dir/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/.idea/.idea.Winder.dir/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/.idea/.idea.Winder.dir/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/.idea/.idea.Winder.dir/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/LoginPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/LoginPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/MainPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MainPage.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
-    </list>
+    <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -152,7 +132,7 @@
       <workItem from="1670589797915" duration="872000" />
       <workItem from="1671032462832" duration="1572000" />
       <workItem from="1671098314429" duration="4647000" />
-      <workItem from="1671103011991" duration="2732000" />
+      <workItem from="1671103011991" duration="3494000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>

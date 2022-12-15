@@ -25,9 +25,9 @@ public partial class MainPage : ContentPage
         Console.WriteLine("App started");
         Authentication.Initialize();
         
-        
+        Database db = new Database();
         try {
-            Database db = new Database();
+            
             Console.WriteLine("Testing database connection");
             db.OpenConnection();
             Console.WriteLine("Successful connection");
@@ -36,12 +36,13 @@ public partial class MainPage : ContentPage
             Console.WriteLine(se.Message);
             Console.WriteLine(se.StackTrace);
         }
+        db.CloseConnection();
+        
         
         //Check if user was previously logged in
-        var userEmail = await SecureStorage.Default.GetAsync("MyKey");
+        var userEmail = await SecureStorage.Default.GetAsync("email");
         if (!String.IsNullOrWhiteSpace(userEmail)) {
             Console.WriteLine("Found user who was logged in, restoring session");
-            Database db = new Database();
             db.UpdateLocalUserFromDatabase(userEmail);
             Console.WriteLine("Restored");
         } else {

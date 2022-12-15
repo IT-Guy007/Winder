@@ -108,9 +108,10 @@ public class Database {
             if (hashed == reader["password"] as string) {
                 Console.WriteLine("Getting password");
                 output = true;
-                //SetLoginEmail(email);
+                
             }
         }
+        SetLoginEmail(email);
 
         //Close connection
         CloseConnection();
