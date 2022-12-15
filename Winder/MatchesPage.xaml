@@ -67,7 +67,7 @@
             </HorizontalStackLayout>
         </Grid>
         <StackLayout WidthRequest="800" Padding="0,0,0,10" >
-            <ListView x:Name="ListOfMatches" Grid.Row="1">
+            <ListView x:Name="ListOfMatches" Grid.Row="1" ItemTapped="ListOfMatches_ItemTapped" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

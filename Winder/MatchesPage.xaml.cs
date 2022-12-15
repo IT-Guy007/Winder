@@ -12,11 +12,13 @@ public partial class MatchesPage : ContentPage
     Database Database = new Database();
 	public class MatchedPerson
 	{
+		public string Email { get; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public ImageSource ProfilePicture { get; set; }
         public MatchedPerson(User MatchedStudent)
         {
+            Email = MatchedStudent.email;
             FirstName = MatchedStudent.firstName;
             LastName = MatchedStudent.lastName;
             MemoryStream ms = new MemoryStream(MatchedStudent.profilePicture);
@@ -58,4 +60,10 @@ public partial class MatchesPage : ContentPage
 
 
 	}
+
+    private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e)
+    {
+        var tappedItem = e.Item as MatchedPerson;
+		DisplayAlert("This is user:", tappedItem.Email, "OK");
+    }
 }
