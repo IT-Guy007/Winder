@@ -62,15 +62,15 @@ public partial class MatchPage : ContentPage
         gridLayout.Add(backButton,0);
         
         
-        //matches button
-        var matchesButton = new Button();
-        matchesButton.Text = "Matches";
-        matchesButton.WidthRequest = 100;
-        matchesButton.HeightRequest = 50;
-        matchesButton.IsVisible = true;
-        matchesButton.TextColor = Microsoft.Maui.Graphics.Color.FromRgb(0, 0, 0);
-        matchesButton.Clicked += MatchesButton_Clicked;
-        matchesButton.HorizontalOptions = LayoutOptions.End;
+        //Chat button
+        var ChatButton = new Button();
+        ChatButton.Text = "Chats";
+        ChatButton.WidthRequest = 100;
+        ChatButton.HeightRequest = 50;
+        ChatButton.IsVisible = true;
+        ChatButton.TextColor = Microsoft.Maui.Graphics.Color.FromRgb(0, 0, 0);
+        ChatButton.Clicked += ChatButton_Clicked;
+        ChatButton.HorizontalOptions = LayoutOptions.End;
 
        
 
@@ -93,7 +93,7 @@ public partial class MatchPage : ContentPage
         instellingen.Clicked += Settings_Clicked;
 
 
-        horizontalLayout.Children.Add(matchesButton);
+        horizontalLayout.Children.Add(ChatButton);
         horizontalLayout.Children.Add(myProfile);
         horizontalLayout.Children.Add(instellingen);
         gridLayout.Add(horizontalLayout,2);
@@ -382,10 +382,10 @@ public partial class MatchPage : ContentPage
         Navigation.PushAsync(myProfile);
     }
     // matches button clicked
-    private void MatchesButton_Clicked(object obj, EventArgs e)
+    private void ChatButton_Clicked(object obj, EventArgs e)
     {
-
-        MatchesPage chats = new MatchesPage();
+        
+        ChatPage chats = new ChatPage();
         backButtonVisible = true;
         //declares origin page, in the matches page
         chats.originPage = pageName;
