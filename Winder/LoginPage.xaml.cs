@@ -22,6 +22,7 @@ public partial class LoginPage : ContentPage {
         Console.WriteLine(Email);
         if (database.CheckLogin(Email, Password)) {
             FoutmeldingInloggen.IsVisible = false;
+            Authentication.Get5Profiles(Email);
             Navigation.PushAsync(new MatchPage());
         }
         else {
@@ -29,8 +30,7 @@ public partial class LoginPage : ContentPage {
         }
     }
    
-    private void WachtwoordVergeten(object sender, EventArgs e)
-    {
+    private void WachtwoordVergeten(object sender, EventArgs e) {
         Navigation.PushAsync(new WijzigWachtwoordScherm());
 
     }

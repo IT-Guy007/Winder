@@ -5,8 +5,7 @@ namespace DataModel;
 using System.Security.Cryptography;
 using System.Text;
 
-public class Authentication
-{
+public class Authentication {
 
     public static User _currentUser { get; set; }
     
@@ -14,6 +13,9 @@ public class Authentication
     public static Queue<Profile> _profileQueue;
     public static Profile _currentProfile;
     public static int selectedImage;
+    
+    // changes condition on scaleimage function
+    public static bool isscaled = false;
     
     public static void Initialize() {
        _profileQueue = new Queue<Profile>();
@@ -45,13 +47,9 @@ public class Authentication
     }
 
     // Calculating the age by using date as parameter
-    public int CalculateAge(DateTime birthDate)
-    {
-        int age = DateTime.Now.Year - birthDate.Year;
-        if (DateTime.Now.DayOfYear < birthDate.DayOfYear)
-        {
-            age--;
-        }
+    public int CalculateAge(DateTime birthDate) {
+        DateTime today = DateTime.Today;
+        int age = today.Year - birthDate.Date.Year;
         return age;
     }
 
@@ -138,7 +136,34 @@ public class Authentication
         // verstuurd de mail
         smtpClient.Send(mailMessage);
     }
-    // changes condition on scaleimage function
-    public static bool isscaled = false;
+
+    //User to get the profiles for the match(run async)
+    public static Profile[] Get5Profiles(string email) {
+
+        //The users(email) to get
+        List<string> usersToRetrief = new List<string>();
+
+        usersToRetrief = Database.AlgorithmForSwiping(email); 
+
+        //Results
+        Profile[] profiles = new Profile[usersToRetrief.Count()];
+        
+        //Retrieving
+        for (int i = 0; i < usersToRetrief.Count(); i++) {
+
+            //Get the user
+            User user = Database.GetUserFromDatabase(usersToRetrief[i]);
+
+            //Get the interests of the user
+            user.interests = Database.LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]).ToArray();
+
+            //Get the images of the user
+            byte[][] images = Database.GetPicturesFromDatabase(usersToRetrief[i]);
+            var profile = new Profile(user, images);
+            
+            profiles[i] = profile;
+        }
+        return profiles;
+    }
     
 }

@@ -96,7 +96,7 @@ public partial class Instellingen : ContentPage
     public void placeMinAge()
     {
         
-        int placeMinAge = database.GetMinAge(email);
+        int placeMinAge = Database.GetMinAge(email);
             minimaleLeeftijd.SelectedItem = placeMinAge;
         
     }
@@ -104,7 +104,7 @@ public partial class Instellingen : ContentPage
     public void placeMaxAge()
     {
        
-        int placeMaxAge = database.GetMaxAge(email);
+        int placeMaxAge = Database.GetMaxAge(email);
         maximaleLeeftijd.SelectedItem = placeMaxAge;
         
     }

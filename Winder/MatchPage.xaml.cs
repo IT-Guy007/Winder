@@ -15,15 +15,12 @@ public partial class MatchPage : ContentPage
     public bool backButtonVisible = false;
 
     public MatchPage() {
-        //Get profiles to swipe
+
         CheckIfQueueNeedsMoreProfiles();
 
         Title = "Make your match now!";
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
-            
-
-
-
+        
         StackLayout verticalStackLayout = new StackLayout { Orientation = StackOrientation.Vertical, VerticalOptions = LayoutOptions.Fill };
         verticalStackLayout.Spacing = 10;
         Grid gridLayout = new Grid()
@@ -329,13 +326,6 @@ public partial class MatchPage : ContentPage
         Content = verticalStackLayout;
     }
 
-    private async Task UpdateQueue()
-    {
-        Task gettingProfiles = GetProfiles();
-        await gettingProfiles;
-    }
-    
-
     private void BackButton_Clicked(object sender, EventArgs e)
     {
         switch (originPage)
@@ -381,9 +371,8 @@ public partial class MatchPage : ContentPage
    
     
 
-    private async Task GetProfiles()
-    {
-        Profile[] profiles = _database.Get5Profiles(Authentication._currentUser.email);
+    private async Task GetProfiles() {
+        Profile[] profiles = Authentication.Get5Profiles(Authentication._currentUser.email);
         foreach (var profile in profiles)
         {
 
@@ -394,27 +383,28 @@ public partial class MatchPage : ContentPage
         }
     }
 
-    private async void CheckIfQueueNeedsMoreProfiles()
-    {
-        if (Authentication._profileQueue.Count < 5)
-        {
+    private async void CheckIfQueueNeedsMoreProfiles() {
+        if (Authentication._profileQueue.Count < 5){
 
             await GetProfiles();
         }
     }
 
     private void NextProfile() {
+        CheckIfQueueNeedsMoreProfiles();
         Console.WriteLine("Next profile, current amount in queue");
         Console.WriteLine(Authentication._profileQueue.Count);
         if (Authentication._profileQueue.Count != 0) {
             Authentication.selectedImage = 0;
             Navigation.PushAsync(new MatchPage());
             
-            //Works better but doesn't work yet
+            //Works better but doesn't work
             //Application.Current.Dispatcher.Dispatch(() => Authentication._currentProfile = Authentication._profileQueue.Dequeue());
 
         } else {
+            Authentication._currentProfile = null;
             Navigation.PushAsync(new MatchPage());
+            
         }
         
         Console.WriteLine("After next profile, current amount in queue");
@@ -455,8 +445,7 @@ public partial class MatchPage : ContentPage
     }
     
     int swipes = 0;
-    private void OnSwipe(object sender, SwipedEventArgs e)
-    {
+    private void OnSwipe(object sender, SwipedEventArgs e) {
         switch (e.Direction)
         {
             case SwipeDirection.Right:
@@ -474,9 +463,7 @@ public partial class MatchPage : ContentPage
         }
     }
     
-    private void OnLike(object sender, EventArgs e)
-    {
-        CheckIfQueueNeedsMoreProfiles();
+    private void OnLike(object sender, EventArgs e) {
         string emailCurrentUser = Authentication._currentUser.email;
         string emailLikedUser = Authentication._currentProfile.user.email;
         if (_database.CheckMatch(emailCurrentUser, emailLikedUser))
@@ -496,7 +483,6 @@ public partial class MatchPage : ContentPage
 
     private void OnDislike(object sender, EventArgs e)
     {
-        CheckIfQueueNeedsMoreProfiles();
         string emailCurrentUser = Authentication._currentUser.email;
         string emaildDislikedUser = Authentication._currentProfile.user.email;
 

@@ -10,7 +10,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="" />
+    <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/33867050-ae3f-4801-8373-97f022c9f89d.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/UserPrefs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/UserPrefs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/DataModel-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/DataModel-Debug.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-ios.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-ios.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-maccatalyst.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-maccatalyst.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Authentication.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unittest/TestDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/TestDatabase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Instellingen.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Instellingen.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/LoginPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/LoginPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Winder.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder.csproj" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,8 +42,6 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DataModel/Database.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/079db77a6d6c4519b9460c7149d598ec9e5c0/ed/0e60d3ed/Page.cs" root0="SKIP_HIGHLIGHTING" />
@@ -79,8 +95,8 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected=".NET Executable.Debug workaround">
-    <configuration name="Debug workaround" type="RunExe" factoryName=".NET Executable">
+  <component name="RunManager" selected=".NET Executable.WorkAround">
+    <configuration name="WorkAround" type="RunExe" factoryName=".NET Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64/Winder.app/Contents/MacOS/Winder" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64/Winder.app/Contents/MacOS" />
@@ -110,7 +126,7 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue=".NET Executable.Debug workaround" />
+      <item itemvalue=".NET Executable.WorkAround" />
       <item itemvalue="Xamarin.iOS.Winder" />
       <item itemvalue="Xamarin.Mac.Winder" />
     </list>
@@ -137,6 +153,7 @@
       <workItem from="1671032462832" duration="1572000" />
       <workItem from="1671098314429" duration="4647000" />
       <workItem from="1671103011991" duration="3494000" />
+      <workItem from="1671117100244" duration="2272000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>

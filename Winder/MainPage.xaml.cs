@@ -14,7 +14,7 @@ public partial class MainPage : ContentPage {
     protected override async void OnAppearing() {
         
         // wait for 4 seconds
-        await Task.Delay(4000);
+        await Task.Delay(3000);
         Console.WriteLine("App started");
         Authentication.Initialize();
         Database.Initialize();
@@ -39,6 +39,7 @@ public partial class MainPage : ContentPage {
             Console.WriteLine("Found user who was logged in, restoring session");
             db.UpdateLocalUserFromDatabase(userEmail);
             Console.WriteLine("Restored");
+            Authentication.Get5Profiles(userEmail);
         } else {
             Console.WriteLine("No user found");
         }
