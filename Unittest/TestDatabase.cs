@@ -174,39 +174,39 @@ public class TestDatabase {
             return false;
         }
     }
-    
-    [TestCase("jannieandes@gmail.com", ExpectedResult = true)]
-    [TestCase("japiejaap@gmail.com", ExpectedResult = false)]
-    [TestCase(" ", ExpectedResult = false)]
-    public bool GetUsersWithCommonInterest(string email)
-    {
-        try
-        {
-            Database.GetUsersWithCommonInterest(email);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-       
-    }
 
-    [TestCase("jannieandes@gmail.com", ExpectedResult = true)]
-    [TestCase("japiejaap@gmail.com", ExpectedResult = false)]
-    [TestCase(" ", ExpectedResult = false)]
-    public bool DatabaseGetRestOfUsers(string email)
-    {
-        try
-        {
-            Database.GetRestOfUsers(email);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
+    //[TestCase("jannieandes@gmail.com", ExpectedResult = true)]
+    //[TestCase("japiejaap@gmail.com", ExpectedResult = false)]
+    //[TestCase(" ", ExpectedResult = false)]
+    //public bool GetUsersWithCommonInterest(string email)
+    //{
+    //    try
+    //    {
+    //        Database.GetUsersWithCommonInterest(email);
+    //        return true;
+    //    }
+    //    catch
+    //    {
+    //        return false;
+    //    }
+
+    //}
+
+    //[TestCase("jannieandes@gmail.com", ExpectedResult = true)]
+    //[TestCase("japiejaap@gmail.com", ExpectedResult = false)]
+    //[TestCase(" ", ExpectedResult = false)]
+    //public bool DatabaseGetRestOfUsers(string email)
+    //{
+    //    try
+    //    {
+    //        Database.GetRestOfUsers(email);
+    //        return true;
+    //    }
+    //    catch
+    //    {
+    //        return false;
+    //    }
+    //}
 
     [TestCase("jannieandes@gmail.com", ExpectedResult = true)]
     [TestCase("japiejaap@gmail.com", ExpectedResult = false)]
@@ -493,35 +493,35 @@ public class TestDatabase {
         return false;
     }
     
-    [TestCase("s1165707@student.windesheim.nl",ExpectedResult = true)]
-    [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
-    public bool GetRestOfUsers(string email) {
-        try {
-            var users = Database.GetRestOfUsers(email);
-            if (users.Count >= 0 && users != null) {
-                return true;
-            }
-        } catch {
-            return false;
-        }
+    //[TestCase("s1165707@student.windesheim.nl",ExpectedResult = true)]
+    //[TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
+    //public bool GetRestOfUsers(string email) {
+    //    try {
+    //        var users = Database.GetRestOfUsers(email);
+    //        if (users.Count >= 0 && users != null) {
+    //            return true;
+    //        }
+    //    } catch {
+    //        return false;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
     
-    [TestCase("s1165707@student.windesheim.nl",ExpectedResult = true)]
-    [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
-    public bool GetUsersWithCommonInterests(string email) {
-        try {
-            var users = Database.GetUsersWithCommonInterest(email);
-            if (users.Length >= 0 && users != null) {
-                return true;
-            }
-        } catch {
-            return false;
-        }
+    //[TestCase("s1165707@student.windesheim.nl",ExpectedResult = true)]
+    //[TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
+    //public bool GetUsersWithCommonInterests(string email) {
+    //    try {
+    //        var users = Database.GetUsersWithCommonInterest(email);
+    //        if (users.Length >= 0 && users != null) {
+    //            return true;
+    //        }
+    //    } catch {
+    //        return false;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
     
     [TestCase("s1165707@student.windesheim.nl",ExpectedResult = true)]
     [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]

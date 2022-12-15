@@ -18,7 +18,7 @@ public class User {
     public int maxAge {get; set; }
 
     public User(string firstName, string middleName, string lastName, DateTime birthDay,
-        string preference, string email, string password, string gender, byte[] profilePicture, string bio, string school, string major)
+        string preference, string email, string password, string gender, byte[] profilePicture, string bio, string school, string major, int minAge, int maxAge)
     {
         this.firstName = firstName;
         this.middleName = middleName;
@@ -32,8 +32,8 @@ public class User {
         this.bio = bio;
         this.school = school;
         this.major = major;
-        this.minAge = Database.GetMinAge(email);
-        this.maxAge = Database.GetMaxAge(email);
+        this.minAge = minAge;
+        this.maxAge = maxAge;
     }
     
     public User(){}

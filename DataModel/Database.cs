@@ -6,6 +6,7 @@ namespace DataModel;
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 public class Database {
     private Authentication _authentication = new Authentication();
@@ -41,7 +42,8 @@ public class Database {
 
     public void UpdateLocalUserFromDatabase(string email) {
         Console.WriteLine("Update current user from database");
-        if (!string.IsNullOrWhiteSpace(email)) {
+        if (!string.IsNullOrWhiteSpace(email))
+        {
 
             //Start connection
             OpenConnection();
@@ -52,28 +54,39 @@ public class Database {
             query.Parameters.AddWithValue("@email", email);
 
 
-        //Execute query
-        try {
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read()) {
-                var firstName = reader["firstName"] as string;
-                var middleName = reader["middleName"] as string;
-                var lastName = reader["lastName"] as string;
-                var preferences = reader["preference"] as string;
-                var birthday = (DateTime)reader["birthday"];
-                var gender = reader["gender"] as string;
-                var profilePicture = reader["profilePicture"] as byte[];
-                var bio = reader["bio"] as string;
-                var school = reader["location"] as string;
-                var major = reader["education"] as string;
-                Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
-                    preferences, email, "", gender ,profilePicture, bio,school,major);
+            //Execute query
+            try
+            {
+                SqlDataReader reader = query.ExecuteReader();
+                while (reader.Read())
+                {
+                    var firstName = reader["firstName"] as string;
+                    var middleName = reader["middleName"] as string;
+                    var lastName = reader["lastName"] as string;
+                    var preferences = reader["preference"] as string;
+                    var birthday = (DateTime)reader["birthday"];
+                    var gender = reader["gender"] as string;
+                    var profilePicture = reader["profilePicture"] as byte[];
+                    var bio = reader["bio"] as string;
+                    var school = reader["location"] as string;
+                    var major = reader["education"] as string;
+                    var minAge = reader["min"] as int?;
+                    var maxAge = reader["max"] as int?;
+
+
+                    var minus = minAge ?? 18;
+                    var maxus = maxAge ?? 99;
+
+                    Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
+                    preferences, email, "", gender, profilePicture, bio, school, major, minus, maxus);
                 }
 
                 //Close connection
                 CloseConnection();
 
-            } catch (SqlException sql) {
+            }
+            catch (SqlException sql)
+            {
                 Console.WriteLine("Error updating local User from Database");
                 Console.WriteLine(sql.ToString());
                 Console.WriteLine(sql.StackTrace);
@@ -299,9 +312,11 @@ public class Database {
                 var school = reader["location"] as string;
                 var major = reader["education"] as string;
                 byte[] img = (byte[])(reader["profilePicture"]);
-                
+                var minAge = (int)reader["min"];
+                var maxAge = (int)reader["max"];
+
                 DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
-                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, img, bio, school, major);
+                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, img, bio, school, major,minAge,maxAge);
             }
         } catch (SqlException e) {
             Console.WriteLine("Error retrieving user from database");
@@ -629,16 +644,14 @@ public class Database {
         SqlCommand query = new SqlCommand("SELECT min FROM winder.winder.[User] WHERE email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
 
-        
         try {
             SqlDataReader reader = query.ExecuteReader();
             while (reader.Read()) {
                 int? minAge = reader["min"] as int?;
-                CloseConnection();
                 int minimalAge = minAge ?? 18;
                 return minimalAge;
-
             }
+            CloseConnection();
         } catch (SqlException se) {
             Console.WriteLine("Error inserting minAge in database");
             Console.WriteLine(se.ToString());
@@ -646,6 +659,7 @@ public class Database {
             CloseConnection();
             return 0;
         }
+        CloseConnection();
         return 0;
     }
 
@@ -850,34 +864,36 @@ public class Database {
         return users.ToArray();
     }
 
-
     public static List<string> AlgorithmForSwiping(string email) {
         
         List<string> users = new List<string>();
-
-        OpenConnection();
         
-        DateTime minDate = DateTime.Now.AddYears(Authentication._currentUser.minAge);
-        DateTime maxDate = DateTime.Now.AddYears(Authentication._currentUser.maxAge);
+        DateTime minDate = DateTime.Now.AddYears(0 - Authentication._currentUser.minAge);
+        DateTime maxDate = DateTime.Now.AddYears(0 - Authentication._currentUser.maxAge);
         List<string> interestsgivenuser = LoadInterestsFromDatabaseInListInteresses(email).ToList(); //Every interest of the current user
 
-        string query = "select top 10 email from winder.[User] +" +
-                       "where email != @email" + //Not themself
-                       "and email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 1)" + //Not disliked
-                       "and email not in (select likedPerson from Winder.Winder.Match where person1 = @email)" + //Not matched
-                       "and email not in (select likedPerson from Winder.Winder.Match where person2 = @email)" + //Not matched
-                       "and birthday >= @minAge and birthday <= @maxAge"; //In age range
-        
+        string query = "select top 10 email from winder.[User] " +
+                       "where email != @email " + //Not themself
+                       "and email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 1) " + //Not disliked
+                       "and gender = (select preference from winder.winder.[User] where email = @email " + //gender check
+                       "and email not in (select winder.winder.Match.person1 from Winder.Winder.Match where person1 = @email) " + //Not matched
+                       "and email not in (select winder.winder.Match.person2 from Winder.Winder.Match where person2 = @email) " + //Not matched
+                       "and birthday >= @minAge and birthday <= @maxAge " + //In age range
+                       "and email not in (select winder.winder.person1 from Winder.Winder.Match where person1 = @email)"; // location check
+
         //Add interests
-        query = query + "WHERE UID != @email AND (interest = @interest";
+        query = query + "AND email in (select email from winder.winder.UserHasInterest where interest = @interest";
         for (int i = 1; i < interestsgivenuser.Count; i++) {
             query = query + " or interest =" + " '" + interestsgivenuser[i] + "' ";
         }
         //Random people
-        query = query + "ORDER BY NEWID()";
+        query = query + ") ORDER BY NEWID()";
         Console.WriteLine(query);
-        
+
+        OpenConnection();
+
         SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@email", email);
         command.Parameters.AddWithValue("@minAge", minDate);
         command.Parameters.AddWithValue("@maxAge", maxDate);
         command.Parameters.AddWithValue("@interest", interestsgivenuser[0]);
@@ -889,7 +905,7 @@ public class Database {
                 string tempEmail = reader["email"] as string ?? "";
                 users.Add(tempEmail);  
             }
-            //Close connection
+            CloseConnection();
             
         } catch (SqlException se) {
             Console.WriteLine("Error retrieving emails for algorithm");
