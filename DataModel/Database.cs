@@ -1,9 +1,9 @@
 using System.Data.SqlClient;
 using Microsoft.Maui.Storage;
 
+
 namespace DataModel;
 
-using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
 
@@ -519,6 +519,7 @@ public class Database {
     }
 
     public void InsertLocation(string email, string location) {
+        CloseConnection();
         // open connection
 
         OpenConnection();
@@ -541,6 +542,7 @@ public class Database {
     }
 
     public string GetPreference(string email) {
+        CloseConnection();
         // open connection
 
         OpenConnection();
@@ -569,6 +571,7 @@ public class Database {
     }
 
     public string GetLocation(string email) {
+        CloseConnection();
         // open connection
 
         OpenConnection();
@@ -596,6 +599,7 @@ public class Database {
     }
 
     public void SetMinAge(string email, int minAge) {
+        CloseConnection();
         // open connection
 
         OpenConnection();
@@ -617,7 +621,7 @@ public class Database {
     }
 
     public void SetMaxAge(string email, int maxAge) {
-        
+        CloseConnection();
         // open connection
         OpenConnection();
 
@@ -638,6 +642,7 @@ public class Database {
     }
 
     public static int GetMinAge(string email) {
+        CloseConnection();
         // open connection
 
         OpenConnection();
@@ -665,6 +670,7 @@ public class Database {
     }
 
     public static int GetMaxAge(string email) {
+        CloseConnection();
         // open connection
 
         OpenConnection();

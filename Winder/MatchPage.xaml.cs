@@ -314,20 +314,7 @@ public partial class MatchPage : ContentPage {
         verticalStackLayout.BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
     }
-
-    private void BackButton_Clicked(object sender, EventArgs e)
-    {
-        switch (originPage)
-        {
-            case "profilepage":
-                Navigation.PushAsync(new ProfileChange());
-                break;
-            case "settingspage":
-                Navigation.PushAsync(new Instellingen());
-                break;
-        }
-
-    }
+    
     
 
     private void BackButton_Clicked(object sender, EventArgs e)
@@ -364,26 +351,6 @@ public partial class MatchPage : ContentPage {
         Navigation.PushAsync(chats);
     }
 
-    private void Settings_Clicked(object sender, EventArgs e)
-    {
-        Instellingen Instellingen = new Instellingen();
-        backButtonVisible = true;
-        Instellingen.originPage = pageName;
-        Navigation.PushAsync(Instellingen);
-    }
-
-   
-    
-
-    // myprofile button clicked
-    private void MyProfile_Clicked(object sender, EventArgs e)
-    {
-        //declares origin page, in the my profile page
-        ProfileChange myProfile = new ProfileChange();
-        backButtonVisible = true;
-        myProfile.originPage = pageName;
-        Navigation.PushAsync(myProfile);
-    }
     // matches button clicked
     private void MatchesButton_Clicked(object obj, EventArgs e)
     {
