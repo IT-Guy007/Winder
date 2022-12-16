@@ -42,8 +42,10 @@
 
 
                 <Button 
+
                     x:Name="chatButton"
                 Text="Chats"
+
                 VerticalOptions="Start" 
                 HorizontalOptions="Start"
                 WidthRequest="120"
@@ -51,6 +53,7 @@
                 HeightRequest="50"
                 TextColor="Black"
                   Clicked="ChatButton_Clicked"
+
                 
             >
                 </Button>

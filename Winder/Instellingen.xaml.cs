@@ -96,7 +96,7 @@ public partial class Instellingen : ContentPage
     public void placeMinAge()
     {
         
-        int placeMinAge = database.GetMinAge(email);
+        int placeMinAge = Database.GetMinAge(email);
             minimaleLeeftijd.SelectedItem = placeMinAge;
         
     }
@@ -104,7 +104,7 @@ public partial class Instellingen : ContentPage
     public void placeMaxAge()
     {
        
-        int placeMaxAge = database.GetMaxAge(email);
+        int placeMaxAge = Database.GetMaxAge(email);
         maximaleLeeftijd.SelectedItem = placeMaxAge;
         
     }
@@ -177,14 +177,18 @@ public partial class Instellingen : ContentPage
             case "matchpage":
                 MatchPage matchPage = new MatchPage();
                 matchPage.backButtonVisible = true;
+                Authentication.SetCurrentProfile();
+
                 Navigation.PushAsync(new MatchPage());
                 break;
             case "profilepage":
                 Navigation.PushAsync(new ProfileChange());
                 break;
+
             case "chatpage":
                 Navigation.PushAsync(new ChatPage());
                 break;
+
         }
 
     }
@@ -195,12 +199,16 @@ public partial class Instellingen : ContentPage
         chats.originPage = pageName;
         Navigation.PushAsync(chats);
 
+
     }
 
     private void matchPage_Clicked(object sender, EventArgs e)
     {
         MatchPage matchPage = new MatchPage();
         matchPage.originPage= pageName;
+
+        Authentication.SetCurrentProfile();
+
         Navigation.PushAsync(matchPage);
 
     }

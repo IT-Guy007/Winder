@@ -33,15 +33,19 @@
 
 
                 <Button 
+
                     x:Name="chatbutton"
                 Text="Chats"
+
                 VerticalOptions="Start" 
                 HorizontalOptions="Start"
                 WidthRequest="120"
                 FontSize="15"
                 HeightRequest="50"
                 TextColor="Black"
+
                     Clicked="ChatButton_Clicked"
+
                 
             >
                 </Button>

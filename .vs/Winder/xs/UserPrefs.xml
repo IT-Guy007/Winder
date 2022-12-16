@@ -1,19 +1,33 @@
 ﻿<Properties StartupConfiguration="{041FB9A6-18D8-4614-8980-D447BBEA2A7C}|Default">
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <Xamarin.Addins.Core.Project ActiveDebugTarget="MyAppleMacCatalystID" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/jeroendenotter/Documents/6. GitHub/Winder/DataModel/Database.cs" relfile="DataModel/Database.cs" line="1094" column="1" />
+      <Breakpoint file="/Users/jeroendenotter/Documents/6. GitHub/Winder/DataModel/Database.cs" relfile="DataModel/Database.cs" line="870" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Winder PreferredExecutionTarget="MyAppleMacCatalystID" />
+  <MultiItemStartupConfigurations />
+  <Xamarin.Addins.Core.Project ActiveDebugTarget="MyAppleMacCatalystID" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="DataModel/Database.cs">
+    <Files>
+      <File FileName="DataModel/Database.cs" Line="931" Column="38" IsPinned="True" />
+      <File FileName="Winder/MatchesPage.xaml.cs" />
+      <File FileName="DataModel/Authentication.cs" />
+      <File FileName="Winder/LoginPage.xaml.cs" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Winder" expanded="True" />
+          <Node name="Winder" expanded="True">
+            <Node name="DataModel" expanded="True">
+              <Node name="Database.cs" selected="True" />
+            </Node>
+            <Node name="Winder" expanded="True" />
+          </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.Winder PreferredExecutionTarget="MyAppleMacCatalystID" />
-  <MultiItemStartupConfigurations />
 </Properties>
