@@ -23,4 +23,10 @@
 
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Microsoft.Maui.Essentials">
+        <HintPath>..\..\..\..\..\..\usr\local\share\dotnet\packs\Microsoft.Maui.Essentials.Ref.maccatalyst\7.0.52\ref\net7.0-maccatalyst13.5\Microsoft.Maui.Essentials.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

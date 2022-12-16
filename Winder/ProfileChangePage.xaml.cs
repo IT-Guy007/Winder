@@ -212,28 +212,27 @@ public partial class ProfileChange : ContentPage
         switch (originPage)
         {
             case "matchpage":
+                Authentication.SetCurrentProfile();
                 Navigation.PushAsync(new MatchPage());
                 break;
             case "settingspage":
                 Navigation.PushAsync(new Instellingen());
                 break;
-            case "chatpage":
-            Navigation.PushAsync(new ChatPage());
-                break;
         }
     }
 
-    private void ChatButton_Clicked(object sender, EventArgs e)
+    private void matchesButton_clicked(object sender, EventArgs e)
     {
-        ChatPage chats = new ChatPage();
-        chats.originPage = pageName;
-        Navigation.PushAsync(chats);
+        MatchesPage matchespage = new MatchesPage();
+        matchespage.originPage = pageName;
+        Navigation.PushAsync(matchespage);
     }
 
     private void matchButton_Clicked(object sender, EventArgs e)
     {
         MatchPage matchpage = new MatchPage();
         matchpage.originPage = pageName;
+        Authentication.SetCurrentProfile();
         Navigation.PushAsync(new MatchPage());
     }
 
