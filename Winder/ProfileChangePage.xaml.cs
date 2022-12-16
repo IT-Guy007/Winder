@@ -1,8 +1,8 @@
 ﻿
 using DataModel;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.PlatformConfiguration.TizenSpecific;
 using System.ComponentModel.DataAnnotations;
+using Winder;
 using System.Drawing.Drawing2D;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Controls.PlatformConfiguration;
@@ -11,6 +11,9 @@ namespace MAUI;
 
 public partial class ProfileChange : ContentPage
 {
+    public string originPage;
+    private const string pageName = "profilepage";
+  
     List<string> interesses  =new List<string>();
     Database Database = new Database();
     Color ErrorColor = new Color(255, 243, 5);
@@ -23,6 +26,7 @@ public partial class ProfileChange : ContentPage
     private bool bio = true;
     private bool education = true;
     //Load all necessary components to the page
+
     public ProfileChange()
     {
         InitializeComponent();
@@ -201,6 +205,45 @@ public partial class ProfileChange : ContentPage
             }
         }
     }
+
+
+    private void Backbutton_Clicked(object sender, EventArgs e)
+    {
+        switch (originPage)
+        {
+            case "matchpage":
+                Navigation.PushAsync(new MatchPage());
+                break;
+            case "settingspage":
+                Navigation.PushAsync(new Instellingen());
+                break;
+            case "chatpage":
+            Navigation.PushAsync(new ChatPage());
+                break;
+        }
+    }
+
+    private void ChatButton_Clicked(object sender, EventArgs e)
+    {
+        ChatPage chats = new ChatPage();
+        chats.originPage = pageName;
+        Navigation.PushAsync(chats);
+    }
+
+    private void matchButton_Clicked(object sender, EventArgs e)
+    {
+        MatchPage matchpage = new MatchPage();
+        matchpage.originPage = pageName;
+        Navigation.PushAsync(new MatchPage());
+    }
+
+    private void Settings_Clicked(object sender, EventArgs e)
+    {
+        Instellingen settings = new Instellingen();
+        settings.originPage = pageName;
+        Navigation.PushAsync(settings); 
+    }
+
     //Checks if input has spaces, letters or dashes
     private bool CheckIfTextIsOnlyLettersAndSpaces(string text)
     {
@@ -343,4 +386,6 @@ public partial class ProfileChange : ContentPage
             }
         }
     }
+
+    
 }
