@@ -10,7 +10,7 @@ public partial class LoginPage : ContentPage {
 
     public LoginPage() {
         InitializeComponent();
-        
+
         loginButton.Clicked += Login;
 
         forgotPasswordButton.Clicked += WachtwoordVergeten;

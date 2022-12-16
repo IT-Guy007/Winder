@@ -83,6 +83,9 @@
       <MauiXaml Update="ForgotPassword.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
+      <MauiXaml Update="ChatPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
     </ItemGroup>
 
     <ItemGroup>
@@ -117,6 +120,10 @@
       </Compile>
       <Compile Update="ForgotPassword.xaml.cs">
         <DependentUpon>ForgotPassword.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="ChatPage.xaml.cs">
+        <DependentUpon>Chat.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>

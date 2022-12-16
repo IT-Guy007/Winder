@@ -89,5 +89,4 @@ public partial class ChatPage : ContentPage
         Navigation.PushAsync(matchPage);
     }
 
-
 }

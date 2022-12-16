@@ -11,11 +11,11 @@
   </component>
   <component name="ChangeListManager">
 
-    <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml.cs" afterDir="false" />
+    <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="Fixed currentUser">
+      <change afterPath="$PROJECT_DIR$/Winder/ChatPage.xaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Winder/ChatPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/LoginPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/LoginPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Winder.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder.csproj" afterDir="false" />
 
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -127,6 +127,15 @@
       <workItem from="1670333630372" duration="1909000" />
       <workItem from="1670336283276" duration="336000" />
       <workItem from="1670336668242" duration="640000" />
+      <workItem from="1670404561422" duration="241000" />
+      <workItem from="1670411575246" duration="1034000" />
+      <workItem from="1670503808689" duration="64000" />
+      <workItem from="1670503908227" duration="500000" />
+      <workItem from="1670510576115" duration="159000" />
+      <workItem from="1670578793215" duration="2918000" />
+      <workItem from="1670585417117" duration="2630000" />
+      <workItem from="1670589797915" duration="872000" />
+      <workItem from="1670931790919" duration="435000" />
       <workItem from="1670577943686" duration="1563000" />
       <workItem from="1670579570062" duration="6483000" />
     </task>
