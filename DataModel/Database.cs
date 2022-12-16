@@ -14,7 +14,7 @@ public class Database {
     public static void Initialize() {
        GenerateConnection();
     }
-    public static void GenerateConnection() {
+    private static void GenerateConnection() {
 
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 

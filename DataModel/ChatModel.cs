@@ -4,19 +4,19 @@ using System.Data;
 using System.Data.SqlClient;
 using static System.Data.SqlClient.SqlDependency;
 
-public class DatabaseChangeListener {
+public static class DatabaseChangeListener {
     
     public static List<string> ChatMessages;
-    private User fromUser;
-    private User toUser;
+    private static User fromUser;
+    private static User toUser;
 
     //SQL
-    private string query;
-    private SqlConnection connection;
-    private SqlCommand SqlCommand;
-    private SqlDependency SqlDependency;
+    private static string query;
+    private static SqlConnection connection;
+    private static SqlCommand SqlCommand;
+    private static SqlDependency SqlDependency;
 
-    public DatabaseChangeListener(User _fromUser, User _toUser) {
+    public static void Initialize(User _fromUser, User _toUser) {
         ChatMessages = new List<string>();
         fromUser = _fromUser;
         toUser = _toUser;
@@ -27,7 +27,7 @@ public class DatabaseChangeListener {
     }
 
     //Generate the connection
-    private void GenerateConnection() {
+    private static void GenerateConnection() {
 
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
@@ -40,26 +40,26 @@ public class DatabaseChangeListener {
     }
 
     //Generate the query
-    private void GenerateQuery() {
-        this.query = "SELECT * FROM Winder.winder.ChatMessage WHERE personFrom = " + fromUser.email +
+    private static void GenerateQuery() {
+        query = "SELECT * FROM Winder.winder.ChatMessage WHERE personFrom = " + fromUser.email +
             " AND personTo = " + toUser.email;
 
         GenerateCommand();
     }
 
     //Generate the query
-    private void GenerateCommand() {
-        this.SqlCommand = new SqlCommand(query, connection);
+    private static void GenerateCommand() {
+        SqlCommand = new SqlCommand(query, connection);
     }
 
     //Generate the dependency
-    private void GenerateDependency() {
-        this.SqlDependency = new SqlDependency(SqlCommand);
-        this.SqlDependency.OnChange += new OnChangeEventHandler(OnDependencyChange);
+    private static void GenerateDependency() {
+        SqlDependency = new SqlDependency(SqlCommand);
+        SqlDependency.OnChange += new OnChangeEventHandler(OnDependencyChange);
     }
 
     //Activate the dependency
-    public void Start() {
+    public static void Start() {
         if( SqlDependency != null) {
             try {
 
@@ -76,7 +76,7 @@ public class DatabaseChangeListener {
     }
 
         // Handler method
-    private void OnDependencyChange(object sender,SqlNotificationEventArgs e ) {
+    private static void OnDependencyChange(object sender,SqlNotificationEventArgs e ) {
         SqlDependency dependency = sender as SqlDependency;
 
          // A notification will only work once, so remove the existing subscription to allow a new one to be added:

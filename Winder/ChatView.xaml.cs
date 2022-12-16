@@ -6,9 +6,6 @@ public partial class ChatView : ContentPage {
     
     public string originPage;
     
-    //Users
-    private User sendFromUser;
-    private User sendToUser;
     
     //MAUI
     private ScrollView scrollView;
@@ -16,8 +13,7 @@ public partial class ChatView : ContentPage {
     //Chatmodel
 
     public ChatView(User sendFromUser, User sendToUser) {
-        this.sendFromUser = sendFromUser;
-        this.sendToUser = sendToUser;
+        DatabaseChangeListener.Initialize(sendFromUser, sendToUser);
         this.originPage = "ChatPage";
 
         //MAUI
