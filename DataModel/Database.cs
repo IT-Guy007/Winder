@@ -786,7 +786,7 @@ public class Database {
 
     public byte[][] GetPicturesFromDatabase(string email) {
         
-        byte[][] result = new byte[10][];
+        byte[][] result = new byte[6][];
 
         //TO-DO: Get pictures from database
         //Start connection
@@ -1067,6 +1067,52 @@ public class Database {
         }
         CloseConnection();
         return users;
+    }
+
+    public bool InsertPictureInDatabase(string email, ImageSource source)
+    {
+        if (!CheckIfUserAlreadyHasThePicture(email, source))
+        {
+            try
+            {
+                OpenConnection();
+                string query = "INSERT INTO Winder.Winder.Pictures (email, picture) VALUES (@email, @picture)";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@email", email);
+                command.Parameters.AddWithValue("@picture", source);
+                command.ExecuteNonQuery();
+                CloseConnection();
+            }
+            catch (SqlException se)
+            {
+                Console.WriteLine("Error inserting picture in database");
+                Console.WriteLine(se.ToString());
+                Console.WriteLine(se.StackTrace);
+                CloseConnection();
+            }
+            CloseConnection();
+        }
+        return false;
+    }
+    private bool CheckIfUserAlreadyHasThePicture(string email, ImageSource source)
+    {
+        OpenConnection();
+        string query = "SELECT * FROM Winder.Winder.Pictures WHERE email = @email AND picture = @picture";
+        SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@email", email);
+        command.Parameters.AddWithValue("@picture", source);
+        // Execute the query and check if it returns any rows
+        SqlDataReader reader = command.ExecuteReader();
+        if (reader.HasRows)
+        {
+            // User already has the picture, return false
+            return false;
+        }
+        else
+        {
+            // User does not have the picture, return true
+            return true;
+        }
     }
 }
 
