@@ -10,20 +10,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="Fixed currentUser">
-      <change afterPath="$PROJECT_DIR$/Winder/ChatPage.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Winder/ChatPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/LoginPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/LoginPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/Match.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Match.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/ChatPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatPage.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/ChatPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatPage.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/Winder.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder.csproj" afterDir="false" />
-
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -31,11 +32,11 @@
       </map>
     </option>
   </component>
-
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ee116d1b35c4432581d5e38969982be1fa7c0/77/e5c75b71/SqlConnection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DataModel/Database.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/079db77a6d6c4519b9460c7149d598ec9e5c0/ed/0e60d3ed/Page.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d7a87f53803495a836648df934b3e309e3c0/69/1bca8d49/Page.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="InvalidFacetManager">
     <ignored-facets>
@@ -83,7 +84,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="UWP.Winder">
+  <component name="RunManager" selected="Xamarin.Mac.Winder">
     <configuration name="Winder" type="UwpProject" factoryName="UWP">
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -115,6 +116,12 @@
         <option name="Build" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="UWP.Winder" />
+      <item itemvalue="Xamarin.Android.Winder" />
+      <item itemvalue="Xamarin.iOS.Winder" />
+      <item itemvalue="Xamarin.Mac.Winder" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -160,56 +167,5 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Winder/ProfileChangePage.xaml.cs</url>
-          <line>230</line>
-          <properties documentPath="C:\Users\Gebruiker\source\repos\Winder\Winder\ProfileChangePage.xaml.cs" initialLine="230" containingFunctionPresentation="method 'matchButton_Clicked'">
-            <startOffsets>
-              <option value="9237" />
-            </startOffsets>
-            <endOffsets>
-              <option value="9275" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/DataModel/Database.cs</url>
-          <line>87</line>
-          <properties documentPath="$PROJECT_DIR$/DataModel/Database.cs" initialLine="87" containingFunctionPresentation="method 'CheckLogin'">
-            <startOffsets>
-              <option value="2733" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2734" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/DataModel/Database.cs</url>
-          <line>760</line>
-          <properties documentPath="$PROJECT_DIR$/DataModel/Database.cs" initialLine="760" containingFunctionPresentation="method 'deleteLikeOnMatch'">
-            <startOffsets>
-              <option value="28564" />
-            </startOffsets>
-            <endOffsets>
-              <option value="28565" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

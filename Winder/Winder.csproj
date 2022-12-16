@@ -65,9 +65,6 @@
       <MauiXaml Update="LoginPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="ChatPage.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </MauiXaml>
       <MauiXaml Update="MatchPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
@@ -83,9 +80,6 @@
       <MauiXaml Update="ForgotPassword.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="ChatPage.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
     </ItemGroup>
 
     <ItemGroup>
@@ -95,10 +89,6 @@
       <Compile Update="LoginPage.xaml.cs">
         <DependentUpon>LoginPage.xaml</DependentUpon>
         <SubType>Code</SubType>
-      </Compile>
-
-      <Compile Update="ChatPage.xaml.cs">
-        <DependentUpon>ChatPage.xaml</DependentUpon>
       </Compile>
       <Compile Update="StartPage.xaml.cs">
         <DependentUpon>StartPage.xaml</DependentUpon>
