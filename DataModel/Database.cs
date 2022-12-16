@@ -6,12 +6,11 @@ namespace DataModel;
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 public class Database {
     private Authentication _authentication = new Authentication();
-    public static SqlConnection connection;
-    
+    private static SqlConnection connection;
+
     public static void Initialize() {
        GenerateConnection();
     }
@@ -838,8 +837,10 @@ public class Database {
         OpenConnection();
 
     
-        SqlCommand command = new SqlCommand("SELECT person FROM Winder.Winder.Liked WHERE likedPerson = @email AND liked = 1 " + // selects the users that have liked the given user
-            "AND person not in (select likedPerson from Winder.Winder.Liked where person = @email) ", connection); // except the ones that the given user has already disliked or liked
+        SqlCommand command = new SqlCommand("SELECT top 5 person FROM Winder.Winder.Liked " +
+                                            "WHERE likedPerson = @email AND liked = 1 " + // selects the users that have liked the given user
+                                            "AND person not in (select likedPerson from Winder.Winder.Liked where person = @email) " + // except the ones that the given user has already disliked or liked
+                                            "order by NEWID()", connection); 
         command.Parameters.AddWithValue("@email", email);
         
         try {
@@ -865,19 +866,23 @@ public class Database {
     }
 
     public static List<string> AlgorithmForSwiping(string email) {
+        Console.WriteLine("Getting users for swiping");
         
-        List<string> users = new List<string>();
+        //Get 10 users from the database within the criteria
+        Queue<string> usersToSwipe = new Queue<string>();
         
         DateTime minDate = DateTime.Now.AddYears(0 - Authentication._currentUser.minAge);
         DateTime maxDate = DateTime.Now.AddYears(0 - Authentication._currentUser.maxAge);
         var formattedMin = minDate.ToString("yyyy-MM-dd HH:mm:ss");
         var formattedMax = maxDate.ToString("yyyy-MM-dd HH:mm:ss");
+        
         List<string> interestsgivenuser = LoadInterestsFromDatabaseInListInteresses(email).ToList(); //Every interest of the current user
 
         string query = "select top 10 email " +
                        "from winder.[User] " +
                        "where email != @email " + //Not themself
-                       "and email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 1) " + //Not disliked
+                       "and email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 1) " + //Not disliked by other person
+                       "and email not in (select likedPerson from winder.winder.Liked where person = @email) " + //Not already a person that you liked
                        "and gender = (select preference from winder.winder.[User] where email = @email) " + //gender check
                        "and email not in (select winder.winder.Match.person1 from Winder.Winder.Match where person1 = @email) " + //Not matched
                        "and email not in (select winder.winder.Match.person2 from Winder.Winder.Match where person2 = @email) " + //Not matched
@@ -891,9 +896,7 @@ public class Database {
         }
         //Random people
         query = query + ") ORDER BY NEWID()";
-        
-        Console.WriteLine(query);
-        
+
         OpenConnection();
 
         SqlCommand command = new SqlCommand(query, connection);
@@ -902,10 +905,9 @@ public class Database {
 
         try {
             SqlDataReader reader = command.ExecuteReader(); // execute het command
-            while (reader.Read())
-            {
-                string tempEmail = reader["email"] as string ?? "";
-                users.Add(tempEmail);  
+            while (reader.Read()) {
+                string user = reader["email"] as string ?? "";
+                usersToSwipe.Enqueue(user);  
             }
             CloseConnection();
             
@@ -913,29 +915,59 @@ public class Database {
             Console.WriteLine("Error retrieving emails for algorithm");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
+            
             //Close connection
             CloseConnection();
         }
         CloseConnection();
         
+        //Get 5 users who likes you
+        string[] usersWhoLikedYou = GetUsersWhoLikedYou(email);
+        Queue<string> likedQueue = new Queue<string>();
         
-        //Loop though users and check if in currentQueue
-        for (int i = 0; i < 5; i++) {
-            var userToAdd = "";
-            //Check if already exists in current Queue
-            var alreadyExists = Authentication._profileQueue.Where(i => i.user.email == userToAdd);
-            if (alreadyExists.Count() == 0 && !users.Contains(userToAdd)) {
-                users.Add(userToAdd);
-            } 
+        //Liked into queue
+        foreach (string user in usersWhoLikedYou) {
+            likedQueue.Enqueue(user);
         }
+
+        //Place for the users who liked you
+        Random random = new Random();
+        int place = random.Next(0, 5);
+
 
         //Check if users contains empty strings
         List<string> result = new List<string>();
-        foreach (var user in users) {
-            if(user != "") {
-                result.Add(user);
+        
+        
+        //Loop though users and check if in currentQueue
+        while(result.Count != 5 && (usersToSwipe.Count > 0 || usersWhoLikedYou.Length > 0)) {
+
+            var userToAdd = "";
+
+            if (place == result.Count) {
+                //For the liked user place else random user
+                if (likedQueue.Count > 0) {
+                    userToAdd = likedQueue.Dequeue();
+                } else {
+                    userToAdd = usersToSwipe.Dequeue();
+                }
+            } else {
+                if(usersToSwipe.Count > 0) {
+                    userToAdd = usersToSwipe.Dequeue();
+                } else {
+                    userToAdd = likedQueue.Dequeue();
+                }
             }
+            
+            //Check if already exists in current Queue
+            var alreadyExists = Authentication._profileQueue.Where(i => i.user.email == userToAdd);
+            if (alreadyExists.Count() == 0 && !usersToSwipe.Contains(userToAdd) && !string.IsNullOrEmpty(userToAdd)) {
+                Console.WriteLine("Adding user");
+                result.Add(userToAdd);
+            }
+            
         }
+        
         return result;
     }
 

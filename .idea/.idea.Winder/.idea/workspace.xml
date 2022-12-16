@@ -12,9 +12,14 @@
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/UserPrefs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/UserPrefs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Authentication.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Instellingen.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Instellingen.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/LoginPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/LoginPage.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/RegisterPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/RegisterPage.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +146,9 @@
       <workItem from="1671098314429" duration="4647000" />
       <workItem from="1671103011991" duration="3494000" />
       <workItem from="1671117100244" duration="2272000" />
-      <workItem from="1671125366467" duration="2827000" />
+      <workItem from="1671125366467" duration="3225000" />
+      <workItem from="1671182617452" duration="1997000" />
+      <workItem from="1671184820548" duration="6045000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>

@@ -4,8 +4,7 @@ using Winder;
 
 namespace MAUI;
 
-public partial class MatchPage : ContentPage
-{
+public partial class MatchPage : ContentPage {
     
     private Database _database = new Database();
 
@@ -16,25 +15,20 @@ public partial class MatchPage : ContentPage
 
     public MatchPage() {
 
-        CheckIfQueueNeedsMoreProfiles();
-
         Title = "Make your match now!";
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         
         StackLayout verticalStackLayout = new StackLayout { Orientation = StackOrientation.Vertical, VerticalOptions = LayoutOptions.Fill };
         verticalStackLayout.Spacing = 10;
-        Grid gridLayout = new Grid()
-        {
-            ColumnDefinitions =
-            {
+        Grid gridLayout = new Grid() {
+            ColumnDefinitions = {
                 new ColumnDefinition(),
                 new ColumnDefinition(),
                 new ColumnDefinition()
                 
             }
         };
-        HorizontalStackLayout horizontalLayout = new HorizontalStackLayout()
-        {
+        HorizontalStackLayout horizontalLayout = new HorizontalStackLayout() {
            HorizontalOptions = LayoutOptions.End
         };
         
@@ -99,18 +93,6 @@ public partial class MatchPage : ContentPage
         StackLayout buttonStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.Center };
         buttonStackLayout.Spacing = 10;
 
-        try {
-            if (Authentication._profileQueue.Count > 0) {
-                Authentication._currentProfile = Authentication._profileQueue.Dequeue();
-            } else {
-                Console.WriteLine("Couldn't find a new profile");
-            }
-        } catch (Exception e) {
-            //No profiles found
-            Console.WriteLine("Couldn't find a new profile");
-            Console.WriteLine(e.StackTrace);
-        }
-
         //Images
         if (Authentication._currentProfile == null)
         {
@@ -133,9 +115,7 @@ public partial class MatchPage : ContentPage
                     };
                     verticalStackLayout.Add(profileImage);
 
-                }
-                else
-                {
+                } else {
 
                     var profileImage = new Microsoft.Maui.Controls.Image
                     {
@@ -205,8 +185,7 @@ public partial class MatchPage : ContentPage
             var namelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Binding
-
-      var name = new Label { Text = Authentication._currentProfile.user.firstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var name = new Label { Text = Authentication._currentProfile.user.firstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             name.SetBinding(Label.TextProperty, new Binding() { Source = Authentication._currentProfile.user.firstName });
 
@@ -369,34 +348,23 @@ public partial class MatchPage : ContentPage
         Instellingen.originPage = pageName;
         Navigation.PushAsync(Instellingen);
     }
-
-   
     
 
-    private async Task GetProfiles() {
-        Profile[] profiles = Authentication.Get5Profiles(Authentication._currentUser.email);
-        foreach (var profile in profiles)
-        {
+    public void NextProfile() {
 
-            if (profile != null)
-            {
-                Authentication._profileQueue.Enqueue(profile);
-            }
-        }
-    }
-
-    private async void CheckIfQueueNeedsMoreProfiles() {
-        if (Authentication._profileQueue.Count < 5){
-
-            await GetProfiles();
-        }
-    }
-
-    private void NextProfile() {
-        CheckIfQueueNeedsMoreProfiles();
-        Console.WriteLine("Next profile, current amount in queue");
-        Console.WriteLine(Authentication._profileQueue.Count);
+        Authentication.CheckIfQueueNeedsMoreProfiles();
         if (Authentication._profileQueue.Count != 0) {
+            try {
+                Authentication._currentProfile = Authentication._profileQueue.Dequeue();
+
+            } catch (Exception e) {
+                //No profiles found
+                Console.WriteLine("Couldn't find a new profile");
+                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.StackTrace);
+
+            }
+
             Authentication.selectedImage = 0;
             Navigation.PushAsync(new MatchPage());
             
@@ -404,13 +372,11 @@ public partial class MatchPage : ContentPage
             //Application.Current.Dispatcher.Dispatch(() => Authentication._currentProfile = Authentication._profileQueue.Dequeue());
 
         } else {
+            Console.WriteLine("Couldn't find a new profile");
             Authentication._currentProfile = null;
             Navigation.PushAsync(new MatchPage());
             
         }
-        
-        Console.WriteLine("After next profile, current amount in queue");
-        Console.WriteLine(Authentication._profileQueue.Count);
 
     }
 
@@ -421,11 +387,11 @@ public partial class MatchPage : ContentPage
     }
 
     
-    byte[] ScaleImage(byte[] bytes)
-    {
-        if (Authentication.isscaled == false)
+    byte[] ScaleImage(byte[] bytes) {
+        //Dont run when other then Windows
+#if WINDOWS
 
-        {
+        if (Authentication.isscaled == false) {
             Authentication.isscaled = true;
 
             using var memoryStream = new MemoryStream();
@@ -440,10 +406,11 @@ public partial class MatchPage : ContentPage
             resized.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
             return stream.ToArray();
         }
-        
-            return bytes;
+        return bytes;
+#else
+        return bytes;
+#endif
 
-        
     }
     
     int swipes = 0;
@@ -468,17 +435,13 @@ public partial class MatchPage : ContentPage
     private void OnLike(object sender, EventArgs e) {
         string emailCurrentUser = Authentication._currentUser.email;
         string emailLikedUser = Authentication._currentProfile.user.email;
-        if (_database.CheckMatch(emailCurrentUser, emailLikedUser))
-        {
+        if (_database.CheckMatch(emailCurrentUser, emailLikedUser)) {
             _database.NewMatch(emailLikedUser, emailCurrentUser);
             _database.DeleteLikeOnMatch(emailCurrentUser, emailLikedUser);
-        }
-        else
-        {
+            MatchPopup();
+        } else {
             _database.NewLike(emailCurrentUser, emailLikedUser);
         }
-
-        MatchPopup();
 
         NextProfile();
     }

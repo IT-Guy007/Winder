@@ -21,9 +21,30 @@ public partial class LoginPage : ContentPage {
         var Password = Wachtwoord.Text;
         Console.WriteLine(Email);
         if (database.CheckLogin(Email, Password)) {
-            FoutmeldingInloggen.IsVisible = false;
-            Authentication.Get5Profiles(Email);
-            Navigation.PushAsync(new MatchPage());
+
+            //Set the first profile
+            Authentication.CheckIfQueueNeedsMoreProfiles();
+            if (Authentication._profileQueue.Count != 0) {
+                try {
+                    Authentication._currentProfile = Authentication._profileQueue.Dequeue();
+
+                } catch (Exception ex) {
+                    //No profiles found
+                    Console.WriteLine("Couldn't find a new profile");
+                    Console.WriteLine(ex.ToString());
+                    Console.WriteLine(ex.StackTrace);
+
+                }
+
+                Authentication.selectedImage = 0;
+                Navigation.PushAsync(new MatchPage());
+
+            } else {
+                Console.WriteLine("Couldn't find a new profile");
+                Authentication._currentProfile = null;
+                Navigation.PushAsync(new MatchPage());
+            
+            }
         }
         else {
             FoutmeldingInloggen.IsVisible = true;
