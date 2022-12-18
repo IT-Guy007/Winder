@@ -177,6 +177,7 @@ public partial class Instellingen : ContentPage
             case "matchpage":
                 MatchPage matchPage = new MatchPage();
                 matchPage.backButtonVisible = true;
+                Authentication.SetCurrentProfile();
                 Navigation.PushAsync(new MatchPage());
                 break;
             case "profilepage":
@@ -186,15 +187,15 @@ public partial class Instellingen : ContentPage
 
     }
 
-    private void matchesbutton_Clicked(object sender, EventArgs e)
-    {
-
+    private void matchesbutton_Clicked(object sender, EventArgs e) {
+        
     }
 
     private void matchPage_Clicked(object sender, EventArgs e)
     {
         MatchPage matchPage = new MatchPage();
         matchPage.originPage= pageName;
+        Authentication.SetCurrentProfile();
         Navigation.PushAsync(matchPage);
 
     }
