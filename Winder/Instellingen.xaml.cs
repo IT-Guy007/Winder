@@ -6,6 +6,7 @@ namespace MAUI;
 
 public partial class Instellingen : ContentPage
 {
+    
     Database database = new Database();
     Authentication _authentication = new Authentication();
     string email = Authentication._currentUser.email;
