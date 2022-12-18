@@ -12,9 +12,14 @@
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/0dd25185-10c1-4601-a292-ef817381e92b.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/cdbfb9b1-eb3e-4874-918a-fe2cad38ab24.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,8 +36,6 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/DataModel/Database.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/079db77a6d6c4519b9460c7149d598ec9e5c0/ed/0e60d3ed/Page.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d7a87f53803495a836648df934b3e309e3c0/69/1bca8d49/Page.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="InvalidFacetManager">
     <ignored-facets>
@@ -43,7 +46,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="SWEA" />
   </component>
   <component name="ProjectId" id="2IXh0gUq4gGfG1ZtGTJa2sn2Fwy" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -76,13 +79,13 @@
       &quot;sqlserver&quot;
     ],
     &quot;rider.external.source.directories&quot;: [
-      &quot;/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
-      &quot;/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
-      &quot;/Users/jeroendenotter/.local/share/Symbols/src&quot;
+      &quot;C:\\Users\\misch\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\misch\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\misch\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
 }</component>
-  <component name="RunManager" selected="Xamarin.Mac.Winder">
+  <component name="RunManager" selected="UWP.Windows">
     <configuration name="WorkAround" type="RunExe" factoryName=".NET Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64/Winder.app/Contents/MacOS/Winder" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -95,6 +98,13 @@
       <method v="2">
         <option name="Build" default="false" projectName="Winder" projectPath="file://$PROJECT_DIR$/Winder/Winder.csproj" />
         <option name="Build Solution" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Windows" type="UwpProject" factoryName="UWP">
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <method v="2">
+        <option name="Build" />
       </method>
     </configuration>
     <configuration name="Winder" type="XamarinIOSProject" factoryName="Xamarin.iOS">
@@ -114,6 +124,7 @@
     </configuration>
     <list>
       <item itemvalue=".NET Executable.WorkAround" />
+      <item itemvalue="UWP.Windows" />
       <item itemvalue="Xamarin.iOS.Winder" />
       <item itemvalue="Xamarin.Mac.Winder" />
     </list>
@@ -142,6 +153,10 @@
       <workItem from="1671103011991" duration="3494000" />
       <workItem from="1671117100244" duration="2272000" />
       <workItem from="1671125366467" duration="2827000" />
+      <workItem from="1671197531378" duration="76000" />
+      <workItem from="1671197632563" duration="796000" />
+      <workItem from="1671198672308" duration="70000" />
+      <workItem from="1671199361593" duration="406000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>

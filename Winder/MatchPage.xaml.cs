@@ -298,6 +298,31 @@ public partial class MatchPage : ContentPage
             bioStackLayout.Add(bio);
             infoStackLayout.Add(bioStackLayout);
 
+            StackLayout InterestsStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            var interestslbl = new Label { Text = "Interesses: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+
+            InterestsStackLayout.Add(interestslbl);
+
+            for (int i = 0; i < Authentication._currentProfile.user.interests.Length; i++)
+            {
+                if (i != 0)
+                {
+                    var spacecommavar = new Label { FontSize = 20, HorizontalOptions = LayoutOptions.Start, Text = ", " };
+                    InterestsStackLayout.Add(spacecommavar);
+                }
+                
+                var interestsbinding = new Binding() { Source = Authentication._currentProfile.user.interests[i] };                             //Data binding
+                var interestvar = new Label { FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+                interestvar.SetBinding(Label.TextProperty, interestsbinding);
+                InterestsStackLayout.Add(interestvar);
+
+                
+               
+            }
+
+            infoStackLayout.Add(InterestsStackLayout);
+
+
 
             //Buttons
             var likeButton = new Button { Text = "Like", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
