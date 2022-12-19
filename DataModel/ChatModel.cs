@@ -67,11 +67,13 @@ public class DatabaseChangeListener
             Console.WriteLine("Waiting for new Data");
 
             //Create dependency for this command and add event handler
-            SqlDependency dependency = new SqlDependency(sqlCommand);
-            dependency.OnChange += OnDependencyChange;
+            SqlDependency dependency = new SqlDependency(new SqlCommand(query, connection));
+            dependency.OnChange += new OnChangeEventHandler(OnDependencyChange);
 
             var dataTable = new DataTable();
+            connection.Open();
             dataTable.Load(sqlCommand.ExecuteReader(CommandBehavior.CloseConnection));
+            connection.Close();
 
             return dataTable;
         } catch (Exception e)
@@ -129,7 +131,7 @@ public class DatabaseChangeListener
         string query = "SELECT [winder].[ChatMessage].[personFrom], [winder].[ChatMessage].[personTo], [winder].[ChatMessage].[sendDate], [winder].[ChatMessage].[chatMessage], [winder].[ChatMessage].[read] " +
                   "FROM [winder].[ChatMessage] " +
                   "WHERE ([winder].[ChatMessage].[personFrom] = '" + fromUser.email + "' AND [winder].[ChatMessage].[personTo] = '" + toUser.email + "') " +
-                  "OR ([winder].[ChatMessage].[personFrom] = '" + toUser.email + "' AND [winder].[ChatMessage].[personTo] = '" + fromUser.email + "')";
+                  "OR ([winder].[ChatMessage].[personFrom] = '" + toUser.email + "' AND [winder].[ChatMessage].[personTo] = '" + fromUser.email + "') order by sendDate";
         
         //Create command
         sqlCommand = new SqlCommand(query, connection);
