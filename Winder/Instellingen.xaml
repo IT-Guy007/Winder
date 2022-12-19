@@ -271,6 +271,7 @@
             <Button
                 BackgroundColor="#D9D9D9"
                 HeightRequest="60"
+                Clicked="deleteAccountbtn"
                 Text="Account verwijderen" />
 
             <Button

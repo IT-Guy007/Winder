@@ -21,8 +21,9 @@ public partial class MainPage : ContentPage {
         Console.WriteLine("App started");
         Authentication.Initialize();
         Database.Initialize();
-
+        
         Database db = new Database();
+      
         try {
             
             Console.WriteLine("Testing database connection");

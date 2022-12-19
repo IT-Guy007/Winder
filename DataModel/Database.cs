@@ -7,6 +7,7 @@ namespace DataModel;
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 public class Database {
     private Authentication _authentication = new Authentication();
@@ -244,6 +245,9 @@ public class Database {
             SqlCommand queryuserHasInterest = new SqlCommand("delete from winder.winder.userHasInterest where UID = @Email", connection);
             queryuserHasInterest.Parameters.AddWithValue("@Email", email);
 
+            SqlCommand queryPhotos = new SqlCommand("delete from winder.winder.Photos where [user] = @Email", connection);
+            queryPhotos.Parameters.AddWithValue("@Email", email);
+
             SqlCommand queryUser = new SqlCommand("delete from winder.winder.[User] where email = @Email", connection);
             queryUser.Parameters.AddWithValue("@Email", email);
 
@@ -254,6 +258,7 @@ public class Database {
                 queryMatchPerson1.ExecuteNonQuery();
                 queryMatchPerson2.ExecuteNonQuery();
                 queryuserHasInterest.ExecuteNonQuery();
+                queryPhotos.ExecuteNonQuery();
 
                 queryUser.ExecuteNonQuery();
 
@@ -649,9 +654,10 @@ public class Database {
             while (reader.Read()) {
                 int? minAge = reader["min"] as int?;
                 int minimalAge = minAge ?? 18;
+                CloseConnection();
                 return minimalAge;
             }
-            CloseConnection();
+            
         } catch (SqlException se) {
             Console.WriteLine("Error inserting minAge in database");
             Console.WriteLine(se.ToString());
@@ -689,6 +695,7 @@ public class Database {
             CloseConnection();
             return 0;
         }
+        CloseConnection();
         return 0;
     }
 

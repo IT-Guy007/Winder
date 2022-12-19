@@ -125,6 +125,19 @@ public partial class Instellingen : ContentPage
         database.SetMaxAge(email, maxAge);
 
     }
+    public async void deleteAccountbtn(object sender, EventArgs e)
+    {
+
+        bool displayresult = await DisplayAlert("", "Weet u zeker dat u uw account wilt verwijderen?", "Ja", "Nee");
+        if (displayresult)
+        {
+            database.DeleteUser(email);
+            SecureStorage.Default.Remove("email");
+            await Navigation.PushAsync(new MainPage());
+        }
+
+    }
+
     //all the data that has been changed will be replaced in the database
     public void editDataBtn(object sender, EventArgs e)
     {
