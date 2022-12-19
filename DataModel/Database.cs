@@ -106,8 +106,18 @@ public class Database {
         string hashed = _authentication.HashPassword(password);
         bool output = false;
 
+        
         //Start connection
         OpenConnection();
+
+        if (!email.EndsWith("@student.windesheim.nl")) {
+            email = email + "@student.windesheim.nl";
+            
+        }
+        if (!email.StartsWith("s"))
+        {
+            email = "s" + email;
+        }
 
         //Create query
         SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email", connection);

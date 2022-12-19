@@ -15,7 +15,9 @@ public partial class MainPage : ContentPage {
     }
     
     protected override async void OnAppearing() {
-        
+
+
+       
         // wait for 4 seconds
         await Task.Delay(3000);
         Console.WriteLine("App started");
