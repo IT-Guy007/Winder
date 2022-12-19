@@ -394,13 +394,14 @@ public class Database {
             
             //Create query
             SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
-            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, education = @Education,birthday = @birthday, bio = @bio, profilePicture = @profilepicture " +
+            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, education = @Education,birthday = @birthday, bio = @bio, gender = @Gender, preference = @Preference,profilePicture = @profilepicture " +
             "where email = @Email", connection);
             query.Parameters.AddWithValue("@firstname", user.firstName);
             query.Parameters.AddWithValue("@middlename", user.middleName);
             query.Parameters.AddWithValue("@lastname", user.lastName);
             query.Parameters.AddWithValue("@birthday", user.birthDay);
-            query.Parameters.AddWithValue("@preference", user.preference);
+            query.Parameters.AddWithValue("@Gender", user.gender);
+            query.Parameters.AddWithValue("@Preference", user.preference);
             query.Parameters.AddWithValue("@Email", user.email);
             query.Parameters.AddWithValue("@bio", user.bio);
             query.Parameters.AddWithValue("@Education", user.major);
@@ -802,7 +803,7 @@ public class Database {
 
     public static byte[][] GetPicturesFromDatabase(string email) {
         
-        byte[][] result = new byte[10][];
+        byte[][] result = new byte[6][];
 
         //TO-DO: Get pictures from database
         //Start connection
@@ -901,7 +902,7 @@ public class Database {
 
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@email", email);
-        command.Parameters.AddWithValue("@interest", interestsgivenuser[0]);
+        if (interestsgivenuser.Count > 0)command.Parameters.AddWithValue("@interest", interestsgivenuser[0]);
 
         try {
             SqlDataReader reader = command.ExecuteReader(); // execute het command
@@ -978,5 +979,88 @@ public class Database {
         await SecureStorage.SetAsync("email", email);
     }
 
+    public List<User> GetMatchedStudentsFromUser(string email)
+    {
+        List<User> users = new List<User>();
+        List<string> emails = new List<string>();
+        try
+        {
+            OpenConnection();
+            string query = "SELECT person1, person2 FROM Winder.Winder.Match WHERE person1 = @email OR person2 = @email";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@email", email);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string person1 = reader["person1"] as string ?? "Unknown";
+                string person2 = reader["person2"] as string ?? "Unknown";
+                if (person1 == email)
+                {
+                    emails.Add(person2);
+                }
+                else
+                {
+                    emails.Add(person1);
+                }
+            }
+            CloseConnection();
+            emails.ForEach(x => users.Add(GetUserFromDatabase(x)));
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine("Error retrieving matches from database");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+        }
+        CloseConnection();
+        return users;
+    }
+
+    public bool InsertPictureInDatabase(string email, ImageSource source)
+    {
+        if (!CheckIfUserAlreadyHasThePicture(email, source))
+        {
+            try
+            {
+                OpenConnection();
+                string query = "INSERT INTO Winder.Winder.Pictures (email, picture) VALUES (@email, @picture)";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@email", email);
+                command.Parameters.AddWithValue("@picture", source);
+                command.ExecuteNonQuery();
+                CloseConnection();
+            }
+            catch (SqlException se)
+            {
+                Console.WriteLine("Error inserting picture in database");
+                Console.WriteLine(se.ToString());
+                Console.WriteLine(se.StackTrace);
+                CloseConnection();
+            }
+            CloseConnection();
+        }
+        return false;
+    }
+    private bool CheckIfUserAlreadyHasThePicture(string email, ImageSource source)
+    {
+        OpenConnection();
+        string query = "SELECT * FROM Winder.Winder.Pictures WHERE email = @email AND picture = @picture";
+        SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@email", email);
+        command.Parameters.AddWithValue("@picture", source);
+        // Execute the query and check if it returns any rows
+        SqlDataReader reader = command.ExecuteReader();
+        if (reader.HasRows)
+        {
+            // User already has the picture, return false
+            return false;
+        }
+        else
+        {
+            // User does not have the picture, return true
+            return true;
+        }
+    }
 }
 

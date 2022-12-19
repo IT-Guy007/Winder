@@ -7,6 +7,8 @@ using System.Drawing.Drawing2D;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Drawing;
+
 namespace MAUI;
 
 public partial class ProfileChange : ContentPage
@@ -16,7 +18,7 @@ public partial class ProfileChange : ContentPage
   
     List<string> interesses  =new List<string>();
     Database Database = new Database();
-    Color ErrorColor = new Color(255, 243, 5);
+    Microsoft.Maui.Graphics.Color ErrorColor = new Microsoft.Maui.Graphics.Color(255, 243, 5);
     private bool firstname = true;
     private bool middlename = true;
     private bool lastname = true;
@@ -40,23 +42,82 @@ public partial class ProfileChange : ContentPage
     {
         if (Authentication._currentUser != null)
         {
+            byte[][] PicturesOfLoggedInUser = Database.GetPicturesFromDatabase(Authentication._currentUser.email);
+            SetAllImageButtons(PicturesOfLoggedInUser);
             Firstname.Placeholder = Authentication._currentUser.firstName;
             Middlename.Placeholder = Authentication._currentUser.middleName;
             Lastname.Placeholder = Authentication._currentUser.lastName;
             Birthdate.Date = Authentication._currentUser.birthDay;
             Bio.Placeholder = Authentication._currentUser.bio;
             Education.Placeholder = Authentication._currentUser.major;
-            MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
-            ProfileImage.Source = ImageSource.FromStream(() => ms);
             Gender.SelectedIndex = GetGenderFromUser();
             Preference.SelectedIndex = GetPreferenceFromUser();
         }
     }
+    private void SetAllImageButtons(byte[][] PicturesOfLoggedInUser)
+    {
+        if (PicturesOfLoggedInUser != null)
+        {
+            if (PicturesOfLoggedInUser[0] != null)
+            {
+                byte[] ScaledImage = ScaleImage(PicturesOfLoggedInUser[0],140,200);
+                ProfileImage1.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+            }
+            if (PicturesOfLoggedInUser[1] != null)
+            {
+                byte[] ScaledImage = ScaleImage(PicturesOfLoggedInUser[1], 140, 200);
+                ProfileImage2.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+            }
+            if (PicturesOfLoggedInUser[2] != null)
+            {
+                byte[] ScaledImage = ScaleImage(PicturesOfLoggedInUser[2], 140, 200);
+                ProfileImage3.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+            }
+            if (PicturesOfLoggedInUser[3] != null)
+            {
+                byte[] ScaledImage = ScaleImage(PicturesOfLoggedInUser[3], 140, 200);
+                ProfileImage4.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+            }
+            if (PicturesOfLoggedInUser[4] != null)
+            {
+                byte[] ScaledImage = ScaleImage(PicturesOfLoggedInUser[4], 140, 200);
+                ProfileImage5.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+            }            
+            if (PicturesOfLoggedInUser[5] != null)
+            {
+                byte[] ScaledImage = ScaleImage(PicturesOfLoggedInUser[5], 140, 200);
+                ProfileImage6.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+            }
+            
+        }
+    }
+public byte[] ScaleImage(byte[] bytes, int width, int height)
+{
+    using (MemoryStream ms = new MemoryStream(bytes))
+    {
+        using (Bitmap image = new Bitmap(ms))
+        {
+            Bitmap resizedImage = new Bitmap(width, height);
+            using (Graphics gfx = Graphics.FromImage(resizedImage))
+            {
+                gfx.DrawImage(image, 0, 0, width, height);
+            }
+
+            using (MemoryStream output = new MemoryStream())
+            {
+                resizedImage.Save(output, image.RawFormat);
+                return output.ToArray();
+            }
+        }
+    }
+}
 
 
 
-    //Gets the preference of user
-    private int GetPreferenceFromUser()
+
+
+//Gets the preference of user
+private int GetPreferenceFromUser()
     {
         if (Authentication._currentUser.preference == "Man") return 1;
         if (Authentication._currentUser.preference == "Vrouw") return 2;
@@ -76,6 +137,7 @@ public partial class ProfileChange : ContentPage
         {
             UpdateUserPropertiesPrepareForUpdateQuery();
             Database.UpdateUserInDatabaseWithNewUserData(Authentication._currentUser);
+            InsertAllPhotosInDatabase(Authentication._currentUser);
             RegisterInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             ClearTextFromEntries();
@@ -86,6 +148,35 @@ public partial class ProfileChange : ContentPage
             DisplayAlert("Er is iets verkeerd gegaan...", "Vul alle gegevens in", "OK");
         }
     }
+
+    private void InsertAllPhotosInDatabase(User currentUser)
+    {
+        if (ProfileImage1.Source != null)
+        {
+            Database.InsertPictureInDatabase(currentUser.email, ProfileImage1.Source);
+        }
+        if (ProfileImage2.Source != null)
+        {
+            Database.InsertPictureInDatabase(currentUser.email, ProfileImage2.Source);
+        }
+        if (ProfileImage3.Source != null)
+        {
+            Database.InsertPictureInDatabase(currentUser.email, ProfileImage3.Source);
+        }
+        if (ProfileImage4.Source != null)
+        {
+            Database.InsertPictureInDatabase(currentUser.email, ProfileImage4.Source);
+        }
+        if (ProfileImage5.Source != null)
+        {
+            Database.InsertPictureInDatabase(currentUser.email, ProfileImage5.Source);
+        }
+        if (ProfileImage6.Source != null)
+        {
+            Database.InsertPictureInDatabase(currentUser.email, ProfileImage6.Source);
+        }
+    }
+
     //Updates the placeholders value after a change has been made
     private void UpdatePlaceholders()
     {
@@ -287,8 +378,8 @@ public partial class ProfileChange : ContentPage
             Stream stream = await image.OpenReadAsync();
             BinaryReader binary = new BinaryReader(fileStream);
             imageArr = binary.ReadBytes((int)fileStream.Length);
-            Authentication._currentUser.profilePicture = imageArr;
-            ProfileImage.Source = ImageSource.FromStream(() => stream);
+            byte[] ScaledImage = ScaleImage(imageArr, 300, 300);
+            ProfileImage2.Source = ImageSource.FromStream(() => stream);
         }
         catch (Exception ex)
         {
