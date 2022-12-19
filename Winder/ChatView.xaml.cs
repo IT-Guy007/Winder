@@ -3,11 +3,13 @@ using DataModel;
 namespace Winder;
 
 public partial class ChatView : ContentPage {
+    private DatabaseChangeListener databaseChangeListener;
     
     public string originPage;
 
     //MAUI
     private ScrollView scrollView;
+    private StackLayout mainStackLayout;
     private StackLayout verticalStackLayout;
 
 
@@ -15,12 +17,13 @@ public partial class ChatView : ContentPage {
         
         //MAUI
         scrollView = new ScrollView();
+        mainStackLayout = new StackLayout{Orientation = StackOrientation.Vertical, VerticalOptions = LayoutOptions.Fill};
         verticalStackLayout = new StackLayout { Orientation = StackOrientation.Vertical, VerticalOptions = LayoutOptions.Fill };
-        scrollView.Content = verticalStackLayout;
         Title = "Chat with your match now!";
         
         //Initialise content
-        DatabaseChangeListener.Initialize(sendFromUser, sendToUser);
+        databaseChangeListener = new DatabaseChangeListener();
+        databaseChangeListener.Initialize(sendFromUser, sendToUser);
         this.originPage = "ChatPage";
 
 
@@ -34,7 +37,6 @@ public partial class ChatView : ContentPage {
             };
             verticalStackLayout.Add(noMessagesFound);
         } else  {
-
             foreach (var message in DatabaseChangeListener._chatCollection) {
                 Label chatMessage = new Label();
                 chatMessage.Text = message.message;
@@ -67,19 +69,24 @@ public partial class ChatView : ContentPage {
             VerticalOptions = LayoutOptions.End,
             FontSize = 20
         };
-        sendButton.Clicked += async () => {
-            if (chatInput.Text != "") {
-                await DatabaseChangeListener.SendMessage(chatInput.Text);
-                chatInput.Text = "";
-            }
-        };
+        //sendButton.Clicked += async () => {
+        //    if (chatInput.Text != "") {
+        //        await DatabaseChangeListener.SendMessage(chatInput.Text);
+        //        chatInput.Text = "";
+        //    }
+        //};
         
         inputStackLayout.Add(chatInput);
         inputStackLayout.Add(sendButton);
-        verticalStackLayout.Add(inputStackLayout);
+
+
         
 
         //Set content
+        
+        mainStackLayout.Add(verticalStackLayout);
+        mainStackLayout.Add(inputStackLayout);
+        scrollView.Content = mainStackLayout;
         verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         scrollView.BackgroundColor = Color.FromArgb("#CC415F");
         Content = scrollView;

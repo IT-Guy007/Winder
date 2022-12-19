@@ -59,7 +59,7 @@ public partial class ChatPage : ContentPage
 
     private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e) {
         var tappedItem = e.Item as MatchedPerson;
-        DisplayAlert("This is user:", tappedItem.Email, "OK");
+        Navigation.PushAsync(new ChatView(Authentication._currentUser, Database.GetUserFromDatabase(tappedItem.Email)));
     }
 
     private void MyProfile_Clicked(object sender, EventArgs e) {

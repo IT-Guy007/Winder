@@ -147,15 +147,24 @@ public partial class MatchPage : ContentPage {
                 currentImage.Source = ImageSource.FromFile("noprofile.jpg");
 
             }
-            else
-            {
-                MemoryStream ms = new MemoryStream(ScaleImage(Authentication._currentProfile.profile_images[Authentication.selectedImage]));
+            else {
+                try
+                {
+                    MemoryStream ms =
+                        new MemoryStream(
+                            ScaleImage(Authentication._currentProfile.profile_images[Authentication.selectedImage]));
 
-                currentImage.Source = ImageSource.FromStream(() => ms);
+                    currentImage.Source = ImageSource.FromStream(() => ms);
 
-                //Data binding
-                currentImage.SetBinding(ImageButton.SourceProperty, new Binding() { Source = ImageSource.FromStream(() => ms) });
-
+                    //Data binding
+                    currentImage.SetBinding(ImageButton.SourceProperty,
+                        new Binding() { Source = ImageSource.FromStream(() => ms) });
+                }
+                catch(Exception e) {
+                    Console.WriteLine("Error in image convert from stream");
+                    Console.WriteLine(e.ToString());
+                    Console.WriteLine(e.StackTrace);
+                }
             }
             currentImage.WidthRequest = 600;
             currentImage.HeightRequest = 600;

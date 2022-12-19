@@ -1,19 +1,18 @@
 ﻿<Properties StartupConfiguration="{041FB9A6-18D8-4614-8980-D447BBEA2A7C}|Default">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/jeroendenotter/Documents/6. GitHub/Winder/DataModel/Database.cs" relfile="DataModel/Database.cs" line="1094" column="1" />
       <Breakpoint file="/Users/jeroendenotter/Documents/6. GitHub/Winder/DataModel/Database.cs" relfile="DataModel/Database.cs" line="870" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Winder PreferredExecutionTarget="MyAppleMacCatalystID" />
-  <MultiItemStartupConfigurations />
   <Xamarin.Addins.Core.Project ActiveDebugTarget="MyAppleMacCatalystID" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Winder PreferredExecutionTarget="MyAppleMacCatalystID" />
   <MonoDevelop.Ide.Workbench ActiveDocument="DataModel/Database.cs">
     <Files>
       <File FileName="DataModel/Database.cs" Line="931" Column="38" IsPinned="True" />
-      <File FileName="Winder/MatchesPage.xaml.cs" />
       <File FileName="DataModel/Authentication.cs" />
       <File FileName="Winder/LoginPage.xaml.cs" />
     </Files>

@@ -11,7 +11,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/DataModel-Release.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Unittest-Release.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/UserPrefs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/UserPrefs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/DataModel-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/DataModel-Debug.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Unittest-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Unittest-Debug.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-ios.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-ios.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-maccatalyst.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-maccatalyst.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/ChatModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/ChatModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/ChatPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatPage.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/ChatView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +43,7 @@
     <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/079db77a6d6c4519b9460c7149d598ec9e5c0/ed/0e60d3ed/Page.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d7a87f53803495a836648df934b3e309e3c0/69/1bca8d49/Page.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7a60916519214763b9f44e9d259e3b9f417c0/c5/5a8da609/SqlDependency.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="InvalidFacetManager">
     <ignored-facets>
