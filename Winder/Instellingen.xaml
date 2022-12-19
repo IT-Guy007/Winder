@@ -6,10 +6,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     BackgroundColor="#CC415F">
 
-
-
-
-
     <StackLayout
         Padding="10"
         HorizontalOptions="FillAndExpand"
@@ -42,8 +38,10 @@
 
 
                 <Button 
+
                     x:Name="chatButton"
                 Text="Chats"
+
                 VerticalOptions="Start" 
                 HorizontalOptions="Start"
                 WidthRequest="120"
@@ -51,6 +49,7 @@
                 HeightRequest="50"
                 TextColor="Black"
                   Clicked="ChatButton_Clicked"
+
                 
             >
                 </Button>

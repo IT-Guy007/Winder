@@ -22,5 +22,9 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
+    <data-source name="Test" uuid="33867050-ae3f-4801-8373-97f022c9f89d">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MSSQL" exact-version="0" />
+      <schema-mapping />
+    </data-source>
   </component>
 </project>
