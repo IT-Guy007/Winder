@@ -25,7 +25,6 @@ public partial class MatchPage : ContentPage {
                 new ColumnDefinition(),
                 new ColumnDefinition(),
                 new ColumnDefinition()
-                
             }
         };
         HorizontalStackLayout horizontalLayout = new HorizontalStackLayout() {
@@ -334,7 +333,7 @@ public partial class MatchPage : ContentPage {
     private void MatchesButton_Clicked(object obj, EventArgs e)
     {
 
-        MatchesPage chats = new MatchesPage();
+        ChatPage chats = new ChatPage();
         backButtonVisible = true;
         //declares origin page, in the matches page
         chats.originPage = pageName;

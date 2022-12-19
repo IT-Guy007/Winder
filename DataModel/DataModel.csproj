@@ -24,6 +24,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Reference Include="Microsoft.Maui.Controls">
+        <HintPath>..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.Maui.Controls.Ref.maccatalyst\7.0.52\ref\net7.0-maccatalyst13.5\Microsoft.Maui.Controls.dll</HintPath>
+      </Reference>
       <Reference Include="Microsoft.Maui.Essentials">
         <HintPath>..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.Maui.Essentials.Ref.maccatalyst\7.0.52\ref\net7.0-maccatalyst13.5\Microsoft.Maui.Essentials.dll</HintPath>
       </Reference>

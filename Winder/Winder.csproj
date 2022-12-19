@@ -65,9 +65,6 @@
       <MauiXaml Update="LoginPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="MatchesPage.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </MauiXaml>
       <MauiXaml Update="MatchPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>

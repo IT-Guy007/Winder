@@ -6,7 +6,6 @@ using Winder;
 using System.Drawing.Drawing2D;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Controls.PlatformConfiguration;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Drawing;
 
 namespace MAUI;
@@ -314,7 +313,7 @@ private int GetPreferenceFromUser()
 
     private void matchesButton_clicked(object sender, EventArgs e)
     {
-        MatchesPage matchespage = new MatchesPage();
+        ChatPage matchespage = new ChatPage();
         matchespage.originPage = pageName;
         Navigation.PushAsync(matchespage);
     }

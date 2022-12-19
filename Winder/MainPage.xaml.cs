@@ -8,7 +8,6 @@ public partial class MainPage : ContentPage {
 
     public MainPage() {
         InitializeComponent();
-        
     }
     
     protected override async void OnAppearing() {
@@ -21,7 +20,6 @@ public partial class MainPage : ContentPage {
 
         Database db = new Database();
         try {
-            
             Console.WriteLine("Testing database connection");
             Database.OpenConnection();
             Console.WriteLine("Successful connection");
