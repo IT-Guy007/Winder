@@ -8,9 +8,6 @@ using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Drawing;
-using Microsoft.UI.Xaml.Media.Imaging;
-using Windows.Graphics.Imaging;
-
 namespace MAUI;
 
 public partial class ProfileChange : ContentPage
@@ -66,36 +63,42 @@ public partial class ProfileChange : ContentPage
             {
                 byte[] ScaledImage = ScaleImage(profilePictures[0],140,200);
                 ProfileImage1.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+                CloseButton1.IsVisible = true;
             }
             else ProfileImage1.Source = "plus.png";
             if (profilePictures[1] != null)
             {
                 byte[] ScaledImage = ScaleImage(profilePictures[1], 140, 200);
                 ProfileImage2.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+                CloseButton2.IsVisible = true;
             }
             else ProfileImage2.Source = "plus.png";
             if (profilePictures[2] != null)
             {
                 byte[] ScaledImage = ScaleImage(profilePictures[2], 140, 200);
                 ProfileImage3.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+                CloseButton3.IsVisible = true;
             }
             else ProfileImage3.Source = "plus.png";
             if (profilePictures[3] != null)
             {
                 byte[] ScaledImage = ScaleImage(profilePictures[3], 140, 200);
                 ProfileImage4.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+                CloseButton4.IsVisible = true;
             }
             else ProfileImage4.Source = "plus.png";
             if (profilePictures[4] != null)
             {
                 byte[] ScaledImage = ScaleImage(profilePictures[4], 140, 200);
                 ProfileImage5.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+                CloseButton5.IsVisible = true;
             }
             else ProfileImage5.Source = "plus.png";
             if (profilePictures[5] != null)
             {
                 byte[] ScaledImage = ScaleImage(profilePictures[5], 140, 200);
                 ProfileImage6.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+                CloseButton6.IsVisible = true;
             }
             else ProfileImage6.Source = "plus.png";
         }
@@ -395,7 +398,8 @@ private int GetPreferenceFromUser()
             Stream stream = await image.OpenReadAsync();
             BinaryReader binary = new BinaryReader(fileStream);
             imageArr = binary.ReadBytes((int)fileStream.Length);
-            string ImageButtonId = ClickedImageButton.AutomationId.ToString();
+            string ImageButtonId = ClickedImageButton.AutomationId;
+            TurnOnVisibilityCloseButton(ImageButtonId);
             profilePictures[int.Parse(ImageButtonId)] = imageArr;
             ScaledImage = ScaleImage(imageArr, 140, 200);
             ClickedImageButton.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
@@ -405,6 +409,32 @@ private int GetPreferenceFromUser()
             DisplayAlert("Error", "Er is iets fout gegaan", "Ok");
         }
     }
+
+    private void TurnOnVisibilityCloseButton(string imageButtonId)
+    {
+        switch (imageButtonId)
+        {
+            case "0":
+                CloseButton1.IsVisible = true;
+                break;
+            case "1":
+                CloseButton2.IsVisible = true;
+                break;
+            case "2":
+                CloseButton3.IsVisible = true;
+                break;
+            case "3":
+                CloseButton4.IsVisible = true;
+                break;
+            case "4":
+                CloseButton5.IsVisible = true;
+                break;
+            case "5":
+                CloseButton6.IsVisible = true;
+                break;
+        }
+    }
+
     //Handles the selected interests and adds them to the listview of interests
     private void PickerIndexChanged(object sender, EventArgs e)
     {
@@ -496,5 +526,38 @@ private int GetPreferenceFromUser()
         }
     }
 
-    
+    private void ImageButtonClicked(object sender, EventArgs e)
+    {
+        ImageButton ImageButton = (ImageButton)sender;
+        profilePictures[int.Parse(ImageButton.AutomationId)] = null;
+        switch (ImageButton.AutomationId)
+        {
+            case "0":
+                ProfileImage1.Source = "plus.png";
+                CloseButton1.IsVisible = false;
+                break;
+            case "1":
+                ProfileImage2.Source = "plus.png";
+                CloseButton2.IsVisible = false;
+                break;
+            case "2":
+                ProfileImage3.Source = "plus.png";
+                CloseButton3.IsVisible = false;
+                break;
+            case "3":
+                ProfileImage4.Source = "plus.png";
+                CloseButton4.IsVisible = false;
+                break;
+            case "4":
+                ProfileImage5.Source = "plus.png";
+                CloseButton5.IsVisible = false;
+                break;
+            case "5":
+                ProfileImage6.Source = "plus.png";
+                CloseButton6.IsVisible = false;
+                break;
+            default:
+                break;
+        }
+    }
 }
