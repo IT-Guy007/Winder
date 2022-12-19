@@ -6,7 +6,7 @@ using static System.Data.SqlClient.SqlDependency;
 
 public static class DatabaseChangeListener {
     
-    public static List<string> ChatMessages;
+    public static List<ChatMessage> ChatMessages;
     private static User fromUser;
     private static User toUser;
 
@@ -16,18 +16,19 @@ public static class DatabaseChangeListener {
     private static SqlCommand SqlCommand;
     private static SqlDependency SqlDependency;
 
-    public static void Initialize(User _fromUser, User _toUser) {
-        ChatMessages = new List<string>();
+    public static void Initialize(User _fromUser, User _toUser)
+    {
+        ChatMessages = new List<ChatMessage>();
         fromUser = _fromUser;
         toUser = _toUser;
 
         GenerateConnection();
         GenerateQuery();
-        GenerateDependency();
     }
 
     //Generate the connection
-    private static void GenerateConnection() {
+    private static void GenerateConnection()
+    {
 
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
@@ -40,48 +41,58 @@ public static class DatabaseChangeListener {
     }
 
     //Generate the query
-    private static void GenerateQuery() {
+    private static void GenerateQuery()
+    {
         query = "SELECT * FROM Winder.winder.ChatMessage WHERE personFrom = " + fromUser.email +
             " AND personTo = " + toUser.email;
 
         GenerateCommand();
     }
 
-    //Generate the query
-    private static void GenerateCommand() {
+    //Generate the command
+    private static void GenerateCommand()
+    {
         SqlCommand = new SqlCommand(query, connection);
     }
 
-    //Generate the dependency
-    private static void GenerateDependency() {
+
+    static DataTable getDataWithSqlDependency() {
+
+        var dataTable = new DataTable();
+
+        // Create dependency for this command and add event handler
         SqlDependency = new SqlDependency(SqlCommand);
-        SqlDependency.OnChange += new OnChangeEventHandler(OnDependencyChange);
+        SqlDependency.OnChange += new OnChangeEventHandler(onDependencyChange);
+
+        // execute command to get data
+        connection.Open();
+        dataTable.Load(SqlCommand.ExecuteReader(CommandBehavior.CloseConnection));
+
+        return dataTable;
+
     }
 
-    //Activate the dependency
-    public static void Start() {
-        if( SqlDependency != null) {
-            try {
+    // Handler method
+    static void onDependencyChange(object sender, SqlNotificationEventArgs e) {
 
+        Console.WriteLine($"OnChange Event fired. SqlNotificationEventArgs: Info={e.Info}, Source={e.Source}, Type={e.Type}.");
 
-            } catch(Exception e) {
-                Console.WriteLine("Error getting the chatmessages from: " + fromUser.email + " And " + toUser.email);
-                Console.WriteLine(e.ToString);
-                Console.WriteLine(e.StackTrace);
-            }
+        if ((e.Info != SqlNotificationInfo.Invalid) && (e.Type != SqlNotificationType.Subscribe)){
+
+            //Resubscribe
+            var dataTable = getDataWithSqlDependency();
+
+            Console.WriteLine($"Data changed. {dataTable.Rows.Count} rows returned.");
+            //Do something with the dataTables
+            DataTableToObject(dataTable);
         } else {
-            Console.WriteLine("No listener exists");
+            Console.WriteLine("SqlDependency not restarted");
         }
 
     }
 
-        // Handler method
-    private static void OnDependencyChange(object sender,SqlNotificationEventArgs e ) {
-        SqlDependency dependency = sender as SqlDependency;
+    private static void DataTableToObject(DataTable dataTable) {
 
-         // A notification will only work once, so remove the existing subscription to allow a new one to be added:
-        dependency.OnChange -= OnDependencyChange;
     }
-
 
 }
