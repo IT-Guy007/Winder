@@ -6,51 +6,20 @@
 
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            
-        </Grid.ColumnDefinitions>
-        <HorizontalStackLayout Grid.Column="3">
 
-
-            
-            <Button 
-                Text="Matches"
-                VerticalOptions="Start" 
-                HorizontalOptions="Start"
+        <Button 
+                Text="Video"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
                 WidthRequest="120"
                 FontSize="15"
                 HeightRequest="50"
-                TextColor="Black"
-                
-            >
-            </Button>
-            <Button 
-                Text="Mijn Profiel"
-                VerticalOptions="Start" 
-                HorizontalOptions="End"
-                WidthRequest="120"
-                FontSize="15"
-                HeightRequest="50"
-                TextColor="Black"
-                
-            >
-            </Button>
-            <Button 
-                Text="instellingen"
-                VerticalOptions="Start" 
-                HorizontalOptions="End"
-                WidthRequest="120"
-                FontSize="15"
-                HeightRequest="50"
-                
+                Clicked="VideoButton_Clicked"
                 TextColor="Black"
             >
+        </Button>
 
-            </Button>
-        </HorizontalStackLayout>
+       
     </Grid>
         
 </ContentPage>

@@ -422,18 +422,47 @@ public class Database {
         }
     }
 
-    public bool SaveProfilePictures(string email, byte[] profilepicture) {
+    public bool SaveProfilePictures(string email, byte[] profilepicture)
+    {
         OpenConnection();
         string sql = "INSERT INTO winder.winder.Photos (winder.[user], winder.photo) VALUES(@Email, @profilepicture)";
         SqlCommand command = new SqlCommand(sql, connection);
         command.Parameters.AddWithValue("@Email", email);
         command.Parameters.AddWithValue("@profilepicture", profilepicture);
-        try {
+        try
+        {
             command.ExecuteNonQuery();
             CloseConnection();
             return true;
-        } catch (SqlException se) {
+        }
+        catch (SqlException se)
+        {
             Console.WriteLine("Error saving profile picture");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            //Close connection
+            CloseConnection();
+            return false;
+        }
+    }
+
+    // saving video into database
+    public bool SaveVideo (string email, byte[] video)
+    {
+        OpenConnection();
+        string sql = "INSERT INTO winder.winder.UserHasVideo (winder.[UID], winder.Video) VALUES(@Email, @video)";
+        SqlCommand command = new SqlCommand(sql, connection);
+        command.Parameters.AddWithValue("@Email", email);
+        command.Parameters.AddWithValue("@video", video);
+        try
+        {
+            command.ExecuteNonQuery();
+            CloseConnection();
+            return true;
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine("Error saving Video");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
             //Close connection

@@ -1,3 +1,5 @@
+using DataModel;
+
 namespace MAUI;
 
 public partial class Headertemplate : ContentPage
@@ -6,4 +8,33 @@ public partial class Headertemplate : ContentPage
 	{
 		InitializeComponent();
 	}
+
+	
+    
+
+    private async void VideoButton_Clicked(object sender, EventArgs e)
+    {
+        var video = await FilePicker.PickAsync(new PickOptions
+        {
+            FileTypes = FilePickerFileType.Videos
+        });
+
+        if (video == null)
+        {
+            return;
+        }
+        else
+        {
+
+            byte[] videoinbytes = null;
+            string email = "testest";
+            Database database = new Database();
+            var videopath = video.FullPath;
+            videoinbytes = File.ReadAllBytes(videopath);
+            database.SaveVideo(email, videoinbytes);
+        }
+        
+    }
+
+   
 }
