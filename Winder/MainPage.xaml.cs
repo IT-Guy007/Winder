@@ -22,6 +22,7 @@ public partial class MainPage : ContentPage {
         Authentication.Initialize();
         Database.Initialize();
         
+
         Database db = new Database();
       
         try {

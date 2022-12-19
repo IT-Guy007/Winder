@@ -133,9 +133,21 @@ public partial class Instellingen : ContentPage
         {
             database.DeleteUser(email);
             SecureStorage.Default.Remove("email");
+            SecureStorage.Remove("email");
             await Navigation.PushAsync(new MainPage());
         }
 
+    }
+
+    public async void logoutBtn(object sender, EventArgs e)
+    {
+        bool displayresult = await DisplayAlert("", "U wordt uitgelogd", "Ok", "Annuleren");
+        if (displayresult)
+        {
+            SecureStorage.Default.Remove("email");
+            SecureStorage.Remove("email");
+            await Navigation.PushAsync(new MainPage());
+        }
     }
 
     //all the data that has been changed will be replaced in the database
