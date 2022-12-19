@@ -4,12 +4,14 @@ namespace MAUI;
 
 public partial class Headertemplate : ContentPage
 {
-	public Headertemplate()
+    Database database = new Database();
+    public Headertemplate()
 	{
 		InitializeComponent();
 	}
 
 	
+    
     
 
     private async void VideoButton_Clicked(object sender, EventArgs e)
@@ -28,7 +30,8 @@ public partial class Headertemplate : ContentPage
 
             byte[] videoinbytes = null;
             string email = "testest";
-            Database database = new Database();
+            
+
             var videopath = video.FullPath;
             videoinbytes = File.ReadAllBytes(videopath);
             database.SaveVideo(email, videoinbytes);

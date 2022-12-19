@@ -5,7 +5,9 @@ using Microsoft.Maui.Storage;
 namespace DataModel;
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 
 public class Database {
     private Authentication _authentication = new Authentication();
@@ -24,10 +26,14 @@ public class Database {
         builder.InitialCatalog = "winder";
 
         connection = new SqlConnection(builder.ConnectionString);
+
     }
 
     public static void OpenConnection() {
+        
+        if (connection == null) { GenerateConnection(); }
         connection.Open();
+       
     }
 
     public static void CloseConnection() {
@@ -453,7 +459,7 @@ public class Database {
         string sql = "INSERT INTO winder.winder.UserHasVideo (winder.[UID], winder.Video) VALUES(@Email, @video)";
         SqlCommand command = new SqlCommand(sql, connection);
         command.Parameters.AddWithValue("@Email", email);
-        command.Parameters.AddWithValue("@video", video);
+        command.Parameters.Add("@video", SqlDbType.VarBinary).Value = video;
         try
         {
             command.ExecuteNonQuery();
@@ -469,6 +475,7 @@ public class Database {
             CloseConnection();
             return false;
         }
+        
     }
 
     public void RegistrationFunction(string firstname, string middlename, string lastname, string email, string preference, DateTime birthday, string gender,
