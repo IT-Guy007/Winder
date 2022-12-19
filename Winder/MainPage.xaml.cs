@@ -34,15 +34,16 @@ public partial class MainPage : ContentPage {
             Console.WriteLine(se.StackTrace);
             displayresult = await DisplayAlert("", "Oeps, er is iets mis gegaan met de database connectie", "Probeer opnieuw", "Sluit de app");
             connectionsucceeded = false;
+            if (displayresult)
+            {
+                await Navigation.PushAsync(new MainPage());
+            }
+            else
+            {
+                Application.Current.Quit();
+            }
         }
-        if (displayresult)
-        {
-            await Navigation.PushAsync(new MainPage());
-        }
-        else
-        {
-            Application.Current.Quit();
-        }
+        
         if (connectionsucceeded)
         {
             Database.CloseConnection();
