@@ -1,14 +1,12 @@
-
 using DataModel;
 using System.Data;
 using System.Data.SqlClient;
-using static System.Data.SqlClient.SqlDependency;
 
-public static class DatabaseChangeListener {
-    
-    public static List<ChatMessage> ChatMessages;
+public class DatabaseChangeListener  {
+    public static ChatCollection _chatCollection;
     private static User fromUser;
     private static User toUser;
+
 
     //SQL
     private static string query;
@@ -16,19 +14,17 @@ public static class DatabaseChangeListener {
     private static SqlCommand SqlCommand;
     private static SqlDependency SqlDependency;
 
-    public static void Initialize(User _fromUser, User _toUser)
-    {
-        ChatMessages = new List<ChatMessage>();
+    public static void Initialize(User _fromUser, User _toUser) {
         fromUser = _fromUser;
         toUser = _toUser;
+        _chatCollection = new ChatCollection();
 
         GenerateConnection();
         GenerateQuery();
     }
 
     //Generate the connection
-    private static void GenerateConnection()
-    {
+    private static void GenerateConnection() {
 
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
@@ -75,7 +71,8 @@ public static class DatabaseChangeListener {
     // Handler method
     static void onDependencyChange(object sender, SqlNotificationEventArgs e) {
 
-        Console.WriteLine($"OnChange Event fired. SqlNotificationEventArgs: Info={e.Info}, Source={e.Source}, Type={e.Type}.");
+        Console.WriteLine("New chatmessage found by listener, Data:");
+        Console.WriteLine($"Info={e.Info}, Source={e.Source}, Type={e.Type}.");
 
         if ((e.Info != SqlNotificationInfo.Invalid) && (e.Type != SqlNotificationType.Subscribe)){
 
@@ -83,7 +80,8 @@ public static class DatabaseChangeListener {
             var dataTable = getDataWithSqlDependency();
 
             Console.WriteLine($"Data changed. {dataTable.Rows.Count} rows returned.");
-            //Do something with the dataTables
+            
+            //Convert to ChatMessage and add to list
             DataTableToObject(dataTable);
         } else {
             Console.WriteLine("SqlDependency not restarted");
@@ -92,7 +90,16 @@ public static class DatabaseChangeListener {
     }
 
     private static void DataTableToObject(DataTable dataTable) {
-
+        foreach (DataRow row in dataTable.Rows) {
+            string fromUser = row["personFrom"].ToString() ?? "";
+            string toUser = row["personTo"].ToString() ?? "";
+            DateTime date = DateTime.Parse(row["sendDate"].ToString()?? "") ;
+            string message = row["chatMessage"].ToString() ?? "";
+            bool read = row["read"] as bool? ?? false;
+            if(fromUser != "" && toUser != "" && message != "") {
+                _chatCollection.Add(new ChatMessage(fromUser, toUser, date, message, read));
+            }
+        }
     }
 
 }
