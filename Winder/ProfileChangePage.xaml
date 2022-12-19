@@ -83,6 +83,7 @@
                         <!-- First row -->
                         <ImageButton
         Clicked="OnProfilePictureClicked"
+        AutomationId = "0"
         x:Name="ProfileImage1"
         HeightRequest="100"
         WidthRequest="80"
@@ -91,10 +92,10 @@
         IsVisible="true"
         Grid.Row="0"
         Grid.Column="0"
-        Source="plus.png"
     />
                         <ImageButton
         Clicked="OnProfilePictureClicked"
+        AutomationId = "1"
         x:Name="ProfileImage2"
         HeightRequest="100"
         WidthRequest="80"
@@ -103,10 +104,10 @@
         IsVisible="true"
         Grid.Row="0"
         Grid.Column="1"
-        Source="plus.png"
     />
                         <ImageButton
         Clicked="OnProfilePictureClicked"
+        AutomationId = "2"             
         x:Name="ProfileImage3"
         HeightRequest="100"
         WidthRequest="80"
@@ -115,13 +116,13 @@
         IsVisible="true"
         Grid.Row="0"
         Grid.Column="2"
-        Source="plus.png"
     />
 
                         <!-- Second row -->
                         <ImageButton
         Clicked="OnProfilePictureClicked"
         x:Name="ProfileImage4"
+        AutomationId = "3"
         HeightRequest="100"
         WidthRequest="80"
         Aspect="AspectFill"
@@ -129,11 +130,11 @@
         IsVisible="true"
         Grid.Row="1"
         Grid.Column="0"
-        Source="plus.png"
     />
                         <ImageButton
         Clicked="OnProfilePictureClicked"
         x:Name="ProfileImage5"
+        AutomationId = "4"
         HeightRequest="100"
         WidthRequest="80"
         Aspect="AspectFill"
@@ -141,11 +142,11 @@
         IsVisible="true"
         Grid.Row="1"
         Grid.Column="1"
-        Source="plus.png" 
     />
                         <ImageButton
         Clicked="OnProfilePictureClicked"
         x:Name="ProfileImage6"
+        AutomationId = "5"     
         HeightRequest="100"
         WidthRequest="80"
         Aspect="AspectFill"
@@ -154,7 +155,6 @@
         Grid.Row="1"
         BorderColor="Black"
         Grid.Column="2"
-        Source="plus.png" 
     />
                     </Grid>
                     <Label 
