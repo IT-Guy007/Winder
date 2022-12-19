@@ -10,8 +10,9 @@ public class DatabaseChangeListener  {
 
     //SQL
     private static string query;
+    private static string connectionString;
+    private static SqlCommand sqlCommand;
     private static SqlConnection connection;
-    private static SqlCommand SqlCommand;
     private static SqlDependency SqlDependency;
 
     public static void Initialize(User _fromUser, User _toUser) {
@@ -21,55 +22,56 @@ public class DatabaseChangeListener  {
 
         GenerateConnection();
         GenerateQuery();
+        GenerateCommand();
+        
+        SqlDependency.Start(connectionString);
+        getDataWithSqlDependency();
     }
 
     //Generate the connection
     private static void GenerateConnection() {
-
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
-        builder.DataSource = "192.168.1.108,1433";
+        builder.DataSource = "192.168.1.106,1433";
         builder.UserID = "sa";
         builder.Password = "Qwerty1@";
         builder.InitialCatalog = "winder";
 
-        connection = new SqlConnection(builder.ConnectionString);
+        connectionString = builder.ConnectionString;
     }
 
     //Generate the query
-    private static void GenerateQuery()
-    {
+    private static void GenerateQuery() {
         query = "SELECT * FROM Winder.winder.ChatMessage WHERE personFrom = " + fromUser.email +
             " AND personTo = " + toUser.email;
-
-        GenerateCommand();
     }
-
+    
     //Generate the command
-    private static void GenerateCommand()
-    {
-        SqlCommand = new SqlCommand(query, connection);
+    private static void GenerateCommand() {
+        sqlCommand = new SqlCommand(query, connection);
     }
 
 
-    static DataTable getDataWithSqlDependency() {
+    //Listener
+    private static DataTable getDataWithSqlDependency() {
+        Console.WriteLine("Waiting for new Data");
 
         var dataTable = new DataTable();
 
         // Create dependency for this command and add event handler
-        SqlDependency = new SqlDependency(SqlCommand);
-        SqlDependency.OnChange += new OnChangeEventHandler(onDependencyChange);
+        SqlDependency = new SqlDependency(sqlCommand);
+        SqlDependency.OnChange += onDependencyChange;
 
         // execute command to get data
         connection.Open();
-        dataTable.Load(SqlCommand.ExecuteReader(CommandBehavior.CloseConnection));
+        dataTable.Load(sqlCommand.ExecuteReader(CommandBehavior.CloseConnection));
 
         return dataTable;
 
     }
 
     // Handler method
-    static void onDependencyChange(object sender, SqlNotificationEventArgs e) {
+    private static void onDependencyChange(object sender, SqlNotificationEventArgs e) {
 
         Console.WriteLine("New chatmessage found by listener, Data:");
         Console.WriteLine($"Info={e.Info}, Source={e.Source}, Type={e.Type}.");
@@ -89,6 +91,7 @@ public class DatabaseChangeListener  {
 
     }
 
+    //Transfer data to collection as ChatMessage objects
     private static void DataTableToObject(DataTable dataTable) {
         foreach (DataRow row in dataTable.Rows) {
             string fromUser = row["personFrom"].ToString() ?? "";

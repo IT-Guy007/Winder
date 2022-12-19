@@ -17,18 +17,6 @@ public class TestDatabase {
         
 
     }
-    
-    [Test]
-    public void TestCreateDatabaseConnection() {
-
-        try {
-            Database.GenerateConnection();
-            Assert.Pass();
-        } catch (SqlException e) {
-            Assert.Fail(e.Message);
-        }
-
-    }
 
     [Test]
     public void TestDatabaseConnection() {

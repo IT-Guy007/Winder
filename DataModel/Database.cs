@@ -4,7 +4,6 @@ using Microsoft.Maui.Storage;
 
 namespace DataModel;
 
-
 using System;
 using System.Collections.Generic;
 
