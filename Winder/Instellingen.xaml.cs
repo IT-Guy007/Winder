@@ -204,24 +204,37 @@ public partial class Instellingen : ContentPage
                 MatchPage matchPage = new MatchPage();
                 matchPage.backButtonVisible = true;
                 Authentication.SetCurrentProfile();
+
                 Navigation.PushAsync(new MatchPage());
                 break;
             case "profilepage":
                 Navigation.PushAsync(new ProfileChange());
                 break;
+
+            case "chatpage":
+                Navigation.PushAsync(new ChatPage());
+                break;
+
         }
 
     }
 
-    private void matchesbutton_Clicked(object sender, EventArgs e) {
-        
+    private void ChatButton_Clicked(object sender, EventArgs e)
+    {
+        ChatPage chats = new ChatPage();
+        chats.originPage = pageName;
+        Navigation.PushAsync(chats);
+
+
     }
 
     private void matchPage_Clicked(object sender, EventArgs e)
     {
         MatchPage matchPage = new MatchPage();
         matchPage.originPage= pageName;
+
         Authentication.SetCurrentProfile();
+
         Navigation.PushAsync(matchPage);
 
     }

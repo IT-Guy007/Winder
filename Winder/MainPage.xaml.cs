@@ -4,20 +4,24 @@ using DataModel;
 namespace MAUI;
 
 
-public partial class MainPage : ContentPage {
+public partial class MainPage : ContentPage
+{
+
 
     private bool connectionsucceeded = true;
     private bool displayresult;
     
     public MainPage() {
+
         InitializeComponent();
-        
     }
     
+
     protected override async void OnAppearing() {
 
 
        
+
         // wait for 4 seconds
         await Task.Delay(3000);
         Console.WriteLine("App started");
@@ -25,17 +29,21 @@ public partial class MainPage : ContentPage {
         Database.Initialize();
         
 
-        Database db = new Database();
+
       
         try {
             
+
             Console.WriteLine("Testing database connection");
             Database.OpenConnection();
             Console.WriteLine("Successful connection");
-        } catch (SqlException se) {
+        }
+        catch (SqlException se)
+        {
             Console.WriteLine("Failed to open connection");
             Console.WriteLine(se.Message);
             Console.WriteLine(se.StackTrace);
+=
             displayresult = await DisplayAlert("", "Oeps, er is iets mis gegaan met de database connectie", "Probeer opnieuw", "Sluit de app");
             connectionsucceeded = false;
             if (displayresult)
@@ -77,6 +85,7 @@ public partial class MainPage : ContentPage {
                 Console.WriteLine("Pushing the startPage");
                 await Navigation.PushAsync(new StartPage());
             }
+
         }
 
         
@@ -84,5 +93,7 @@ public partial class MainPage : ContentPage {
 
     }
 }
+
+
 
 
