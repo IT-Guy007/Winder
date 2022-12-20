@@ -1110,5 +1110,31 @@ public class Database {
             return false;
         }
     }
+    public bool SendMessage(string personFrom, string personTo, string message)
+    {
+        
+        try
+        {
+            
+            OpenConnection();
+            DateTime sendDate = DateTime.Now;
+            SqlCommand query = new SqlCommand("INSERT INTO winder.winder.[ChatMessage] (personFrom, personTo,chatMessage,sendDate,[read]) VALUES ('" + personFrom + "' , '" + personTo + "','" + message + "', @sendDate, 0)", connection);
+            query.Parameters.AddWithValue("@sendDate", sendDate);
+           
+            query.ExecuteNonQuery();
+            CloseConnection();
+            return true;
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine("Error sending the message");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+            return false;
+        }
+
+        
+    }
 }
 

@@ -555,5 +555,21 @@ public class TestDatabase {
 
         return false;
     }
+    [TestCase("s1167488@student.windesheim.nl", "s1178208@student.windesheim.nl", "Vahe Test", ExpectedResult = true)]
+    public bool SendMessageTest(string personFrom, string personTo, string message)
+    {
+        try
+        {
+            return _database.SendMessage(personFrom, personTo, message);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+
+
+
 }   
 
