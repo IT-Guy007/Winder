@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="DB-223.8214.6">
-    <data-source name="Winder" uuid="5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387">
+  <component name="dataSourceStorageLocal" created-in="DB-222.4345.5">
+    <data-source name="192.168.1.106" uuid="5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387">
       <database-info product="Microsoft SQL Server" version="16.00.1000" jdbc-version="4.2" driver-name="Microsoft JDBC Driver 11.2 for SQL Server" driver-version="11.2.0.0" dbms="MSSQL" exact-version="16.0.1000" exact-driver-version="11.2">
         <extra-name-characters>$#@</extra-name-characters>
         <identifier-quote-string>&quot;</identifier-quote-string>
@@ -23,25 +23,8 @@
       </schema-mapping>
     </data-source>
     <data-source name="Test" uuid="33867050-ae3f-4801-8373-97f022c9f89d">
-      <database-info product="Microsoft SQL Server" version="16.00.1000" jdbc-version="4.2" driver-name="Microsoft JDBC Driver 11.2 for SQL Server" driver-version="11.2.0.0" dbms="MSSQL" exact-version="16.0.1000" exact-driver-version="11.2">
-        <extra-name-characters>$#@</extra-name-characters>
-        <identifier-quote-string>&quot;</identifier-quote-string>
-      </database-info>
-      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
-      <secret-storage>master_key</secret-storage>
-      <user-name>sa</user-name>
-      <schema-mapping>
-        <introspection-scope>
-          <node negative="1">
-            <node kind="database" qname="@">
-              <node kind="schema" qname="@" />
-            </node>
-            <node kind="database" qname="winder">
-              <node kind="schema" qname="winder" />
-            </node>
-          </node>
-        </introspection-scope>
-      </schema-mapping>
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MSSQL" exact-version="0" />
+      <schema-mapping />
     </data-source>
   </component>
 </project>

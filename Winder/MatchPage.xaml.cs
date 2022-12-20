@@ -370,6 +370,7 @@ public partial class MatchPage : ContentPage {
         Navigation.PushAsync(Instellingen);
     }
     
+    
 
     public void NextProfile() {
 
