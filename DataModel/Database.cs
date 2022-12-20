@@ -997,7 +997,35 @@ public class Database {
         }
         return result;
     }
+    //User to get the profiles for the match(run async)
+    public Profile[] Get5Profiles(string email) {
+        //The algorithm that determines who to get
 
+        //The users(email) to get
+        List<string> usersToRetrief = new List<string>();
+
+        usersToRetrief = AlgorithmForSwiping(email);
+
+        //Results
+        Profile[] profiles = new Profile[usersToRetrief.Count()];
+
+        //Retrieving
+        for (int i = 0; i < usersToRetrief.Count(); i++) {
+
+            //Get the user
+            User user = GetUserFromDatabase(usersToRetrief[i]);
+
+            //Get the interests of the user
+            user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]).ToArray();
+
+            //Get the images of the user
+            byte[][] images = GetPicturesFromDatabase(usersToRetrief[i]);
+            var profile = new Profile(user, images);
+
+            profiles[i] = profile;
+        }
+        return profiles;
+    }
     //User to get the profiles for the match(run async)
     public Profile[] Get5Profiles(string email) {
         //The algorithm that determines who to get
