@@ -1,11 +1,15 @@
 ﻿using System.Drawing;
 using DataModel;
+using Microsoft.Maui.Layouts;
+using System.Security.Cryptography.X509Certificates;
 using Winder;
+using System.IO;
+using Microsoft.Maui.Graphics.Text;
 
 namespace MAUI;
 
-public partial class MatchPage : ContentPage {
-
+public partial class MatchPage : ContentPage
+{
     
     private Database _database = new Database();
 
@@ -15,24 +19,29 @@ public partial class MatchPage : ContentPage {
     public bool backButtonVisible = false;
 
     public MatchPage() {
+        //Get profiles to swipe
+        CheckIfQueueNeedsMoreProfiles();
 
         Title = "Make your match now!";
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
-        
+            
+
+
+
         StackLayout verticalStackLayout = new StackLayout { Orientation = StackOrientation.Vertical, VerticalOptions = LayoutOptions.Fill };
         verticalStackLayout.Spacing = 10;
-        Grid gridLayout = new Grid() {
-            ColumnDefinitions = {
-
+        Grid gridLayout = new Grid()
+        {
+            ColumnDefinitions =
+            {
                 new ColumnDefinition(),
                 new ColumnDefinition(),
                 new ColumnDefinition()
                 
             }
         };
-
-        HorizontalStackLayout horizontalLayout = new HorizontalStackLayout() {
-
+        HorizontalStackLayout horizontalLayout = new HorizontalStackLayout()
+        {
            HorizontalOptions = LayoutOptions.End
         };
         
@@ -45,16 +54,14 @@ public partial class MatchPage : ContentPage {
         backButton.CornerRadius = 50;
         backButton.Aspect = Aspect.AspectFill;
         backButton.IsVisible = false;
-
-        if (backButtonVisible) {
-
+        if (backButtonVisible)
+        {
             backButton.IsVisible = true;
         }
         backButton.Clicked += BackButton_Clicked;
         gridLayout.Add(backButton,0);
         
         
-
         //Chat button
         var ChatButton = new Button();
         ChatButton.Text = "Chats";
@@ -64,7 +71,6 @@ public partial class MatchPage : ContentPage {
         ChatButton.TextColor = Microsoft.Maui.Graphics.Color.FromRgb(0, 0, 0);
         ChatButton.Clicked += ChatButton_Clicked;
         ChatButton.HorizontalOptions = LayoutOptions.End;
-
 
        
 
@@ -86,8 +92,8 @@ public partial class MatchPage : ContentPage {
         instellingen.HorizontalOptions = LayoutOptions.End;
         instellingen.Clicked += Settings_Clicked;
 
-        horizontalLayout.Children.Add(ChatButton);
 
+        horizontalLayout.Children.Add(ChatButton);
         horizontalLayout.Children.Add(myProfile);
         horizontalLayout.Children.Add(instellingen);
         gridLayout.Add(horizontalLayout,2);
@@ -100,6 +106,16 @@ public partial class MatchPage : ContentPage {
         //Button StackLayout
         StackLayout buttonStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.Center };
         buttonStackLayout.Spacing = 10;
+
+        try {
+            Authentication._currentProfile = Authentication._profileQueue.Dequeue();
+        }
+        catch (Exception e)
+        {
+            //No profiles found
+            Console.WriteLine("Couldn't find a new profile");
+            Console.WriteLine(e.StackTrace);
+        }
 
         //Images
         if (Authentication._currentProfile == null)
@@ -123,7 +139,9 @@ public partial class MatchPage : ContentPage {
                     };
                     verticalStackLayout.Add(profileImage);
 
-                } else {
+                }
+                else
+                {
 
                     var profileImage = new Microsoft.Maui.Controls.Image
                     {
@@ -193,7 +211,8 @@ public partial class MatchPage : ContentPage {
             var namelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Binding
-            var name = new Label { Text = Authentication._currentProfile.user.firstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+
+      var name = new Label { Text = Authentication._currentProfile.user.firstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             name.SetBinding(Label.TextProperty, new Binding() { Source = Authentication._currentProfile.user.firstName });
 
@@ -314,7 +333,12 @@ public partial class MatchPage : ContentPage {
         verticalStackLayout.BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
     }
-    
+
+    private async Task UpdateQueue()
+    {
+        Task gettingProfiles = GetProfiles();
+        await gettingProfiles;
+    }
     
 
     private void BackButton_Clicked(object sender, EventArgs e)
@@ -351,17 +375,6 @@ public partial class MatchPage : ContentPage {
         Navigation.PushAsync(chats);
     }
 
-    // matches button clicked
-    private void MatchesButton_Clicked(object obj, EventArgs e)
-    {
-
-        MatchesPage chats = new MatchesPage();
-        backButtonVisible = true;
-        //declares origin page, in the matches page
-        chats.originPage = pageName;
-        Navigation.PushAsync(chats);
-    }
-
     private void Settings_Clicked(object sender, EventArgs e)
     {
         Instellingen Instellingen = new Instellingen();
@@ -369,35 +382,46 @@ public partial class MatchPage : ContentPage {
         Instellingen.originPage = pageName;
         Navigation.PushAsync(Instellingen);
     }
+
+   
     
     
 
-    public void NextProfile() {
+    private async Task GetProfiles()
+    {
+        Profile[] profiles = _database.Get5Profiles(Authentication._currentUser.email);
+        foreach (var profile in profiles)
+        {
 
-        Authentication.CheckIfQueueNeedsMoreProfiles();
-        if (Authentication._profileQueue.Count != 0) {
-            try {
-                Authentication._currentProfile = Authentication._profileQueue.Dequeue();
-
-            } catch (Exception e) {
-                //No profiles found
-                Console.WriteLine("Couldn't find a new profile");
-                Console.WriteLine(e.ToString());
-                Console.WriteLine(e.StackTrace);
-
+            if (profile != null)
+            {
+                Authentication._profileQueue.Enqueue(profile);
             }
+        }
+    }
 
+    private async void CheckIfQueueNeedsMoreProfiles()
+    {
+        if (Authentication._profileQueue.Count < 5)
+        {
+
+            await GetProfiles();
+        }
+    }
+
+    private void NextProfile()
+    {
+        if (Authentication._profileQueue.Count != 0)
+        {
             Authentication.selectedImage = 0;
             Navigation.PushAsync(new MatchPage());
             
-            //Works better but doesn't work
+            //Works better but doesn't work yet
             //Application.Current.Dispatcher.Dispatch(() => Authentication._currentProfile = Authentication._profileQueue.Dequeue());
 
         } else {
-            Console.WriteLine("Couldn't find a new profile");
-            Authentication._currentProfile = null;
+            Authentication._profileQueue = new Queue<Profile>();
             Navigation.PushAsync(new MatchPage());
-            
         }
 
     }
@@ -409,15 +433,12 @@ public partial class MatchPage : ContentPage {
     }
 
     
+    byte[] ScaleImage(byte[] bytes)
+    {
+        if (Authentication.isscaled == false)
 
-    byte[] ScaleImage(byte[] bytes) {
-        //Dont run when other then Windows
-#if WINDOWS
-
-        if (Authentication.isscaled == false) {
-
+        {
             Authentication.isscaled = true;
-
             using var memoryStream = new MemoryStream();
             memoryStream.Write(bytes, 0, Convert.ToInt32(bytes.Length));
             memoryStream.Seek(0, SeekOrigin.Begin);
@@ -432,15 +453,13 @@ public partial class MatchPage : ContentPage {
         }
 
         return bytes;
-#else
-        return bytes;
-#endif
 
-
+        
     }
     
     int swipes = 0;
-    private void OnSwipe(object sender, SwipedEventArgs e) {
+    private void OnSwipe(object sender, SwipedEventArgs e)
+    {
         switch (e.Direction)
         {
             case SwipeDirection.Right:
@@ -458,22 +477,27 @@ public partial class MatchPage : ContentPage {
         }
     }
     
-    private void OnLike(object sender, EventArgs e) {
+    private void OnLike(object sender, EventArgs e)
+    {
+        CheckIfQueueNeedsMoreProfiles();
         string emailCurrentUser = Authentication._currentUser.email;
         string emailLikedUser = Authentication._currentProfile.user.email;
-        if (_database.CheckMatch(emailCurrentUser, emailLikedUser)) {
+        if (_database.CheckMatch(emailCurrentUser, emailLikedUser))
+        {
             _database.NewMatch(emailLikedUser, emailCurrentUser);
-            _database.DeleteLikeOnMatch(emailCurrentUser, emailLikedUser);
+            _database.deleteLikeOnMatch(emailCurrentUser, emailLikedUser);
             MatchPopup();
-        } else {
+        }
+        else
+        {
             _database.NewLike(emailCurrentUser, emailLikedUser);
         }
-
         NextProfile();
     }
 
     private void OnDislike(object sender, EventArgs e)
     {
+        CheckIfQueueNeedsMoreProfiles();
         string emailCurrentUser = Authentication._currentUser.email;
         string emaildDislikedUser = Authentication._currentProfile.user.email;
 
@@ -481,5 +505,4 @@ public partial class MatchPage : ContentPage {
 
         NextProfile();
     }
-
 }

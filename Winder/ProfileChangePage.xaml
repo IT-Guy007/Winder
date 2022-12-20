@@ -26,19 +26,15 @@
 
 
                 <Button 
-
                     x:Name="chatbutton"
                 Text="Chats"
-
                 VerticalOptions="Start" 
                 HorizontalOptions="Start"
                 WidthRequest="120"
                 FontSize="15"
                 HeightRequest="50"
                 TextColor="Black"
-
                     Clicked="ChatButton_Clicked"
-
                 
             >
                 </Button>
@@ -72,7 +68,7 @@
         </Grid>
         <Frame HasShadow="True" BorderColor="Black" WidthRequest="658" BackgroundColor="#d1546f" Margin="0,-80,0,0" HeightRequest="700">
             <HorizontalStackLayout BackgroundColor="#d1546f" HeightRequest="750" WidthRequest="700">
-                <VerticalStackLayout>
+                <VerticalStackLayout Margin="65,0,0,0">
                     <Grid ColumnSpacing="5" RowSpacing="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -306,7 +302,7 @@
 
                     </Frame>
                 </VerticalStackLayout>
-                <VerticalStackLayout Margin="10, 10, 10, 10">
+                <VerticalStackLayout Margin="10, -15, 10, 10">
                     <Label
             x:Name="lblFirstname"
             Text="Voornaam"
@@ -412,6 +408,7 @@
                 </VerticalStackLayout>
                 <ImageButton
     x:Name="ChangeProfile"
+    Margin="0,-650,0,0"
     WidthRequest="50"
     HeightRequest="50"
     Padding="5"

@@ -31,6 +31,10 @@ public partial class ChatPage : ContentPage
         List<User> MatchedStudents = Database.GetMatchedStudentsFromUser(Authentication._currentUser.email);
         List<MatchedPerson> MatchedPeople = ConvertUserToMatchPerson(MatchedStudents);
         ListOfMatches.ItemsSource = MatchedPeople;
+        if (MatchedStudents.Count < 1) {
+            NoMatchDisplay.Text = "Je hebt helaas geen matches ;(";
+            NoMatchDisplay.IsVisible= true;
+        }
     }
     private List<MatchedPerson> ConvertUserToMatchPerson(List<User> MatchedStudents)
     {

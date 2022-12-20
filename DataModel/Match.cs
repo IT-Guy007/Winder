@@ -1,4 +1,3 @@
-
 namespace DataModel;
 
 public class Match {
