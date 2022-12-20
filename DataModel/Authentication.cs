@@ -9,11 +9,9 @@ public class Authentication {
 
     public static User _currentUser { get; set; }
 
-
     //Match
     public static Queue<Profile> _profileQueue;
     public static Profile _currentProfile;
-
     public static int selectedImage;
     public static bool isGettingProfiles;
 
@@ -56,10 +54,8 @@ public class Authentication {
     // Calculating the age by using date as parameter
     public int CalculateAge(DateTime birthDate)
     {
-
         DateTime today = DateTime.Today;
         int age = today.Year - birthDate.Date.Year;
-
         return age;
     }
 
@@ -149,7 +145,6 @@ public class Authentication {
         smtpClient.Send(mailMessage);
     }
 
-
     //User to get the profiles for the match(run async)
     public static Profile[] Get5Profiles(string email) {
         
@@ -207,5 +202,4 @@ public class Authentication {
             _currentProfile = _profileQueue.Dequeue();
         }
     }
-
 }

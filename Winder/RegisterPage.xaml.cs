@@ -161,7 +161,6 @@ public partial class RegisterPage : ContentPage {
 
             database.RegistrationFunction(firstname, middlename, lastname, email, preference, dateOfBirth, gender, " ", password, profilePicture, true, school, major);
             database.SaveProfilePictures(email, profilePicture);
-            
 
             foreach (string interesse in GekozenInteressesLijst) {
                 database.RegisterInterestInDatabase(email, interesse);
@@ -391,7 +390,6 @@ public partial class RegisterPage : ContentPage {
     private void Backbutton_Clicked(object sender, EventArgs e)
     {
         Navigation.PushAsync(new StartPage());
-
     }
 }
 

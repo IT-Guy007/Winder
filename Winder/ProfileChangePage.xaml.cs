@@ -7,18 +7,16 @@ using System.Drawing.Drawing2D;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Drawing;
 namespace MAUI;
 
 public partial class ProfileChange : ContentPage
 {
     public string originPage;
     private const string pageName = "profilepage";
-
-    List<string> interesses = new List<string>();
+  
+    List<string> interesses  =new List<string>();
     Database Database = new Database();
-    Microsoft.Maui.Graphics.Color ErrorColor = new Microsoft.Maui.Graphics.Color(255, 243, 5);
-    private byte[][] profilePictures { get; set;}
+    Color ErrorColor = new Color(255, 243, 5);
     private bool firstname = true;
     private bool middlename = true;
     private bool lastname = true;
@@ -32,7 +30,6 @@ public partial class ProfileChange : ContentPage
     public ProfileChange()
     {
         InitializeComponent();
-        profilePictures = new byte[6][];
         LoadUserFromDatabaseInForm();
         InterestSelection.ItemsSource = Database.GetInterestsFromDataBase();
         interesses = Database.LoadInterestsFromDatabaseInListInteresses(Authentication._currentUser.email);
@@ -43,93 +40,23 @@ public partial class ProfileChange : ContentPage
     {
         if (Authentication._currentUser != null)
         {
-            profilePictures = Database.GetPicturesFromDatabase(Authentication._currentUser.email);
-            SetAllImageButtons();
             Firstname.Placeholder = Authentication._currentUser.firstName;
             Middlename.Placeholder = Authentication._currentUser.middleName;
             Lastname.Placeholder = Authentication._currentUser.lastName;
             Birthdate.Date = Authentication._currentUser.birthDay;
             Bio.Placeholder = Authentication._currentUser.bio;
             Education.Placeholder = Authentication._currentUser.major;
+            MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
+            ProfileImage.Source = ImageSource.FromStream(() => ms);
             Gender.SelectedIndex = GetGenderFromUser();
             Preference.SelectedIndex = GetPreferenceFromUser();
         }
     }
-    private void SetAllImageButtons()
-    {
-        if (profilePictures != null)
-        {
-            if (profilePictures[0] != null)
-            {
-                byte[] ScaledImage = ScaleImage(profilePictures[0],140,200);
-                ProfileImage1.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
-                CloseButton1.IsVisible = true;
-            }
-            else ProfileImage1.Source = "plus.png";
-            if (profilePictures[1] != null)
-            {
-                byte[] ScaledImage = ScaleImage(profilePictures[1], 140, 200);
-                ProfileImage2.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
-                CloseButton2.IsVisible = true;
-            }
-            else ProfileImage2.Source = "plus.png";
-            if (profilePictures[2] != null)
-            {
-                byte[] ScaledImage = ScaleImage(profilePictures[2], 140, 200);
-                ProfileImage3.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
-                CloseButton3.IsVisible = true;
-            }
-            else ProfileImage3.Source = "plus.png";
-            if (profilePictures[3] != null)
-            {
-                byte[] ScaledImage = ScaleImage(profilePictures[3], 140, 200);
-                ProfileImage4.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
-                CloseButton4.IsVisible = true;
-            }
-            else ProfileImage4.Source = "plus.png";
-            if (profilePictures[4] != null)
-            {
-                byte[] ScaledImage = ScaleImage(profilePictures[4], 140, 200);
-                ProfileImage5.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
-                CloseButton5.IsVisible = true;
-            }
-            else ProfileImage5.Source = "plus.png";
-            if (profilePictures[5] != null)
-            {
-                byte[] ScaledImage = ScaleImage(profilePictures[5], 140, 200);
-                ProfileImage6.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
-                CloseButton6.IsVisible = true;
-            }
-            else ProfileImage6.Source = "plus.png";
-        }
-    }
-public byte[] ScaleImage(byte[] bytes, int width, int height)
-{
-    using (MemoryStream ms = new MemoryStream(bytes))
-    {
-        using (Bitmap image = new Bitmap(ms))
-        {
-            Bitmap resizedImage = new Bitmap(width, height);
-            using (Graphics gfx = Graphics.FromImage(resizedImage))
-            {
-                gfx.DrawImage(image, 0, 0, width, height);
-            }
-
-            using (MemoryStream output = new MemoryStream())
-            {
-                resizedImage.Save(output, image.RawFormat);
-                return output.ToArray();
-            }
-        }
-    }
-}
 
 
 
-
-
-//Gets the preference of user
-private int GetPreferenceFromUser()
+    //Gets the preference of user
+    private int GetPreferenceFromUser()
     {
         if (Authentication._currentUser.preference == "Man") return 1;
         if (Authentication._currentUser.preference == "Vrouw") return 2;
@@ -149,8 +76,6 @@ private int GetPreferenceFromUser()
         {
             UpdateUserPropertiesPrepareForUpdateQuery();
             Database.UpdateUserInDatabaseWithNewUserData(Authentication._currentUser);
-            Database.DeleteAllPhotosFromDatabase(Authentication._currentUser);
-            InsertAllPhotosInDatabase(Authentication._currentUser);
             RegisterInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             ClearTextFromEntries();
@@ -161,40 +86,6 @@ private int GetPreferenceFromUser()
             DisplayAlert("Er is iets verkeerd gegaan...", "Vul alle gegevens in", "OK");
         }
     }
-
-    private void InsertAllPhotosInDatabase(User currentUser)
-    {
-        if (profilePictures != null)
-        {
-            for (int i = 0; i < profilePictures.Length; i++)
-            {
-                if (profilePictures[i] != null)
-                {
-                    Database.InsertPictureInDatabase(currentUser.email, profilePictures[i]);
-                }
-            }
-        }
-    }
-    private byte[] ConvertImageSourceToByteArray(ImageSource source)
-    {
-        var stream = source as StreamImageSource;
-        if (stream != null)
-        {
-            var task = stream.Stream.Invoke(CancellationToken.None);
-            task.Wait();
-            var s = task.Result;
-            byte[] bytes;
-            using (var memoryStream = new MemoryStream())
-            {
-                s.CopyTo(memoryStream);
-                bytes = memoryStream.ToArray();
-            }
-            return bytes;
-        }
-        return null;
-    }
-
-
     //Updates the placeholders value after a change has been made
     private void UpdatePlaceholders()
     {
@@ -321,28 +212,27 @@ private int GetPreferenceFromUser()
         switch (originPage)
         {
             case "matchpage":
+                Authentication.SetCurrentProfile();
                 Navigation.PushAsync(new MatchPage());
                 break;
             case "settingspage":
                 Navigation.PushAsync(new Instellingen());
                 break;
-            case "chatpage":
-            Navigation.PushAsync(new ChatPage());
-                break;
         }
     }
 
-    private void ChatButton_Clicked(object sender, EventArgs e)
+    private void matchesButton_clicked(object sender, EventArgs e)
     {
-        ChatPage chats = new ChatPage();
-        chats.originPage = pageName;
-        Navigation.PushAsync(chats);
+        MatchesPage matchespage = new MatchesPage();
+        matchespage.originPage = pageName;
+        Navigation.PushAsync(matchespage);
     }
 
     private void matchButton_Clicked(object sender, EventArgs e)
     {
         MatchPage matchpage = new MatchPage();
         matchpage.originPage = pageName;
+        Authentication.SetCurrentProfile();
         Navigation.PushAsync(new MatchPage());
     }
 
@@ -381,60 +271,30 @@ private int GetPreferenceFromUser()
     {
         try
         {
-            ImageButton ClickedImageButton = (ImageButton)sender;
             var image = await FilePicker.PickAsync(new PickOptions
             {
                 PickerTitle = "Kies een profielfoto",
                 FileTypes = FilePickerFileType.Images
             });
+
             if (image == null)
             {
                 return;
             }
             string imgLocation = image.FullPath;
             byte[] imageArr = null;
-            byte[] ScaledImage = null;
             FileStream fileStream = new FileStream(imgLocation, FileMode.Open, FileAccess.Read);
             Stream stream = await image.OpenReadAsync();
             BinaryReader binary = new BinaryReader(fileStream);
             imageArr = binary.ReadBytes((int)fileStream.Length);
-            string ImageButtonId = ClickedImageButton.AutomationId;
-            TurnOnVisibilityCloseButton(ImageButtonId);
-            profilePictures[int.Parse(ImageButtonId)] = imageArr;
-            ScaledImage = ScaleImage(imageArr, 140, 200);
-            ClickedImageButton.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+            Authentication._currentUser.profilePicture = imageArr;
+            ProfileImage.Source = ImageSource.FromStream(() => stream);
         }
         catch (Exception ex)
         {
             DisplayAlert("Error", "Er is iets fout gegaan", "Ok");
         }
     }
-
-    private void TurnOnVisibilityCloseButton(string imageButtonId)
-    {
-        switch (imageButtonId)
-        {
-            case "0":
-                CloseButton1.IsVisible = true;
-                break;
-            case "1":
-                CloseButton2.IsVisible = true;
-                break;
-            case "2":
-                CloseButton3.IsVisible = true;
-                break;
-            case "3":
-                CloseButton4.IsVisible = true;
-                break;
-            case "4":
-                CloseButton5.IsVisible = true;
-                break;
-            case "5":
-                CloseButton6.IsVisible = true;
-                break;
-        }
-    }
-
     //Handles the selected interests and adds them to the listview of interests
     private void PickerIndexChanged(object sender, EventArgs e)
     {
@@ -526,38 +386,5 @@ private int GetPreferenceFromUser()
         }
     }
 
-    private void ImageButtonClicked(object sender, EventArgs e)
-    {
-        ImageButton ImageButton = (ImageButton)sender;
-        profilePictures[int.Parse(ImageButton.AutomationId)] = null;
-        switch (ImageButton.AutomationId)
-        {
-            case "0":
-                ProfileImage1.Source = "plus.png";
-                CloseButton1.IsVisible = false;
-                break;
-            case "1":
-                ProfileImage2.Source = "plus.png";
-                CloseButton2.IsVisible = false;
-                break;
-            case "2":
-                ProfileImage3.Source = "plus.png";
-                CloseButton3.IsVisible = false;
-                break;
-            case "3":
-                ProfileImage4.Source = "plus.png";
-                CloseButton4.IsVisible = false;
-                break;
-            case "4":
-                ProfileImage5.Source = "plus.png";
-                CloseButton5.IsVisible = false;
-                break;
-            case "5":
-                ProfileImage6.Source = "plus.png";
-                CloseButton6.IsVisible = false;
-                break;
-            default:
-                break;
-        }
-    }
+    
 }

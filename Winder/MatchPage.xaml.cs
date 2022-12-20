@@ -5,7 +5,6 @@ using Winder;
 namespace MAUI;
 
 public partial class MatchPage : ContentPage {
-
     
     private Database _database = new Database();
 
@@ -23,16 +22,13 @@ public partial class MatchPage : ContentPage {
         verticalStackLayout.Spacing = 10;
         Grid gridLayout = new Grid() {
             ColumnDefinitions = {
-
                 new ColumnDefinition(),
                 new ColumnDefinition(),
                 new ColumnDefinition()
                 
             }
         };
-
         HorizontalStackLayout horizontalLayout = new HorizontalStackLayout() {
-
            HorizontalOptions = LayoutOptions.End
         };
         
@@ -45,26 +41,22 @@ public partial class MatchPage : ContentPage {
         backButton.CornerRadius = 50;
         backButton.Aspect = Aspect.AspectFill;
         backButton.IsVisible = false;
-
         if (backButtonVisible) {
-
             backButton.IsVisible = true;
         }
         backButton.Clicked += BackButton_Clicked;
         gridLayout.Add(backButton,0);
         
         
-
-        //Chat button
-        var ChatButton = new Button();
-        ChatButton.Text = "Chats";
-        ChatButton.WidthRequest = 100;
-        ChatButton.HeightRequest = 50;
-        ChatButton.IsVisible = true;
-        ChatButton.TextColor = Microsoft.Maui.Graphics.Color.FromRgb(0, 0, 0);
-        ChatButton.Clicked += ChatButton_Clicked;
-        ChatButton.HorizontalOptions = LayoutOptions.End;
-
+        //matches button
+        var matchesButton = new Button();
+        matchesButton.Text = "Chat's";
+        matchesButton.WidthRequest = 100;
+        matchesButton.HeightRequest = 50;
+        matchesButton.IsVisible = true;
+        matchesButton.TextColor = Microsoft.Maui.Graphics.Color.FromRgb(0, 0, 0);
+        matchesButton.Clicked += MatchesButton_Clicked;
+        matchesButton.HorizontalOptions = LayoutOptions.End;
 
        
 
@@ -86,8 +78,8 @@ public partial class MatchPage : ContentPage {
         instellingen.HorizontalOptions = LayoutOptions.End;
         instellingen.Clicked += Settings_Clicked;
 
-        horizontalLayout.Children.Add(ChatButton);
 
+        horizontalLayout.Children.Add(matchesButton);
         horizontalLayout.Children.Add(myProfile);
         horizontalLayout.Children.Add(instellingen);
         gridLayout.Add(horizontalLayout,2);
@@ -339,8 +331,6 @@ public partial class MatchPage : ContentPage {
         verticalStackLayout.BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
     }
-    
-    
 
     private void BackButton_Clicked(object sender, EventArgs e)
     {
@@ -366,17 +356,6 @@ public partial class MatchPage : ContentPage {
         Navigation.PushAsync(myProfile);
     }
     // matches button clicked
-    private void ChatButton_Clicked(object obj, EventArgs e)
-    {
-        
-        ChatPage chats = new ChatPage();
-        backButtonVisible = true;
-        //declares origin page, in the matches page
-        chats.originPage = pageName;
-        Navigation.PushAsync(chats);
-    }
-
-    // matches button clicked
     private void MatchesButton_Clicked(object obj, EventArgs e)
     {
 
@@ -394,7 +373,6 @@ public partial class MatchPage : ContentPage {
         Instellingen.originPage = pageName;
         Navigation.PushAsync(Instellingen);
     }
-    
     
 
     public void NextProfile() {
@@ -434,13 +412,11 @@ public partial class MatchPage : ContentPage {
     }
 
     
-
     byte[] ScaleImage(byte[] bytes) {
         //Dont run when other then Windows
 #if WINDOWS
 
         if (Authentication.isscaled == false) {
-
             Authentication.isscaled = true;
 
             using var memoryStream = new MemoryStream();
@@ -455,12 +431,10 @@ public partial class MatchPage : ContentPage {
             resized.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
             return stream.ToArray();
         }
-
         return bytes;
 #else
         return bytes;
 #endif
-
 
     }
     

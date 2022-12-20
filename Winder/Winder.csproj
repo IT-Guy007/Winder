@@ -33,11 +33,9 @@
       <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
     </PropertyGroup>
 
-
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
       <CreatePackage>false</CreatePackage>
     </PropertyGroup>
-
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -67,16 +65,11 @@
       <MauiXaml Update="LoginPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-
-      <MauiXaml Update="ChatPage.xaml">
-
+      <MauiXaml Update="MatchesPage.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
       <MauiXaml Update="MatchPage.xaml">
         <SubType>Designer</SubType>
-      </MauiXaml>
-      <MauiXaml Update="VideoTemplate.xaml">
-        <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
       <MauiXaml Update="ProfileChangePage.xaml">
         <SubType>Designer</SubType>
@@ -97,21 +90,12 @@
         <DependentUpon>LoginPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-
-
-      <Compile Update="ChatPage.xaml.cs">
-        <DependentUpon>ChatPage.xaml</DependentUpon>
-      </Compile>
-
       <Compile Update="StartPage.xaml.cs">
         <DependentUpon>StartPage.xaml</DependentUpon>
       </Compile>
       <Compile Update="MatchPage.xaml.cs">
         <DependentUpon>MatchPage.xaml</DependentUpon>
         <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="VideoTemplate.xaml.cs">
-        <DependentUpon>VideoTemplate.xaml</DependentUpon>
       </Compile>
       <Compile Update="ProfileChangePage.xaml.cs">
         <DependentUpon>ProfileChangePage.xaml</DependentUpon>
