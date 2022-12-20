@@ -33,11 +33,6 @@
       <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
     </PropertyGroup>
 
-
-    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
-      <CreatePackage>false</CreatePackage>
-    </PropertyGroup>
-
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -47,6 +42,9 @@
 
         <!-- Images -->
         <MauiImage Include="Resources\Images\*" />
+        <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+
+        <!-- Custom Fonts -->
         <MauiFont Include="Resources\Fonts\*" />
 
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
@@ -54,7 +52,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
+        <PackageReference Include="CommunityToolkit.Maui" Version="3.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
         <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     </ItemGroup>
@@ -67,9 +65,7 @@
       <MauiXaml Update="LoginPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-
       <MauiXaml Update="ChatPage.xaml">
-
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
       <MauiXaml Update="MatchPage.xaml">
@@ -98,11 +94,9 @@
         <SubType>Code</SubType>
       </Compile>
 
-
       <Compile Update="ChatPage.xaml.cs">
         <DependentUpon>ChatPage.xaml</DependentUpon>
       </Compile>
-
       <Compile Update="StartPage.xaml.cs">
         <DependentUpon>StartPage.xaml</DependentUpon>
       </Compile>
@@ -131,10 +125,4 @@
       <ProjectReference Include="..\DataModel\DataModel.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <MauiImage Remove="Resources\Images\dotnet_bot.svg" />
-    </ItemGroup>
-    <ItemGroup>
-      <BundleResource Include="Resources\Images\dotnet_bot.svg" />
-    </ItemGroup>
 </Project>

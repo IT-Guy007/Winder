@@ -123,11 +123,6 @@ public byte[] ScaleImage(byte[] bytes, int width, int height)
         }
     }
 }
-
-
-
-
-
 //Gets the preference of user
 private int GetPreferenceFromUser()
     {
