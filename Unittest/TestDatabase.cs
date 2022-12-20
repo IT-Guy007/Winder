@@ -555,5 +555,50 @@ public class TestDatabase {
 
         return false;
     }
+    [TestCase("s1173231@student.windesheim.nl", ExpectedResult = true)]
+    [TestCase("s1178208@student.windesheim.nl", ExpectedResult = false)]
+    public bool GetMatchedStudents(string email)
+    {
+        try
+        {
+            var users = _database.GetMatchedStudentsFromUser(email);
+            if (users.Count >= 0 && users != null)
+            {
+                return true;
+            }
+        }
+        catch
+        {
+            return false;
+        }
+        return false;
+    }
+    [TestCase("s1178208@student.windesheim.nl", null,ExpectedResult = false)]
+    public bool InsertPictureInDatabaseTest(string email, byte[] picture)
+    {
+        try
+        {
+            _database.InsertPictureInDatabase(email, picture);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+    [TestCase("s1178208@student.windesheim.nl", ExpectedResult = true)]
+    [TestCase("s10310310@student.windesheim.nl", ExpectedResult = false)]
+    public bool DeletePicturesFromDatabaseTest(string email)
+    {
+        try
+        {
+            _database.DeleteAllPhotosFromDatabase(email);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }   
 

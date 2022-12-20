@@ -143,8 +143,8 @@ private int GetPreferenceFromUser()
         if (firstname == true && middlename == true && lastname == true && birthday == true && preference == true && gender == true && bio == true && education == true)
         {
             UpdateUserPropertiesPrepareForUpdateQuery();
-            Database.UpdateUserInDatabaseWithNewUserData(Authentication._currentUser);
-            Database.DeleteAllPhotosFromDatabase(Authentication._currentUser);
+            Database.UpdateUserInDatabaseWithNewUserData(Authentication._currentUser.email);
+            Database.DeleteAllPhotosFromDatabase(Authentication._currentUser.email);
             InsertAllPhotosInDatabase(Authentication._currentUser);
             RegisterInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");

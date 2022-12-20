@@ -1027,7 +1027,7 @@ public class Database {
         }
         return profiles;
     }
-
+    //Get all matched students from the database
     public List<User> GetMatchedStudentsFromUser(string email)
     {
         List<User> users = new List<User>();
@@ -1065,7 +1065,7 @@ public class Database {
         CloseConnection();
         return users;
     }
-
+    //Insert a picture into the database
     public bool InsertPictureInDatabase(string email, byte[] imageToUpload)
     {
         try
@@ -1089,14 +1089,15 @@ public class Database {
         CloseConnection();
         return false;
     }
-    public bool DeleteAllPhotosFromDatabase(User currentUser)
+    //Delete all pictures from the database which the user has
+    public bool DeleteAllPhotosFromDatabase(string email)
     {
         try
         {
             OpenConnection();
             string sql = "delete from winder.winder.Photos WHERE [user] = @Email";
             SqlCommand command = new SqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@Email", currentUser.email);
+            command.Parameters.AddWithValue("@Email", email);
             command.ExecuteNonQuery();
             CloseConnection();
             return true;
