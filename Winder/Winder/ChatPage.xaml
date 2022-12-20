@@ -70,6 +70,7 @@
                 </Button>
             </HorizontalStackLayout>
         </Grid>
+        <Label x:Name="NoMatchDisplay" FontSize="40" FontAttributes="Bold" IsVisible="false"></Label>
         <StackLayout WidthRequest="800" Padding="0,0,0,10" >
             <ListView x:Name="ListOfMatches" Grid.Row="1" ItemTapped="ListOfMatches_ItemTapped" >
                 <ListView.ItemTemplate>

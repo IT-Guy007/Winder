@@ -1068,51 +1068,28 @@ public class Database {
 
     public bool InsertPictureInDatabase(string email, byte[] imageToUpload)
     {
-            try
-            {
-                OpenConnection();
-                string sql = "INSERT INTO winder.winder.Photos (winder.[user], winder.photo) VALUES(@Email, @profilepicture)";
-                SqlCommand command = new SqlCommand(sql, connection);
-                command.Parameters.AddWithValue("@Email", email);
-                command.Parameters.AddWithValue("@profilepicture", imageToUpload);
-                command.ExecuteNonQuery();
-                CloseConnection();
-            }
-            catch (SqlException se)
-            {
-                Console.WriteLine("Error inserting picture in database");
-                Console.WriteLine(se.ToString());
-                Console.WriteLine(se.StackTrace);
-                CloseConnection();
-                CloseConnection();
-            }
+        try
+        {
+            OpenConnection();
+            string sql = "INSERT INTO winder.winder.Photos (winder.[user], winder.photo) VALUES(@Email, @profilepicture)";
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Email", email);
+            command.Parameters.AddWithValue("@profilepicture", imageToUpload);
+            command.ExecuteNonQuery();
             CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine("Error inserting picture in database");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+            CloseConnection();
+        }
+        CloseConnection();
         return false;
     }
-    private bool CheckIfUserAlreadyHasThePicture(string email, byte[] imageToCheck)
-    {
-        OpenConnection();
-        string query = "SELECT * FROM Winder.Photos WHERE user = @email AND photo = @picture";
-        SqlCommand command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@email", email);
-        command.Parameters.AddWithValue("@picture", imageToCheck);
-        // Execute the query and check if it returns any rows
-        SqlDataReader reader = command.ExecuteReader();
-        if (reader.HasRows)
-        {
-            CloseConnection();
-            // User already has the picture, return false
-            return true;
-        }
-        else
-        {
-            CloseConnection();
-            // User does not have the picture, return true
-            return false;
-        }
-    }
-
-    public void DeleteAllPhotosFromDatabase(User currentUser)
+    public bool DeleteAllPhotosFromDatabase(User currentUser)
     {
         try
         {
@@ -1122,6 +1099,7 @@ public class Database {
             command.Parameters.AddWithValue("@Email", currentUser.email);
             command.ExecuteNonQuery();
             CloseConnection();
+            return true;
         }
         catch (SqlException se)
         {
@@ -1129,8 +1107,8 @@ public class Database {
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
             CloseConnection();
+            return false;
         }
-        CloseConnection();
     }
 }
 

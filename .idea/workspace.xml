@@ -2,22 +2,53 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f7621750-06d2-454f-8f55-4adadda7d3bf" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/.idea/.idea.Winder/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/.idea/.idea.Winder/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/.vs/ProjectEvaluation/winder.metadata.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/.vs/ProjectEvaluation/winder.metadata.v5.2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/.vs/ProjectEvaluation/winder.projects.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/.vs/ProjectEvaluation/winder.projects.v5.2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/.vs/Winder/FileContentIndex/a75cf50d-557b-4f51-a248-491bbc548e39.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/.vs/Winder/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/.vs/Winder/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/.vs/Winder/FileContentIndex/3320b791-8e45-428b-8fb8-5ba3b2817d59.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/.vs/Winder/FileContentIndex/960f67f6-4379-430d-9800-9c197abbc9a6.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/.vs/Winder/FileContentIndex/b0bf47c5-9038-49a4-a2ca-fd6473d57d77.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/.vs/Winder/FileContentIndex/edb62396-64a4-42a9-8e34-f886c5f018f2.vsidx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/.vs/Winder/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/.vs/Winder/v17/.futdcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/.vs/Winder/v17/TestStore/0/014.testlog" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/.vs/Winder/v17/TestStore/0/testlog.manifest" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/.vs/Winder/v17/TestStore/0/testlog.manifest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/DataModel/DataModel.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/DataModel/Database.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/DataModel/Match.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/DataModel/Match.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/DataModel/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Winder/ChatPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder/ChatPage.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Winder/ChatPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder/ChatPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Winder/MainPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder/MainPage.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder/MatchPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Winder/ProfileChangePage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder/ProfileChangePage.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Winder/ProfileChangePage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder/ProfileChangePage.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2JAk2LRWHQy5rD1jqRv6ayi4Mhb" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenDatabaseViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/vahen"
+  }
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

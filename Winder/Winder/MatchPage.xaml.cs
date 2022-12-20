@@ -435,23 +435,22 @@ public partial class MatchPage : ContentPage
     
     byte[] ScaleImage(byte[] bytes)
     {
-        if (Authentication.isscaled == false)
+        //if (Authentication.isscaled == false)
 
-        {
-            Authentication.isscaled = true;
+        //{
+        //    Authentication.isscaled = true;
+        //    using var memoryStream = new MemoryStream();
+        //    memoryStream.Write(bytes, 0, Convert.ToInt32(bytes.Length));
+        //    memoryStream.Seek(0, SeekOrigin.Begin);
 
-            using var memoryStream = new MemoryStream();
-            memoryStream.Write(bytes, 0, Convert.ToInt32(bytes.Length));
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            using var originalImage = new Bitmap(memoryStream);
-            var resized = new Bitmap(600, 600);
-            using var graphics = System.Drawing.Graphics.FromImage(resized);
-            graphics.DrawImage(originalImage, 0, 0, 600, 600);
-            using var stream = new MemoryStream();
-            resized.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-            return stream.ToArray();
-        }
+        //    using var originalImage = new Bitmap(memoryStream);
+        //    var resized = new Bitmap(600, 600);
+        //    using var graphics = System.Drawing.Graphics.FromImage(resized);
+        //    graphics.DrawImage(originalImage, 0, 0, 600, 600);
+        //    using var stream = new MemoryStream();
+        //    resized.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+        //    return stream.ToArray();
+        //}
         
             return bytes;
 
