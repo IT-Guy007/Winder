@@ -10,7 +10,7 @@ public class Authentication {
     public static User _currentUser { get; set; }
 
     //Match
-    public static Queue<Profile> _profileQueue;
+    public static Queue<Profile> _profileQueue = new Queue<Profile>();
     public static Profile _currentProfile;
     public static int selectedImage;
     public static bool isGettingProfiles;
@@ -23,7 +23,7 @@ public class Authentication {
         _profileQueue = new Queue<Profile>();
         selectedImage = 0;
         _currentUser = new User();
-        isGettingProfiles = false;
+        
     }
 
 
@@ -36,7 +36,6 @@ public class Authentication {
         {
             return false;
         }
-
         return true;
     }
 
@@ -47,15 +46,17 @@ public class Authentication {
         {
             return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
         }
-
         return null;
     }
 
     // Calculating the age by using date as parameter
     public int CalculateAge(DateTime birthDate)
     {
-        DateTime today = DateTime.Today;
-        int age = today.Year - birthDate.Date.Year;
+        int age = DateTime.Now.Year - birthDate.Year;
+        if (DateTime.Now.DayOfYear < birthDate.DayOfYear) {
+            age--;
+        }
+
         return age;
     }
 
@@ -66,7 +67,6 @@ public class Authentication {
         {
             return true;
         }
-
         return false;
     }
 
@@ -77,7 +77,6 @@ public class Authentication {
         {
             return true;
         }
-
         return false;
     }
 
@@ -177,7 +176,7 @@ public class Authentication {
         return profiles;
     }
 
-    private static async Task GetProfiles() {
+    public static async Task GetProfiles() {
         Profile[] profiles = Get5Profiles(_currentUser.email);
         foreach (var profile in profiles) {
 

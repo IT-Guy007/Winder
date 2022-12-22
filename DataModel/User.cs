@@ -18,8 +18,7 @@ public class User {
     public int maxAge {get; set; }
 
     public User(string firstName, string middleName, string lastName, DateTime birthDay,
-        string preference, string email, string password, string gender, byte[] profilePicture, string bio, string school, string major, int minAge, int maxAge)
-    {
+        string preference, string email, string password, string gender, byte[] profilePicture, string bio, string school, string major, int minAge, int maxAge) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -33,7 +32,7 @@ public class User {
         this.school = school;
         this.major = major;
         this.minAge = minAge;
-        this.maxAge = maxAge;
+        this.minAge = maxAge;
     }
     
     public User(){}

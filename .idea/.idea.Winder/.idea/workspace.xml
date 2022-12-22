@@ -12,9 +12,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/ChatModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/ChatModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387/storage_v2/_src_/database/winder.tdoL0Q/schema/winder.tdoL0Q.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387/storage_v2/_src_/database/winder.tdoL0Q/schema/winder.tdoL0Q.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/ChatView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatView.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/ChatView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatView.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/ChatsViewPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatsViewPage.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/ChatsViewPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatsViewPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,16 +29,16 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Jeroen" />
+        <entry key="$PROJECT_DIR$" value="US-Chatten" />
       </map>
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/DataModel/ChatModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DataModel/Database.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/079db77a6d6c4519b9460c7149d598ec9e5c0/ed/0e60d3ed/Page.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d7a87f53803495a836648df934b3e309e3c0/69/1bca8d49/Page.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d7a87f53803495a836648df934b3e309e3c0/e8/44d17c52/Brush.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7a60916519214763b9f44e9d259e3b9f417c0/c5/5a8da609/SqlDependency.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="InvalidFacetManager">
@@ -55,40 +60,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Device#class com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSSimulatorKind#com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSDevicesProvider#Xamarin.iOS: Winder&quot;: &quot;iPhone 14&quot;,
-    &quot;DeviceKind#com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSDevicesProvider&quot;: &quot;Simulator&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;rider.run.widget.enabled.cache&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Device#class com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSSimulatorKind#com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSDevicesProvider#Xamarin.iOS: Winder": "iPhone 14",
+    "DeviceKind#com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSDevicesProvider": "Simulator",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "rider.run.widget.enabled.cache": "false",
+    "settings.editor.selected.configurable": "configurable.group.appearance",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlserver&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlserver"
     ],
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\wesse\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\wesse\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\wesse\\AppData\\Local\\Symbols\\src&quot;
+    "rider.external.source.directories": [
+      "/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache",
+      "/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache",
+      "/Users/jeroendenotter/.local/share/Symbols/src"
     ]
   }
-}</component>
-  <component name="RunManager" selected="Publish to folder.Publish Winder to folder">
-    <configuration name="Publish Winder to folder" type="DotNetFolderPublish" factoryName="Publish to folder">
-      <riderPublish configuration="Release" platform="Any CPU" runtime="Portable" target_folder="$PROJECT_DIR$/Winder/bin/Release/net7.0-windows10.0.19041.0/publish" target_framework="net7.0-windows10.0.19041.0" uuid_high="297160223462278676" uuid_low="-8538591488934008196" />
-      <method v="2" />
-    </configuration>
+}]]></component>
+  <component name="RunManager" selected="Xamarin.Mac.Winder">
     <configuration name="WorkAround" type="RunExe" factoryName=".NET Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64/Winder.app/Contents/MacOS/Winder" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -101,6 +102,13 @@
       <method v="2">
         <option name="Build" default="false" projectName="Winder" projectPath="file://$PROJECT_DIR$/Winder/Winder.csproj" />
         <option name="Build Solution" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Windows" type="UwpProject" factoryName="UWP">
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <method v="2">
+        <option name="Build" />
       </method>
     </configuration>
     <configuration name="Winder" type="XamarinIOSProject" factoryName="Xamarin.iOS">
@@ -120,7 +128,7 @@
     </configuration>
     <list>
       <item itemvalue=".NET Executable.WorkAround" />
-      <item itemvalue="Publish to folder.Publish Winder to folder" />
+      <item itemvalue="UWP.Windows" />
       <item itemvalue="Xamarin.iOS.Winder" />
       <item itemvalue="Xamarin.Mac.Winder" />
     </list>
@@ -151,8 +159,12 @@
       <workItem from="1671125366467" duration="3225000" />
       <workItem from="1671182617452" duration="1997000" />
       <workItem from="1671184820548" duration="6045000" />
-      <workItem from="1671198631238" duration="63000" />
-      <workItem from="1671701004278" duration="2437000" />
+      <workItem from="1671198590206" duration="141000" />
+      <workItem from="1671199029651" duration="588000" />
+      <workItem from="1671713624549" duration="35000" />
+      <workItem from="1671713673979" duration="86000" />
+      <workItem from="1671713774162" duration="676000" />
+      <workItem from="1671721717923" duration="3743000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>

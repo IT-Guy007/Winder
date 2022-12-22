@@ -1,27 +1,38 @@
 ﻿using System.Drawing;
 using DataModel;
 using Winder;
+using Color = Microsoft.Maui.Graphics.Color;
+using Image = Microsoft.Maui.Controls.Image;
 
-namespace MAUI;
+namespace Winder;
 
-public partial class MatchPage : ContentPage {
-    
-    private Database _database = new Database();
+public partial class MatchPage {
 
-    public string originPage;
-    public const string pageName = "matchpage";
-    public const string backbuttonImage = "backbutton.png";
-    public bool backButtonVisible = false;
+    private readonly Database database;
+
+    public string OriginPage;
+    private const string PageName = "matchpage";
+    private const string BackbuttonImage = "backbutton.png";
+    public bool BackButtonVisible;
 
     public MatchPage() {
+        
+        this.database = new Database();
+        //Get profiles to swipe
+        CheckIfQueueNeedsMoreProfiles();
 
         Title = "Make your match now!";
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         
-        StackLayout verticalStackLayout = new StackLayout { Orientation = StackOrientation.Vertical, VerticalOptions = LayoutOptions.Fill };
-        verticalStackLayout.Spacing = 10;
+
+
+        StackLayout verticalStackLayout = new StackLayout {
+            Orientation = StackOrientation.Vertical, VerticalOptions = LayoutOptions.Fill,
+            Spacing = 10
+        };
         Grid gridLayout = new Grid() {
-            ColumnDefinitions = {
+            ColumnDefinitions =
+            {
                 new ColumnDefinition(),
                 new ColumnDefinition(),
                 new ColumnDefinition()
@@ -32,101 +43,109 @@ public partial class MatchPage : ContentPage {
         };
         
         // backbutton
-        var backButton = new ImageButton();
-        backButton.Source = backbuttonImage;
-        backButton.WidthRequest = 40;
-        backButton.HeightRequest = 40;
-        backButton.HorizontalOptions = LayoutOptions.Start;
-        backButton.CornerRadius = 50;
-        backButton.Aspect = Aspect.AspectFill;
-        backButton.IsVisible = false;
-        if (backButtonVisible) {
-            backButton.IsVisible = true;
-        }
+        var backButton = new ImageButton {
+            Source = BackbuttonImage,
+            WidthRequest = 40,
+            HeightRequest = 40,
+            HorizontalOptions = LayoutOptions.Start,
+            CornerRadius = 50,
+            Aspect = Aspect.AspectFill,
+            IsVisible = BackButtonVisible
+        };
         backButton.Clicked += BackButton_Clicked;
         gridLayout.Add(backButton,0);
         
         
-        //matches button
-        var matchesButton = new Button();
-        matchesButton.Text = "Chat's";
-        matchesButton.WidthRequest = 100;
-        matchesButton.HeightRequest = 50;
-        matchesButton.IsVisible = true;
-        matchesButton.TextColor = Microsoft.Maui.Graphics.Color.FromRgb(0, 0, 0);
-        matchesButton.Clicked += MatchesButton_Clicked;
-        matchesButton.HorizontalOptions = LayoutOptions.End;
+        //Chat button
+        var chatButton = new Button {
+            Text = "Chats",
+            WidthRequest = 100,
+            HeightRequest = 50,
+            IsVisible = true,
+            TextColor = Color.FromRgb(0, 0, 0)
+        };
+        chatButton.Clicked += ChatButton_Clicked;
+        chatButton.HorizontalOptions = LayoutOptions.End;
 
        
 
         //my profile button
-        var myProfile = new Button();
-        myProfile.Text = "Mijn profiel";
-        myProfile.HeightRequest = 50;
-        myProfile.TextColor = Microsoft.Maui.Graphics.Color.FromRgb(0, 0, 0);
-        myProfile.WidthRequest = 110;
+        var myProfile = new Button {
+            Text = "Mijn profiel",
+            HeightRequest = 50,
+            TextColor = Color.FromRgb(0, 0, 0),
+            WidthRequest = 110
+        };
         myProfile.Clicked += MyProfile_Clicked;
         myProfile.HorizontalOptions = LayoutOptions.End;
 
         //settings button
-        var instellingen = new Button();
-        instellingen.Text = "Instellingen";
-        instellingen.TextColor = Microsoft.Maui.Graphics.Color.FromRgb(0, 0, 0);
-        instellingen.HeightRequest = 50;
-        instellingen.WidthRequest = 115;
-        instellingen.HorizontalOptions = LayoutOptions.End;
-        instellingen.Clicked += Settings_Clicked;
+        var settings = new Button {
+            Text = "SettingsPage",
+            TextColor = Color.FromRgb(0, 0, 0),
+            HeightRequest = 50,
+            WidthRequest = 115,
+            HorizontalOptions = LayoutOptions.End
+        };
+        settings.Clicked += Settings_Clicked;
 
 
-        horizontalLayout.Children.Add(matchesButton);
+        horizontalLayout.Children.Add(chatButton);
         horizontalLayout.Children.Add(myProfile);
-        horizontalLayout.Children.Add(instellingen);
+        horizontalLayout.Children.Add(settings);
         gridLayout.Add(horizontalLayout,2);
         verticalStackLayout.Add(gridLayout);
         
         //The stack with left the image and right the info.
-        StackLayout imageLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-        imageLayout.Spacing = 10;
+        StackLayout imageLayout = new StackLayout {
+            Orientation = StackOrientation.Horizontal,
+            Spacing = 10
+        };
 
         //Button StackLayout
-        StackLayout buttonStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.Center };
-        buttonStackLayout.Spacing = 10;
+        StackLayout buttonStackLayout = new StackLayout {
+            Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.Center,
+            Spacing = 10
+        };
+
+        try {
+            Authentication._currentProfile = Authentication._profileQueue.Dequeue();
+        }
+        catch (Exception e)
+        {
+            //No profiles found
+            Console.WriteLine("Couldn't find a new profile");
+            Console.WriteLine(e.StackTrace);
+        }
 
         //Images
-        if (Authentication._currentProfile == null)
-        {
+        if (Authentication._currentProfile == null) {
+            if (Authentication._currentUser.profilePicture.Length > 1000) {
 
-            if (Authentication._currentUser.profilePicture != null)
+                MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
+
+
+                var profileImage = new Image {
+                    Source = ImageSource.FromStream(() => ms),
+                    Aspect = Aspect.AspectFit,
+                    WidthRequest = 800,
+                    HeightRequest = 800,
+                    BackgroundColor = Color.FromArgb("#CC415F")
+                };
+                verticalStackLayout.Add(profileImage);
+
+            }
+            else
             {
-                if (Authentication._currentUser.profilePicture.Length > 1000)
-                {
 
-                    MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
-
-
-                    var profileImage = new Microsoft.Maui.Controls.Image
-                    {
-                        Source = ImageSource.FromStream(() => ms),
-                        Aspect = Aspect.AspectFit,
-                        WidthRequest = 800,
-                        HeightRequest = 800,
-                        BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#CC415F")
-                    };
-                    verticalStackLayout.Add(profileImage);
-
-                } else {
-
-                    var profileImage = new Microsoft.Maui.Controls.Image
-                    {
-                        Source = "noprofile.jpg",
-                        Aspect = Aspect.AspectFit,
-                        WidthRequest = 800,
-                        HeightRequest = 800,
-                        BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#CC415F")
-                    };
-                    verticalStackLayout.Add(profileImage);
-                }
-
+                var profileImage = new Image {
+                    Source = "noprofile.jpg",
+                    Aspect = Aspect.AspectFit,
+                    WidthRequest = 800,
+                    HeightRequest = 800,
+                    BackgroundColor = Color.FromArgb("#CC415F")
+                };
+                verticalStackLayout.Add(profileImage);
             }
 
             var label = new Label { Text = "No more profiles to match with for now", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
@@ -169,19 +188,12 @@ public partial class MatchPage : ContentPage {
             currentImage.WidthRequest = 600;
             currentImage.HeightRequest = 600;
 
-            currentImage.Clicked += (sender, args) => {
+            currentImage.Clicked += (_, _) => {
+                if (Authentication.selectedImage < Authentication._currentProfile.profile_images.Length) {
+                    Authentication.selectedImage++;
+                } else {
 
-                if (Authentication._currentProfile != null)
-                {
-                    if (Authentication.selectedImage < Authentication._currentProfile.profile_images.Length)
-                    {
-                        Authentication.selectedImage++;
-                    }
-                    else
-                    {
-
-                        Authentication.selectedImage = 0;
-                    }
+                    Authentication.selectedImage = 0;
                 }
             };
 
@@ -192,9 +204,9 @@ public partial class MatchPage : ContentPage {
             StackLayout nameStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             var namelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
+            
             //Binding
             var name = new Label { Text = Authentication._currentProfile.user.firstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-
             name.SetBinding(Label.TextProperty, new Binding() { Source = Authentication._currentProfile.user.firstName });
 
             name.FontSize = 20;
@@ -284,7 +296,29 @@ public partial class MatchPage : ContentPage {
             bioStackLayout.Add(biolbl);
             bioStackLayout.Add(bio);
             infoStackLayout.Add(bioStackLayout);
+            StackLayout InterestsStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            var interestslbl = new Label { Text = "Interesses: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
+            InterestsStackLayout.Add(interestslbl);
+
+            for (int i = 0; i < Authentication._currentProfile.user.interests.Length; i++)
+            {
+                if (i != 0)
+                {
+                    var spacecommavar = new Label { FontSize = 20, HorizontalOptions = LayoutOptions.Start, Text = ", " };
+                    InterestsStackLayout.Add(spacecommavar);
+                }
+
+                var interestsbinding = new Binding() { Source = Authentication._currentProfile.user.interests[i] };                             //Data binding
+                var interestvar = new Label { FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+                interestvar.SetBinding(Label.TextProperty, interestsbinding);
+                InterestsStackLayout.Add(interestvar);
+
+
+
+            }
+
+            infoStackLayout.Add(InterestsStackLayout);
 
             //Buttons
             var likeButton = new Button { Text = "Like", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
@@ -311,19 +345,19 @@ public partial class MatchPage : ContentPage {
         verticalStackLayout.Add(imageLayout);
         verticalStackLayout.Add(buttonStackLayout);
 
-        verticalStackLayout.BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#CC415F");
+        verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
     }
 
     private void BackButton_Clicked(object sender, EventArgs e)
     {
-        switch (originPage)
+        switch (OriginPage)
         {
             case "profilepage":
                 Navigation.PushAsync(new ProfileChange());
                 break;
             case "settingspage":
-                Navigation.PushAsync(new Instellingen());
+                Navigation.PushAsync(new SettingsPage());
                 break;
         }
 
@@ -334,28 +368,28 @@ public partial class MatchPage : ContentPage {
     {
         //declares origin page, in the my profile page
         ProfileChange myProfile = new ProfileChange();
-        backButtonVisible = true;
-        myProfile.originPage = pageName;
+        BackButtonVisible = true;
+        myProfile.OriginPage = PageName;
         Navigation.PushAsync(myProfile);
     }
     // matches button clicked
-    private void MatchesButton_Clicked(object obj, EventArgs e)
-    {
-
-        ChatPage chats = new ChatPage();
-        backButtonVisible = true;
+    private void ChatButton_Clicked(object obj, EventArgs e) {
+        
+        ChatsViewPage chatsViews = new ChatsViewPage();
+        BackButtonVisible = true;
         //declares origin page, in the matches page
-        chats.originPage = pageName;
-        Navigation.PushAsync(chats);
+        chatsViews.OriginPage = PageName;
+        Navigation.PushAsync(chatsViews);
     }
 
     private void Settings_Clicked(object sender, EventArgs e)
     {
-        Instellingen Instellingen = new Instellingen();
-        backButtonVisible = true;
-        Instellingen.originPage = pageName;
-        Navigation.PushAsync(Instellingen);
+        SettingsPage settingsPage = new SettingsPage();
+        BackButtonVisible = true;
+        settingsPage.OriginPage = PageName;
+        Navigation.PushAsync(settingsPage);
     }
+    
 
     public void NextProfile() {
 
@@ -375,14 +409,12 @@ public partial class MatchPage : ContentPage {
             Authentication.selectedImage = 0;
             Navigation.PushAsync(new MatchPage());
             
-            //Works better but doesn't work
+            //Works better but doesn't work yet
             //Application.Current.Dispatcher.Dispatch(() => Authentication._currentProfile = Authentication._profileQueue.Dequeue());
 
         } else {
-            Console.WriteLine("Couldn't find a new profile");
-            Authentication._currentProfile = null;
+            Authentication._profileQueue = new Queue<Profile>();
             Navigation.PushAsync(new MatchPage());
-            
         }
 
     }
@@ -395,12 +427,11 @@ public partial class MatchPage : ContentPage {
 
     
     byte[] ScaleImage(byte[] bytes) {
-        //Dont run when other then Windows
 #if WINDOWS
+        
 
         if (Authentication.isscaled == false) {
             Authentication.isscaled = true;
-
             using var memoryStream = new MemoryStream();
             memoryStream.Write(bytes, 0, Convert.ToInt32(bytes.Length));
             memoryStream.Seek(0, SeekOrigin.Begin);
@@ -419,48 +450,56 @@ public partial class MatchPage : ContentPage {
 #endif
 
     }
-    
-    int swipes = 0;
+
+    readonly int swipes = 0;
     private void OnSwipe(object sender, SwipedEventArgs e) {
-        switch (e.Direction)
-        {
+        switch (e.Direction) {
             case SwipeDirection.Right:
-                if (swipes % 2 == 0)
-                {
+                if (swipes % 2 == 0) {
                     OnLike(sender, e);
                 }
                 break;
             case SwipeDirection.Left:
-                if (swipes % 2 == 0)
-                {
+                if (swipes % 2 == 0) {
                     OnDislike(sender, e);
                 }
                 break;
         }
     }
     
-    private void OnLike(object sender, EventArgs e) {
+    private async void CheckIfQueueNeedsMoreProfiles() {
+        if (Authentication._profileQueue.Count < 5) {
+
+            await Authentication.GetProfiles();
+        }
+    }
+    
+    private void OnLike(object sender, EventArgs e)
+    {
+        CheckIfQueueNeedsMoreProfiles();
         string emailCurrentUser = Authentication._currentUser.email;
         string emailLikedUser = Authentication._currentProfile.user.email;
-        if (_database.CheckMatch(emailCurrentUser, emailLikedUser)) {
-            _database.NewMatch(emailLikedUser, emailCurrentUser);
-            _database.DeleteLikeOnMatch(emailCurrentUser, emailLikedUser);
+        if (database.CheckMatch(emailCurrentUser, emailLikedUser))
+        {
+            database.NewMatch(emailLikedUser, emailCurrentUser);
+            database.deleteLikeOnMatch(emailCurrentUser, emailLikedUser);
             MatchPopup();
-        } else {
-            _database.NewLike(emailCurrentUser, emailLikedUser);
         }
-
+        else
+        {
+            database.NewLike(emailCurrentUser, emailLikedUser);
+        }
         NextProfile();
     }
 
     private void OnDislike(object sender, EventArgs e)
     {
+        CheckIfQueueNeedsMoreProfiles();
         string emailCurrentUser = Authentication._currentUser.email;
         string emaildDislikedUser = Authentication._currentProfile.user.email;
 
-        _database.NewDislike(emailCurrentUser, emaildDislikedUser);
+        database.NewDislike(emailCurrentUser, emaildDislikedUser);
 
         NextProfile();
     }
-
 }
