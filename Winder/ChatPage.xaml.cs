@@ -8,8 +8,7 @@ public partial class ChatPage : ContentPage
     public string originPage;
     Database Database = new Database();
     private const string pageName = "chatpage";
-    public class MatchedPerson
-    {
+    public class MatchedPerson {
         public string Email { get; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -31,6 +30,7 @@ public partial class ChatPage : ContentPage
         List<MatchedPerson> MatchedPeople = ConvertUserToMatchPerson(MatchedStudents);
         ListOfMatches.ItemsSource = MatchedPeople;
     }
+
     private List<MatchedPerson> ConvertUserToMatchPerson(List<User> MatchedStudents) {
         List<MatchedPerson> MatchedPeople = new List<MatchedPerson>();
 

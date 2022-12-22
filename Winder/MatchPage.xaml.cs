@@ -356,8 +356,6 @@ public partial class MatchPage : ContentPage {
         Instellingen.originPage = pageName;
         Navigation.PushAsync(Instellingen);
     }
-    
-    
 
     public void NextProfile() {
 

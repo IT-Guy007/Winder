@@ -885,8 +885,8 @@ public class Database {
                        "and email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 1) " + //Not disliked by other person
                        "and email not in (select likedPerson from winder.winder.Liked where person = @email) " + //Not already a person that you liked
                        "and gender = (select preference from winder.winder.[User] where email = @email) " + //gender check
-                       "and email not in (select winder.winder.Match.person1 from Winder.Winder.Match where person1 = @email) " + //Not matched
-                       "and email not in (select winder.winder.Match.person2 from Winder.Winder.Match where person2 = @email) " + //Not matched
+                       "and email not in (select winder.winder.Match.person1 from Winder.Winder.Match where person2 = @email) " + //Not matched
+                       "and email not in (select winder.winder.Match.person2 from Winder.Winder.Match where person1 = @email) " + //Not matched
                        "and birthday >= '" + formattedMax +"' and birthday <= '" + formattedMin + "' " + //In age range
                        "And location = (select location from winder.winder.[User] where email = @email)"; // location check
 
@@ -972,8 +972,6 @@ public class Database {
         return result;
     }
 
-    
-    
     private async Task SetLoginEmail(string email) {
         Console.WriteLine("Setting login email");
         await SecureStorage.SetAsync("email", email);
@@ -1042,6 +1040,7 @@ public class Database {
         }
         return false;
     }
+
     private bool CheckIfUserAlreadyHasThePicture(string email, ImageSource source)
     {
         OpenConnection();
@@ -1062,5 +1061,44 @@ public class Database {
             return true;
         }
     }
+
+    public static bool SendMessage(string personFrom, string personTo, string message) {
+        try {
+
+            OpenConnection();
+            DateTime sendDate = DateTime.Now;
+            SqlCommand query = new SqlCommand("INSERT INTO winder.winder.[ChatMessage] (personFrom, personTo,chatMessage,sendDate,[readMessage]) VALUES ('" + personFrom + "' , '" + personTo + "','" + message + "', @sendDate, 0)", connection);
+            query.Parameters.AddWithValue("@sendDate", sendDate);
+
+            query.ExecuteNonQuery();
+            CloseConnection();
+            return true;
+        } catch (SqlException se) {
+            Console.WriteLine("Error sending the message");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+            return false;
+        }
+    }
+
+    public static bool makeRead(string personFrom, string personTo){
+        try {
+            OpenConnection();
+            SqlCommand query = new SqlCommand("UPDATE winder.winder.[ChatMessage] SET [readMessage] = 1 WHERE personTo = '" + personFrom + "' AND personFrom = '" + personTo + "'", connection);
+            query.ExecuteNonQuery();
+            CloseConnection();
+            return true;
+        }
+        catch (SqlException se) {
+            Console.WriteLine("Error updating read message");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+            return false;
+        }
+
+    }
+
 }
 

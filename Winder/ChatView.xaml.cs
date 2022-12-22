@@ -12,9 +12,10 @@ public partial class ChatView : ContentPage {
     private StackLayout mainStackLayout;
     private StackLayout verticalStackLayout;
 
-
     public ChatView(User sendFromUser, User sendToUser) {
-        
+
+        Database.makeRead(sendFromUser.email, sendToUser.email);
+
         //MAUI
         scrollView = new ScrollView();
         mainStackLayout = new StackLayout{Orientation = StackOrientation.Vertical, VerticalOptions = LayoutOptions.Fill};
@@ -25,8 +26,6 @@ public partial class ChatView : ContentPage {
         databaseChangeListener = new DatabaseChangeListener();
         databaseChangeListener.Initialize(sendFromUser, sendToUser);
         this.originPage = "ChatPage";
-
-
 
         if (DatabaseChangeListener._chatCollection.Count == 0) {
             Label noMessagesFound = new Label {
@@ -69,18 +68,17 @@ public partial class ChatView : ContentPage {
             VerticalOptions = LayoutOptions.End,
             FontSize = 20
         };
-        //sendButton.Clicked += async () => {
-        //    if (chatInput.Text != "") {
-        //        await DatabaseChangeListener.SendMessage(chatInput.Text);
-        //        chatInput.Text = "";
-        //    }
-        //};
-        
+
+        sendButton.Clicked += (_, _) => {
+            if (!string.IsNullOrWhiteSpace(chatInput.Text)) {
+                chatInput.Text = char.ToUpper(chatInput.Text[0]) + chatInput.Text.Substring(1);
+                Database.SendMessage(sendFromUser.email, sendToUser.email, chatInput.Text);
+                Navigation.PushAsync(new ChatView(sendFromUser, sendToUser));
+            }
+        };
+
         inputStackLayout.Add(chatInput);
         inputStackLayout.Add(sendButton);
-
-
-        
 
         //Set content
         
