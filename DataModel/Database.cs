@@ -1,4 +1,6 @@
 using System.Data.SqlClient;
+using Microsoft.Maui.Storage;
+
 namespace DataModel;
 using System;
 using System.Collections.Generic;
@@ -86,13 +88,25 @@ public class Database {
         }
     }
 
-    public bool CheckLogin(string email, string password) {
-
+    public bool CheckLogin(string email, string password)
+    {
+        Console.WriteLine("Check login");
         string hashed = _authentication.HashPassword(password);
         bool output = false;
 
+
         //Start connection
         OpenConnection();
+
+        if (!email.EndsWith("@student.windesheim.nl"))
+        {
+            email = email + "@student.windesheim.nl";
+
+        }
+        if (!email.StartsWith("s"))
+        {
+            email = "s" + email;
+        }
 
         //Create query
         SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email", connection);
@@ -101,11 +115,17 @@ public class Database {
         //Execute query
         SqlDataReader reader = query.ExecuteReader();
 
-        while (reader.Read()) {
-            if (hashed == reader["password"] as string) {
+        Console.WriteLine("Checking login");
+        while (reader.Read())
+        {
+            if (hashed == reader["password"] as string)
+            {
+                Console.WriteLine("Getting password");
                 output = true;
+
             }
         }
+        SetLoginEmail(email);
 
         //Close connection
         CloseConnection();
@@ -1183,5 +1203,12 @@ public class Database {
 
         
     }
+    private async Task SetLoginEmail(string email)
+    {
+        Console.WriteLine("Setting login email");
+        await SecureStorage.SetAsync("email", email);
+       
+    }
+
 }
 

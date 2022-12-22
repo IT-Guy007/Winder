@@ -23,6 +23,14 @@ public class Authentication
     public static Profile _currentProfile;
     public static int selectedImage = 0;
 
+    public static void Initialize()
+    {
+        _profileQueue = new Queue<Profile>();
+        selectedImage = 0;
+        _currentUser = new User();
+        
+    }
+
     //Defining state
     enum LoggedState
     {

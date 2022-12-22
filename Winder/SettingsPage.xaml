@@ -266,19 +266,36 @@
 
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
 
             </Grid.ColumnDefinitions>
             <Button
                 BackgroundColor="#D9D9D9"
                 HeightRequest="60"
-                Text="Account verwijderen" />
+                Clicked="deleteAccountbtn"
+                Text="Account verwijderen" 
+                TextColor="Black"
+                />
 
             <Button
                 Grid.Column="1"
                 BackgroundColor="#D9D9D9"
+                Clicked="logoutBtn"
+                HeightRequest="60"
+                Text="Uitloggen" 
+                TextColor="Black"
+                />
+
+            <Button
+                Grid.Column="2"
+                BackgroundColor="#D9D9D9"
                 Clicked="EditDataBtn"
                 HeightRequest="60"
-                Text="Wijzigingen opslaan" />
+                Text="Wijzigingen opslaan"
+                TextColor="Black"
+                />
+
+
 
         </Grid>
 

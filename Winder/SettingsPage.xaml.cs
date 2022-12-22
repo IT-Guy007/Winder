@@ -1,5 +1,7 @@
 using CommunityToolkit.Maui.Views;
 using DataModel;
+using MAUI;
+using Microsoft.Maui.ApplicationModel.Communication;
 
 namespace Winder;
 
@@ -105,6 +107,30 @@ public partial class SettingsPage {
         int maxAge = (int)maximaleLeeftijd.SelectedItem;
         database.SetMaxAge(Authentication._currentUser.email, maxAge);
 
+    }
+    public async void deleteAccountbtn(object sender, EventArgs e)
+    {
+
+        bool displayresult = await DisplayAlert("", "Weet u zeker dat u uw account wilt verwijderen?", "Ja", "Nee");
+        if (displayresult)
+        {
+            database.DeleteUser(Authentication._currentUser.email);
+            SecureStorage.Default.Remove("email");
+            SecureStorage.Remove("email");
+            await Navigation.PushAsync(new MainPage());
+        }
+
+    }
+
+    public async void logoutBtn(object sender, EventArgs e)
+    {
+        bool displayresult = await DisplayAlert("", "U wordt uitgelogd", "Ok", "Annuleren");
+        if (displayresult)
+        {
+            SecureStorage.Default.Remove("email");
+            SecureStorage.Remove("email");
+            await Navigation.PushAsync(new StartPage());
+        }
     }
     //all the data that has been changed will be replaced in the database
     private void EditDataBtn(object sender, EventArgs e) {
