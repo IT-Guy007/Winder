@@ -373,8 +373,7 @@ public partial class MatchPage {
         Navigation.PushAsync(myProfile);
     }
     // matches button clicked
-    private void ChatButton_Clicked(object obj, EventArgs e)
-    {
+    private void ChatButton_Clicked(object obj, EventArgs e) {
         
         ChatsViewPage chatsViews = new ChatsViewPage();
         BackButtonVisible = true;

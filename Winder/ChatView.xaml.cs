@@ -1,6 +1,9 @@
 using DataModel;
 using Intents;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
+using Microsoft.Maui.Graphics;
 
 namespace Winder;
 
@@ -8,20 +11,26 @@ public partial class ChatView {
     private DatabaseChangeListener databaseChangeListener;
 
     //MAUI
-    private ScrollView scrollView;
-    private StackLayout mainStackLayout;
-    private StackLayout verticalStackLayout;
-    private Grid grid;
-
+    private readonly ScrollView scrollView;
+    private readonly StackLayout verticalStackLayout;
+    private readonly Grid grid;
 
     public ChatView(User sendFromUser, User sendToUser) {
 
         Database.SetRead(sendFromUser.email, sendToUser.email);
+        Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
 
         //MAUI
-        scrollView = new ScrollView();
-        mainStackLayout = new StackLayout{Orientation = StackOrientation.Vertical, VerticalOptions = LayoutOptions.Fill};
-        verticalStackLayout = new StackLayout { Orientation = StackOrientation.Vertical, VerticalOptions = LayoutOptions.Fill };
+        scrollView = new ScrollView { 
+            Orientation = ScrollOrientation.Vertical, 
+            VerticalOptions = LayoutOptions.Fill,
+
+        };
+
+        verticalStackLayout = new StackLayout {
+            Orientation = StackOrientation.Vertical, 
+            VerticalOptions = LayoutOptions.Fill
+        };
 
         grid = new Grid {
             HorizontalOptions = LayoutOptions.Fill,
@@ -33,6 +42,7 @@ public partial class ChatView {
             },
             
             RowDefinitions = {
+                new RowDefinition { Height = new GridLength(50)},
                 new RowDefinition(),
                 new RowDefinition { Height = new GridLength(50)}
             }
@@ -101,14 +111,14 @@ public partial class ChatView {
         Entry chatInput = new Entry {
             Placeholder = "Type your message here",
             HorizontalOptions = LayoutOptions.FillAndExpand,
-            VerticalOptions = LayoutOptions.End,
-            FontSize = 20
+            FontSize = 20,
+            BackgroundColor = Colors.White,
+            TextColor = Colors.Black
         };
         
         Button sendButton = new Button {
             Text = "Send",
             HorizontalOptions = LayoutOptions.End,
-            VerticalOptions = LayoutOptions.End,
             FontSize = 20
         };
 
@@ -122,23 +132,34 @@ public partial class ChatView {
 
         inputStackLayout.Add(chatInput);
         inputStackLayout.Add(sendButton);
+        
+        ImageButton backButton = new ImageButton {
+            Source = "backbutton.png",
+            HorizontalOptions = LayoutOptions.Start,
+            VerticalOptions = LayoutOptions.Start,
+            WidthRequest = 50,
+            HeightRequest = 50
+        };
+        backButton.Clicked += (_,_) => {
+            Navigation.PushAsync(new ChatsViewPage());
+        };
 
         //Set content
-        
-        mainStackLayout.Add(verticalStackLayout);
-        mainStackLayout.Add(inputStackLayout);
-        scrollView.Content = mainStackLayout;
+        verticalStackLayout.Add(inputStackLayout);
+
         verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         scrollView.BackgroundColor = Color.FromArgb("#CC415F");
 
-        grid.SetRow(verticalStackLayout, 0);
-        grid.Add(verticalStackLayout);
-        grid.SetRow(inputStackLayout, 1);
+        grid.SetRow(backButton, 0);
+        grid.Add(backButton);
+        grid.SetRow(scrollView, 1);
+        grid.Add(scrollView);
+        grid.SetRow(inputStackLayout, 2);
         grid.Add(inputStackLayout);
         
-        
+        scrollView.Content = verticalStackLayout;
         Content = grid;
-        ;
+        
     }
     
 }

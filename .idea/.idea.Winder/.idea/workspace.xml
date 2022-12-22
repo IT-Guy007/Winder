@@ -12,24 +12,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387.corrupted.20221222-041335.reason.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387.corrupted.20221222-041335.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/.name" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Authentication.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unittest/TestDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/TestDatabase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387/storage_v2/_src_/database/winder.tdoL0Q/schema/winder.tdoL0Q.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5eb8b30d-cac9-4a17-8f43-a3f6ccfd3387/storage_v2/_src_/database/winder.tdoL0Q/schema/winder.tdoL0Q.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/ChatView.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatView.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/ChatView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatView.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/ChatsViewPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatsViewPage.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/ChatsViewPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatsViewPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/LoginPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/LoginPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Winder.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +164,7 @@
       <workItem from="1671713624549" duration="35000" />
       <workItem from="1671713673979" duration="86000" />
       <workItem from="1671713774162" duration="676000" />
-      <workItem from="1671721717923" duration="1031000" />
+      <workItem from="1671721717923" duration="3743000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>

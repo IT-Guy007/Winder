@@ -1,76 +1,83 @@
 using DataModel;
+using MAUI;
 
 namespace Winder;
 
-public partial class ChatsViewPage {
+public partial class ChatsViewPage : ContentPage
+{
     public string OriginPage;
-    private readonly Database database;
-	private const string PageName = "chatpage";
+    Database Database = new Database();
+    private const string pageName = "chatpage";
+    public class MatchedPerson {
+        public string Email { get; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public ImageSource ProfilePicture { get; set; }
 
-	public ChatsViewPage() {
-	    database = new Database();
-	    InitializeComponent();
-        List<User> matchedStudents = database.GetMatchedStudentsFromUser(Authentication._currentUser.email);
-        List<MatchedPerson> matchedPeople = ConvertUserToMatchPerson(matchedStudents);
-        ListOfMatches.ItemsSource = matchedPeople;
-        if (matchedStudents.Count < 1) {
-            NoMatchDisplay.Text = "Je hebt helaas geen matches ;(";
-            NoMatchDisplay.IsVisible= true;
+        public MatchedPerson(User MatchedStudent) {
+            Email = MatchedStudent.email;
+            FirstName = MatchedStudent.firstName;
+            LastName = MatchedStudent.lastName;
+            MemoryStream ms = new MemoryStream(MatchedStudent.profilePicture);
+            ProfilePicture = ImageSource.FromStream(() => ms);
         }
+
     }
-    
-    private List<MatchedPerson> ConvertUserToMatchPerson(List<User> matchedStudents) {
-        List<MatchedPerson> matchedPeople = new List<MatchedPerson>();
-        foreach (var student in matchedStudents)
-        {
-            matchedPeople.Add(new MatchedPerson(student));
+
+    public ChatsViewPage() {
+        InitializeComponent();
+        List<User> MatchedStudents = Database.GetMatchedStudentsFromUser(Authentication._currentUser.email);
+        List<MatchedPerson> MatchedPeople = ConvertUserToMatchPerson(MatchedStudents);
+        ListOfMatches.ItemsSource = MatchedPeople;
+    }
+
+    private List<MatchedPerson> ConvertUserToMatchPerson(List<User> MatchedStudents) {
+        List<MatchedPerson> MatchedPeople = new List<MatchedPerson>();
+
+        foreach (var student in MatchedStudents) {
+            MatchedPeople.Add(new MatchedPerson(student));
         }
-        return matchedPeople;
+
+        return MatchedPeople;
     }
 
 
     private void Backbutton_Clicked(object sender, EventArgs e) {
+        switch (OriginPage) {
+            case "matchpage":
+                Navigation.PushAsync(new MatchPage());
+                break;
+            case "profilepage":
+                Navigation.PushAsync(new ProfileChange());
+                break;
+            case "settingspage":
+                Navigation.PushAsync(new SettingsPage());
+                break;
+        }
 
-	    switch (OriginPage) {
-			case "matchpage":
-				Navigation.PushAsync(new MatchPage());
-				break;
-			case "profilepage":
-				Navigation.PushAsync(new ProfileChange());
-				break;
-			case "settingspage":
-				Navigation.PushAsync(new SettingsPage());
-				break;
-		}
-
-
-	}
+    }
 
     private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e) {
-	    if (e.Item is MatchedPerson tappedItem) {
-		    User user = Database.GetUserFromDatabase(tappedItem.Email);
-	    }
+        var tappedItem = e.Item as MatchedPerson;
+        Navigation.PushAsync(new ChatView(Authentication._currentUser, Database.GetUserFromDatabase(tappedItem.Email)));
     }
 
     private void MyProfile_Clicked(object sender, EventArgs e) {
-		ProfileChange profileChange = new ProfileChange {
-			OriginPage = PageName
-		};
-		Navigation.PushAsync(profileChange);
-	}
-	private void Settings_Clicked(object sender, EventArgs e) {
-		SettingsPage settings = new SettingsPage {
-			OriginPage = PageName
-		};
-		Navigation.PushAsync(settings);
-	}
-
-    private void MatchPage_Clicked(object sender, EventArgs e) {
-        MatchPage page = new MatchPage {
-	        OriginPage = PageName
-        };
-        Navigation.PushAsync(page);
+        ProfileChange myProfile = new ProfileChange();
+        myProfile.OriginPage = pageName;
+        Navigation.PushAsync(myProfile);
     }
 
+    private void Settings_Clicked(object sender, EventArgs e) {
+        SettingsPage settings = new SettingsPage();
+        settings.OriginPage = pageName;
+        Navigation.PushAsync(settings);
+    }
+
+    private void MatchPage_Clicked(object sender, EventArgs e) {
+        MatchPage matchPage = new MatchPage();
+        matchPage.OriginPage = pageName;
+        Navigation.PushAsync(matchPage);
+    }
 
 }
