@@ -1,114 +1,96 @@
-﻿
-using DataModel;
-using Microsoft.Maui.Controls;
-using System.ComponentModel.DataAnnotations;
-using Winder;
-using System.Drawing.Drawing2D;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Controls.PlatformConfiguration;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Drawing;
-namespace MAUI;
+﻿using DataModel;
 
-public partial class ProfileChange : ContentPage
-{
-    public string originPage;
-    private const string pageName = "profilepage";
+namespace Winder;
 
-    List<string> interesses = new List<string>();
-    Database Database = new Database();
-    Microsoft.Maui.Graphics.Color ErrorColor = new Microsoft.Maui.Graphics.Color(255, 243, 5);
-    private byte[][] profilePictures { get; set;}
+public partial class ProfileChange {
+    public string OriginPage;
+    private const string PageName = "profilepage";
+
+    private readonly List<string> interests;
+    private readonly Database database;
+    private readonly Color errorColor;
+    private byte[][] ProfilePictures { get; set;}
     private bool firstname = true;
-    private bool middlename = true;
+    private bool middleName = true;
     private bool lastname = true;
     private bool birthday = true;
-    private bool preference = true;
-    private bool gender = true;
+    private readonly bool preference = true;
+    private readonly bool gender = true;
     private bool bio = true;
     private bool education = true;
+    
     //Load all necessary components to the page
-
-    public ProfileChange()
-    {
+    public ProfileChange() {
+        database = new Database();
+        interests = new List<string>();
+        errorColor = new Color(255, 243, 5);
+        
         InitializeComponent();
-        profilePictures = new byte[6][];
+        
+        ProfilePictures = new byte[6][];
         LoadUserFromDatabaseInForm();
-        InterestSelection.ItemsSource = Database.GetInterestsFromDataBase();
-        interesses = Database.LoadInterestsFromDatabaseInListInteresses(Authentication._currentUser.email);
-        ListInterests.ItemsSource = interesses;
+        InterestSelection.ItemsSource = database.GetInterestsFromDataBase();
+        interests = database.LoadInterestsFromDatabaseInListInteresses(Authentication._currentUser.email);
+        ListInterests.ItemsSource = interests;
     }
     //Fills the form inputs placeholders with the user data
-    private void LoadUserFromDatabaseInForm()
-    {
-        if (Authentication._currentUser != null)
-        {
-            profilePictures = Database.GetPicturesFromDatabase(Authentication._currentUser.email);
-            SetAllImageButtons();
-            Firstname.Placeholder = Authentication._currentUser.firstName;
-            Middlename.Placeholder = Authentication._currentUser.middleName;
-            Lastname.Placeholder = Authentication._currentUser.lastName;
-            Birthdate.Date = Authentication._currentUser.birthDay;
-            Bio.Placeholder = Authentication._currentUser.bio;
-            Education.Placeholder = Authentication._currentUser.major;
-            Gender.SelectedIndex = GetGenderFromUser();
-            Preference.SelectedIndex = GetPreferenceFromUser();
-        }
+    private void LoadUserFromDatabaseInForm() {
+    ProfilePictures = database.GetPicturesFromDatabase(Authentication._currentUser.email);
+        SetAllImageButtons();
+        Firstname.Placeholder = Authentication._currentUser.firstName;
+        Middlename.Placeholder = Authentication._currentUser.middleName;
+        Lastname.Placeholder = Authentication._currentUser.lastName;
+        Birthdate.Date = Authentication._currentUser.birthDay;
+        Bio.Placeholder = Authentication._currentUser.bio;
+        Education.Placeholder = Authentication._currentUser.major;
+        Gender.SelectedIndex = GetGenderFromUser();
+        Preference.SelectedIndex = GetPreferenceFromUser();
     }
-    private void SetAllImageButtons()
-    {
-        if (profilePictures != null)
-        {
-            if (profilePictures[0] != null)
-            {
-                byte[] ScaledImage = ScaleImage(profilePictures[0],140,200);
-                ProfileImage1.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+    private void SetAllImageButtons() {
+        if (ProfilePictures != null) {
+            if (ProfilePictures[0] != null) {
+                byte[] scaledImage = ScaleImage(ProfilePictures[0],140,200);
+                ProfileImage1.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton1.IsVisible = true;
-            }
-            else ProfileImage1.Source = "plus.png";
-            if (profilePictures[1] != null)
-            {
-                byte[] ScaledImage = ScaleImage(profilePictures[1], 140, 200);
-                ProfileImage2.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+            } else ProfileImage1.Source = "plus.png";
+            
+            if (ProfilePictures[1] != null) {
+                byte[] scaledImage = ScaleImage(ProfilePictures[1], 140, 200);
+                ProfileImage2.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton2.IsVisible = true;
-            }
-            else ProfileImage2.Source = "plus.png";
-            if (profilePictures[2] != null)
-            {
-                byte[] ScaledImage = ScaleImage(profilePictures[2], 140, 200);
-                ProfileImage3.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+            } else ProfileImage2.Source = "plus.png";
+            
+            if (ProfilePictures[2] != null) {
+                byte[] scaledImage = ScaleImage(ProfilePictures[2], 140, 200);
+                ProfileImage3.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton3.IsVisible = true;
             }
             else ProfileImage3.Source = "plus.png";
-            if (profilePictures[3] != null)
-            {
-                byte[] ScaledImage = ScaleImage(profilePictures[3], 140, 200);
-                ProfileImage4.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+            
+            if (ProfilePictures[3] != null) {
+                byte[] scaledImage = ScaleImage(ProfilePictures[3], 140, 200);
+                ProfileImage4.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton4.IsVisible = true;
-            }
-            else ProfileImage4.Source = "plus.png";
-            if (profilePictures[4] != null)
-            {
-                byte[] ScaledImage = ScaleImage(profilePictures[4], 140, 200);
-                ProfileImage5.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+            } else ProfileImage4.Source = "plus.png";
+            
+            if (ProfilePictures[4] != null) {
+                byte[] scaledImage = ScaleImage(ProfilePictures[4], 140, 200);
+                ProfileImage5.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton5.IsVisible = true;
-            }
-            else ProfileImage5.Source = "plus.png";
-            if (profilePictures[5] != null)
-            {
-                byte[] ScaledImage = ScaleImage(profilePictures[5], 140, 200);
-                ProfileImage6.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
+            } else ProfileImage5.Source = "plus.png";
+            
+            if (ProfilePictures[5] != null) {
+                byte[] scaledImage = ScaleImage(ProfilePictures[5], 140, 200);
+                ProfileImage6.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton6.IsVisible = true;
-            }
-            else ProfileImage6.Source = "plus.png";
+            } else ProfileImage6.Source = "plus.png";
         }
     }
-public byte[] ScaleImage(byte[] bytes, int width, int height)
-{
-    using (MemoryStream ms = new MemoryStream(bytes))
-    {
-        using (Bitmap image = new Bitmap(ms))
-        {
+
+    private byte[] ScaleImage(byte[] bytes, int width, int height) {
+#if WINDOWS
+    using (MemoryStream ms = new MemoryStream(bytes)) {
+        using (Bitmap image = new Bitmap(ms)) {
             Bitmap resizedImage = new Bitmap(width, height);
             using (Graphics gfx = Graphics.FromImage(resizedImage))
             {
@@ -122,7 +104,11 @@ public byte[] ScaleImage(byte[] bytes, int width, int height)
             }
         }
     }
+#else
+    return bytes;
+#endif
 }
+    
 //Gets the preference of user
 private int GetPreferenceFromUser()
     {
@@ -138,13 +124,11 @@ private int GetPreferenceFromUser()
         return 0;
     }
     //Changes the userdata en updates the form
-    private void ChangeUserData(object sender, EventArgs e)
-    {
-        if (firstname == true && middlename == true && lastname == true && birthday == true && preference == true && gender == true && bio == true && education == true)
-        {
+    private void ChangeUserData(object sender, EventArgs e) {
+        if (firstname && middleName && lastname && birthday  && preference && gender && bio && education ) {
             UpdateUserPropertiesPrepareForUpdateQuery();
-            Database.UpdateUserInDatabaseWithNewUserData(Authentication._currentUser);
-            Database.DeleteAllPhotosFromDatabase(Authentication._currentUser);
+            database.UpdateUserInDatabaseWithNewUserData(Authentication._currentUser);
+            database.DeleteAllPhotosFromDatabase(Authentication._currentUser);
             InsertAllPhotosInDatabase(Authentication._currentUser);
             RegisterInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
@@ -159,34 +143,13 @@ private int GetPreferenceFromUser()
 
     private void InsertAllPhotosInDatabase(User currentUser)
     {
-        if (profilePictures != null)
-        {
-            for (int i = 0; i < profilePictures.Length; i++)
-            {
-                if (profilePictures[i] != null)
-                {
-                    Database.InsertPictureInDatabase(currentUser.email, profilePictures[i]);
+        if (ProfilePictures != null) {
+            foreach (byte[] bytes in ProfilePictures) {
+                if (bytes != null) {
+                    database.InsertPictureInDatabase(currentUser.email, bytes);
                 }
             }
         }
-    }
-    private byte[] ConvertImageSourceToByteArray(ImageSource source)
-    {
-        var stream = source as StreamImageSource;
-        if (stream != null)
-        {
-            var task = stream.Stream.Invoke(CancellationToken.None);
-            task.Wait();
-            var s = task.Result;
-            byte[] bytes;
-            using (var memoryStream = new MemoryStream())
-            {
-                s.CopyTo(memoryStream);
-                bytes = memoryStream.ToArray();
-            }
-            return bytes;
-        }
-        return null;
     }
 
 
@@ -197,7 +160,7 @@ private int GetPreferenceFromUser()
         Firstname.Placeholder = Authentication._currentUser.firstName;
         Middlename.Placeholder = Authentication._currentUser.middleName;
         Lastname.Placeholder = Authentication._currentUser.lastName;
-        Birthdate.Date = (DateTime)Authentication._currentUser.birthDay;
+        Birthdate.Date = Authentication._currentUser.birthDay;
         Bio.Placeholder = Authentication._currentUser.bio;
         Education.Placeholder = Authentication._currentUser.major;
     }
@@ -213,36 +176,31 @@ private int GetPreferenceFromUser()
     //Adds all interests to users list of interests
     private void RegisterInterestsInDatabase()
     {
-        foreach (var interest in interesses)
+        foreach (var interest in interests)
         {
-            Database.RegisterInterestInDatabase(Authentication._currentUser.email, interest);
+            database.RegisterInterestInDatabase(Authentication._currentUser.email, interest);
         }
     }
     //Update the users data 
     private void UpdateUserPropertiesPrepareForUpdateQuery()
     {
-        if (Authentication._currentUser.firstName != Firstname.Text && Firstname.Text != null && Firstname.Text != "") Authentication._currentUser.firstName = Firstname.Text;
-        if (Authentication._currentUser.middleName != Middlename.Text && Middlename.Text != null && Middlename.Text != "") Authentication._currentUser.middleName = Middlename.Text;
-        if (Authentication._currentUser.lastName != Lastname.Text && Lastname.Text != null && Lastname.Text != "") Authentication._currentUser.lastName = Lastname.Text;
-        if (Authentication._currentUser.major != Education.Text && Education.Text != null && Education.Text != "") Authentication._currentUser.major = Education.Text;
+        if (Authentication._currentUser.firstName != Firstname.Text && !string.IsNullOrEmpty(Firstname.Text)) Authentication._currentUser.firstName = Firstname.Text;
+        if (Authentication._currentUser.middleName != Middlename.Text && !string.IsNullOrEmpty(Middlename.Text)) Authentication._currentUser.middleName = Middlename.Text;
+        if (Authentication._currentUser.lastName != Lastname.Text && !string.IsNullOrEmpty(Lastname.Text)) Authentication._currentUser.lastName = Lastname.Text;
+        if (Authentication._currentUser.major != Education.Text && !string.IsNullOrEmpty(Education.Text)) Authentication._currentUser.major = Education.Text;
         if (Authentication._currentUser.birthDay != Birthdate.Date) Authentication._currentUser.birthDay = Birthdate.Date;
-        if (Authentication._currentUser.bio != Bio.Text && Bio.Text != null && Bio.Text != "") Authentication._currentUser.bio = Bio.Text;
-        if (Authentication._currentUser.gender != Gender.SelectedItem.ToString()) Authentication._currentUser.gender = Gender.SelectedItem.ToString();
-        if (Authentication._currentUser.preference != Preference.SelectedItem.ToString()) Authentication._currentUser.preference = Preference.SelectedItem.ToString();
+        if (Authentication._currentUser.bio != Bio.Text && !string.IsNullOrEmpty(Bio.Text)) Authentication._currentUser.bio = Bio.Text;
+        if (Authentication._currentUser.gender != Gender.SelectedItem.ToString()) Authentication._currentUser.gender = Gender.SelectedItem.ToString() ?? string.Empty;
+        if (Authentication._currentUser.preference != Preference.SelectedItem.ToString()) Authentication._currentUser.preference = Preference.SelectedItem.ToString() ?? string.Empty;
     }
     //Checks if the firstname input is valid
-    private void FirstnameTextChanged(object sender, TextChangedEventArgs e)
-    {
-        if (Firstname.Text != "")
-        {
-            if (!CheckIfTextIsOnlyLetters(Firstname.Text))
-            {
+    private void FirstnameTextChanged(object sender, TextChangedEventArgs e) {
+        if (!string.IsNullOrWhiteSpace(Firstname.Text)) {
+            if (!CheckIfTextIsOnlyLetters(Firstname.Text)) {
                 firstname = false;
                 lblFirstname.Text = "Voornaam mag alleen letters bevatten";
-                lblFirstname.TextColor = ErrorColor;
-            }
-            else
-            {
+                lblFirstname.TextColor = errorColor;
+            } else {
                 firstname = true;
                 lblFirstname.Text = "Voornaam";
                 lblFirstname.TextColor = default;
@@ -250,20 +208,20 @@ private int GetPreferenceFromUser()
             }
         }
     }
-    //Checks if the middlename input is valid
+    //Checks if the middleName input is valid
     private void MiddlenameTextChanged(object sender, TextChangedEventArgs e)
     {
         if (Middlename.Text != "")
         {
             if (!CheckIfTextIsOnlyLetters(Middlename.Text))
             {
-                middlename = false;
+                middleName = false;
                 lblMiddlename.Text = "Tussenvoegsel mag alleen letters bevatten";
-                lblMiddlename.TextColor = ErrorColor;
+                lblMiddlename.TextColor = errorColor;
             }
             else
             {
-                middlename = true;
+                middleName = true;
                 lblMiddlename.Text = "Tussenvoegsel";
                 lblMiddlename.TextColor = default;
                 Middlename.Text = Middlename.Text.First().ToString().ToUpper() + Middlename.Text[1..].ToLower();
@@ -279,7 +237,7 @@ private int GetPreferenceFromUser()
             {
                 lastname = false;
                 lblLastname.Text = "Achternaam mag alleen letters bevatten";
-                lblLastname.TextColor = ErrorColor;
+                lblLastname.TextColor = errorColor;
             }
             else
             {
@@ -299,7 +257,7 @@ private int GetPreferenceFromUser()
             {
                 education = false;
                 lblEducation.Text = "Opleiding mag alleen letters bevatten";
-                lblEducation.TextColor = ErrorColor;
+                lblEducation.TextColor = errorColor;
             }
             else
             {
@@ -313,38 +271,39 @@ private int GetPreferenceFromUser()
 
     private void Backbutton_Clicked(object sender, EventArgs e)
     {
-        switch (originPage)
+        switch (OriginPage)
         {
             case "matchpage":
                 Navigation.PushAsync(new MatchPage());
                 break;
             case "settingspage":
-                Navigation.PushAsync(new Instellingen());
+                Navigation.PushAsync(new SettingsPage());
                 break;
             case "chatpage":
-            Navigation.PushAsync(new ChatPage());
+            Navigation.PushAsync(new ChatsViewPage());
                 break;
         }
     }
 
-    private void ChatButton_Clicked(object sender, EventArgs e)
-    {
-        ChatPage chats = new ChatPage();
-        chats.originPage = pageName;
-        Navigation.PushAsync(chats);
+    private void ChatButton_Clicked(object sender, EventArgs e) {
+        ChatsViewPage chatsViews = new ChatsViewPage {
+            OriginPage = PageName
+        };
+        Navigation.PushAsync(chatsViews);
     }
 
     private void matchButton_Clicked(object sender, EventArgs e)
     {
-        MatchPage matchpage = new MatchPage();
-        matchpage.originPage = pageName;
-        Navigation.PushAsync(new MatchPage());
+        MatchPage matchpage = new MatchPage {
+            OriginPage = PageName
+        };
+        Navigation.PushAsync(matchpage);
     }
 
-    private void Settings_Clicked(object sender, EventArgs e)
-    {
-        Instellingen settings = new Instellingen();
-        settings.originPage = pageName;
+    private void Settings_Clicked(object sender, EventArgs e) {
+        SettingsPage settings = new SettingsPage {
+            OriginPage = PageName
+        };
         Navigation.PushAsync(settings); 
     }
 
@@ -376,7 +335,7 @@ private int GetPreferenceFromUser()
     {
         try
         {
-            ImageButton ClickedImageButton = (ImageButton)sender;
+            ImageButton clickedImageButton = (ImageButton)sender;
             var image = await FilePicker.PickAsync(new PickOptions
             {
                 PickerTitle = "Kies een profielfoto",
@@ -387,21 +346,19 @@ private int GetPreferenceFromUser()
                 return;
             }
             string imgLocation = image.FullPath;
-            byte[] imageArr = null;
-            byte[] ScaledImage = null;
             FileStream fileStream = new FileStream(imgLocation, FileMode.Open, FileAccess.Read);
-            Stream stream = await image.OpenReadAsync();
             BinaryReader binary = new BinaryReader(fileStream);
-            imageArr = binary.ReadBytes((int)fileStream.Length);
-            string ImageButtonId = ClickedImageButton.AutomationId;
-            TurnOnVisibilityCloseButton(ImageButtonId);
-            profilePictures[int.Parse(ImageButtonId)] = imageArr;
-            ScaledImage = ScaleImage(imageArr, 140, 200);
-            ClickedImageButton.Source = ImageSource.FromStream(() => new MemoryStream(ScaledImage));
-        }
-        catch (Exception ex)
-        {
-            DisplayAlert("Error", "Er is iets fout gegaan", "Ok");
+            byte[] imageArr = binary.ReadBytes((int)fileStream.Length);
+            string imageButtonId = clickedImageButton.AutomationId;
+            TurnOnVisibilityCloseButton(imageButtonId);
+            ProfilePictures[int.Parse(imageButtonId)] = imageArr;
+            byte[] scaledImage = ScaleImage(imageArr, 140, 200);
+            clickedImageButton.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
+        } catch (Exception ex) {
+            Console.WriteLine("Error picking profilefoto");
+            Console.WriteLine(ex.ToString());
+            Console.WriteLine(ex.StackTrace);
+            await DisplayAlert("Error", "Er is iets fout gegaan", "Ok");
         }
     }
 
@@ -433,73 +390,58 @@ private int GetPreferenceFromUser()
     //Handles the selected interests and adds them to the listview of interests
     private void PickerIndexChanged(object sender, EventArgs e)
     {
-        if (InterestSelection.SelectedItem != null && interesses.Count < 5)
+        if (InterestSelection.SelectedItem != null && interests.Count < 5)
         {
             InterestSelection.Title = "Interesse";
             InterestSelection.TitleColor = default;
-            if (!interesses.Contains(InterestSelection.SelectedItem.ToString()))
+            if (!interests.Contains(InterestSelection.SelectedItem.ToString()))
             {
-                interesses.Add(InterestSelection.SelectedItem.ToString());
+                interests.Add(InterestSelection.SelectedItem.ToString());
                 ListInterests.ItemsSource = null;
-                ListInterests.ItemsSource = interesses;
+                ListInterests.ItemsSource = interests;
             }
             else
             {
                 InterestSelection.Title = "Je hebt deze interesse al toegevoegd";
-                InterestSelection.TitleColor = ErrorColor;
+                InterestSelection.TitleColor = errorColor;
             }
         }
         else
         {
-            InterestSelection.Title = "Je kunt maximaal 5 interesses selecteren";
-            InterestSelection.TitleColor = ErrorColor;
-        }
-    }
-    //Deletes the selected item in listview of interests
-    private void DeleteInterest(object sender, EventArgs e)
-    {
-        if (ListInterests.SelectedItem != null) {
-            var item = ListInterests.SelectedItem.ToString();
-            interesses.Remove(item);
-            ListInterests.ItemsSource = null;
-            ListInterests.ItemsSource = interesses;
-            ListInterests.SelectedItem = null;
+            InterestSelection.Title = "Je kunt maximaal 5 interests selecteren";
+            InterestSelection.TitleColor = errorColor;
         }
     }
 
     //Checks if selected birthdate is a birthdate that is 18 years or older
-    private void DateOfBirthSelectedDate(object sender, DateChangedEventArgs e)
-    {
-                    DateTime today = DateTime.Today;
-            int age = today.Year - Birthdate.Date.Year;
-            if (Birthdate.Date > today.AddYears(-age)) age--;
-            if (age >= 18)
-            {
-                birthday = true;
+    private void DateOfBirthSelectedDate(object sender, DateChangedEventArgs e) {
+        DateTime today = DateTime.Today;
+        int age = today.Year - Birthdate.Date.Year;
+        if (Birthdate.Date > today.AddYears(-age)) age--;
+        if (age >= 18) {
+            birthday = true;
             lblBirthdate.Text = "Leeftijd : " + age;
             lblBirthdate.BackgroundColor = default;
-            }
-            else
-            {
+        } else {
             birthday = false;
-                lblBirthdate.Text = "Je moet minimaal 18 jaar zijn";
-                lblBirthdate.BackgroundColor = ErrorColor;
-            }
+            lblBirthdate.Text = "Je moet minimaal 18 jaar zijn";
+            lblBirthdate.BackgroundColor = errorColor;
+        }
     }
     //Check if an item has been selected and delete the selected item of ListInterests
-    private void ListInterestsItemSelected(object sender, SelectedItemChangedEventArgs e)
-    {
-                if (ListInterests.SelectedItem != null)
-        {
-            InterestSelection.Title = "Interesse";
-            InterestSelection.TitleColor = default;
-            var interest = ListInterests.SelectedItem.ToString();
-            Database.RemoveInterestOfUser(Authentication._currentUser.email, interest);
-            interesses.Remove(interest);
-            ListInterests.ItemsSource = null;
-            ListInterests.ItemsSource = interesses;
-            ListInterests.SelectedItem = null;
+    private void ListInterestsItemSelected(object sender, SelectedItemChangedEventArgs e) {
+        if (ListInterests.SelectedItem == null) return;
+        InterestSelection.Title = "Interesse";
+        InterestSelection.TitleColor = default;
+        var interest = ListInterests.SelectedItem.ToString();
+        if (interest != null) {
+            database.RemoveInterestOfUser(Authentication._currentUser.email, interest);
+            interests.Remove(interest);
         }
+
+        ListInterests.ItemsSource = null;
+        ListInterests.ItemsSource = interests;
+        ListInterests.SelectedItem = null;
     }
 
     private void BioTextChanged(object sender, TextChangedEventArgs e)
@@ -510,7 +452,7 @@ private int GetPreferenceFromUser()
             {
                 bio = false;
                 lblBio.Text = "Bio mag alleen letters bevatten";
-                lblBio.TextColor = ErrorColor;
+                lblBio.TextColor = errorColor;
             }
             else
             {
@@ -523,9 +465,9 @@ private int GetPreferenceFromUser()
 
     private void ImageButtonClicked(object sender, EventArgs e)
     {
-        ImageButton ImageButton = (ImageButton)sender;
-        profilePictures[int.Parse(ImageButton.AutomationId)] = null;
-        switch (ImageButton.AutomationId)
+        ImageButton imageButton = (ImageButton)sender;
+        ProfilePictures[int.Parse(imageButton.AutomationId)] = null;
+        switch (imageButton.AutomationId)
         {
             case "0":
                 ProfileImage1.Source = "plus.png";
@@ -550,8 +492,6 @@ private int GetPreferenceFromUser()
             case "5":
                 ProfileImage6.Source = "plus.png";
                 CloseButton6.IsVisible = false;
-                break;
-            default:
                 break;
         }
     }

@@ -1,11 +1,9 @@
 using MAUI;
-using System;
-using System.Threading.Tasks;
-namespace MAUI;
+
+namespace Winder;
 
 
-public partial class MainPage : ContentPage
-{
+public partial class MainPage {
 
    
     public MainPage()

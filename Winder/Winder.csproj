@@ -65,14 +65,11 @@
       <MauiXaml Update="LoginPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="ChatPage.xaml">
+      <MauiXaml Update="ChatsViewPage.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
       <MauiXaml Update="MatchPage.xaml">
         <SubType>Designer</SubType>
-      </MauiXaml>
-      <MauiXaml Update="VideoTemplate.xaml">
-        <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
       <MauiXaml Update="ProfileChangePage.xaml">
         <SubType>Designer</SubType>
@@ -80,7 +77,7 @@
       <MauiXaml Update="RegisterPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="ForgotPassword.xaml">
+      <MauiXaml Update="ForgotPasswordPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
     </ItemGroup>
@@ -94,7 +91,7 @@
         <SubType>Code</SubType>
       </Compile>
 
-      <Compile Update="ChatPage.xaml.cs">
+      <Compile Update="ChatsViewPage.xaml.cs">
         <DependentUpon>ChatPage.xaml</DependentUpon>
       </Compile>
       <Compile Update="StartPage.xaml.cs">
@@ -104,9 +101,6 @@
         <DependentUpon>MatchPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="VideoTemplate.xaml.cs">
-        <DependentUpon>VideoTemplate.xaml</DependentUpon>
-      </Compile>
       <Compile Update="ProfileChangePage.xaml.cs">
         <DependentUpon>ProfileChangePage.xaml</DependentUpon>
         <SubType>Code</SubType>
@@ -115,7 +109,7 @@
         <DependentUpon>RegisterPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="ForgotPassword.xaml.cs">
+      <Compile Update="ForgotPasswordPage.xaml.cs">
         <DependentUpon>ForgotPassword.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>

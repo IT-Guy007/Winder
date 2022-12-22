@@ -1,12 +1,11 @@
 ﻿using DataModel;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MAUI;
-public partial class LoginPage : ContentPage {
-    Button loginButton = new Button();
-    Button forgotPasswordButton = new Button();
+namespace Winder;
+public partial class LoginPage {
+    private readonly Button loginButton = new Button();
+    private readonly Button forgotPasswordButton = new Button();
 
-    Database database = new Database();
+    readonly Database database = new Database();
 
     public LoginPage() {
         InitializeComponent();
@@ -20,11 +19,10 @@ public partial class LoginPage : ContentPage {
 
     }
 
-    private void Login(object sender, EventArgs e)
-    {
-        var Email = Emailadres.Text;
-        var Password = Wachtwoord.Text;
-        if (database.CheckLogin(Email, Password)) {
+    private void Login(object sender, EventArgs e) {
+        var email = Emailadres.Text;
+        var password = Wachtwoord.Text;
+        if (database.CheckLogin(email, password)) {
             FoutmeldingInloggen.IsVisible = false;
             Navigation.PushAsync(new MatchPage());
         }
@@ -35,7 +33,7 @@ public partial class LoginPage : ContentPage {
    
     private void WachtwoordVergeten(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new WijzigWachtwoordScherm());
+        Navigation.PushAsync(new ForgotPasswordPage());
 
     }
 

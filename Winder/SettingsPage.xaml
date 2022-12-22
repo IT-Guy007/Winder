@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
-    x:Class="MAUI.Instellingen"
+    x:Class="Winder.SettingsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     BackgroundColor="#CC415F">
@@ -218,7 +218,7 @@
                 <Button
                     Grid.Column="1"
                     BackgroundColor="Gray"
-                    Clicked="editPasswordBtn"
+                    Clicked="EditPasswordBtn"
                     Text="Wijzig wachtwoord" />
             </Grid>
         </StackLayout>
@@ -276,7 +276,7 @@
             <Button
                 Grid.Column="1"
                 BackgroundColor="#D9D9D9"
-                Clicked="editDataBtn"
+                Clicked="EditDataBtn"
                 HeightRequest="60"
                 Text="Wijzigingen opslaan" />
 
