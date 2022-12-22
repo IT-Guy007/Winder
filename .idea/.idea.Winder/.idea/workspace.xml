@@ -5,21 +5,16 @@
     <projectFile kind="XamarinAndroid">Winder/Winder.csproj</projectFile>
     <projectFile kind="XamarinIOS">Winder/Winder.csproj</projectFile>
     <projectFile kind="XamarinMacOS">Winder/Winder.csproj</projectFile>
+    <projectFile pubXmlPath="Winder/Properties/PublishProfiles/FolderProfile net7.0-maccatalyst.pubxml">Winder/Winder.csproj</projectFile>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/0bf0d495-92f3-4bd2-b7bd-82843f0b569e.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/2b7d4347-0ed7-4345-b55d-e8c68de7cb00.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/7f1ef0af-5095-4784-bcb2-6232a40c8ca3.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/.wsuo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/.wsuo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/slnx.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/slnx.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unittest/Unittest.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/Unittest.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Winder.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/ChatModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/ChatModel.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +32,9 @@
     <setting file="file://$PROJECT_DIR$/DataModel/ChatModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DataModel/Database.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/079db77a6d6c4519b9460c7149d598ec9e5c0/ed/0e60d3ed/Page.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d7a87f53803495a836648df934b3e309e3c0/69/1bca8d49/Page.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7a60916519214763b9f44e9d259e3b9f417c0/c5/5a8da609/SqlDependency.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="InvalidFacetManager">
     <ignored-facets>
@@ -115,7 +113,7 @@
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64" />
-      <option name="PASS_PARENT_ENVS" value="0" />
+      <option name="PASS_PARENT_ENVS_MAC" value="1" />
       <method v="2">
         <option name="Build" />
       </method>

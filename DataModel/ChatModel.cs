@@ -106,8 +106,7 @@ public class DatabaseChangeListener
     }
 
     //Transfer data to collection as ChatMessage objects
-    private static void DataTableToObject(DataTable dataTable)
-    {
+    private static void DataTableToObject(DataTable dataTable) {
         Console.WriteLine("Found new info, inserting rows: " + dataTable.Rows.Count);
         foreach (DataRow row in dataTable.Rows)
         {
@@ -115,10 +114,9 @@ public class DatabaseChangeListener
             string toUser = row["personTo"].ToString() ?? "";
             DateTime date = DateTime.Parse(row["sendDate"].ToString() ?? "");
             string message = row["chatMessage"].ToString() ?? "";
-            bool read = row["readMessage"] as bool? ?? false;
-            if (fromUser != "" && toUser != "" && message != "")
-            {
-                _chatCollection.Add(new ChatMessage(fromUser, toUser, date, message, read));
+            int read = int.Parse(row["readMessage"].ToString() ?? "0");
+            if (fromUser != "" && toUser != "" && message != "") {
+                _chatCollection.Add(new ChatMessage(fromUser, toUser, date, message, read != 0));
             }
         }
     }
