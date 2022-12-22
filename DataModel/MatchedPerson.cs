@@ -1,5 +1,6 @@
+
+
 using Microsoft.Maui.Controls;
-using static Microsoft.Maui.Controls.ImageSource;
 
 namespace DataModel;
 
@@ -13,7 +14,7 @@ public class MatchedPerson {
         FirstName = matchedStudent.firstName;
         LastName = matchedStudent.lastName;
         MemoryStream ms = new MemoryStream(matchedStudent.profilePicture);
-        ProfilePicture = FromStream(() => ms);
+        ProfilePicture = ImageSource.FromStream(() => ms);
     }
-
+    
 }

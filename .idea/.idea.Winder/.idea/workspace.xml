@@ -12,6 +12,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/8954267d-7cea-4325-aea9-ae3a9a929232.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/96287726-2e8c-4fa5-8205-b772b22dba9b.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/b0d73044-3abb-4d56-90c4-da99994a127e.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/c3bc274f-4427-4d24-8d1d-b6e31409dedc.vsidx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/223a9452-c26d-476b-bfd7-1e19c656ec82.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/3383e377-3d54-4f16-a280-86b93bca0602.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/3a5c789c-fa8f-4faf-b5cf-54379900b5ab.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/cb52d79a-4208-499e-bf5c-9bd81c806b35.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/017.testlog" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/testlog.manifest" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/testlog.manifest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/OutputMessages/147017d2-f20c-685b-c28d-84e34fbe2137/StandardOutput.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/OutputMessages/3635b080-3571-2616-fc35-78f00a4a0a32/StandardOutput.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/OutputMessages/4642bf7c-ae13-024e-22ca-047a0182fa8b/StandardOutput.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/OutputMessages/c0c69122-3871-e0e1-8716-de24fcd4c577/StandardOutput.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/OutputMessages/c2b3fb92-9613-7945-8856-1143077fc3e9/StandardOutput.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/MatchedPerson.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/MatchedPerson.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ProfileChangePage.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,9 +52,6 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/DataModel/Database.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/079db77a6d6c4519b9460c7149d598ec9e5c0/ed/0e60d3ed/Page.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d7a87f53803495a836648df934b3e309e3c0/69/1bca8d49/Page.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7a60916519214763b9f44e9d259e3b9f417c0/c5/5a8da609/SqlDependency.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="InvalidFacetManager">
     <ignored-facets>
@@ -81,7 +101,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="Xamarin.Mac.Winder">
+  <component name="RunManager" selected="UWP.Windows">
     <configuration name="WorkAround" type="RunExe" factoryName=".NET Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64/Winder.app/Contents/MacOS/Winder" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -113,7 +133,7 @@
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64" />
-      <option name="PASS_PARENT_ENVS_MAC" value="1" />
+      <option name="PASS_PARENT_ENVS" value="1" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -153,6 +173,9 @@
       <workItem from="1671184820548" duration="6045000" />
       <workItem from="1671198590206" duration="141000" />
       <workItem from="1671199029651" duration="588000" />
+      <workItem from="1671713624549" duration="35000" />
+      <workItem from="1671713673979" duration="86000" />
+      <workItem from="1671713774162" duration="676000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>
