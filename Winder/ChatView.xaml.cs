@@ -16,7 +16,7 @@ public partial class ChatView {
 
     public ChatView(User sendFromUser, User sendToUser) {
 
-        Database.makeRead(sendFromUser.email, sendToUser.email);
+        Database.SetRead(sendFromUser.email, sendToUser.email);
 
         //MAUI
         scrollView = new ScrollView();

@@ -8,7 +8,7 @@ public partial class ChatsViewPage {
 	private const string PageName = "chatpage";
 
 	public ChatsViewPage() {
-	    this.database = new Database();
+	    database = new Database();
 	    InitializeComponent();
         List<User> matchedStudents = database.GetMatchedStudentsFromUser(Authentication._currentUser.email);
         List<MatchedPerson> matchedPeople = ConvertUserToMatchPerson(matchedStudents);
@@ -48,7 +48,7 @@ public partial class ChatsViewPage {
 
     private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e) {
 	    if (e.Item is MatchedPerson tappedItem) {
-		    User user = database.GetUserFromDatabase(tappedItem.Email);
+		    User user = Database.GetUserFromDatabase(tappedItem.Email);
 	    }
     }
 

@@ -259,7 +259,7 @@ public class TestDatabase {
     [TestCase("s1164000@student.windesheim.nl", ExpectedResult = true)]
     public bool GetUserFromDatabase(string email) {
         try {
-            _database.GetUserFromDatabase(email);
+            Database.GetUserFromDatabase(email);
             return true;
         } catch {
             return false;
@@ -440,7 +440,7 @@ public class TestDatabase {
     [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
     public bool GetPictureFromDatabase(string email) {
         try {
-            var picture = _database.GetPicturesFromDatabase(email);
+            var picture = Database.GetPicturesFromDatabase(email);
             if (picture != null) {
                 return true;
             }
@@ -516,7 +516,7 @@ public class TestDatabase {
     [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
     public bool Get5Profiles(string email) {
         try {
-            var users = _database.Get5Profiles(email);
+            var users = Authentication.Get5Profiles(email);
             if (users.Length >= 0 && users != null) {
                 return true;
             }
@@ -527,14 +527,10 @@ public class TestDatabase {
         return false;
     }
     [TestCase("s1167488@student.windesheim.nl", "s1178208@student.windesheim.nl", "Vahe Test", ExpectedResult = true)]
-    public bool SendMessageTest(string personFrom, string personTo, string message)
-    {
-        try
-        {
-            return _database.SendMessage(personFrom, personTo, message);
-        }
-        catch
-        {
+    public bool SendMessageTest(string personFrom, string personTo, string message) {
+        try {
+            return Database.SendMessage(personFrom, personTo, message);
+        } catch {
             return false;
         }
     }

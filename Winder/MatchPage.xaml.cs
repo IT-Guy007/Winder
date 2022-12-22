@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using DataModel;
 using Winder;
+using Color = Microsoft.Maui.Graphics.Color;
+using Image = Microsoft.Maui.Controls.Image;
 
 namespace Winder;
 
@@ -388,24 +390,7 @@ public partial class MatchPage {
         settingsPage.OriginPage = PageName;
         Navigation.PushAsync(settingsPage);
     }
-
-    // myprofile button clicked
-    private void MyProfile_Clicked(object sender, EventArgs e)
-    {
-        //declares origin page, in the my profile page
-        ProfileChange myProfile = new ProfileChange();
-        backButtonVisible = true;
-        myProfile.originPage = pageName;
-        Navigation.PushAsync(myProfile);
-    }
-
-    private async void CheckIfQueueNeedsMoreProfiles() {
-        if (Authentication._profileQueue.Count < 5) {
-
-            await GetProfiles();
-        }
-    }
-
+    
 
     public void NextProfile() {
 
@@ -480,6 +465,13 @@ public partial class MatchPage {
                     OnDislike(sender, e);
                 }
                 break;
+        }
+    }
+    
+    private async void CheckIfQueueNeedsMoreProfiles() {
+        if (Authentication._profileQueue.Count < 5) {
+
+            await Authentication.GetProfiles();
         }
     }
     

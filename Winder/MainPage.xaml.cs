@@ -1,5 +1,7 @@
 using System.Data.SqlClient;
 using DataModel;
+using MAUI;
+
 namespace Winder;
 
 
@@ -14,14 +16,12 @@ public partial class MainPage : ContentPage {
     }
 
     protected override async void OnAppearing() {
-    
-
 
         // wait for 4 seconds
         //await Task.Delay(3000);
         Console.WriteLine("App started");
         Authentication.Initialize();
-        Database.GenerateConnection();
+        Database.Initialize();
         Database db = new Database();
 
         try{
@@ -59,7 +59,7 @@ public partial class MainPage : ContentPage {
                 Console.WriteLine("Found user who was logged in, restoring session");
                 db.UpdateLocalUserFromDatabase(userEmail);
                 Console.WriteLine("Restored");
-                db.Get5Profiles(userEmail);
+                Authentication.Get5Profiles(userEmail);
             }
             else
             {

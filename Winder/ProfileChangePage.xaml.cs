@@ -37,7 +37,7 @@ public partial class ProfileChange {
     }
     //Fills the form inputs placeholders with the user data
     private void LoadUserFromDatabaseInForm() {
-    ProfilePictures = database.GetPicturesFromDatabase(Authentication._currentUser.email);
+        ProfilePictures = Database.GetPicturesFromDatabase(Authentication._currentUser.email);
         SetAllImageButtons();
         Firstname.Placeholder = Authentication._currentUser.firstName;
         Middlename.Placeholder = Authentication._currentUser.middleName;

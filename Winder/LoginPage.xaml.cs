@@ -1,4 +1,5 @@
 ﻿using DataModel;
+using MAUI;
 
 namespace Winder;
 public partial class LoginPage {
@@ -31,14 +32,12 @@ public partial class LoginPage {
         }
     }
    
-    private void WachtwoordVergeten(object sender, EventArgs e)
-    {
+    private void WachtwoordVergeten(object sender, EventArgs e) {
         Navigation.PushAsync(new ForgotPasswordPage());
 
     }
 
-    private void Backbutton_Clicked(object sender, EventArgs e)
-    {
+    private void Backbutton_Clicked(object sender, EventArgs e) {
         Navigation.PushAsync(new StartPage());
     }
 }

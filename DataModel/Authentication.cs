@@ -176,7 +176,7 @@ public class Authentication {
         return profiles;
     }
 
-    private static async Task GetProfiles() {
+    public static async Task GetProfiles() {
         Profile[] profiles = Get5Profiles(_currentUser.email);
         foreach (var profile in profiles) {
 

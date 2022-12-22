@@ -302,7 +302,7 @@ public class Database
         return interests;
     }
 
-    public User GetUserFromDatabase(string email) {
+    public static User GetUserFromDatabase(string email) {
         User user = null;
         OpenConnection();
         string sql = "SELECT * FROM Winder.Winder.[User] where email = @Email";
@@ -816,7 +816,7 @@ public class Database
         }
     }
 
-    public byte[][] GetPicturesFromDatabase(string email) {
+    public static byte[][] GetPicturesFromDatabase(string email) {
 
         byte[][] result = new byte[6][];
 
@@ -1138,41 +1138,6 @@ public class Database
         return false;
     }
 
-    private bool CheckIfUserAlreadyHasThePicture(string email, ImageSource source)
-    {
-        OpenConnection();
-        string query = "SELECT * FROM Winder.Winder.Pictures WHERE email = @email AND picture = @picture";
-        SqlCommand command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@email", email);
-        command.Parameters.AddWithValue("@picture", source);
-        // Execute the query and check if it returns any rows
-        SqlDataReader reader = command.ExecuteReader();
-        if (reader.HasRows)
-        {
-            Console.WriteLine("Error deleting pictures from database");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            CloseConnection();
-            return false;
-        }
-    }
-    public bool SendMessage(string personFrom, string personTo, string message)
-    {
-        
-        try
-        {
-            
-            OpenConnection();
-            DateTime sendDate = DateTime.Now;
-            SqlCommand query = new SqlCommand("INSERT INTO winder.winder.[ChatMessage] (personFrom, personTo,chatMessage,sendDate,[read]) VALUES ('" + personFrom + "' , '" + personTo + "','" + message + "', @sendDate, 0)", connection);
-            query.Parameters.AddWithValue("@sendDate", sendDate);
-           
-            query.ExecuteNonQuery();
-            CloseConnection();
-            return true;
-        }
-    }
-
     public static bool SendMessage(string personFrom, string personTo, string message) {
         try {
 
@@ -1209,6 +1174,27 @@ public class Database
             return false;
         }
 
+    }
+    
+    public bool DeleteAllPhotosFromDatabase(User currentUser) {
+        try
+        {
+            OpenConnection();
+            string sql = "delete from winder.winder.Photos WHERE [user] = @Email";
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Email", currentUser.email);
+            command.ExecuteNonQuery();
+            CloseConnection();
+            return true;
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine("Error deleting pictures from database");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+            return false;
+        }
     }
 
 }
