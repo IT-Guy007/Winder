@@ -20,10 +20,8 @@ public class TestDatabase {
     
     [Test]
     public void TestCreateDatabaseConnection() {
-        
-        Database database = new Database();
         try {
-            database.GenerateConnection();
+            Database.GenerateConnection();
             Assert.Pass();
         } catch (SqlException e) {
             Assert.Fail(e.Message);
@@ -34,12 +32,11 @@ public class TestDatabase {
     [Test]
     public void TestDatabaseConnection() {
         
-        Database database = new Database();
         try {
-            database.OpenConnection();
+            Database.OpenConnection();
             Assert.Pass();
 
-            database.CloseConnection();
+            Database.CloseConnection();
         } catch(SqlException e) {
             Assert.Fail(e.Message);
         }
@@ -138,13 +135,12 @@ public class TestDatabase {
     [TestCase("s1416890@student.windesheim.nl", ExpectedResult = true)]
     public bool LoadInterestsFromDatabaseInListInteressesTest(string email)
     {
-        return _database.LoadInterestsFromDatabaseInListInteresses(email).Count > 0;
+        return Database.LoadInterestsFromDatabaseInListInteresses(email).Count > 0;
     }
 
     [TestCase("s1416890@student.windesheim.nl", "Lezen", ExpectedResult = true)]
     [TestCase("s1416890@student.windesheim.nl", "bestaat niet", ExpectedResult = false)]
-    public bool removeInterestOutOfuserHasInterestTableDatabaseTest(string email, string interest)
-    {
+    public bool removeInterestOutOfuserHasInterestTableDatabaseTest(string email, string interest) {
         return _database.RemoveInterestOfUser(email, interest);
     }
 
@@ -168,7 +164,7 @@ public class TestDatabase {
     {
         try
         {
-            _database.GetUsersWhoLikedYou(email);
+            Database.GetUsersWhoLikedYou(email);
             return true;
         }
         catch
@@ -213,15 +209,11 @@ public class TestDatabase {
     [TestCase("jannieandes@gmail.com", ExpectedResult = true)]
     [TestCase("japiejaap@gmail.com", ExpectedResult = false)]
     [TestCase(" ", ExpectedResult = false)]
-    public bool DatabaseAlgorithmForSwiping(string email)
-    {
-        try
-        {
-            _database.AlgorithmForSwiping(email);
+    public bool DatabaseAlgorithmForSwiping(string email) {
+        try {
+            Database.AlgorithmForSwiping(email);
             return true;
-        }
-        catch
-        {
+        } catch {
             return false;
         }
     }
@@ -321,7 +313,7 @@ public class TestDatabase {
     [TestCase("s116400@student.windesheim.nl", ExpectedResult = false)]
     public bool LoadInterestfromdatabase(string email) {
         try {
-            _database.LoadInterestsFromDatabaseInListInteresses(email);
+            Database.LoadInterestsFromDatabaseInListInteresses(email);
             return true;
         } catch {
             return false;
@@ -484,7 +476,7 @@ public class TestDatabase {
     [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
     public bool GetUsersWhoLikedYou(string email) {
         try {
-            var likes = _database.GetUsersWhoLikedYou(email);
+            string[] likes = Database.GetUsersWhoLikedYou(email);
             if (likes != null) {
                 return true;
             }
@@ -529,7 +521,7 @@ public class TestDatabase {
     [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
     public bool AlgAlgorithmForSwipingorithm(string email) {
         try {
-            var users = _database.AlgorithmForSwiping(email);
+            List<string> users = Database.AlgorithmForSwiping(email);
             if (users.Count >= 0 && users != null) {
                 return true;
             }
