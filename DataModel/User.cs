@@ -14,9 +14,9 @@ public class User {
     public string school { get; set; }
     public string major { get; set; }
     public string[] interests { get; set; }
-    
     public int minAge { get; set; }
-    public int maxAge { get; set; }
+    public int maxAge {get; set; }
+
     public User(string firstName, string middleName, string lastName, DateTime birthDay,
         string preference, string email, string password, string gender, byte[] profilePicture, string bio, string school, string major, int minAge, int maxAge) {
         this.firstName = firstName;
@@ -34,6 +34,7 @@ public class User {
         this.minAge = minAge;
         this.minAge = maxAge;
     }
+    
     public User(){}
     
 }

@@ -26,15 +26,15 @@
 
 
                 <Button 
-                    x:Name="chatbutton"
-                Text="Chats"
+                    x:Name="matchesbutton"
+                Text="Matches"
                 VerticalOptions="Start" 
                 HorizontalOptions="Start"
                 WidthRequest="120"
                 FontSize="15"
                 HeightRequest="50"
                 TextColor="Black"
-                    Clicked="ChatButton_Clicked"
+                    Clicked="matchesButton_clicked"
                 
             >
                 </Button>

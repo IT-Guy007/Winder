@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using DataModel;
-using Color = Microsoft.Maui.Graphics.Color;
-using Image = Microsoft.Maui.Controls.Image;
+using Winder;
 
 namespace Winder;
 
@@ -35,11 +34,9 @@ public partial class MatchPage {
                 new ColumnDefinition(),
                 new ColumnDefinition(),
                 new ColumnDefinition()
-                
             }
         };
-        HorizontalStackLayout horizontalLayout = new HorizontalStackLayout()
-        {
+        HorizontalStackLayout horizontalLayout = new HorizontalStackLayout() {
            HorizontalOptions = LayoutOptions.End
         };
         
@@ -167,15 +164,24 @@ public partial class MatchPage {
                 currentImage.Source = ImageSource.FromFile("noprofile.jpg");
 
             }
-            else
-            {
-                MemoryStream ms = new MemoryStream(ScaleImage(Authentication._currentProfile.profile_images[Authentication.selectedImage]));
+            else {
+                try
+                {
+                    MemoryStream ms =
+                        new MemoryStream(
+                            ScaleImage(Authentication._currentProfile.profile_images[Authentication.selectedImage]));
 
-                currentImage.Source = ImageSource.FromStream(() => ms);
+                    currentImage.Source = ImageSource.FromStream(() => ms);
 
-                //Data binding
-                currentImage.SetBinding(ImageButton.SourceProperty, new Binding() { Source = ImageSource.FromStream(() => ms) });
-
+                    //Data binding
+                    currentImage.SetBinding(ImageButton.SourceProperty,
+                        new Binding() { Source = ImageSource.FromStream(() => ms) });
+                }
+                catch(Exception e) {
+                    Console.WriteLine("Error in image convert from stream");
+                    Console.WriteLine(e.ToString());
+                    Console.WriteLine(e.StackTrace);
+                }
             }
             currentImage.WidthRequest = 600;
             currentImage.HeightRequest = 600;
@@ -340,8 +346,7 @@ public partial class MatchPage {
         verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
     }
-    
-    
+
     private void BackButton_Clicked(object sender, EventArgs e)
     {
         switch (OriginPage)
@@ -384,17 +389,14 @@ public partial class MatchPage {
         Navigation.PushAsync(settingsPage);
     }
 
-   
-    
-    
-
-    private Task GetProfiles() {
-        Profile[] profiles = database.Get5Profiles(Authentication._currentUser.email);
-        foreach (var profile in profiles) {
-            Authentication._profileQueue.Enqueue(profile);
-        }
-
-        return Task.CompletedTask;
+    // myprofile button clicked
+    private void MyProfile_Clicked(object sender, EventArgs e)
+    {
+        //declares origin page, in the my profile page
+        ProfileChange myProfile = new ProfileChange();
+        backButtonVisible = true;
+        myProfile.originPage = pageName;
+        Navigation.PushAsync(myProfile);
     }
 
     private async void CheckIfQueueNeedsMoreProfiles() {
@@ -404,10 +406,22 @@ public partial class MatchPage {
         }
     }
 
-    private void NextProfile()
-    {
-        if (Authentication._profileQueue.Count != 0)
-        {
+
+    public void NextProfile() {
+
+        Authentication.CheckIfQueueNeedsMoreProfiles();
+        if (Authentication._profileQueue.Count != 0) {
+            try {
+                Authentication._currentProfile = Authentication._profileQueue.Dequeue();
+
+            } catch (Exception e) {
+                //No profiles found
+                Console.WriteLine("Couldn't find a new profile");
+                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.StackTrace);
+
+            }
+
             Authentication.selectedImage = 0;
             Navigation.PushAsync(new MatchPage());
             
@@ -446,11 +460,11 @@ public partial class MatchPage {
             resized.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
             return stream.ToArray();
         }
-
         return bytes;
 #else
         return bytes;
-#endif  
+#endif
+
     }
 
     readonly int swipes = 0;

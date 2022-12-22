@@ -31,8 +31,19 @@
 
     <PropertyGroup>
       <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+      <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+      <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+      <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+      <GenerateTestArtifacts>True</GenerateTestArtifacts>
+      <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     </PropertyGroup>
 
+<<<<<<< HEAD
+=======
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+      <CreatePackage>false</CreatePackage>
+    </PropertyGroup>
+>>>>>>> origin/US-Chatten
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -65,9 +76,12 @@
       <MauiXaml Update="LoginPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
+<<<<<<< HEAD
       <MauiXaml Update="ChatsViewPage.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
+=======
+>>>>>>> origin/US-Chatten
       <MauiXaml Update="MatchPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
@@ -90,10 +104,13 @@
         <DependentUpon>LoginPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+<<<<<<< HEAD
 
       <Compile Update="ChatsViewPage.xaml.cs">
         <DependentUpon>ChatPage.xaml</DependentUpon>
       </Compile>
+=======
+>>>>>>> origin/US-Chatten
       <Compile Update="StartPage.xaml.cs">
         <DependentUpon>StartPage.xaml</DependentUpon>
       </Compile>
@@ -119,4 +136,22 @@
       <ProjectReference Include="..\DataModel\DataModel.csproj" />
     </ItemGroup>
 
+<<<<<<< HEAD
+=======
+    <ItemGroup>
+      <MauiImage Remove="Resources\Images\dotnet_bot.svg" />
+    </ItemGroup>
+    <ItemGroup>
+      <BundleResource Include="Resources\Images\dotnet_bot.svg" />
+    </ItemGroup>
+
+    <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(Configuration)' == 'Release'">
+        <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
+        <PackageCertificateThumbprint>800B6CE557DFAD391C5859CEADC9ADC4B3BA7940</PackageCertificateThumbprint>
+    </PropertyGroup>
+    <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' and '$(RuntimeIdentifierOverride)' != ''">
+        <RuntimeIdentifier>$(RuntimeIdentifierOverride)</RuntimeIdentifier>
+    </PropertyGroup>
+
+>>>>>>> origin/US-Chatten
 </Project>

@@ -110,7 +110,7 @@ public partial class ProfileChange {
     return bytes;
 #endif
 }
-    
+
 //Gets the preference of user
 private int GetPreferenceFromUser()
     {
@@ -276,6 +276,7 @@ private int GetPreferenceFromUser()
         switch (OriginPage)
         {
             case "matchpage":
+                Authentication.SetCurrentProfile();
                 Navigation.PushAsync(new MatchPage());
                 break;
             case "settingspage":

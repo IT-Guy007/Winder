@@ -1,4 +1,3 @@
-using MAUI;
 using System.Data.SqlClient;
 using DataModel;
 namespace Winder;
@@ -8,32 +7,24 @@ public partial class MainPage : ContentPage {
 
     private bool connectionsucceeded = true;
     private bool displayresult;
-    public MainPage()
-    {
+    public MainPage() {
         InitializeComponent();
         
 
     }
 
-    protected override async void OnAppearing()
-    {
+    protected override async void OnAppearing() {
     
 
 
         // wait for 4 seconds
-        await Task.Delay(3000);
+        //await Task.Delay(3000);
         Console.WriteLine("App started");
         Authentication.Initialize();
         Database.GenerateConnection();
         Database db = new Database();
-        
-        
 
-
-        
-
-        try
-        {
+        try{
 
             Console.WriteLine("Testing database connection");
             Database.OpenConnection();
@@ -86,9 +77,6 @@ public partial class MainPage : ContentPage {
                 await Navigation.PushAsync(new StartPage());
             }
         }
-
-
-
 
     }
 }
