@@ -30,7 +30,7 @@ public partial class ProfileChange {
         ProfilePictures = new byte[6][];
         LoadUserFromDatabaseInForm();
         InterestSelection.ItemsSource = database.GetInterestsFromDataBase();
-        interests = database.LoadInterestsFromDatabaseInListInteresses(Authentication._currentUser.email);
+        interests = Database.LoadInterestsFromDatabaseInListInteresses(Authentication._currentUser.email);
         ListInterests.ItemsSource = interests;
     }
     //Fills the form inputs placeholders with the user data

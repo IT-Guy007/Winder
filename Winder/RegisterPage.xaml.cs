@@ -156,7 +156,7 @@ public partial class RegisterPage {
 
             database.RegistrationFunction(firstname, middleName, lastname, email, preference, dateOfBirth, gender, " ", password, profilePicture, true, school, major);
             database.SaveProfilePictures(email, profilePicture);
-            User currentUser = new User(firstname, middleName, lastname, dateOfBirth, preference, email, password, gender, profilePicture, " ", school, major);
+            User currentUser = new User(firstname, middleName, lastname, dateOfBirth, preference, email, password, gender, profilePicture, " ", school, major,18,23);
             Authentication._currentUser = currentUser;
 
             foreach (string interesse in chosenInterestsList) {
