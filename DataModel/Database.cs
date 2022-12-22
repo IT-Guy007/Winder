@@ -7,11 +7,13 @@ namespace DataModel;
 using System;
 using System.Collections.Generic;
 
-public class Database {
-    private Authentication _authentication = new Authentication();
+public class Database
+{
+    private static Authentication _authentication;
     private static SqlConnection connection;
 
     public static void Initialize() {
+        _authentication = new Authentication();
        GenerateConnection();
     }
     private static void GenerateConnection() {

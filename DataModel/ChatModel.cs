@@ -48,7 +48,7 @@ public class DatabaseChangeListener
 
     //Generate the query
     private static void GenerateQuery() {
-        query = "SELECT [winder].[ChatMessage].[personFrom], [winder].[ChatMessage].[personTo], [winder].[ChatMessage].[sendDate], [winder].[ChatMessage].[chatMessage], [winder].[ChatMessage].[read] " +
+        query = "SELECT [winder].[ChatMessage].[personFrom], [winder].[ChatMessage].[personTo], [winder].[ChatMessage].[sendDate], [winder].[ChatMessage].[chatMessage], [winder].[ChatMessage].[readMessage] " +
                   "FROM [winder].[ChatMessage] " +
                   "WHERE ([winder].[ChatMessage].[personFrom] = '" + fromUser.email + "' AND [winder].[ChatMessage].[personTo] = '" + toUser.email + "') " +
                   "OR ([winder].[ChatMessage].[personFrom] = '" + toUser.email + "' AND [winder].[ChatMessage].[personTo] = '" + fromUser.email + "')";
@@ -106,8 +106,7 @@ public class DatabaseChangeListener
     }
 
     //Transfer data to collection as ChatMessage objects
-    private static void DataTableToObject(DataTable dataTable)
-    {
+    private static void DataTableToObject(DataTable dataTable) {
         Console.WriteLine("Found new info, inserting rows: " + dataTable.Rows.Count);
         foreach (DataRow row in dataTable.Rows)
         {
@@ -115,10 +114,9 @@ public class DatabaseChangeListener
             string toUser = row["personTo"].ToString() ?? "";
             DateTime date = DateTime.Parse(row["sendDate"].ToString() ?? "");
             string message = row["chatMessage"].ToString() ?? "";
-            bool read = row["read"] as bool? ?? false;
-            if (fromUser != "" && toUser != "" && message != "")
-            {
-                _chatCollection.Add(new ChatMessage(fromUser, toUser, date, message, read));
+            int read = int.Parse(row["readMessage"].ToString() ?? "0");
+            if (fromUser != "" && toUser != "" && message != "") {
+                _chatCollection.Add(new ChatMessage(fromUser, toUser, date, message, read != 0));
             }
         }
     }
@@ -128,7 +126,7 @@ public class DatabaseChangeListener
         connection.Open();
         
         //Create query
-        string query = "SELECT [winder].[ChatMessage].[personFrom], [winder].[ChatMessage].[personTo], [winder].[ChatMessage].[sendDate], [winder].[ChatMessage].[chatMessage], [winder].[ChatMessage].[read] " +
+        string query = "SELECT [winder].[ChatMessage].[personFrom], [winder].[ChatMessage].[personTo], [winder].[ChatMessage].[sendDate], [winder].[ChatMessage].[chatMessage], [winder].[ChatMessage].[readMessage] " +
                   "FROM [winder].[ChatMessage] " +
                   "WHERE ([winder].[ChatMessage].[personFrom] = '" + fromUser.email + "' AND [winder].[ChatMessage].[personTo] = '" + toUser.email + "') " +
                   "OR ([winder].[ChatMessage].[personFrom] = '" + toUser.email + "' AND [winder].[ChatMessage].[personTo] = '" + fromUser.email + "') order by sendDate";
