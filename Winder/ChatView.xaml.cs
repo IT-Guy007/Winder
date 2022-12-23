@@ -1,4 +1,5 @@
 using DataModel;
+using Intents;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
@@ -144,16 +145,19 @@ public partial class ChatView {
         };
 
         //Set content
-        Content = grid;
+        verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
+        scrollView.BackgroundColor = Color.FromArgb("#CC415F");
+
         grid.SetRow(backButton, 0);
         grid.Add(backButton);
         grid.SetRow(scrollView, 1);
         grid.Add(scrollView);
-
-        verticalStackLayout.Add(inputStackLayout);
+        grid.SetRow(inputStackLayout, 2);
+        grid.Add(inputStackLayout);
+        
         scrollView.Content = verticalStackLayout;
-        verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
-        scrollView.BackgroundColor = Color.FromArgb("#CC415F");
+        Content = grid;
+        
     }
     
 }
