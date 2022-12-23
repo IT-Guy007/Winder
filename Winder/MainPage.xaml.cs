@@ -25,7 +25,6 @@ public partial class MainPage : ContentPage {
         Database db = new Database();
 
         try{
-
             Console.WriteLine("Testing database connection");
             Database.OpenConnection();
             Console.WriteLine("Successful connection");
@@ -39,7 +38,7 @@ public partial class MainPage : ContentPage {
             connectionsucceeded = false;
             if (displayresult)
             {
-                await Navigation.PushAsync(new MainPage());
+                await Navigation.PushAsync(new StartPage());
             }
             else
             {
