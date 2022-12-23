@@ -145,8 +145,6 @@ public partial class ChatView {
         };
 
         //Set content
-        verticalStackLayout.Add(inputStackLayout);
-
         verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         scrollView.BackgroundColor = Color.FromArgb("#CC415F");
 

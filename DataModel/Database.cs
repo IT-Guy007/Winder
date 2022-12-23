@@ -5,9 +5,8 @@ namespace DataModel;
 using System;
 using System.Collections.Generic;
 
-public class Database
-{
-    private static Authentication _authentication;
+public class Database {
+private static Authentication _authentication;
     private static SqlConnection connection;
 
     public static void Initialize() {
