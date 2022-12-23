@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="FakesAssemblies\**" />
+      <EmbeddedResource Remove="FakesAssemblies\**" />
+      <None Remove="FakesAssemblies\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Microsoft.QualityTools.Testing.Fakes" Version="16.11.230815" />
+      <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalDesignTimeBuildInput Remove="FakesAssemblies\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Maui.Controls">
+        <HintPath>..\..\..\..\..\..\usr\local\share\dotnet\packs\Microsoft.Maui.Controls.Ref.ios\7.0.52\ref\net7.0-ios13.6\Microsoft.Maui.Controls.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.Maui.Essentials">
+        <HintPath>..\..\..\..\..\..\usr\local\share\dotnet\packs\Microsoft.Maui.Essentials.Ref.ios\7.0.52\ref\net7.0-ios13.6\Microsoft.Maui.Essentials.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>
