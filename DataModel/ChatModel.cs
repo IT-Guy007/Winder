@@ -2,8 +2,7 @@ using DataModel;
 using System.Data;
 using System.Data.SqlClient;
 
-public class DatabaseChangeListener
-{
+public class DatabaseChangeListener {
     public static ChatCollection _chatCollection;
     private static User fromUser;
     private static User toUser;
@@ -15,8 +14,7 @@ public class DatabaseChangeListener
     private static SqlCommand sqlCommand;
     private static SqlConnection connection;
 
-    public void Initialize(User _fromUser, User _toUser)
-    {
+    public void Initialize(User _fromUser, User _toUser) {
         fromUser = _fromUser;
         toUser = _toUser;
         _chatCollection = new ChatCollection();

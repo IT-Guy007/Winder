@@ -1044,28 +1044,35 @@ public class Database
 
             var userToAdd = "";
 
-            if (place == result.Count) {
-                //For the liked user place else random user
-                if (likedQueue.Count > 0) {
-                    userToAdd = likedQueue.Dequeue();
+            try {
+                if (place == result.Count) {
+                    //For the liked user place else random user
+                    if (likedQueue.Count > 0) {
+                        userToAdd = likedQueue.Dequeue();
+                    } else {
+                        userToAdd = usersToSwipe.Dequeue();
+                    }
                 } else {
-                    userToAdd = usersToSwipe.Dequeue();
+                    if (usersToSwipe.Count > 0) {
+                        userToAdd = usersToSwipe.Dequeue();
+                    } else {
+                        userToAdd = likedQueue.Dequeue();
+                    }
                 }
-            } else {
-                if(usersToSwipe.Count > 0) {
-                    userToAdd = usersToSwipe.Dequeue();
-                } else {
-                    userToAdd = likedQueue.Dequeue();
+
+                //Check if already exists in current Queue
+                IEnumerable<Profile> alreadyExists = Authentication._profileQueue.Where(i => i.user.email == userToAdd);
+                if (!alreadyExists.Any() && !usersToSwipe.Contains(userToAdd) && !string.IsNullOrEmpty(userToAdd)) {
+                    Console.WriteLine("Adding user");
+                    result.Add(userToAdd);
                 }
             }
-            
-            //Check if already exists in current Queue
-            var alreadyExists = Authentication._profileQueue.Where(i => i.user.email == userToAdd);
-            if (alreadyExists.Count() == 0 && !usersToSwipe.Contains(userToAdd) && !string.IsNullOrEmpty(userToAdd)) {
-                Console.WriteLine("Adding user");
-                result.Add(userToAdd);
+            catch (Exception e) {
+                Console.WriteLine("Error adding user to queue");
+                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.StackTrace);
             }
-            
+
         }
         
         return result;
