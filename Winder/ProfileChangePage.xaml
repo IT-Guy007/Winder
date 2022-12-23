@@ -67,7 +67,7 @@
 
         </Grid>
         <Frame HasShadow="True" BorderColor="Black" WidthRequest="658" BackgroundColor="#d1546f" Margin="0,-80,0,0" HeightRequest="700">
-            <HorizontalStackLayout BackgroundColor="#d1546f" HeightRequest="750" WidthRequest="700">
+            <HorizontalStackLayout BackgroundColor="#d1546f" HeightRequest="450" WidthRequest="700">
                 <VerticalStackLayout Margin="65,0,0,0">
                     <Grid ColumnSpacing="5" RowSpacing="5">
                         <Grid.RowDefinitions>
@@ -408,7 +408,7 @@
                 </VerticalStackLayout>
                 <ImageButton
     x:Name="ChangeProfile"
-    Margin="0,-650,0,0"
+    Margin="0,-400,0,0"
     WidthRequest="50"
     HeightRequest="50"
     Padding="5"

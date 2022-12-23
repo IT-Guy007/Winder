@@ -1027,7 +1027,7 @@ public class Database {
         return profiles;
     }
     //User to get the profiles for the match(run async)
-    public Profile[] Get5Profiles(string email) {
+    public Profile[] GetProfiles(string email) {
         //The algorithm that determines who to get
 
         //The users(email) to get
