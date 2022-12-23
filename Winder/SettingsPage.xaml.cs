@@ -37,11 +37,12 @@ public partial class SettingsPage {
 
     }
     //sets the preference in the database
-    private void SetPreference()
-    {
+    private void SetPreference() {
         string preference = Preference.SelectedItem.ToString();
         if (preference != null) database.InsertPreference(Authentication._currentUser.email, preference);
+        Authentication._profileQueue = new Queue<Profile>();
     }
+    
     //sets the location in the database
     private void SetLocation() {
         string location = Location.SelectedItem.ToString();

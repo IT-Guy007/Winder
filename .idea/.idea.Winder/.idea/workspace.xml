@@ -11,13 +11,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-ios.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-ios.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-maccatalyst.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-maccatalyst.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/ChatView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Winder.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder.csproj" afterDir="false" />
-    </list>
+    <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
