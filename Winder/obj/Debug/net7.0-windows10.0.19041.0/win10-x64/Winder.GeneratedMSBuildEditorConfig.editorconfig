@@ -1,0 +1,101 @@
+is_global = true
+build_property.TargetFramework = net7.0-windows10.0.19041.0
+build_property.TargetPlatformMinVersion = 10.0.17763.0
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Winder
+build_property.ProjectDir = C:\Users\vahen\Documents\GitHub\Winder\Winder\
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/ChatsViewPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.ChatsViewPage.xaml
+build_metadata.AdditionalFiles.TargetPath = ChatsViewPage.xaml
+build_metadata.AdditionalFiles.RelativePath = ChatsViewPage.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/ChatView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.ChatView.xaml
+build_metadata.AdditionalFiles.TargetPath = ChatView.xaml
+build_metadata.AdditionalFiles.RelativePath = ChatView.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/editPasswordPopUp.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.editPasswordPopUp.xaml
+build_metadata.AdditionalFiles.TargetPath = editPasswordPopUp.xaml
+build_metadata.AdditionalFiles.RelativePath = editPasswordPopUp.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/ForgotPasswordPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.ForgotPasswordPage.xaml
+build_metadata.AdditionalFiles.TargetPath = ForgotPasswordPage.xaml
+build_metadata.AdditionalFiles.RelativePath = ForgotPasswordPage.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/LoginPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.LoginPage.xaml
+build_metadata.AdditionalFiles.TargetPath = LoginPage.xaml
+build_metadata.AdditionalFiles.RelativePath = LoginPage.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/MainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.MainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/MatchPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.MatchPage.xaml
+build_metadata.AdditionalFiles.TargetPath = MatchPage.xaml
+build_metadata.AdditionalFiles.RelativePath = MatchPage.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/ProfileChangePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.ProfileChangePage.xaml
+build_metadata.AdditionalFiles.TargetPath = ProfileChangePage.xaml
+build_metadata.AdditionalFiles.RelativePath = ProfileChangePage.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/RegisterPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.RegisterPage.xaml
+build_metadata.AdditionalFiles.TargetPath = RegisterPage.xaml
+build_metadata.AdditionalFiles.RelativePath = RegisterPage.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/SettingsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.SettingsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = SettingsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = SettingsPage.xaml
+
+[C:/Users/vahen/Documents/GitHub/Winder/Winder/StartPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Winder.StartPage.xaml
+build_metadata.AdditionalFiles.TargetPath = StartPage.xaml
+build_metadata.AdditionalFiles.RelativePath = StartPage.xaml
