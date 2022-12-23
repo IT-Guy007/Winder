@@ -1,5 +1,4 @@
 using System.Data.SqlClient;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
 namespace DataModel;
@@ -17,12 +16,12 @@ public class Database
     }
     private static void GenerateConnection() {
 
-        SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-
-        builder.DataSource = "192.168.1.106,1433";
-        builder.UserID = "sa";
-        builder.Password = "Qwerty1@";
-        builder.InitialCatalog = "winder";
+        SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder {
+            DataSource = "192.168.1.106,1433",
+            UserID = "sa",
+            Password = "Qwerty1@",
+            InitialCatalog = "winder"
+        };
 
         connection = new SqlConnection(builder.ConnectionString);
     }
@@ -1040,7 +1039,7 @@ public class Database
         
         
         //Loop though users and check if in currentQueue
-        while(result.Count != 5 && (usersToSwipe.Count > 0 || usersWhoLikedYou.Length > 0)) {
+        while(result.Count != 5 && (usersToSwipe.Count > 0 || likedQueue.Count > 0)) {
 
             var userToAdd = "";
 

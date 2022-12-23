@@ -107,15 +107,17 @@ public partial class MatchPage {
             Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.Center,
             Spacing = 10
         };
+        if (Authentication._profileQueue.Count > 0) {
+            try {
+                Authentication._currentProfile = Authentication._profileQueue.Dequeue();
 
-        try {
-            Authentication._currentProfile = Authentication._profileQueue.Dequeue();
-        }
-        catch (Exception e)
-        {
-            //No profiles found
-            Console.WriteLine("Couldn't find a new profile");
-            Console.WriteLine(e.StackTrace);
+            } catch (Exception e) {
+                //No profiles found
+                Console.WriteLine("Error dequeuing profile: " + e);
+                Console.WriteLine(e.StackTrace);
+            }
+        } else {
+            Authentication._currentProfile = null!;
         }
 
         //Images

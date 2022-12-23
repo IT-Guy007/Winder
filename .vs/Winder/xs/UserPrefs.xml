@@ -1,30 +1,32 @@
 ﻿<Properties StartupConfiguration="{041FB9A6-18D8-4614-8980-D447BBEA2A7C}|Default">
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <Xamarin.Addins.Core.Project ActiveDebugTarget="MyAppleMacCatalystID" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/jeroendenotter/Documents/6. GitHub/Winder/DataModel/Database.cs" relfile="DataModel/Database.cs" line="1094" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="DataModel/ChatModel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Winder/MatchPage.xaml.cs">
     <Files>
-      <File FileName="DataModel/Database.cs" Line="918" Column="40" IsPinned="True" />
-      <File FileName="DataModel/Authentication.cs" />
-      <File FileName="Winder/LoginPage.xaml.cs" />
-      <File FileName="DataModel/ChatModel.cs" Line="125" Column="26" />
+      <File FileName="Winder/MatchPage.xaml.cs" Line="114" Column="13" />
+      <File FileName="DataModel/Database.cs" Line="1094" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Winder" expanded="True">
             <Node name="DataModel" expanded="True" />
-            <Node name="Winder" expanded="True" />
+            <Node name="Winder" expanded="True">
+              <Node name="MatchPage.xaml" expanded="True">
+                <Node name="MatchPage.xaml.cs" selected="True" />
+              </Node>
+            </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.Winder PreferredExecutionTarget="MyAppleMacCatalystID" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/jeroendenotter/Documents/6. GitHub/Winder/Winder/MatchPage.xaml.cs" relfile="Winder/MatchPage.xaml.cs" line="396" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>
