@@ -986,26 +986,34 @@ private static Authentication _authentication;
                        "and birthday >= '" + formattedMax +"' and birthday <= '" + formattedMin + "' " + //In age range
                        "And location = (select location from winder.winder.[User] where email = @email)"; // location check
 
-        //Add interests
-        query = query + "AND email in (select email from winder.winder.UserHasInterest where interest = @interest";
-        for (int i = 1; i < interestsgivenuser.Count; i++) {
-            query = query + " or interest =" + " '" + interestsgivenuser[i] + "' ";
+        
+        
+        if (interestsgivenuser.Count > 0) {
+            //Add interests
+            query = query + "AND email in (select email from winder.winder.UserHasInterest where interest = " + "'" + interestsgivenuser[0] + "' ";
+            for (int i = 1; i < interestsgivenuser.Count; i++) {
+                query = query + " or interest =" + " '" + interestsgivenuser[i] + "' ";
+            }
         }
+        
+        SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@email", email);
+        
         //Random people
         query = query + ") ORDER BY NEWID()";
 
         OpenConnection();
-
-        SqlCommand command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@email", email);
-        if (interestsgivenuser.Count > 0)command.Parameters.AddWithValue("@interest", interestsgivenuser[0]);
-
-
+        
         try {
             SqlDataReader reader = command.ExecuteReader(); // execute het command
-            while (reader.Read()) {
-                string user = reader["email"] as string ?? "";
-                usersToSwipe.Enqueue(user);  
+            if (reader.HasRows) {
+                while (reader.Read())
+                {
+                    string user = reader["email"] as string ?? "";
+                    usersToSwipe.Enqueue(user);
+                }
+            } else {
+                Console.WriteLine("No new profiles found to swipe");
             }
             CloseConnection();
             

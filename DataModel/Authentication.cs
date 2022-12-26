@@ -10,16 +10,12 @@ public class Authentication {
     public static User _currentUser { get; set; }
 
     //Match
-    public static Queue<Profile> _profileQueue = new Queue<Profile>();
+    public static Queue<Profile> _profileQueue;
     public static Profile _currentProfile;
     public static int selectedImage;
-    public static bool isGettingProfiles;
+    private static bool isGettingProfiles;
 
-    // changes condition on scaleimage function
-    public static bool isscaled = false;
-
-    public static void Initialize()
-    {
+    public static void Initialize() {
         _profileQueue = new Queue<Profile>();
         selectedImage = 0;
         _currentUser = new User();
@@ -40,10 +36,8 @@ public class Authentication {
     }
 
     // Hashing the password
-    public string HashPassword(string password)
-    {
-        if (!string.IsNullOrEmpty(password))
-        {
+    public string HashPassword(string password) {
+        if (!string.IsNullOrEmpty(password)) {
             return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
         }
         return null;
@@ -157,8 +151,7 @@ public class Authentication {
         Profile[] profiles = new Profile[usersToRetrief.Count()];
 
         //Retrieving
-        for (int i = 0; i < usersToRetrief.Count(); i++)
-        {
+        for (int i = 0; i < usersToRetrief.Count(); i++) {
 
             //Get the user
             User user = Database.GetUserFromDatabase(usersToRetrief[i]);
