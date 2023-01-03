@@ -12,12 +12,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/9a1e66f6-6669-4fb6-a92a-515bd604be84.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/05c590b4-2e4c-4f64-989e-35f149a69f64.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/44409638-58a8-41f1-bd94-9bf2af45e381.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/905b8418-a096-411e-aa86-e520cedfdc8c.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/b35beec8-d951-431f-b080-1e6c32e19778.vsidx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/85ddde9c-2235-40f9-b3c0-397c4efaeae5.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/018.testlog" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/018.testlog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/MatchedPerson.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/MatchedPerson.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/Profile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Profile.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,9 +86,9 @@
       "sqlserver"
     ],
     "rider.external.source.directories": [
-      "C:\\Users\\Gebruiker\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Gebruiker\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\Gebruiker\\AppData\\Local\\Symbols\\src"
+      "C:\\Users\\misch\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\misch\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\misch\\AppData\\Local\\Symbols\\src"
     ]
   }
 }]]></component>
@@ -164,6 +171,7 @@
       <workItem from="1671804217285" duration="737000" />
       <workItem from="1672071684016" duration="429000" />
       <workItem from="1672747989556" duration="1319000" />
+      <workItem from="1672752101178" duration="919000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>
