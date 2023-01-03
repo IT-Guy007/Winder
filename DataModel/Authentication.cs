@@ -11,7 +11,13 @@ public class Authentication {
     private const string winderEmail = "thewinderapp@gmail.com";
     private const string emailCredential = "xltbqbsyderpqsxp";
     private const string validationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
+    private const string emailEndsWith = "@student.windesheim.nl";
+    private const string emailStartsWith = "s";
+    private const int passwordLength =  8;
+    private const string smtpClientGmail = "smtp.gmail.com";
+    private const int portEmail = 587;
     public static bool isScaled = false;
+
     //Match
     public static Queue<Profile> _profileQueue;
     public static Profile _currentProfile;
@@ -70,7 +76,7 @@ public class Authentication {
     // checks if email belongs to Windesheim, returns true if so
     public bool CheckEmail(string email)
     {
-        if (email.EndsWith("@student.windesheim.nl") && email.StartsWith("s"))
+        if (email.EndsWith(emailEndsWith) && email.StartsWith(emailStartsWith))
         {
             return true;
         }
@@ -79,7 +85,7 @@ public class Authentication {
 
     private bool PasswordLength(string password)
     {
-        return password.Length >= 8;
+        return password.Length >= passwordLength;
     }
 
     private bool PasswordContainsNumber(string password)
@@ -118,9 +124,9 @@ public class Authentication {
     public void SendEmail(string email, string body, string subject)
     {
         //zet de client op
-        SmtpClient smtpClient = new SmtpClient("smtp.gmail.com")
+        SmtpClient smtpClient = new SmtpClient(smtpClientGmail)
         {
-            Port = 587,
+            Port = portEmail,
             UseDefaultCredentials = false,
             Credentials = new NetworkCredential(winderEmail, emailCredential),
             EnableSsl = true,

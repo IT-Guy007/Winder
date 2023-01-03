@@ -12,24 +12,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/1b5a7ed6-d3ca-483d-ab74-475e08c12faa.vsidx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/68bab280-8f8d-42df-b778-517f86495caf.vsidx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/cf5839c1-34a9-4a2b-b853-32f9b141ff8e.vsidx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/f3b5b5d2-1f04-4580-a67b-3a445fbd9a00.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/9a1e66f6-6669-4fb6-a92a-515bd604be84.vsidx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/119f3d91-d89c-4991-a444-0f07e5950e26.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/1d43bd90-5b77-411e-b572-d044c660fbda.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/267b5aa0-d376-4314-beb4-4d222ac6debe.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/3862331b-6afd-4211-82ca-bf1f907b159b.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/8adbdb0c-a9de-452f-a2b5-8b65e3605b5b.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/ae7f33ed-35b7-4451-baf0-928151c39625.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/e4c4062a-4d6a-4f2b-863d-772b83d45d0c.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Authentication.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/MatchedPerson.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/MatchedPerson.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/ChatView.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/ChatView.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/85ddde9c-2235-40f9-b3c0-397c4efaeae5.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +163,7 @@
       <workItem from="1671721717923" duration="3743000" />
       <workItem from="1671804217285" duration="737000" />
       <workItem from="1672071684016" duration="429000" />
-      <workItem from="1672747989556" duration="719000" />
+      <workItem from="1672747989556" duration="1319000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>
