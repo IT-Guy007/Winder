@@ -1,12 +1,16 @@
 using DataModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection.Metadata;
 
 public class DatabaseChangeListener {
     public static ChatCollection _chatCollection;
     private static User fromUser;
     private static User toUser;
-
+    private const string dataSource = "192.168.1.106,1433";
+    private const string userID = "sa";
+    private const string databasePassword = "Qwerty1@";
+    private const string databaseInitial = "winder";
 
     //SQL
     private static string query;
@@ -35,10 +39,10 @@ public class DatabaseChangeListener {
     {
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
-        builder.DataSource = "192.168.1.106,1433";
-        builder.UserID = "sa";
-        builder.Password = "Qwerty1@";
-        builder.InitialCatalog = "winder";
+        builder.DataSource = dataSource;
+        builder.UserID = userID;
+        builder.Password = databasePassword;
+        builder.InitialCatalog = databaseInitial;
 
         connectionString = builder.ConnectionString;
         connection = new SqlConnection(connectionString);
