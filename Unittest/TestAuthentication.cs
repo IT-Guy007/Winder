@@ -51,7 +51,7 @@ public class TestAuthentication {
     [TestCase("2001-01-11", ExpectedResult = 21)]
     [TestCase("1999-11-14", ExpectedResult = 23)]
     public int AuthenticationCalculateAge(DateTime birthDate) {
-        return authentication.CalculateAge(birthDate);
+        return Authentication.CalculateAge(birthDate);
     }
     
     [TestCase("s1165707@student.windesheim.nl", ExpectedResult = false)]

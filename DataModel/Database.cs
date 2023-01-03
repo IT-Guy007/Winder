@@ -1002,11 +1002,9 @@ private static Authentication _authentication;
                        "and gender = (select preference from winder.winder.[User] where email = @email) " + //gender check
                        "and email not in (select winder.winder.Match.person1 from Winder.Winder.Match where person2 = @email) " + //Not matched
                        "and email not in (select winder.winder.Match.person2 from Winder.Winder.Match where person1 = @email) " + //Not matched
-                       "and birthday >= '" + formattedMax +"' and birthday <= '" + formattedMin + "' " + //In age range
+                       "and birthday <= '" + formattedMax + "' and birthday >= '" + formattedMin + "' " + //In age range
                        "And location = (select location from winder.winder.[User] where email = @email)"; // location check
 
-        
-        
         if (interestsGivenUser.Count > 0) {
             //Add interests
             query = query + "AND email in (select email from winder.winder.UserHasInterest where interest = " + "'" + interestsGivenUser[0] + "' ";
@@ -1014,13 +1012,13 @@ private static Authentication _authentication;
                 query = query + " or interest =" + " '" + interestsGivenUser[i] + "' ";
             }
         }
-        
-        SqlCommand command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@email", email);
-        
+
         //Random people
         query = query + ") ORDER BY NEWID()";
 
+        SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@email", email);
+        
         OpenConnection();
         
         try {
