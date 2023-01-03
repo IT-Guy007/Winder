@@ -8,7 +8,10 @@ using System.Text;
 public class Authentication {
 
     public static User _currentUser { get; set; }
-
+    private const string winderEmail = "thewinderapp@gmail.com";
+    private const string emailCredential = "xltbqbsyderpqsxp";
+    private const string validationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
+    public static bool isScaled = false;
     //Match
     public static Queue<Profile> _profileQueue;
     public static Profile _currentProfile;
@@ -93,7 +96,7 @@ public class Authentication {
     //maakt de authenticatiecode aan
     public static string RandomString(int length)
     {
-        const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
+        
         StringBuilder res = new StringBuilder();
         using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
         {
@@ -103,7 +106,7 @@ public class Authentication {
             {
                 rng.GetBytes(uintBuffer);
                 uint num = BitConverter.ToUInt32(uintBuffer, 0);
-                res.Append(valid[(int)(num % (uint)valid.Length)]);
+                res.Append(validationCharacters[(int)(num % (uint)validationCharacters.Length)]);
             }
         }
 
@@ -119,7 +122,7 @@ public class Authentication {
         {
             Port = 587,
             UseDefaultCredentials = false,
-            Credentials = new NetworkCredential("thewinderapp@gmail.com", "xltbqbsyderpqsxp"),
+            Credentials = new NetworkCredential(winderEmail, emailCredential),
             EnableSsl = true,
 
         };
@@ -127,7 +130,7 @@ public class Authentication {
         // maakt de mail aan
         MailMessage mailMessage = new MailMessage
         {
-            From = new MailAddress("thewinderapp@gmail.com"),
+            From = new MailAddress(winderEmail),
             Subject = subject,
             Body = body,
             IsBodyHtml = true,
