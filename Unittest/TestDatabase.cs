@@ -6,29 +6,31 @@ namespace Unittest;
 
 public class TestDatabase {
 
-    
+
     private Authentication _authentication { get; set; }
     private Database _database { get; set; }
     private DateTime today { get; set; }
-    
+    private byte[] testProfile;
+
     [SetUp]
     public void Setup() {
         _authentication = new Authentication();
         _database = new Database();
         today = new DateTime();
-        
+
+
 
     }
 
     [Test]
     public void TestDatabaseConnection() {
-        
+
         try {
             Database.OpenConnection();
             Assert.Pass();
 
             Database.CloseConnection();
-        } catch(SqlException e) {
+        } catch (SqlException e) {
             Assert.Fail(e.Message);
         }
 
@@ -39,20 +41,20 @@ public class TestDatabase {
         Database database = new Database();
         Assert.IsNotEmpty(database.GetEmailFromDataBase());
     }
-    
+
     [TestCase("Jeroen", "1234", ExpectedResult = false)]
     [TestCase("s1165707@student.windesheim.nl", "Qwerty1@", ExpectedResult = true)]
     public bool LoginTest(string email, string password) {
         return _database.CheckLogin(email, password);
 
     }
-    
+
     [TestCase("Test", "", "Account", "male",
-        "01-01-2000", "male", "Ik haat men leven want ik haal netwerken nooit", "Kaolozooi_ik_haal_netwerkenniet01@","",false, "Zwolle", "opleiding",
+        "01-01-2000", "male", "Ik haat men leven want ik haal netwerken nooit", "Kaolozooi_ik_haal_netwerkenniet01@", "", false, "Zwolle", "opleiding",
         ExpectedResult = true)]
 
     public bool RegisterTest(string firstname, string middlename, string lastname,
-        string preference, DateTime birthday, string gender, string bio, string password,string profilePicture, bool active, string locatie, string opleiding)
+        string preference, DateTime birthday, string gender, string bio, string password, string profilePicture, bool active, string locatie, string opleiding)
     {
         Random random = new Random();
         var email1 = random.Next(0, 999999);
@@ -67,9 +69,9 @@ public class TestDatabase {
         }
     }
 
-    [TestCase("s1165707@student.windesheim.nl",false, ExpectedResult = true)]
-    [TestCase("1707@student.windesheim.nl",false, ExpectedResult = false)]
-    [TestCase("s1165707@student.windesheim.nl",true, ExpectedResult = true)]
+    [TestCase("s1165707@student.windesheim.nl", false, ExpectedResult = true)]
+    [TestCase("1707@student.windesheim.nl", false, ExpectedResult = false)]
+    [TestCase("s1165707@student.windesheim.nl", true, ExpectedResult = true)]
     public bool ToggleActivationTest(string email, bool activation) {
         return _database.ToggleActivation(email, activation);
     }
@@ -81,7 +83,7 @@ public class TestDatabase {
     {
         try
         {
-            
+
             _database.DeleteUser(email);
             return true;
 
@@ -93,7 +95,7 @@ public class TestDatabase {
     }
 
     [TestCase("jannieandes@gmail.com", "asdf", ExpectedResult = true)]
-    [TestCase("japiejaap@gmail.com", "asedf",  ExpectedResult = false)]
+    [TestCase("japiejaap@gmail.com", "asedf", ExpectedResult = false)]
     public bool DatabaseUpdatePassword(string email, string password)
     {
         try
@@ -106,10 +108,11 @@ public class TestDatabase {
             return false;
         }
     }
-    [TestCase("Peter", "van", "Huizkes", "Vrouw", "1998/01/01", "Man", "bio info", "s1416890@student.windesheim.nl", ExpectedResult = true)]
+    [TestCase("Peter", "van", "Huizkes", "Vrouw", "1998/01/01", "Man", "bio info", "s1416890@student.windesheim.nl", "ICT", ExpectedResult = true)]
     public bool UpdateUserInDatabaseWithNewUserProfileTest(string firstname, string middlename, string lastname,
-    string preference, DateTime birthday, string gender, string bio, string email)
+    string preference, DateTime birthday, string gender, string bio, string email,string major, byte[] profilePicture)
     {
+        
         User testUser = new User();
         testUser.firstName = firstname;
         testUser.middleName = middlename;
@@ -119,6 +122,8 @@ public class TestDatabase {
         testUser.gender = gender;
         testUser.bio = bio;
         testUser.email = email;
+        testUser.major = major;
+        testUser.profilePicture = profilePicture;
         return _database.UpdateUserInDatabaseWithNewUserData(testUser);
     }
 
@@ -229,8 +234,8 @@ public class TestDatabase {
         }
     }
     
-    [TestCase("s1165707@student.windesheim.nl","Qwerty2@", ExpectedResult = true)]
-    [TestCase("s1165707@student.windesheim.nl","Qwerty1@", ExpectedResult = true)]
+    [TestCase("s1173231@student.windesheim.nl","Qwerty2@", ExpectedResult = true)]
+    [TestCase("s1173231@student.windesheim.nl","Qwerty1@", ExpectedResult = true)]
     public bool UpdatePassword(string email, string password) {
         try {
             _database.UpdatePassword(email, password);
@@ -363,7 +368,7 @@ public class TestDatabase {
         }
     }
     
-    [TestCase("s1165707@student.windesheim.nl",99,ExpectedResult = true)]
+    [TestCase("s1165400@student.windesheim.nl", 99,ExpectedResult = true)]
     [TestCase("s1165400@student.windesheim.nl",100,ExpectedResult = false)]
     public bool SetMaxAge(string email, int age) {
         try {
