@@ -284,7 +284,7 @@ public partial class RegisterPage {
 
         #region geboortedatum checks
 
-        if (auth.CalculateAge(geboortedatumtijdelijk) < 18)
+        if (Authentication.CalculateAge(geboortedatumtijdelijk) < 18)
         {
             FoutLeeftijd.IsVisible = true;
             aantalchecks -= 1;

@@ -238,12 +238,11 @@ public partial class MatchPage {
             //Age
             StackLayout ageStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var birthday = int.Parse(Authentication._currentProfile.user.birthDay.ToString("yyyyMMdd"));
-            var today = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
-            var age = new Label { Text = ((today - birthday) / 1000).ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var birthday = Authentication.CalculateAge(Authentication._currentProfile.user.birthDay);
+            var age = new Label { Text = birthday.ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to Stack
-            var ageBinding = new Binding() { Source = ((today - birthday) / 1000).ToString() };
+            var ageBinding = new Binding() { Source = birthday.ToString() };
             age.SetBinding(Label.TextProperty, ageBinding);
 
 

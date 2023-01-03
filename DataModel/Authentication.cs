@@ -53,7 +53,7 @@ public class Authentication {
     }
 
     // Calculating the age by using date as parameter
-    public int CalculateAge(DateTime birthDate)
+    public static int CalculateAge(DateTime birthDate)
     {
         int age = DateTime.Now.Year - birthDate.Year;
         if (DateTime.Now.DayOfYear < birthDate.DayOfYear) {
