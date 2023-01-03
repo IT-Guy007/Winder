@@ -45,9 +45,9 @@ public class TestAuthentication {
         return authentication.HashPassword(password);
     }
 
-    [TestCase("2000-01-01", ExpectedResult = 22)]
+    [TestCase("2000-01-01", ExpectedResult = 23)]
     [TestCase("2001-11-23", ExpectedResult = 21)]
-    [TestCase("2003-12-10", ExpectedResult = 18)]
+    [TestCase("2003-12-10", ExpectedResult = 19)]
     [TestCase("2001-01-11", ExpectedResult = 21)]
     [TestCase("1999-11-14", ExpectedResult = 23)]
     public int AuthenticationCalculateAge(DateTime birthDate) {
