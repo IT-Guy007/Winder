@@ -173,7 +173,7 @@ public partial class MatchPage {
                 {
                     MemoryStream ms =
                         new MemoryStream(
-                            ScaleImage(Authentication._currentProfile.profile_images[Authentication.selectedImage]));
+                            ScaleImage(Authentication._currentProfile.profileImages[Authentication.selectedImage]));
 
                     currentImage.Source = ImageSource.FromStream(() => ms);
 
@@ -191,7 +191,7 @@ public partial class MatchPage {
             currentImage.HeightRequest = 600;
 
             currentImage.Clicked += (_, _) => {
-                if (Authentication.selectedImage < Authentication._currentProfile.profile_images.Length) {
+                if (Authentication.selectedImage < Authentication._currentProfile.profileImages.Length) {
                     Authentication.selectedImage++;
                 } else {
 
