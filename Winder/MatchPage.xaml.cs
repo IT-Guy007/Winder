@@ -501,7 +501,6 @@ public partial class MatchPage {
         string emaildDislikedUser = Authentication._currentProfile.user.email;
 
         database.NewDislike(emailCurrentUser, emaildDislikedUser);
-
         NextProfile();
     }
 }
