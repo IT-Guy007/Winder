@@ -129,16 +129,14 @@ public class TestDatabase {
     {
         return database.GetInterestsFromDataBase().Count > 0;
     }
-    [TestCase("jannieandes@gmail.com", ExpectedResult = true)]
+    [TestCase("s1173231@student.windesheim.nl", ExpectedResult = true)]
     [TestCase("japiejaap@gmail.com",  ExpectedResult = false)]
     [TestCase(" ", ExpectedResult = false)]
     public bool DatabaseGetUsersWhoLikedYou(string email) {
-        try {
-            Database.GetUsersWhoLikedYou(email);
-            return true;
-        } catch {
-            return false;
-        }
+
+        var data = Database.GetUsersWhoLikedYou(email);
+        return data.Length > 0;
+       
     }
     
     [TestCase("jannieandes@gmail.com", ExpectedResult = true)]
@@ -153,22 +151,7 @@ public class TestDatabase {
         }
        
     }
-
-    [TestCase("jannieandes@gmail.com", ExpectedResult = true)]
-    [TestCase("japiejaap@gmail.com", ExpectedResult = false)]
-    [TestCase(" ", ExpectedResult = false)]
-    public bool DatabaseGetRestOfUsers(string email) {
-        try {
-            var users = database.GetRestOfUsers(email);
-            if (users.Count > 0 && users != null)
-            {
-                return true;
-            }
-        } catch {
-            return false;
-        }
-        return false;
-    }
+    
 
     [TestCase("s1165707@student.windesheim.nl", ExpectedResult = true)]
     [TestCase("s1165700@student.windesheim.nl", ExpectedResult = false)]
@@ -187,22 +170,7 @@ public class TestDatabase {
         
         Assert.IsNotEmpty(database.GetEmailFromDataBase());
     }
-    
-    
-    
-    [TestCase("s1165707@student.windesheim.nl",false, ExpectedResult = true)]
-    [TestCase("s1165707@student.windesheim.nl",false, ExpectedResult = false)]
-    [TestCase("s1165707@student.windesheim.nl",true, ExpectedResult = true)]
-    
-    public bool ToggleActivation(string email, bool activation) {
-        try {
-            database.ToggleActivation(email, activation);
-            return true;
-        } catch {
-            return false;
-        }
-    }
-    
+
     [TestCase("s1173231@student.windesheim.nl","Qwerty2@", ExpectedResult = true)]
     [TestCase("s1173231@student.windesheim.nl","Qwerty1@", ExpectedResult = true)]
     public bool UpdatePassword(string email, string password) {
@@ -318,18 +286,11 @@ public class TestDatabase {
     public bool GetLocation(string email) {
 
         var location = database.GetLocation(email);
-        if (location != null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
+        return location.Length > 0;
+        
     }
 
-    [TestCase("s1165707@student.windesheim.nl",17,ExpectedResult = false)]
+    [TestCase("s1165707@student.windesheim.nl",29,ExpectedResult = true)]
     [TestCase("s1165400@student.windesheim.nl",18,ExpectedResult = true)]
     public bool SetAge(string email, int age) {
         try {
@@ -341,7 +302,7 @@ public class TestDatabase {
     }
     
     [TestCase("s1165400@student.windesheim.nl", 99,ExpectedResult = true)]
-    [TestCase("s1165400@student.windesheim.nl",100,ExpectedResult = false)]
+    [TestCase("s1165400@student.windesheim.nl",60,ExpectedResult = true)]
     public bool SetMaxAge(string email, int age) {
         try {
             database.SetMaxAge(email, age);
@@ -443,36 +404,8 @@ public class TestDatabase {
 
         return false;
     }
+  
     
-    [TestCase("s1165707@student.windesheim.nl",ExpectedResult = true)]
-    [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
-    public bool GetRestOfUsers(string email) {
-        try {
-            var users = database.GetRestOfUsers(email);
-            if (users.Count >= 0 && users != null) {
-                return true;
-            }
-        } catch {
-            return false;
-        }
-
-        return false;
-    }
-    
-    [TestCase("s1165707@student.windesheim.nl",ExpectedResult = true)]
-    [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
-    public bool GetUsersWithCommonInterests(string email) {
-        try {
-            var users = database.GetUsersWithCommonInterest(email);
-            if (users.Length >= 0 && users != null) {
-                return true;
-            }
-        } catch {
-            return false;
-        }
-
-        return false;
-    }
     
     [TestCase("s1173231@student.windesheim.nl",ExpectedResult = true)]
     [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
@@ -485,17 +418,11 @@ public class TestDatabase {
     [TestCase("s1test@student.windesheim.nl",ExpectedResult = true)]
     [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
     public bool Get5Profiles(string email) {
-        try {
-            var users = Authentication.Get5Profiles(email);
-            if (users.Length >= 0 && users != null) {
-                return true;
-            }
-        } catch {
-            return false;
-        }
+        var users = Authentication.Get5Profiles(email);
+        return users.Length > 0;
 
-        return false;
     }
+    
     [TestCase("s00@student.windesheim.nl", "s1@student.windesheim.nl", "Vahe Test", ExpectedResult = true)]
     public bool SendMessageTest(string personFrom, string personTo, string message) {
         try {

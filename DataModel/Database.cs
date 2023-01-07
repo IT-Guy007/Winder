@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 
 public class Database {
-private static Authentication _authentication;
+    private static Authentication _authentication;
     private static SqlConnection connection;
     
     private static string dataSourceConnection = "192.168.1.106,1433";
@@ -621,24 +621,28 @@ private static Authentication _authentication;
     }
 
     public void SetMinAge(string email, int minAge) {
+        
         // open connection
-
         OpenConnection();
 
-        SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET min = @minAge WHERE email = @Email", connection);
-        query.Parameters.AddWithValue("@Email", email);
-        query.Parameters.AddWithValue("@minAge", minAge);
+        if (minAge > 17 && minAge < 101) {
 
-        try {
-            query.ExecuteReader();
-            CloseConnection();
-        } catch (SqlException se) {
-            Console.WriteLine("Error inserting minAge in database");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            CloseConnection();
+
+            SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET min = @minAge WHERE email = @Email",
+                connection);
+            query.Parameters.AddWithValue("@Email", email);
+            query.Parameters.AddWithValue("@minAge", minAge);
+
+            try {
+                query.ExecuteReader();
+                CloseConnection();
+            } catch (SqlException se) {
+                Console.WriteLine("Error inserting minAge in database");
+                Console.WriteLine(se.ToString());
+                Console.WriteLine(se.StackTrace);
+                CloseConnection();
+            }
         }
-
     }
 
     public void SetMaxAge(string email, int maxAge) {
@@ -892,48 +896,6 @@ private static Authentication _authentication;
         return users.ToArray();
     }
 
-    public Queue<string> GetRestOfUsers(string email) {
-        List<string> usersList = new List<string>();
-
-        string[] usersWhoLikedYou = GetUsersWhoLikedYou(email);
-        string[] usersWithCommonInterests = GetUsersWithCommonInterest(email);
-
-        OpenConnection();
-
-        SqlCommand command = new SqlCommand("SELECT TOP 10 email FROM Winder.Winder.[User] WHERE email != @email " +
-        "AND email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + // selects the users which have not disliked the given user
-        "AND email not in (select likedPerson from Winder.Winder.Liked where person = @email) " +               // selects the users that the given user had not disliked or already liked
-        "AND email not in (select person1 from Winder.Winder.Match where person2 = @email) " +                  // selects the users that the given user has not already matched with 
-        "AND email not in (select person2 from Winder.Winder.Match where person1 = @email) ", connection);                                                                                 //Limit to 5
-        command.Parameters.AddWithValue("@email", email);
-
-        try {
-            SqlDataReader reader = command.ExecuteReader(); // execute het command
-
-            while (reader.Read()) {
-                string person = reader["email"] as string ?? "Unknown";
-                usersList.Add(person);   // zet elk persoon in de users 
-            }
-
-        } catch (SqlException se) {
-            Console.WriteLine("Error retrieving rest of users from database");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            CloseConnection();
-        }
-
-        string[] users = usersList.ToArray();
-        users = users.Except(usersWhoLikedYou).ToArray();
-        users = users.Except(usersWithCommonInterests).ToArray();  // makes it so the rest of users does not contain the users that liked you or have common interests because we have different methods for them
-
-        Queue<string> queue = new Queue<string>();                 //make a queue from the users
-        foreach (string user in users) {
-            queue.Enqueue(user);
-        }
-
-        CloseConnection();
-        return queue;
-    }
     public string[] GetUsersWithCommonInterest(string email) {
         List<string> users = new List<string>();
 
