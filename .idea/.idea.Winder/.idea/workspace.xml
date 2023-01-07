@@ -88,7 +88,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="Xamarin.Mac.Winder">
+  <component name="RunManager" selected="UWP.Windows">
     <configuration name="WorkAround" type="RunExe" factoryName=".NET Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64/Winder.app/Contents/MacOS/Winder" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -120,7 +120,7 @@
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64" />
-      <option name="PASS_PARENT_ENVS_MAC" value="1" />
+      <option name="PASS_PARENT_ENVS" value="1" />
       <method v="2">
         <option name="Build" />
       </method>
