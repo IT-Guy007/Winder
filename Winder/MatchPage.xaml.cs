@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using DataModel;
-using Winder;
+﻿using DataModel;
 using Color = Microsoft.Maui.Graphics.Color;
 using Image = Microsoft.Maui.Controls.Image;
 
@@ -173,7 +171,7 @@ public partial class MatchPage {
                 {
                     MemoryStream ms =
                         new MemoryStream(
-                            ScaleImage(Authentication._currentProfile.profile_images[Authentication.selectedImage]));
+                            ScaleImage(Authentication._currentProfile.profileImages[Authentication.selectedImage]));
 
                     currentImage.Source = ImageSource.FromStream(() => ms);
 
@@ -191,7 +189,7 @@ public partial class MatchPage {
             currentImage.HeightRequest = 600;
 
             currentImage.Clicked += (_, _) => {
-                if (Authentication.selectedImage < Authentication._currentProfile.profile_images.Length) {
+                if (Authentication.selectedImage < Authentication._currentProfile.profileImages.Length) {
                     Authentication.selectedImage++;
                 } else {
 
@@ -238,12 +236,11 @@ public partial class MatchPage {
             //Age
             StackLayout ageStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var birthday = int.Parse(Authentication._currentProfile.user.birthDay.ToString("yyyyMMdd"));
-            var today = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
-            var age = new Label { Text = ((today - birthday) / 1000).ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var birthday = Authentication.CalculateAge(Authentication._currentProfile.user.birthDay);
+            var age = new Label { Text = birthday.ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to Stack
-            var ageBinding = new Binding() { Source = ((today - birthday) / 1000).ToString() };
+            var ageBinding = new Binding() { Source = birthday.ToString() };
             age.SetBinding(Label.TextProperty, ageBinding);
 
 
@@ -432,8 +429,8 @@ public partial class MatchPage {
 #if WINDOWS
         
 
-        if (Authentication.isscaled == false) {
-            Authentication.isscaled = true;
+        if (Authentication.isScaled == false) {
+            Authentication.isScaled = true;
             using var memoryStream = new MemoryStream();
             memoryStream.Write(bytes, 0, Convert.ToInt32(bytes.Length));
             memoryStream.Seek(0, SeekOrigin.Begin);

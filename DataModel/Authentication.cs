@@ -8,18 +8,22 @@ using System.Text;
 public class Authentication {
 
     public static User _currentUser { get; set; }
+    private const string winderEmail = "thewinderapp@gmail.com";
+    private const string emailCredential = "xltbqbsyderpqsxp";
+    private const string validationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
+    private const string emailEndsWith = "@student.windesheim.nl";
+    private const string emailStartsWith = "s";
+    private const int passwordLength =  8;
+    private const string smtpClientGmail = "smtp.gmail.com";
+    private const int portEmail = 587;
 
     //Match
-    public static Queue<Profile> _profileQueue = new Queue<Profile>();
+    public static Queue<Profile> _profileQueue;
     public static Profile _currentProfile;
     public static int selectedImage;
-    public static bool isGettingProfiles;
+    private static bool isGettingProfiles;
 
-    // changes condition on scaleimage function
-    public static bool isscaled = false;
-
-    public static void Initialize()
-    {
+    public static void Initialize() {
         _profileQueue = new Queue<Profile>();
         selectedImage = 0;
         _currentUser = new User();
@@ -40,18 +44,17 @@ public class Authentication {
     }
 
     // Hashing the password
-    public string HashPassword(string password)
-    {
-        if (!string.IsNullOrEmpty(password))
-        {
-            return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+    public string HashPassword(string password) {
+        if (!string.IsNullOrEmpty(password)) {
+            String result = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+            Console.WriteLine(result);
+            return result;
         }
-        return null;
+        return "";
     }
 
     // Calculating the age by using date as parameter
-    public int CalculateAge(DateTime birthDate)
-    {
+    public static int CalculateAge(DateTime birthDate) {
         int age = DateTime.Now.Year - birthDate.Year;
         if (DateTime.Now.DayOfYear < birthDate.DayOfYear) {
             age--;
@@ -73,7 +76,7 @@ public class Authentication {
     // checks if email belongs to Windesheim, returns true if so
     public bool CheckEmail(string email)
     {
-        if (email.EndsWith("@student.windesheim.nl") && email.StartsWith("s"))
+        if (email.EndsWith(emailEndsWith) && email.StartsWith(emailStartsWith))
         {
             return true;
         }
@@ -82,7 +85,7 @@ public class Authentication {
 
     private bool PasswordLength(string password)
     {
-        return password.Length >= 8;
+        return password.Length >= passwordLength;
     }
 
     private bool PasswordContainsNumber(string password)
@@ -99,7 +102,7 @@ public class Authentication {
     //maakt de authenticatiecode aan
     public static string RandomString(int length)
     {
-        const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
+        
         StringBuilder res = new StringBuilder();
         using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
         {
@@ -109,7 +112,7 @@ public class Authentication {
             {
                 rng.GetBytes(uintBuffer);
                 uint num = BitConverter.ToUInt32(uintBuffer, 0);
-                res.Append(valid[(int)(num % (uint)valid.Length)]);
+                res.Append(validationCharacters[(int)(num % (uint)validationCharacters.Length)]);
             }
         }
 
@@ -121,11 +124,11 @@ public class Authentication {
     public void SendEmail(string email, string body, string subject)
     {
         //zet de client op
-        SmtpClient smtpClient = new SmtpClient("smtp.gmail.com")
+        SmtpClient smtpClient = new SmtpClient(smtpClientGmail)
         {
-            Port = 587,
+            Port = portEmail,
             UseDefaultCredentials = false,
-            Credentials = new NetworkCredential("thewinderapp@gmail.com", "xltbqbsyderpqsxp"),
+            Credentials = new NetworkCredential(winderEmail, emailCredential),
             EnableSsl = true,
 
         };
@@ -133,7 +136,7 @@ public class Authentication {
         // maakt de mail aan
         MailMessage mailMessage = new MailMessage
         {
-            From = new MailAddress("thewinderapp@gmail.com"),
+            From = new MailAddress(winderEmail),
             Subject = subject,
             Body = body,
             IsBodyHtml = true,
@@ -157,8 +160,7 @@ public class Authentication {
         Profile[] profiles = new Profile[usersToRetrief.Count()];
 
         //Retrieving
-        for (int i = 0; i < usersToRetrief.Count(); i++)
-        {
+        for (int i = 0; i < usersToRetrief.Count(); i++) {
 
             //Get the user
             User user = Database.GetUserFromDatabase(usersToRetrief[i]);
