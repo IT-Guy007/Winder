@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 public class Authentication {
-
+    public static bool isScaled = false;
     public static User _currentUser { get; set; }
     private const string winderEmail = "thewinderapp@gmail.com";
     private const string emailCredential = "xltbqbsyderpqsxp";
