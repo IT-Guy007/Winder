@@ -46,8 +46,11 @@ private static Authentication _authentication;
     public static void OpenConnection() {
         if (connection == null) {
             GenerateConnection();
+            OpenConnection();
+        } else if (connection.State == System.Data.ConnectionState.Closed) {
+            connection.Open();
         }
-        connection.Open();
+
     }
 
     public static void CloseConnection() {
@@ -62,7 +65,6 @@ private static Authentication _authentication;
     public void UpdateLocalUserFromDatabase(string email) {
 
         if (!string.IsNullOrWhiteSpace(email)) {
-
             //Start connection
             OpenConnection();
 
@@ -95,16 +97,10 @@ private static Authentication _authentication;
                         preferences, email, "", gender, profilePicture, bio, school, major,minus,maxus);
                 }
 
-                //Close connection
-                CloseConnection();
-
             } catch (SqlException sql) {
                 Console.WriteLine("Error updating local User from Database");
                 Console.WriteLine(sql.ToString());
                 Console.WriteLine(sql.StackTrace);
-
-                //Close connection
-                CloseConnection();
             }
 
             //Close connection
@@ -249,7 +245,7 @@ private static Authentication _authentication;
     public void DeleteUser(string email) {
         Authentication authentication = new Authentication();
 
-        if (authentication.EmailIsUnique(email) == false) {
+        if (authentication.EmailIsUnique(email)) {
 
 
             OpenConnection(); // connectie opzetten
@@ -982,8 +978,7 @@ private static Authentication _authentication;
 
 
     public static List<string> AlgorithmForSwiping(string email) {
-        Console.WriteLine("Getting users for swiping");
-        
+
         //Get 10 users from the database within the criteria
         Queue<string> usersToSwipe = new Queue<string>();
         

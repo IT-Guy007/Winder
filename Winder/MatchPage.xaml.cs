@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using DataModel;
-using Winder;
+﻿using DataModel;
 using Color = Microsoft.Maui.Graphics.Color;
 using Image = Microsoft.Maui.Controls.Image;
 

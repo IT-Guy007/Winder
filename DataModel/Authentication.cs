@@ -16,7 +16,6 @@ public class Authentication {
     private const int passwordLength =  8;
     private const string smtpClientGmail = "smtp.gmail.com";
     private const int portEmail = 587;
-    public static bool isScaled = false;
 
     //Match
     public static Queue<Profile> _profileQueue;

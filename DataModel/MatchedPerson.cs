@@ -1,8 +1,3 @@
-
-
-
-
-
 using Microsoft.Maui.Controls;
 
 namespace DataModel;
