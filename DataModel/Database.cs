@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Database {
-private static Authentication _authentication;
+    private static Authentication _authentication;
     private static SqlConnection connection;
     
     private static string dataSourceConnection = "192.168.1.106,1433";
@@ -214,8 +214,8 @@ private static Authentication _authentication;
     public void UpdatePassword(string email, string password)
     {
         Authentication authentication = new Authentication();
-        if (authentication.EmailIsUnique(email) == false) // checken of email in de database staat
-        {
+        // checken of email in de database staat
+        if (authentication.EmailIsUnique(email) == false)  {
 
             // connectieopzetten en query maken
 
@@ -624,24 +624,28 @@ private static Authentication _authentication;
     }
 
     public void SetMinAge(string email, int minAge) {
+        
         // open connection
-
         OpenConnection();
 
-        SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET min = @minAge WHERE email = @Email", connection);
-        query.Parameters.AddWithValue("@Email", email);
-        query.Parameters.AddWithValue("@minAge", minAge);
+        if (minAge > 17 && minAge < 101) {
 
-        try {
-            query.ExecuteReader();
-            CloseConnection();
-        } catch (SqlException se) {
-            Console.WriteLine("Error inserting minAge in database");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            CloseConnection();
+
+            SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET min = @minAge WHERE email = @Email",
+                connection);
+            query.Parameters.AddWithValue("@Email", email);
+            query.Parameters.AddWithValue("@minAge", minAge);
+
+            try {
+                query.ExecuteReader();
+                CloseConnection();
+            } catch (SqlException se) {
+                Console.WriteLine("Error inserting minAge in database");
+                Console.WriteLine(se.ToString());
+                Console.WriteLine(se.StackTrace);
+                CloseConnection();
+            }
         }
-
     }
 
     public void SetMaxAge(string email, int maxAge) {
@@ -895,6 +899,7 @@ private static Authentication _authentication;
         return users.ToArray();
     }
 
+
     public Queue<string> GetRestOfUsers(string email) {
         List<string> usersList = new List<string>();
 
@@ -937,8 +942,8 @@ private static Authentication _authentication;
         CloseConnection();
         return queue;
     }
-    public string[] GetUsersWithCommonInterest(string email)
-    {
+    public string[] GetUsersWithCommonInterest(string email){
+
         List<string> users = new List<string>();
 
         List<string> interestsGivenUser = LoadInterestsFromDatabaseInListInteresses(email).ToList();

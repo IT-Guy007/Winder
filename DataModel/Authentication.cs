@@ -47,14 +47,15 @@ public class Authentication {
     // Hashing the password
     public string HashPassword(string password) {
         if (!string.IsNullOrEmpty(password)) {
-            return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+            String result = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+            Console.WriteLine(result);
+            return result;
         }
-        return null;
+        return "";
     }
 
     // Calculating the age by using date as parameter
-    public static int CalculateAge(DateTime birthDate)
-    {
+    public static int CalculateAge(DateTime birthDate) {
         int age = DateTime.Now.Year - birthDate.Year;
         if (DateTime.Now.DayOfYear < birthDate.DayOfYear) {
             age--;
