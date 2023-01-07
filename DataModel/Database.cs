@@ -211,8 +211,8 @@ private static Authentication _authentication;
     public void UpdatePassword(string email, string password)
     {
         Authentication authentication = new Authentication();
-        if (authentication.EmailIsUnique(email) == false) // checken of email in de database staat
-        {
+        // checken of email in de database staat
+        if (authentication.EmailIsUnique(email) == false)  {
 
             // connectieopzetten en query maken
 

@@ -16,6 +16,7 @@ public class TestDatabase {
         authentication = new Authentication();
         database.UpdateLocalUserFromDatabase("s1165707@student.windesheim.nl");
         Authentication.Initialize();
+        Database.Initialize();
     }
 
     [Test]
