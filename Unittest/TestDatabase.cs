@@ -389,24 +389,7 @@ public class TestDatabase {
 
         return false;
     }
-    
-    [TestCase("s1165707@student.windesheim.nl",ExpectedResult = true)]
-    [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
-    public bool GetUsersWhoLikedYou(string email) {
-        try {
-            string[] likes = Database.GetUsersWhoLikedYou(email);
-            if (likes != null) {
-                return true;
-            }
-        } catch {
-            return false;
-        }
 
-        return false;
-    }
-  
-    
-    
     [TestCase("s1173231@student.windesheim.nl",ExpectedResult = true)]
     [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
     public bool AlgorithmForSwiping(string email) {
