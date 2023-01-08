@@ -99,8 +99,9 @@ public class TestDatabase {
         return database.UpdateUserInDatabaseWithNewUserData(testUser);
     }
 
+    
     [TestCase("@student.windesheim.nl", ExpectedResult = false)]
-    [TestCase("s1416890@student.windesheim.nl", ExpectedResult = true)]
+    [TestCase("s1test@student.windesheim.nl", ExpectedResult = true)]
     public bool LoadInterestsFromDatabaseInListInteressesTest(string email)
     {
         return Database.LoadInterestsFromDatabaseInListInteresses(email).Count > 0;
@@ -232,16 +233,7 @@ public class TestDatabase {
         }
     }
     
-    [TestCase("s1165707@student.windesheim.nl", ExpectedResult = true)]
-    [TestCase("s116400@student.windesheim.nl", ExpectedResult = false)]
-    public bool LoadInterestFromDatabase(string email) {
-        try {
-            Database.LoadInterestsFromDatabaseInListInteresses(email);
-            return true;
-        } catch {
-            return false;
-        }
-    }
+  
     
     [TestCase("s1165707@student.windesheim.nl","Female", ExpectedResult = true)]
     [TestCase("s1165707@student.windesheim.nl","Male", ExpectedResult = true)]
