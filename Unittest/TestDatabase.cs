@@ -16,6 +16,8 @@ public class TestDatabase {
     public void Setup() {
         database = new Database();
         authentication = new Authentication();
+        database.UpdateLocalUserFromDatabase(loginEmail);
+
         Authentication.Initialize();
         Database.Initialize();
     }
@@ -393,7 +395,7 @@ public class TestDatabase {
         return false;
     }
 
-    [TestCase("s1173231@student.windesheim.nl",ExpectedResult = true)]
+    [TestCase("s1test@student.windesheim.nl",ExpectedResult = true)]
     [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
     public bool AlgorithmForSwiping(string email) {
         var users = Database.AlgorithmForSwiping(email);
