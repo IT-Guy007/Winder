@@ -108,11 +108,13 @@ public class TestDatabase {
     }
 
     [TestCase("s1178208@student.windesheim.nl", "Lezen", ExpectedResult = true)]
-    [TestCase("s1416890@student.windesheim.nl", "bestaat niet", ExpectedResult = false)]
+    [TestCase("s141689d30@student.windesheim.nl", "bestaat niet", ExpectedResult = false)]
     public bool RemoveInterestOutOfuserHasInterestTableDatabaseTest(string email, string interest) {
         if (database.RemoveInterestOfUser(email, interest)) {
-            database.RegisterInterestInDatabase(email, interest);
-            return true;
+            if (database.RegisterInterestInDatabase(email, interest))
+            {
+                return true;
+            }
         }return false;
     }
 
