@@ -145,8 +145,6 @@ public class Database {
 
             }
         }
-        SetLoginEmail(email);
-
         //Close connection
         CloseConnection();
         UpdateLocalUserFromDatabase(email);
@@ -581,7 +579,6 @@ public class Database {
                 var preference = reader["preference"] as string;
                 CloseConnection();
                 return preference;
-
             }
         } catch (SqlException se) {
             Console.WriteLine("Error inserting preference in database");

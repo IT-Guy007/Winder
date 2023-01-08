@@ -14,7 +14,6 @@ public class TestDatabase {
     public void Setup() {
         database = new Database();
         authentication = new Authentication();
-        database.UpdateLocalUserFromDatabase("s1165707@student.windesheim.nl");
         Authentication.Initialize();
         Database.Initialize();
     }
@@ -39,10 +38,9 @@ public class TestDatabase {
     }
 
     [TestCase("Jeroen", "1234", ExpectedResult = false)]
-    [TestCase("s1165707@student.windesheim.nl", "Qwerty1@", ExpectedResult = true)]
+    [TestCase("s1178208@student.windesheim.nl", "Qwerty1@", ExpectedResult = true)]
     public bool LoginTest(string email, string password) {
         return database.CheckLogin(email, password);
-
     }
 
 
@@ -106,10 +104,13 @@ public class TestDatabase {
         return Database.LoadInterestsFromDatabaseInListInteresses(email).Count > 0;
     }
 
-    [TestCase("s1416890@student.windesheim.nl", "Lezen", ExpectedResult = true)]
+    [TestCase("s1178208@student.windesheim.nl", "Lezen", ExpectedResult = true)]
     [TestCase("s1416890@student.windesheim.nl", "bestaat niet", ExpectedResult = false)]
     public bool RemoveInterestOutOfuserHasInterestTableDatabaseTest(string email, string interest) {
-        return database.RemoveInterestOfUser(email, interest);
+        if (database.RemoveInterestOfUser(email, interest)) {
+            database.RegisterInterestInDatabase(email, interest);
+            return true;
+        }return false;
     }
 
     
@@ -266,12 +267,12 @@ public class TestDatabase {
         }
     }
     
-    [TestCase("s1165707@student.windesheim.nl",ExpectedResult = true)]
-    [TestCase("s1165400@student.windesheim.nl",ExpectedResult = false)]
+    [TestCase("s1234568@student.windesheim.nl", ExpectedResult = true)]
+    [TestCase("Non-existent-user", ExpectedResult = false)]
     public bool GetPreference(string email) {
         try {
             var preferences = database.GetPreference(email);
-            if (preferences != null) {
+            if (preferences != "") {
                 return true;
             }
         } catch {
