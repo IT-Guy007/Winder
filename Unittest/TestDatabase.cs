@@ -1,4 +1,5 @@
 using System.Data.SqlClient;
+using System.Reflection.Metadata.Ecma335;
 using DataModel;
 using NUnit.Framework;
 
@@ -9,12 +10,13 @@ public class TestDatabase {
 
     private Database database;
     private Authentication authentication;
-    
+    private const string loginEmail = "s1165707@student.windesheim.nl";
+
     [SetUp]
     public void Setup() {
         database = new Database();
         authentication = new Authentication();
-        database.UpdateLocalUserFromDatabase("s1165707@student.windesheim.nl");
+        database.UpdateLocalUserFromDatabase(loginEmail);
         Authentication.Initialize();
         Database.Initialize();
     }
@@ -125,18 +127,24 @@ public class TestDatabase {
         database.RemoveInterestOfUser(email, interest);
         return boolean;
     }
+
     [TestCase(ExpectedResult = true)]
     public bool GetInterestsFromDataBaseTest()
     {
         return database.GetInterestsFromDataBase().Count > 0;
     }
+
     [TestCase("s1173231@student.windesheim.nl", ExpectedResult = true)]
     [TestCase("japiejaap@gmail.com",  ExpectedResult = false)]
     [TestCase(" ", ExpectedResult = false)]
     public bool DatabaseGetUsersWhoLikedYou(string email) {
 
-        var data = Database.GetUsersWhoLikedYou(email);
-        return data.Length > 0;
+        var data = Database.GetUsersWhoLikedYou(loginEmail);
+        if (data.Contains(email))
+        {
+            return true;
+        }
+        return false;
        
     }
     
@@ -372,7 +380,7 @@ public class TestDatabase {
     public bool GetPictureFromDatabase(string email) {
         try {
             var picture = Database.GetPicturesFromDatabase(email);
-            if (picture != null) {
+            if (picture[0] != null) { //check of er een foto in de array zit doormiddel van het checken van de eerste optie
                 return true;
             }
         } catch {
