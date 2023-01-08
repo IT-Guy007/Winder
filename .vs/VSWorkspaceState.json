@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\DataModel"
+    "\\DataModel",
+    "\\Unittest"
   ],
+  "SelectedNode": "\\Winder.sln",
   "PreviewInSolutionExplorer": false
 }

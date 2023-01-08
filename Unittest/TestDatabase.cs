@@ -1,4 +1,5 @@
 using System.Data.SqlClient;
+using System.Reflection.Metadata.Ecma335;
 using DataModel;
 using NUnit.Framework;
 
@@ -9,11 +10,16 @@ public class TestDatabase {
 
     private Database database;
     private Authentication authentication;
-    
+    private const string loginEmail = "s1165707@student.windesheim.nl";
+
     [SetUp]
     public void Setup() {
         database = new Database();
         authentication = new Authentication();
+<<<<<<< HEAD
+=======
+        database.UpdateLocalUserFromDatabase(loginEmail);
+>>>>>>> 31cf38ba265120f51eec2080eb2bf8f24643c3a0
         Authentication.Initialize();
         Database.Initialize();
     }
@@ -97,8 +103,9 @@ public class TestDatabase {
         return database.UpdateUserInDatabaseWithNewUserData(testUser);
     }
 
+    
     [TestCase("@student.windesheim.nl", ExpectedResult = false)]
-    [TestCase("s1416890@student.windesheim.nl", ExpectedResult = true)]
+    [TestCase("s1test@student.windesheim.nl", ExpectedResult = true)]
     public bool LoadInterestsFromDatabaseInListInteressesTest(string email)
     {
         return Database.LoadInterestsFromDatabaseInListInteresses(email).Count > 0;
@@ -125,18 +132,24 @@ public class TestDatabase {
         database.RemoveInterestOfUser(email, interest);
         return boolean;
     }
+
     [TestCase(ExpectedResult = true)]
     public bool GetInterestsFromDataBaseTest()
     {
         return database.GetInterestsFromDataBase().Count > 0;
     }
+
     [TestCase("s1173231@student.windesheim.nl", ExpectedResult = true)]
     [TestCase("japiejaap@gmail.com",  ExpectedResult = false)]
     [TestCase(" ", ExpectedResult = false)]
     public bool DatabaseGetUsersWhoLikedYou(string email) {
 
-        var data = Database.GetUsersWhoLikedYou(email);
-        return data.Length > 0;
+        var data = Database.GetUsersWhoLikedYou(loginEmail);
+        if (data.Contains(email))
+        {
+            return true;
+        }
+        return false;
        
     }
     
@@ -233,16 +246,7 @@ public class TestDatabase {
         }
     }
     
-    [TestCase("s1165707@student.windesheim.nl", ExpectedResult = true)]
-    [TestCase("s116400@student.windesheim.nl", ExpectedResult = false)]
-    public bool LoadInterestFromDatabase(string email) {
-        try {
-            Database.LoadInterestsFromDatabaseInListInteresses(email);
-            return true;
-        } catch {
-            return false;
-        }
-    }
+  
     
     [TestCase("s1165707@student.windesheim.nl","Female", ExpectedResult = true)]
     [TestCase("s1165707@student.windesheim.nl","Male", ExpectedResult = true)]
@@ -381,7 +385,7 @@ public class TestDatabase {
     public bool GetPictureFromDatabase(string email) {
         try {
             var picture = Database.GetPicturesFromDatabase(email);
-            if (picture != null) {
+            if (picture[0] != null) { //check of er een foto in de array zit doormiddel van het checken van de eerste optie
                 return true;
             }
         } catch {
