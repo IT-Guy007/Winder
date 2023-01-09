@@ -1,8 +1,7 @@
-using System.Drawing;
-using System.Numerics;
-
-namespace Unit_test;
 using DataModel;
+using NUnit.Framework;
+
+namespace Unittest;
 
 public class TestAuthentication {
 
@@ -46,13 +45,13 @@ public class TestAuthentication {
         return authentication.HashPassword(password);
     }
 
-    [TestCase("2000-01-01", ExpectedResult = 22)]
+    [TestCase("2000-01-01", ExpectedResult = 23)]
     [TestCase("2001-11-23", ExpectedResult = 21)]
-    [TestCase("2003-12-10", ExpectedResult = 18)]
+    [TestCase("2003-12-10", ExpectedResult = 19)]
     [TestCase("2001-01-11", ExpectedResult = 21)]
     [TestCase("1999-11-14", ExpectedResult = 23)]
     public int AuthenticationCalculateAge(DateTime birthDate) {
-        return authentication.CalculateAge(birthDate);
+        return Authentication.CalculateAge(birthDate);
     }
     
     [TestCase("s1165707@student.windesheim.nl", ExpectedResult = false)]
@@ -60,10 +59,7 @@ public class TestAuthentication {
     public bool AuthenticationEmailIsUnique(string email) {
         return authentication.EmailIsUnique(email);
     }
-
-
-
-
+    
     [TestCase(4, ExpectedResult = "4")]
     [TestCase(0, ExpectedResult = "0")]
     [TestCase(9, ExpectedResult = "9")]
@@ -73,24 +69,17 @@ public class TestAuthentication {
 
     }
 
-
     [TestCase("1174004@student.widnesheim.nl", "hoi", "hoi", ExpectedResult = true)]
     [TestCase("1174004@student.widnesheim.nl", "hoi", "", ExpectedResult = true)]
     [TestCase("1174004@student.widnesheim.nl", "", "hoi", ExpectedResult = true)]
     [TestCase("", "hoi", "hoi", ExpectedResult = false)]
     [TestCase("1174004", "hoi", "hoi", ExpectedResult = false)]
-    public bool AuthenticationSendEmail(string email, string subject, string body)
-    {
-
-        try
-        {
+    public bool AuthenticationSendEmail(string email, string subject, string body) {
+        try {
             authentication.SendEmail(email, subject, body);
             return true;
-        }
-        catch
-        {
+        } catch {
             return false;
         }
-        
     }
 }

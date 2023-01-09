@@ -5,57 +5,31 @@ namespace DataModel;
 using System.Security.Cryptography;
 using System.Text;
 
-public class Authentication
-{
-
+public class Authentication {
+    public static bool isScaled = false;
     public static User _currentUser { get; set; }
-    private LoggedState _loggedState { get; set; }
-    private AccountState _accountState { get; set; }
-
-    public Authentication()
-    {
-        _loggedState = LoggedState.signedOut;
-        _accountState = AccountState.inactive;
-    }
+    private const string winderEmail = "thewinderapp@gmail.com";
+    private const string emailCredential = "xltbqbsyderpqsxp";
+    private const string validationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
+    private const string emailEndsWith = "@student.windesheim.nl";
+    private const string emailStartsWith = "s";
+    private const int passwordLength =  8;
+    private const string smtpClientGmail = "smtp.gmail.com";
+    private const int portEmail = 587;
 
     //Match
-    public static Queue<Profile> _profileQueue = new Queue<Profile>();
+    public static Queue<Profile> _profileQueue;
     public static Profile _currentProfile;
-    public static int selectedImage = 0;
+    public static int selectedImage;
+    private static bool isGettingProfiles;
 
-    //Defining state
-    enum LoggedState
-    {
-        signedIn,
-        signedOut,
+    public static void Initialize() {
+        _profileQueue = new Queue<Profile>();
+        selectedImage = 0;
+        _currentUser = new User();
+        
     }
 
-    enum AccountState
-    {
-        active,
-        inactive,
-    }
-
-    public void UpdateUserSetting(bool activation, bool signedIN)
-    {
-        if (activation)
-        {
-            this._accountState = AccountState.active;
-        }
-        else
-        {
-            this._accountState = AccountState.inactive;
-        }
-
-        if (signedIN)
-        {
-            this._loggedState = LoggedState.signedIn;
-        }
-        else
-        {
-            this._loggedState = LoggedState.signedOut;
-        }
-    }
 
     // checking if email is already in database, returns true if unique
     public bool EmailIsUnique(string email)
@@ -70,23 +44,22 @@ public class Authentication
     }
 
     // Hashing the password
-    public string HashPassword(string password)
-    {
-        if (!string.IsNullOrEmpty(password))
-        {
-            return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+    public string HashPassword(string password) {
+        if (!string.IsNullOrEmpty(password)) {
+            String result = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+            Console.WriteLine(result);
+            return result;
         }
-        return null;
+        return "";
     }
 
     // Calculating the age by using date as parameter
-    public int CalculateAge(DateTime birthDate)
-    {
+    public static int CalculateAge(DateTime birthDate) {
         int age = DateTime.Now.Year - birthDate.Year;
-        if (DateTime.Now.DayOfYear < birthDate.DayOfYear)
-        {
+        if (DateTime.Now.DayOfYear < birthDate.DayOfYear) {
             age--;
         }
+
         return age;
     }
 
@@ -103,7 +76,7 @@ public class Authentication
     // checks if email belongs to Windesheim, returns true if so
     public bool CheckEmail(string email)
     {
-        if (email.EndsWith("@student.windesheim.nl") && email.StartsWith("s"))
+        if (email.EndsWith(emailEndsWith) && email.StartsWith(emailStartsWith))
         {
             return true;
         }
@@ -112,7 +85,7 @@ public class Authentication
 
     private bool PasswordLength(string password)
     {
-        return password.Length >= 8;
+        return password.Length >= passwordLength;
     }
 
     private bool PasswordContainsNumber(string password)
@@ -129,7 +102,7 @@ public class Authentication
     //maakt de authenticatiecode aan
     public static string RandomString(int length)
     {
-        const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
+        
         StringBuilder res = new StringBuilder();
         using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
         {
@@ -139,7 +112,7 @@ public class Authentication
             {
                 rng.GetBytes(uintBuffer);
                 uint num = BitConverter.ToUInt32(uintBuffer, 0);
-                res.Append(valid[(int)(num % (uint)valid.Length)]);
+                res.Append(validationCharacters[(int)(num % (uint)validationCharacters.Length)]);
             }
         }
 
@@ -151,11 +124,11 @@ public class Authentication
     public void SendEmail(string email, string body, string subject)
     {
         //zet de client op
-        SmtpClient smtpClient = new SmtpClient("smtp.gmail.com")
+        SmtpClient smtpClient = new SmtpClient(smtpClientGmail)
         {
-            Port = 587,
+            Port = portEmail,
             UseDefaultCredentials = false,
-            Credentials = new NetworkCredential("thewinderapp@gmail.com", "xltbqbsyderpqsxp"),
+            Credentials = new NetworkCredential(winderEmail, emailCredential),
             EnableSsl = true,
 
         };
@@ -163,7 +136,7 @@ public class Authentication
         // maakt de mail aan
         MailMessage mailMessage = new MailMessage
         {
-            From = new MailAddress("thewinderapp@gmail.com"),
+            From = new MailAddress(winderEmail),
             Subject = subject,
             Body = body,
             IsBodyHtml = true,
@@ -173,7 +146,61 @@ public class Authentication
         // verstuurd de mail
         smtpClient.Send(mailMessage);
     }
-    // changes condition on scaleimage function
-    public static bool isscaled = false;
+
+    //User to get the profiles for the match(run async)
+    public static Profile[] Get5Profiles(string email) {
+        
+
+        //The users(email) to get
+        List<string> usersToRetrief = new List<string>();
+
+        usersToRetrief = Database.AlgorithmForSwiping(email);
+
+        //Results
+        Profile[] profiles = new Profile[usersToRetrief.Count()];
+
+        //Retrieving
+        for (int i = 0; i < usersToRetrief.Count(); i++) {
+
+            //Get the user
+            User user = Database.GetUserFromDatabase(usersToRetrief[i]);
+
+            //Get the interests of the user
+            user.interests = Database.LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]).ToArray();
+
+            //Get the images of the user
+            byte[][] images = Database.GetPicturesFromDatabase(usersToRetrief[i]);
+            var profile = new Profile(user, images);
+
+            profiles[i] = profile;
+        }
+
+        return profiles;
+    }
+
+    public static async Task GetProfiles() {
+        Profile[] profiles = Get5Profiles(_currentUser.email);
+        foreach (var profile in profiles) {
+
+            if (profile != null) {
+                _profileQueue.Enqueue(profile);
+            }
+        }
+    }
+
+    public static async void CheckIfQueueNeedsMoreProfiles() {
+        if (_profileQueue.Count < 5 && !isGettingProfiles) {
+            isGettingProfiles = true;
+            await GetProfiles();
+            isGettingProfiles = false;
+
+        }
+    }
     
+    public static void SetCurrentProfile() {
+        CheckIfQueueNeedsMoreProfiles();
+        if (_profileQueue.Count > 0) {
+            _currentProfile = _profileQueue.Dequeue();
+        }
+    }
 }

@@ -3,13 +3,13 @@ namespace DataModel;
 public class Profile
 {
     public User user { get; set; }
-    public byte[][] profile_images { get; set; }
+    public byte[][] profileImages { get; set; }
     
     
-    public Profile(User user, byte[][] profile_images)
+    public Profile(User user, byte[][] profileImages)
     {
         this.user = user;
-        this.profile_images = profile_images;
+        this.profileImages = profileImages;
     }
     
 }

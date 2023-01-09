@@ -1,19 +1,31 @@
 ﻿<Properties StartupConfiguration="{041FB9A6-18D8-4614-8980-D447BBEA2A7C}|Default">
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/jeroendenotter/Documents/6. GitHub/Winder/DataModel/Database.cs" relfile="DataModel/Database.cs" line="966" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <Xamarin.Addins.Core.Project ActiveDebugTarget="MyAppleMacCatalystID" />
+  <MonoDevelop.Ide.ItemProperties.Winder PreferredExecutionTarget="MyAppleMacCatalystID" />
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="DataModel/Database.cs">
+    <Files>
+      <File FileName="DataModel/Database.cs" Line="1080" Column="14" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Winder" expanded="True" />
+          <Node name="Winder" expanded="True">
+            <Node name="DataModel" expanded="True">
+              <Node name="Database.cs" selected="True" />
+            </Node>
+            <Node name="Winder" expanded="True">
+              <Node name="MatchPage.xaml" expanded="True" />
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.Winder PreferredExecutionTarget="MyAppleMacCatalystID" />
-  <MultiItemStartupConfigurations />
+  <Xamarin.Addins.Core.Project ActiveDebugTarget="MyAppleMacCatalystID" />
 </Properties>

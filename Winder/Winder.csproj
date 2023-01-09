@@ -31,8 +31,16 @@
 
     <PropertyGroup>
       <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+      <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+      <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+      <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+      <GenerateTestArtifacts>True</GenerateTestArtifacts>
+      <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+      <CreatePackage>false</CreatePackage>
+    </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -42,9 +50,6 @@
 
         <!-- Images -->
         <MauiImage Include="Resources\Images\*" />
-        <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
-
-        <!-- Custom Fonts -->
         <MauiFont Include="Resources\Fonts\*" />
 
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
@@ -52,7 +57,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommunityToolkit.Maui" Version="3.0.0" />
+        <PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
         <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     </ItemGroup>
@@ -71,19 +76,13 @@
       <MauiXaml Update="MatchPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="VideoTemplate.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </MauiXaml>
       <MauiXaml Update="ProfileChangePage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
       <MauiXaml Update="RegisterPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="ForgotPassword.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
-      <MauiXaml Update="ChatPage.xaml">
+      <MauiXaml Update="ForgotPasswordPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
     </ItemGroup>
@@ -96,7 +95,6 @@
         <DependentUpon>LoginPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-
       <Compile Update="ChatPage.xaml.cs">
         <DependentUpon>ChatPage.xaml</DependentUpon>
       </Compile>
@@ -107,9 +105,6 @@
         <DependentUpon>MatchPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="VideoTemplate.xaml.cs">
-        <DependentUpon>VideoTemplate.xaml</DependentUpon>
-      </Compile>
       <Compile Update="ProfileChangePage.xaml.cs">
         <DependentUpon>ProfileChangePage.xaml</DependentUpon>
         <SubType>Code</SubType>
@@ -118,12 +113,8 @@
         <DependentUpon>RegisterPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="ForgotPassword.xaml.cs">
+      <Compile Update="ForgotPasswordPage.xaml.cs">
         <DependentUpon>ForgotPassword.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="ChatPage.xaml.cs">
-        <DependentUpon>Chat.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
@@ -132,4 +123,10 @@
       <ProjectReference Include="..\DataModel\DataModel.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <MauiImage Remove="Resources\Images\dotnet_bot.svg" />
+    </ItemGroup>
+    <ItemGroup>
+      <BundleResource Include="Resources\Images\dotnet_bot.svg" />
+    </ItemGroup>
 </Project>
