@@ -224,9 +224,9 @@ public class TestDatabase {
         }
     }
     
-    [TestCase("s1165707@student.windesheim.nl","Bier drinken", ExpectedResult = true)]
-    [TestCase("s1165707@student.windesheim.nl","Duikenn", ExpectedResult = false)]
-    public bool RegisterInterestInDatabase(string email, string interest) {
+    [TestCase("s1178208@student.windesheim.nl","Bier drinken", ExpectedResult = true)]
+    [TestCase("s1178208@student.windesheim.nl", "Duikenn", ExpectedResult = false)]
+    public bool RegisterInterestInDatabaseTest(string email, string interest) {
         try {
             database.RegisterInterestInDatabase(email, interest);
             return true;
