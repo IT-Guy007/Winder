@@ -148,8 +148,6 @@ public class Database {
 
             }
         }
-        SetLoginEmail(email);
-
         //Close connection
         CloseConnection();
         UpdateLocalUserFromDatabase(email);
