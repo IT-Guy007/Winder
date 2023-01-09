@@ -4,7 +4,9 @@
              x:Class="MAUI.StartPage" 
              Shell.NavBarIsVisible="False"
              BackgroundColor="#CC415F">
-    
+    <Shell.BackButtonBehavior  >
+        <BackButtonBehavior IsEnabled="False" IsVisible="False"></BackButtonBehavior>
+    </Shell.BackButtonBehavior>
     <VerticalStackLayout VerticalOptions="Center"  >
             
         <Image 
