@@ -16,8 +16,6 @@ public class TestDatabase {
     public void Setup() {
         database = new Database();
         authentication = new Authentication();
-        database.UpdateLocalUserFromDatabase(loginEmail);
-
         Authentication.Initialize();
         Database.Initialize();
     }
