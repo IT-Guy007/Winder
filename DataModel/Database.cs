@@ -1060,8 +1060,7 @@ public class Database {
         await SecureStorage.SetAsync("email", email);
     }
 
-    public List<User> GetMatchedStudentsFromUser(string email)
-    {
+    public List<User> GetMatchedStudentsFromUser(string email) {
         List<User> users = new List<User>();
         List<string> emails = new List<string>();
         try
@@ -1142,42 +1141,34 @@ public class Database {
         }
     }
 
-    public static bool SetRead(string personFrom, string personTo){
+    public static void SetRead(string personFrom, string personTo){
         try {
             OpenConnection();
             SqlCommand query = new SqlCommand("UPDATE winder.winder.[ChatMessage] SET [readMessage] = 1 WHERE personTo = '" + personFrom + "' AND personFrom = '" + personTo + "'", connection);
             query.ExecuteNonQuery();
             CloseConnection();
-            return true;
-        }
-        catch (SqlException se) {
+        } catch (SqlException se) {
             Console.WriteLine("Error updating read message");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
             CloseConnection();
-            return false;
         }
 
     }
     
-    public bool DeleteAllPhotosFromDatabase(User currentUser) {
-        try
-        {
+    public void DeleteAllPhotosFromDatabase(User currentUser) {
+        try {
             OpenConnection();
             string query = "delete from winder.winder.Photos WHERE [user] = @Email";
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@Email", currentUser.email);
             command.ExecuteNonQuery();
             CloseConnection();
-            return true;
-        }
-        catch (SqlException se)
-        {
+        } catch (SqlException se) {
             Console.WriteLine("Error deleting pictures from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
             CloseConnection();
-            return false;
         }
     }
 
