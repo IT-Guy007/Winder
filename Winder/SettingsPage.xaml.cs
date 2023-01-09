@@ -208,24 +208,5 @@ public partial class SettingsPage {
         Navigation.PushAsync(page);
 
     }
-    private void AgeAlgorithm(object sender, EventArgs e)
-    {
-        CheckBox checkBox = (CheckBox)sender;
-        bool isChecked = checkBox.IsChecked;
-        // Perform some action based on the value of isChecked
-    }
-    private void PreferenceAlgorithm(object sender, EventArgs e)
-    {
-        CheckBox checkBox = (CheckBox)sender;
-        bool isChecked = checkBox.IsChecked;
-        
-        // Perform some action based on the value of isChecked
-    }
-
-    private void InterestsAlgorithm(object sender, EventArgs e)
-    {
-        CheckBox checkBox = (CheckBox)sender;
-        bool isChecked = checkBox.IsChecked;
-        // Perform some action based on the value of isChecked
-    }
+   
 }
