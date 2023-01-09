@@ -11,16 +11,28 @@ public partial class ChatView {
     private DatabaseChangeListener databaseChangeListener;
 
     //MAUI
-    private readonly ScrollView scrollView;
-    private readonly StackLayout verticalStackLayout;
-    private readonly Grid grid;
+    private ScrollView scrollView;
+    private StackLayout verticalStackLayout;
+    private Grid grid;
+
+    private readonly User sendFromUser;
+    private readonly User sendToUser;
 
     public ChatView(User sendFromUser, User sendToUser) {
+        this.sendFromUser = sendFromUser;
+        this.sendToUser = sendToUser;
 
         Database.SetRead(sendFromUser.email, sendToUser.email);
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
+        
+        //Set content
+        Initialize();
 
+    }
+
+    private void Initialize() {
         //MAUI
+        Title = "Chat with your match now!";
         scrollView = new ScrollView { 
             Orientation = ScrollOrientation.Vertical, 
             VerticalOptions = LayoutOptions.Fill,
@@ -49,11 +61,42 @@ public partial class ChatView {
         };
         
         
-        Title = "Chat with your match now!";
-        
         //Initialise content
         databaseChangeListener = new DatabaseChangeListener();
         databaseChangeListener.Initialize(sendFromUser, sendToUser);
+        
+        //First row
+        HorizontalStackLayout horizontalStackLayout = new HorizontalStackLayout {
+            HorizontalOptions = LayoutOptions.FillAndExpand,
+            VerticalOptions = LayoutOptions.Fill,
+            BackgroundColor = Color.FromArgb("#CC415F"),
+        };
+
+
+        ImageButton backButton = new ImageButton {
+            Source = "backbutton.png",
+            HorizontalOptions = LayoutOptions.Start,
+            VerticalOptions = LayoutOptions.Start,
+            WidthRequest = 50,
+            HeightRequest = 50
+        };
+        backButton.Clicked += (_,_) => {
+            Navigation.PushAsync(new ChatsViewPage());
+        };
+        
+        horizontalStackLayout.Add(backButton);
+        
+        ImageButton refreshButton = new ImageButton {
+            Source = "refresh.png",
+            HorizontalOptions = LayoutOptions.End,
+            VerticalOptions = LayoutOptions.Start,
+            WidthRequest = 50,
+            HeightRequest = 50
+        };
+        refreshButton.Clicked += (_,_) => {
+            Initialize();
+        };
+        horizontalStackLayout.Add(refreshButton);
 
         //All the chatmessages
         if (DatabaseChangeListener._chatCollection.Count == 0) {
@@ -126,30 +169,19 @@ public partial class ChatView {
             if (!string.IsNullOrWhiteSpace(chatInput.Text)) {
                 chatInput.Text = char.ToUpper(chatInput.Text[0]) + chatInput.Text.Substring(1);
                 Database.SendMessage(sendFromUser.email, sendToUser.email, chatInput.Text);
-                Navigation.PushAsync(new ChatView(sendFromUser, sendToUser));
+                Initialize();
             }
         };
 
         inputStackLayout.Add(chatInput);
         inputStackLayout.Add(sendButton);
-        
-        ImageButton backButton = new ImageButton {
-            Source = "backbutton.png",
-            HorizontalOptions = LayoutOptions.Start,
-            VerticalOptions = LayoutOptions.Start,
-            WidthRequest = 50,
-            HeightRequest = 50
-        };
-        backButton.Clicked += (_,_) => {
-            Navigation.PushAsync(new ChatsViewPage());
-        };
 
         //Set content
         verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         scrollView.BackgroundColor = Color.FromArgb("#CC415F");
 
-        grid.SetRow(backButton, 0);
-        grid.Add(backButton);
+        grid.SetRow(horizontalStackLayout, 0);
+        grid.Add(horizontalStackLayout);
         grid.SetRow(scrollView, 1);
         grid.Add(scrollView);
         grid.SetRow(inputStackLayout, 2);

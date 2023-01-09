@@ -14,24 +14,45 @@ public partial class MatchPage {
     private const string BackbuttonImage = "backbutton.png";
     public bool BackButtonVisible;
 
+    private StackLayout verticalStackLayout;
+
     public MatchPage() {
+        database = new Database();
         
-        this.database = new Database();
         //Get profiles to swipe
         CheckIfQueueNeedsMoreProfiles();
+
+        //Set first profile
+        if (Authentication._profileQueue.Count > 0) {
+            try {
+                Authentication._currentProfile = Authentication._profileQueue.Dequeue();
+
+            } catch (Exception e) {
+                
+                //No profiles found
+                Console.WriteLine("Error dequeuing profile: " + e);
+                Console.WriteLine(e.StackTrace);
+            }
+        } else {
+            Authentication._currentProfile = null!;
+        }
+        
+        //Set content
+        Initialize();
+    }
+
+    private void Initialize() {
 
         Title = "Make your match now!";
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         
 
-
-        StackLayout verticalStackLayout = new StackLayout {
+        verticalStackLayout = new StackLayout {
             Orientation = StackOrientation.Vertical, VerticalOptions = LayoutOptions.Fill,
             Spacing = 10
         };
         Grid gridLayout = new Grid() {
-            ColumnDefinitions =
-            {
+            ColumnDefinitions = {
                 new ColumnDefinition(),
                 new ColumnDefinition(),
                 new ColumnDefinition()
@@ -106,25 +127,12 @@ public partial class MatchPage {
             Orientation = StackOrientation.Horizontal, HorizontalOptions = LayoutOptions.Center,
             Spacing = 10
         };
-        if (Authentication._profileQueue.Count > 0) {
-            try {
-                Authentication._currentProfile = Authentication._profileQueue.Dequeue();
-
-            } catch (Exception e) {
-                //No profiles found
-                Console.WriteLine("Error dequeuing profile: " + e);
-                Console.WriteLine(e.StackTrace);
-            }
-        } else {
-            Authentication._currentProfile = null!;
-        }
 
         //Images
         if (Authentication._currentProfile == null) {
             if (Authentication._currentUser.profilePicture.Length > 1000) {
 
                 MemoryStream ms = new MemoryStream(Authentication._currentUser.profilePicture);
-
 
                 var profileImage = new Image {
                     Source = ImageSource.FromStream(() => ms),
@@ -135,9 +143,7 @@ public partial class MatchPage {
                 };
                 verticalStackLayout.Add(profileImage);
 
-            }
-            else
-            {
+            } else {
 
                 var profileImage = new Image {
                     Source = "noprofile.jpg",
@@ -153,34 +159,25 @@ public partial class MatchPage {
             verticalStackLayout.Add(label);
 
         }
-        else
-        {
+        else {
             StackLayout infoStackLayout = new StackLayout { Orientation = StackOrientation.Vertical };
 
 
             //Image carousel
             var currentImage = new ImageButton();
-
-
-            if (Authentication._currentProfile == null)
-            {
+            
+            if (Authentication._currentProfile == null) {
                 currentImage.Source = ImageSource.FromFile("noprofile.jpg");
 
-            }
-            else {
-                try
-                {
+            } else {
+                try {
                     MemoryStream ms =
                         new MemoryStream(
                             ScaleImage(Authentication._currentProfile.profileImages[Authentication.selectedImage]));
 
                     currentImage.Source = ImageSource.FromStream(() => ms);
-
-                    //Data binding
-                    currentImage.SetBinding(ImageButton.SourceProperty,
-                        new Binding() { Source = ImageSource.FromStream(() => ms) });
-                }
-                catch(Exception e) {
+                    
+                } catch(Exception e) {
                     Console.WriteLine("Error in image convert from stream");
                     Console.WriteLine(e.ToString());
                     Console.WriteLine(e.StackTrace);
@@ -190,28 +187,22 @@ public partial class MatchPage {
             currentImage.HeightRequest = 600;
 
             currentImage.Clicked += (_, _) => {
-                if (Authentication.selectedImage < Authentication._currentProfile.profileImages.Length) {
+                if (Authentication.selectedImage < Authentication._currentProfile.profileImages.Count(x => x != null) - 1) {
                     Authentication.selectedImage++;
+                    Initialize();
                 } else {
-
                     Authentication.selectedImage = 0;
+                    Initialize();
                 }
             };
 
             imageLayout.Add(currentImage);
 
-
             //Name
             StackLayout nameStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-            var namelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-
             
-            //Binding
+            var namelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             var name = new Label { Text = Authentication._currentProfile.user.firstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            name.SetBinding(Label.TextProperty, new Binding() { Source = Authentication._currentProfile.user.firstName });
-
-            name.FontSize = 20;
-            name.HorizontalOptions = LayoutOptions.Start;
 
             //Add to stack
             nameStackLayout.Add(namelbl);
@@ -221,12 +212,9 @@ public partial class MatchPage {
 
             //Gender
             StackLayout genderStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            
             var genderlbl = new Label { Text = "Geslacht: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             var gender = new Label { Text = Authentication._currentProfile.user.gender, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-
-            //Data binding
-            var genderBinding = new Binding() { Source = Authentication._currentProfile.user.gender };
-            gender.SetBinding(Label.TextProperty, genderBinding);
 
             //Add to Stack
             genderStackLayout.Add(genderlbl);
@@ -236,14 +224,10 @@ public partial class MatchPage {
 
             //Age
             StackLayout ageStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            
             var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             var birthday = Authentication.CalculateAge(Authentication._currentProfile.user.birthDay);
             var age = new Label { Text = birthday.ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-
-            //Add to Stack
-            var ageBinding = new Binding() { Source = birthday.ToString() };
-            age.SetBinding(Label.TextProperty, ageBinding);
-
 
             //Add to Stack
             ageStackLayout.Add(agelbl);
@@ -253,14 +237,10 @@ public partial class MatchPage {
 
             //Location
             StackLayout locationStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            
             var locationlbl = new Label { Text = "Windesheim locatie: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             var location = new Label { Text = Authentication._currentProfile.user.school, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-
-
-            //Data binding
-            var locationBinding = new Binding() { Source = Authentication._currentProfile.user.school };
-            location.SetBinding(Label.TextProperty, locationBinding);
-
+            
             //Add to Stack
             locationStackLayout.Add(locationlbl);
             locationStackLayout.Add(location);
@@ -269,52 +249,40 @@ public partial class MatchPage {
 
             //Education
             StackLayout educationStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            
             var educationlbl = new Label { Text = "Opleiding: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             var education = new Label { Text = Authentication._currentProfile.user.major, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-
-            //Data binding
-            var educationbinding = new Binding() { Source = Authentication._currentProfile.user.major };
-            education.SetBinding(Label.TextProperty, educationbinding);
 
             //Add to stack
             educationStackLayout.Add(educationlbl);
             educationStackLayout.Add(education);
             infoStackLayout.Add(educationStackLayout);
 
-
-            //Data binding
-            var bioBinding = new Binding() { Source = Authentication._currentProfile.user.bio };
-
             //Bio
             StackLayout bioStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             var biolbl = new Label { Text = "Bio: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var bio = new Label { FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            bio.SetBinding(Label.TextProperty, bioBinding);
+            var bio = new Label { Text = Authentication._currentProfile.user.bio ,FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
 
             //Add to stack
             bioStackLayout.Add(biolbl);
             bioStackLayout.Add(bio);
             infoStackLayout.Add(bioStackLayout);
+            
+            //Interests
             StackLayout InterestsStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             var interestslbl = new Label { Text = "Interesses: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             InterestsStackLayout.Add(interestslbl);
 
-            for (int i = 0; i < Authentication._currentProfile.user.interests.Length; i++)
-            {
-                if (i != 0)
-                {
+            for (int i = 0; i < Authentication._currentProfile.user.interests.Length; i++) {
+                if (i != 0) {
                     var spacecommavar = new Label { FontSize = 20, HorizontalOptions = LayoutOptions.Start, Text = ", " };
                     InterestsStackLayout.Add(spacecommavar);
                 }
-
-                var interestsbinding = new Binding() { Source = Authentication._currentProfile.user.interests[i] };                             //Data binding
-                var interestvar = new Label { FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-                interestvar.SetBinding(Label.TextProperty, interestsbinding);
+                
+                var interestvar = new Label { Text = Authentication._currentProfile.user.interests[i], FontSize = 20, HorizontalOptions = LayoutOptions.Start };
                 InterestsStackLayout.Add(interestvar);
-
-
 
             }
 
@@ -348,9 +316,8 @@ public partial class MatchPage {
         verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
     }
-
-    private void BackButton_Clicked(object sender, EventArgs e)
-    {
+    
+    private void BackButton_Clicked(object sender, EventArgs e) {
         switch (OriginPage)
         {
             case "profilepage":
@@ -363,7 +330,7 @@ public partial class MatchPage {
 
     }
 
-    // myprofile button clicked
+    // my profile button clicked
     private void MyProfile_Clicked(object sender, EventArgs e)
     {
         //declares origin page, in the my profile page
@@ -372,6 +339,7 @@ public partial class MatchPage {
         myProfile.OriginPage = PageName;
         Navigation.PushAsync(myProfile);
     }
+    
     // matches button clicked
     private void ChatButton_Clicked(object obj, EventArgs e) {
         
@@ -390,8 +358,7 @@ public partial class MatchPage {
         Navigation.PushAsync(settingsPage);
     }
     
-
-    public void NextProfile() {
+    private void NextProfile() {
 
         Authentication.CheckIfQueueNeedsMoreProfiles();
         if (Authentication._profileQueue.Count != 0) {
@@ -407,14 +374,11 @@ public partial class MatchPage {
             }
 
             Authentication.selectedImage = 0;
-            Navigation.PushAsync(new MatchPage());
-            
-            //Works better but doesn't work yet
-            //Application.Current.Dispatcher.Dispatch(() => Authentication._currentProfile = Authentication._profileQueue.Dequeue());
+            Initialize();
 
         } else {
             Authentication._profileQueue = new Queue<Profile>();
-            Navigation.PushAsync(new MatchPage());
+            Initialize();
         }
 
     }
@@ -425,7 +389,6 @@ public partial class MatchPage {
         await DisplayAlert("Match", "You have a match", "OK");
     }
 
-    
     byte[] ScaleImage(byte[] bytes) {
 #if WINDOWS
         
