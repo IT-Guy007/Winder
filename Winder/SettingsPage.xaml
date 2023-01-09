@@ -162,8 +162,10 @@
                 </Picker>
 
                 <CheckBox
+                    x:Name="SeachOnAge"
                     Grid.Column="1"
                     Margin="5"
+                    BackgroundColor="AliceBlue"
                     CheckedChanged="AgeAlgorithm"
                     HorizontalOptions="End"
                     IsChecked="{Binding IsChecked, Mode=TwoWay}"
@@ -211,6 +213,7 @@
                 </Picker>
 
                 <CheckBox
+                    x:Name="SearchOnPreferance"
                     Grid.Column="1"
                     Margin="5"
                     CheckedChanged="PreferenceAlgorithm"
@@ -240,6 +243,7 @@
                     VerticalOptions="Center" />
 
                 <CheckBox
+                    x:Name="SearchOnInterests"
                     Grid.Column="1"
                     Margin="5"
                     CheckedChanged="InterestsAlgorithm"
@@ -297,7 +301,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
-
                 </Grid.ColumnDefinitions>
                 <Label
                     Margin="30,0,0,0"
