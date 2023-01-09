@@ -147,6 +147,7 @@ public partial class SettingsPage {
                 SetLocation();
                 SetMinAge();
                 SetMaxAge();
+                foutLeeftijd.IsVisible = false;
                 DisplayAlert("Melding", "Er zijn succesvol gegevens aangepast", "OK");
             }
             
