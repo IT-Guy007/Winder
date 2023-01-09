@@ -78,13 +78,7 @@
                 <ColumnDefinition Width="*" />
 
             </Grid.ColumnDefinitions>
-            <Label
-                Grid.Column="1"
-                FontSize="25"
-                HorizontalOptions="End"
-                Text="Filter:"
-                TextColor="Black"
-                VerticalOptions="End" />
+            
 
             <Label
                 x:Name="foutLeeftijd"
