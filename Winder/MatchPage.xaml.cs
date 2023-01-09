@@ -101,7 +101,7 @@ public partial class MatchPage {
 
         //settings button
         var settings = new Button {
-            Text = "SettingsPage",
+            Text = "Instellingen",
             TextColor = Color.FromRgb(0, 0, 0),
             HeightRequest = 50,
             WidthRequest = 115,

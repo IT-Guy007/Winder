@@ -52,7 +52,7 @@
             >
                 </Button>
                 <Button 
-                Text="settingsPage"
+                Text="Instellingen"
                 VerticalOptions="Start" 
                 HorizontalOptions="End"
                 WidthRequest="120"
