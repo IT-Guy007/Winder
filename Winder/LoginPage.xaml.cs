@@ -25,6 +25,7 @@ public partial class LoginPage {
         var password = Wachtwoord.Text;
         if (database.CheckLogin(email, password)) {
             FoutmeldingInloggen.IsVisible = false;
+            
             Navigation.PushAsync(new MatchPage());
         }
         else {

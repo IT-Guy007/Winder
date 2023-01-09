@@ -19,6 +19,7 @@ public partial class MatchPage {
     public MatchPage() {
         database = new Database();
         
+
         //Get profiles to swipe
         CheckIfQueueNeedsMoreProfiles();
 

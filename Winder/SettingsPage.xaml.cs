@@ -118,6 +118,7 @@ public partial class SettingsPage {
             database.DeleteUser(Authentication._currentUser.email);
             SecureStorage.Default.Remove("email");
             SecureStorage.Remove("email");
+            SecureStorage.RemoveAll();
             await Navigation.PushAsync(new MainPage());
         }
 
@@ -130,6 +131,7 @@ public partial class SettingsPage {
         {
             SecureStorage.Default.Remove("email");
             SecureStorage.Remove("email");
+            SecureStorage.RemoveAll();
             await Navigation.PushAsync(new StartPage());
         }
     }

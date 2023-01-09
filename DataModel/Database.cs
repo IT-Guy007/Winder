@@ -11,7 +11,11 @@ using System.Collections.Generic;
 public class Database {
     private static Authentication _authentication;
     private static SqlConnection connection;
-    
+
+    private const bool ageAlgorithm = true;
+    private const bool preferenceAlgorithm = true;
+    private const bool interestsAlgorithm = true;
+
     private static string dataSourceConnection = "192.168.1.106,1433";
     private static string userIDConnection = "sa";
     private static string passwordConnection = "Qwerty1@";
@@ -28,7 +32,7 @@ public class Database {
     private static int amountOfPictures = 6;
 
     private static int amountOfUsersToReturnForAlgorithm = 5;
-
+    
     public static void Initialize() {
         _authentication = new Authentication();
        GenerateConnection();
@@ -144,7 +148,16 @@ public class Database {
             {
                 Console.WriteLine("Getting password");
                 output = true;
-
+                try
+                {
+                    SetLoginEmail(email);
+            
+                }
+                catch
+                {
+                    Console.WriteLine("Error setting login email");
+                }
+                
             }
         }
         //Close connection
@@ -1088,37 +1101,58 @@ public class Database {
         }
     }
 
+    
     public static List<string> AlgorithmForSwiping(string email) {
 
+       
+    
         //Get 10 users from the database within the criteria
         Queue<string> usersToSwipe = new Queue<string>();
-        
+
         DateTime minDate = DateTime.Now.AddYears(0 - Authentication._currentUser.minAge);
         DateTime maxDate = DateTime.Now.AddYears(0 - Authentication._currentUser.maxAge);
         var formattedMin = minDate.ToString("yyyy-MM-dd HH:mm:ss");
         var formattedMax = maxDate.ToString("yyyy-MM-dd HH:mm:ss");
-        
+
+
+
+
         List<string> interestsGivenUser = LoadInterestsFromDatabaseInListInteresses(email).ToList(); //Every interest of the current user
 
-        
+
         string query = "select top 10 email " +
                        "from winder.[User] " +
                        "where email != @email " + //Not themself
                        "and email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 1) " + //Not disliked by other person
                        "and email not in (select likedPerson from winder.winder.Liked where person = @email) " + //Not already a person that you liked
-                       "and gender = (select preference from winder.winder.[User] where email = @email) " + //gender check
                        "and email not in (select winder.winder.Match.person1 from Winder.Winder.Match where person2 = @email) " + //Not matched
                        "and email not in (select winder.winder.Match.person2 from Winder.Winder.Match where person1 = @email) " + //Not matched
-                       "and birthday <= '" + formattedMax + "' and birthday >= '" + formattedMin + "' " + //In age range
-                       "And location = (select location from winder.winder.[User] where email = @email)"; // location check
+                       "And location = (select location from winder.winder.[User] where email = @email) "; // location check
 
-        if (interestsGivenUser.Count > 0) {
-            //Add interests
-            query = query + "AND email in (select email from winder.winder.UserHasInterest where interest = " + "'" + interestsGivenUser[0] + "' ";
-            for (int i = 1; i < interestsGivenUser.Count; i++) {
-                query = query + " or interest =" + " '" + interestsGivenUser[i] + "' ";
+        if (ageAlgorithm)
+        {
+            query = query + "and birthday <= '" + formattedMax + "' and birthday >= '" + formattedMin + "' "; //In age range
+        }
+
+        if (preferenceAlgorithm)
+        {
+            query = query + "and gender = (select preference from winder.winder.[User] where email = @email) "; //gender check
+        }
+
+        if (interestsAlgorithm)
+        {
+            if (interestsGivenUser.Count > 0)
+            {
+                //Add interests
+                query = query + " AND email in (select email from winder.winder.UserHasInterest where interest = " + "'" + interestsGivenUser[0] + "' ";
+                for (int i = 1; i < interestsGivenUser.Count; i++)
+                {
+                    query = query + " or interest =" + " '" + interestsGivenUser[i] + "' ";
+                }
             }
         }
+
+
 
         // Enque users to swipe
         EnqueUsersToSwipe(usersToSwipe, email, query);
@@ -1149,7 +1183,10 @@ public class Database {
     private async Task SetLoginEmail(string email) {
         Console.WriteLine("Setting login email");
         await SecureStorage.SetAsync("email", email);
+        
     }
+    
+ 
 
     public List<User> GetMatchedStudentsFromUser(string email) {
         List<User> users = new List<User>();

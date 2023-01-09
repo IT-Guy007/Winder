@@ -47,7 +47,7 @@ public class TestDatabase
     }
 
     [TestCase("Jeroen", "1234", ExpectedResult = false)]
-    [TestCase("s1178208@student.windesheim.nl", "Qwerty1@", ExpectedResult = true)]
+    [TestCase("s111@student.windesheim.nl", "Afc1daAfc1da", ExpectedResult = true)]
     public bool LoginTest(string email, string password)
     {
         return database.CheckLogin(email, password);
