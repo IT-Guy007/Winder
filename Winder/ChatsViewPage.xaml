@@ -26,6 +26,7 @@
                 IsVisible="true"
                 CornerRadius="50"
                 Grid.Column="0"/>
+            
             <HorizontalStackLayout Grid.Column="2" HorizontalOptions="End" >
                 <Button 
                     x:Name="myProfile"
@@ -52,7 +53,7 @@
                 </Button>
                 
                 <Button 
-                    Text="instellingen"
+                    Text="Instellingen"
                     VerticalOptions="Start" 
                     HorizontalOptions="End"
                     WidthRequest="120"
@@ -67,7 +68,7 @@
         </Grid>
         
         <StackLayout WidthRequest="800" Padding="0,0,0,10" >
-            <ListView x:Name="ListOfMatches" Grid.Row="1" ItemTapped="ListOfMatches_ItemTapped" >
+            <ListView x:Name="ListOfMatches" ItemTapped="ListOfMatches_ItemTapped" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

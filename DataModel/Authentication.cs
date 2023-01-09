@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 public class Authentication {
-    public static bool isScaled = false;
+
     public static User _currentUser { get; set; }
     private const string winderEmail = "thewinderapp@gmail.com";
     private const string emailCredential = "xltbqbsyderpqsxp";
@@ -16,6 +16,7 @@ public class Authentication {
     private const int passwordLength =  8;
     private const string smtpClientGmail = "smtp.gmail.com";
     private const int portEmail = 587;
+    public static bool isScaled = false;
 
     //Match
     public static Queue<Profile> _profileQueue;
@@ -188,15 +189,19 @@ public class Authentication {
         }
     }
 
-    public static async void CheckIfQueueNeedsMoreProfiles() {
-        if (_profileQueue.Count < 5 && !isGettingProfiles) {
+    public static async void CheckIfQueueNeedsMoreProfiles()
+    {
+        if (_profileQueue.Count < 5 && !isGettingProfiles)
+        {
             isGettingProfiles = true;
             await GetProfiles();
             isGettingProfiles = false;
 
         }
     }
+
     
+
     public static void SetCurrentProfile() {
         CheckIfQueueNeedsMoreProfiles();
         if (_profileQueue.Count > 0) {

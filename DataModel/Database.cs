@@ -3,7 +3,9 @@ using Microsoft.Maui.Storage;
 
 
 namespace DataModel;
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 public class Database {
@@ -579,6 +581,7 @@ public class Database {
                 var preference = reader["preference"] as string;
                 CloseConnection();
                 return preference;
+
             }
         } catch (SqlException se) {
             Console.WriteLine("Error inserting preference in database");
@@ -893,7 +896,51 @@ public class Database {
         return users.ToArray();
     }
 
-    public string[] GetUsersWithCommonInterest(string email) {
+
+    public Queue<string> GetRestOfUsers(string email) {
+        List<string> usersList = new List<string>();
+
+        string[] usersWhoLikedYou = GetUsersWhoLikedYou(email);
+        string[] usersWithCommonInterests = GetUsersWithCommonInterest(email);
+
+        OpenConnection();
+
+        SqlCommand command = new SqlCommand("SELECT TOP 10 email FROM Winder.Winder.[User] WHERE email != @email " +
+        "AND email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + // selects the users which have not disliked the given user
+        "AND email not in (select likedPerson from Winder.Winder.Liked where person = @email) " +               // selects the users that the given user had not disliked or already liked
+        "AND email not in (select person1 from Winder.Winder.Match where person2 = @email) " +                  // selects the users that the given user has not already matched with 
+        "AND email not in (select person2 from Winder.Winder.Match where person1 = @email) ", connection);                                                                                 //Limit to 5
+        command.Parameters.AddWithValue("@email", email);
+
+        try {
+            SqlDataReader reader = command.ExecuteReader(); // execute het command
+
+            while (reader.Read()) {
+                string person = reader["email"] as string ?? "Unknown";
+                usersList.Add(person);   // zet elk persoon in de users 
+            }
+
+        } catch (SqlException se) {
+            Console.WriteLine("Error retrieving rest of users from database");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+        }
+
+        string[] users = usersList.ToArray();
+        users = users.Except(usersWhoLikedYou).ToArray();
+        users = users.Except(usersWithCommonInterests).ToArray();  // makes it so the rest of users does not contain the users that liked you or have common interests because we have different methods for them
+
+        Queue<string> queue = new Queue<string>();                 //make a queue from the users
+        foreach (string user in users) {
+            queue.Enqueue(user);
+        }
+
+        CloseConnection();
+        return queue;
+    }
+    public string[] GetUsersWithCommonInterest(string email){
+
         List<string> users = new List<string>();
 
         List<string> interestsGivenUser = LoadInterestsFromDatabaseInListInteresses(email).ToList();
@@ -901,7 +948,8 @@ public class Database {
 
         string query = "SELECT UID FROM Winder.Winder.UserHasInterest WHERE UID != @email AND (interest = @interest"; // selects the users which have a common interest
 
-        for (int i = 1; i < interestsGivenUser.Count; i++) {
+        for (int i = 1; i < interestsGivenUser.Count; i++)
+        {
             query = query + " or interest =" + " '" + interestsGivenUser[i] + "' ";
         }
         query = query + ") AND UID not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + // selects the users which have not disliked the given user
@@ -915,7 +963,8 @@ public class Database {
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@email", email);
         if (interestsGivenUser.Count > 0) command.Parameters.AddWithValue("@interest", interestsGivenUser[0]);
-        try {
+        try
+        {
             SqlDataReader reader = command.ExecuteReader(); // execute het command
             while (reader.Read())
             {
@@ -924,7 +973,9 @@ public class Database {
             }
             //Close connection
 
-        } catch (SqlException se) {
+        }
+        catch (SqlException se)
+        {
             Console.WriteLine("Error retrieving users with common interests from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
@@ -935,6 +986,107 @@ public class Database {
         return users.ToArray();
     }
 
+    // Enque users to swipe
+    private static void EnqueUsersToSwipe(Queue<string> usersToSwipe, string email, string query)
+    {
+        //Random people
+        query = query + ") ORDER BY NEWID()";
+
+        SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@email", email);
+
+        OpenConnection();
+
+        try
+        {
+            SqlDataReader reader = command.ExecuteReader(); // execute het command
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    string user = reader["email"] as string ?? "";
+                    usersToSwipe.Enqueue(user);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No new profiles found to swipe");
+            }
+            CloseConnection();
+
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine("Error retrieving emails for algorithm");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+
+            //Close connection
+            CloseConnection();
+        }
+        CloseConnection();
+    }
+
+    // Enque who liked you
+    private static void EnqueWhoLikedYou(Queue<string> likedQueue, string[] usersWhoLikedYou)
+    {
+        foreach (string user in usersWhoLikedYou)
+        {
+            likedQueue.Enqueue(user);
+        }
+    }
+
+    // Loop though users and check if in currentQueue
+    private static void CheckCurrentQueue(List<string> result, Queue<string> usersToSwipe, Queue<string> likedQueue, int place)
+    {
+        while (result.Count != amountOfUsersToReturnForAlgorithm && (usersToSwipe.Count > 0 || likedQueue.Count > 0))
+        {
+
+            var userToAdd = "";
+
+            try
+            {
+                if (place == result.Count)
+                {
+                    //For the liked user place else random user
+                    if (likedQueue.Count > 0)
+                    {
+                        userToAdd = likedQueue.Dequeue();
+                    }
+                    else
+                    {
+                        userToAdd = usersToSwipe.Dequeue();
+                    }
+                }
+                else
+                {
+                    if (usersToSwipe.Count > 0)
+                    {
+                        userToAdd = usersToSwipe.Dequeue();
+                    }
+                    else
+                    {
+                        userToAdd = likedQueue.Dequeue();
+                    }
+                }
+
+                //Check if already exists in current Queue
+                IEnumerable<Profile> alreadyExists = Authentication._profileQueue.Where(i => i.user.email == userToAdd);
+                if (!alreadyExists.Any() && !usersToSwipe.Contains(userToAdd) && !string.IsNullOrEmpty(userToAdd))
+                {
+                    Console.WriteLine("Adding user");
+                    result.Add(userToAdd);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error adding user to queue");
+                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.StackTrace);
+            }
+
+        }
+    }
 
     public static List<string> AlgorithmForSwiping(string email) {
 
@@ -948,6 +1100,7 @@ public class Database {
         
         List<string> interestsGivenUser = LoadInterestsFromDatabaseInListInteresses(email).ToList(); //Every interest of the current user
 
+        
         string query = "select top 10 email " +
                        "from winder.[User] " +
                        "where email != @email " + //Not themself
@@ -967,45 +1120,15 @@ public class Database {
             }
         }
 
-        //Random people
-        query = query + ") ORDER BY NEWID()";
+        // Enque users to swipe
+        EnqueUsersToSwipe(usersToSwipe, email, query);
 
-        SqlCommand command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@email", email);
-        
-        OpenConnection();
-        
-        try {
-            SqlDataReader reader = command.ExecuteReader(); // execute het command
-            if (reader.HasRows) {
-                while (reader.Read())
-                {
-                    string user = reader["email"] as string ?? "";
-                    usersToSwipe.Enqueue(user);
-                }
-            } else {
-                Console.WriteLine("No new profiles found to swipe");
-            }
-            CloseConnection();
-            
-        } catch (SqlException se) {
-            Console.WriteLine("Error retrieving emails for algorithm");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            
-            //Close connection
-            CloseConnection();
-        }
-        CloseConnection();
-        
         //Get 5 users who likes you
         string[] usersWhoLikedYou = GetUsersWhoLikedYou(email);
         Queue<string> likedQueue = new Queue<string>();
         
         //Liked into queue
-        foreach (string user in usersWhoLikedYou) {
-            likedQueue.Enqueue(user);
-        }
+        EnqueWhoLikedYou(likedQueue, usersWhoLikedYou);
 
         //Place for the users who liked you
         Random random = new Random();
@@ -1014,44 +1137,12 @@ public class Database {
 
         //Check if users contains empty strings
         List<string> result = new List<string>();
-        
-        
+
+
         //Loop though users and check if in currentQueue
-        while(result.Count != amountOfUsersToReturnForAlgorithm && (usersToSwipe.Count > 0 || likedQueue.Count > 0)) {
+        CheckCurrentQueue(result,usersToSwipe,likedQueue,place);
 
-            var userToAdd = "";
 
-            try {
-                if (place == result.Count) {
-                    //For the liked user place else random user
-                    if (likedQueue.Count > 0) {
-                        userToAdd = likedQueue.Dequeue();
-                    } else {
-                        userToAdd = usersToSwipe.Dequeue();
-                    }
-                } else {
-                    if (usersToSwipe.Count > 0) {
-                        userToAdd = usersToSwipe.Dequeue();
-                    } else {
-                        userToAdd = likedQueue.Dequeue();
-                    }
-                }
-
-                //Check if already exists in current Queue
-                IEnumerable<Profile> alreadyExists = Authentication._profileQueue.Where(i => i.user.email == userToAdd);
-                if (!alreadyExists.Any() && !usersToSwipe.Contains(userToAdd) && !string.IsNullOrEmpty(userToAdd)) {
-                    Console.WriteLine("Adding user");
-                    result.Add(userToAdd);
-                }
-            }
-            catch (Exception e) {
-                Console.WriteLine("Error adding user to queue");
-                Console.WriteLine(e.ToString());
-                Console.WriteLine(e.StackTrace);
-            }
-
-        }
-        
         return result;
     }
 
@@ -1060,8 +1151,7 @@ public class Database {
         await SecureStorage.SetAsync("email", email);
     }
 
-    public List<User> GetMatchedStudentsFromUser(string email)
-    {
+    public List<User> GetMatchedStudentsFromUser(string email) {
         List<User> users = new List<User>();
         List<string> emails = new List<string>();
         try
@@ -1142,42 +1232,34 @@ public class Database {
         }
     }
 
-    public static bool SetRead(string personFrom, string personTo){
+    public static void SetRead(string personFrom, string personTo){
         try {
             OpenConnection();
             SqlCommand query = new SqlCommand("UPDATE winder.winder.[ChatMessage] SET [readMessage] = 1 WHERE personTo = '" + personFrom + "' AND personFrom = '" + personTo + "'", connection);
             query.ExecuteNonQuery();
             CloseConnection();
-            return true;
-        }
-        catch (SqlException se) {
+        } catch (SqlException se) {
             Console.WriteLine("Error updating read message");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
             CloseConnection();
-            return false;
         }
 
     }
     
-    public bool DeleteAllPhotosFromDatabase(User currentUser) {
-        try
-        {
+    public void DeleteAllPhotosFromDatabase(User currentUser) {
+        try {
             OpenConnection();
             string query = "delete from winder.winder.Photos WHERE [user] = @Email";
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@Email", currentUser.email);
             command.ExecuteNonQuery();
             CloseConnection();
-            return true;
-        }
-        catch (SqlException se)
-        {
+        } catch (SqlException se) {
             Console.WriteLine("Error deleting pictures from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
             CloseConnection();
-            return false;
         }
     }
 

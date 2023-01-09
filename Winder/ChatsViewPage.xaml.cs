@@ -3,44 +3,29 @@ using MAUI;
 
 namespace Winder;
 
-public partial class ChatsViewPage : ContentPage
-{
+public partial class ChatsViewPage {
     public string OriginPage;
-    Database Database = new Database();
-    private const string pageName = "chatpage";
-    public class MatchedPerson {
-        public string Email { get; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public ImageSource ProfilePicture { get; set; }
-
-        public MatchedPerson(User MatchedStudent) {
-            Email = MatchedStudent.email;
-            FirstName = MatchedStudent.firstName;
-            LastName = MatchedStudent.lastName;
-            MemoryStream ms = new MemoryStream(MatchedStudent.profilePicture);
-            ProfilePicture = ImageSource.FromStream(() => ms);
-        }
-
-    }
+    private Database Database;
+    private const string pageName = "Chatpage";
 
     public ChatsViewPage() {
+        Database = new Database();
         InitializeComponent();
+        
         List<User> MatchedStudents = Database.GetMatchedStudentsFromUser(Authentication._currentUser.email);
         List<MatchedPerson> MatchedPeople = ConvertUserToMatchPerson(MatchedStudents);
         ListOfMatches.ItemsSource = MatchedPeople;
     }
 
     private List<MatchedPerson> ConvertUserToMatchPerson(List<User> MatchedStudents) {
-        List<MatchedPerson> MatchedPeople = new List<MatchedPerson>();
+        List<MatchedPerson> matchedPeople = new List<MatchedPerson>();
 
         foreach (var student in MatchedStudents) {
-            MatchedPeople.Add(new MatchedPerson(student));
+            matchedPeople.Add(new MatchedPerson(student));
         }
 
-        return MatchedPeople;
+        return matchedPeople;
     }
-
 
     private void Backbutton_Clicked(object sender, EventArgs e) {
         switch (OriginPage) {
