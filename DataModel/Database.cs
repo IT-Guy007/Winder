@@ -1131,12 +1131,12 @@ public class Database {
 
         if (ageAlgorithm)
         {
-            query = query + "and birthday <= '" + formattedMax + "' and birthday >= '" + formattedMin + "' "; //In age range
+            query = query + " and birthday <= '" + formattedMax + "' and birthday >= '" + formattedMin + "'  "; //In age range
         }
 
         if (preferenceAlgorithm)
         {
-            query = query + "and gender = (select preference from winder.winder.[User] where email = @email) "; //gender check
+            query = query + " and gender = (select preference from winder.winder.[User] where email = @email) "; //gender check
         }
 
         if (interestsAlgorithm)
