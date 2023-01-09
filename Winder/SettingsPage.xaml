@@ -161,69 +161,8 @@
         </StackLayout>
 
 
-        <StackLayout
-            Margin="0,15,0,0"
-            BackgroundColor="#D9D9D9"
-            HeightRequest="50"
-            HorizontalOptions="FillAndExpand">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+        
 
-                </Grid.ColumnDefinitions>
-
-                <Label
-                    Margin="30,0,0,0"
-                    FontSize="30"
-                    Text="Voorkeur geslacht"
-                    TextColor="Black"
-                    VerticalOptions="Center" />
-                <Picker
-                    x:Name="Preference"
-                    Grid.Column="1"
-                    BackgroundColor="Gray"
-                    HorizontalOptions="Start"
-                    HorizontalTextAlignment="Center"
-                    IsVisible="True"
-                    SelectedItem=""
-                    TextColor="White"
-                    VerticalOptions="Center">
-
-
-                    <Picker.Items>
-                        <x:String>Man</x:String>
-                        <x:String>Vrouw</x:String>
-                        <x:String>Anders</x:String>
-                    </Picker.Items>
-                </Picker>
-
-
-            </Grid>
-        </StackLayout>
-
-        <StackLayout
-            Margin="0,15,0,0"
-            BackgroundColor="#D9D9D9"
-            HeightRequest="50"
-            HorizontalOptions="FillAndExpand">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-
-                </Grid.ColumnDefinitions>
-                <Label
-                    Margin="30,0,0,0"
-                    FontSize="30"
-                    Text="Interesses"
-                    TextColor="Black"
-                    VerticalOptions="Center" />
-
-              
-
-            </Grid>
-        </StackLayout>
 
 
         <StackLayout

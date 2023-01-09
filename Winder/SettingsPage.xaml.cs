@@ -14,7 +14,7 @@ public partial class SettingsPage {
 
         InitializeComponent();
         GetMinimaleLeeftijd();
-        PlacePreference();
+      
         PlaceLocation();
         PlaceMinAge();
         PlaceMaxAge();
@@ -24,9 +24,11 @@ public partial class SettingsPage {
     }
 
     // puts the min and max age in the picker.
-    private void GetMinimaleLeeftijd() {
+    private void GetMinimaleLeeftijd()
+    {
         int[] leeftijd = new int[82];
-        for (int i = 0; i < leeftijd.Length; i++) {
+        for (int i = 0; i < leeftijd.Length; i++)
+        {
             leeftijd[i] = i + 18;
 
         }
@@ -35,12 +37,6 @@ public partial class SettingsPage {
         maximaleLeeftijd.ItemsSource = leeftijd;
 
 
-    }
-    //sets the preference in the database
-    private void SetPreference() {
-        string preference = Preference.SelectedItem.ToString();
-        if (preference != null) database.InsertPreference(Authentication._currentUser.email, preference);
-        Authentication._profileQueue = new Queue<Profile>();
     }
     
     //sets the location in the database
@@ -69,12 +65,8 @@ public partial class SettingsPage {
             
         }
     }
-    //sets preference in the picker what the user already has in the database
-    private void PlacePreference( ) {
-        
-        string placePreference = database.GetPreference(Authentication._currentUser.email);
-        Preference.SelectedItem = placePreference;
-    }
+ 
+  
     //sets location in the picker what the user already has in the database
     private void PlaceLocation() {
         string placeLocation = database.GetLocation(Authentication._currentUser.email);
@@ -145,7 +137,7 @@ public partial class SettingsPage {
                 foutLeeftijd.IsVisible = true;
 
             } else {
-                SetPreference();
+               
                 SetLocation();
                 SetMinAge();
                 SetMaxAge();
