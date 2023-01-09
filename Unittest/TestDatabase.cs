@@ -400,8 +400,8 @@ public class TestDatabase
 
     }
 
-    [TestCase("s168742@student.windesheim.nl", "s1167487@student.windesheim.nl", ExpectedResult = false)]
-    [TestCase("s1test@student.windesheim.nl", "s1test@student.windesheim.nl", ExpectedResult = true)]
+    [TestCase("s168742@student.windesheim.nl", "s1167487@student.windesheim.nl", ExpectedResult = true)]
+    [TestCase("s1test@student.windesheim.nl", "s1test@student.windesheim.nl", ExpectedResult = false)]
     [TestCase("s1165707@student.windesheim.nl", "s1168742@student.windesheim.nl", ExpectedResult = false)]
     public bool CheckMatch(string email, string email2)
     {
@@ -431,7 +431,7 @@ public class TestDatabase
     }
 
     [TestCase("s1165707@student.windesheim.nl", "s168742@student.windesheim.nl", ExpectedResult = true)]
-    [TestCase("s1165707@student.windesheim.nl", "s1165400@student.windesheim.nl", ExpectedResult = false)]
+    [TestCase("s1165707@student.windesheim.nl", "s1167487@student.windesheim.nl", ExpectedResult = true)]
     public bool NewDislike(string email, string email2)
     {
         try

@@ -82,6 +82,21 @@
             </HorizontalStackLayout>
 
         </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+
+            </Grid.ColumnDefinitions>
+            <Label
+                    HorizontalOptions="End"
+                    FontSize="30"
+                    Text="Ik wil filteren op:"
+                    TextColor="Black"
+                    VerticalOptions="Center"
+                Grid.Column="1"/>
+
+        </Grid>
 
         <StackLayout
             Margin="0,60,0,0"
@@ -145,6 +160,18 @@
 
                     <Picker.ItemsSource />
                 </Picker>
+                
+                <CheckBox
+  IsChecked="{Binding IsChecked, Mode=TwoWay}"
+  Margin="5"
+  CheckedChanged="AgeAlgorithm"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    Grid.Column="1"
+/>
+
+
+
                 <Label
                     x:Name="foutLeeftijd"
                     Grid.Column="1"
@@ -169,6 +196,7 @@
                     <ColumnDefinition Width="*" />
 
                 </Grid.ColumnDefinitions>
+                
                 <Label
                     Margin="30,0,0,0"
                     FontSize="30"
@@ -193,10 +221,19 @@
                         <x:String>Anders</x:String>
                     </Picker.Items>
                 </Picker>
+                
+                <CheckBox
+  IsChecked="{Binding IsChecked, Mode=TwoWay}"
+  Margin="5"
+  CheckedChanged="PreferenceAlgorithm"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    Grid.Column="1"
+/>
+                
             </Grid>
         </StackLayout>
-
-
+        
         <StackLayout
             Margin="0,15,0,0"
             BackgroundColor="#D9D9D9"
@@ -211,19 +248,23 @@
                 <Label
                     Margin="30,0,0,0"
                     FontSize="30"
-                    Text="Wachtwoord"
+                    Text="Interesses"
                     TextColor="Black"
                     VerticalOptions="Center" />
-
-                <Button
+                
+                <CheckBox
+  IsChecked="{Binding IsChecked, Mode=TwoWay}"
+  Margin="5"
+  CheckedChanged="InterestsAlgorithm"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
                     Grid.Column="1"
-                    BackgroundColor="Gray"
-                    Clicked="EditPasswordBtn"
-                    Text="Wijzig wachtwoord" />
+/>
+                
             </Grid>
         </StackLayout>
 
-
+       
         <StackLayout
             Margin="0,15,0,0"
             BackgroundColor="#D9D9D9"
@@ -258,6 +299,32 @@
 
                     </Picker.Items>
                 </Picker>
+            </Grid>
+        </StackLayout>
+
+        <StackLayout
+            Margin="0,15,0,0"
+            BackgroundColor="#D9D9D9"
+            HeightRequest="50"
+            HorizontalOptions="FillAndExpand">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+
+                </Grid.ColumnDefinitions>
+                <Label
+                    Margin="30,0,0,0"
+                    FontSize="30"
+                    Text="Wachtwoord"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+
+                <Button
+                    Grid.Column="1"
+                    BackgroundColor="Gray"
+                    Clicked="EditPasswordBtn"
+                    Text="Wijzig wachtwoord" />
             </Grid>
         </StackLayout>
 
