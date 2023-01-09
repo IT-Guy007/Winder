@@ -22,7 +22,7 @@ public class Database {
     private static string initialCatalogConnection = "winder";
 
     private static int minAgePreference = 18;
-    private static int maxAgePreference = 99;
+    private static int maxAgePreference = 18;
 
     private string emailHasToStartWith = "s";
     private string emailHasToEndWith = "@student.windesheim.nl";
