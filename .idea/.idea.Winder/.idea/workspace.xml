@@ -12,15 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/4df75c49-4c39-428c-842c-79a81db1d044.vsidx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/be291cd6-17fb-4618-aa12-d17b38fe94cd.vsidx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/ca54d69d-b140-449b-910b-621ffff14037.vsidx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Authentication.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Database.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/MatchedPerson.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/MatchedPerson.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unittest/TestDatabase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/TestDatabase.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,29 +188,29 @@
       <expand>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 58% 648/1535" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 58% 648/1535" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="(1.0.0.0, net7.0) 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-        </path>
-        <path>
-          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 58% 648/1535" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="(1.0.0.0, net7.0) 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="Total 58% 648/1535" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="(1.0.0.0, net7.0) 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 58% 648/1535" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="(1.0.0.0, net7.0) 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />

@@ -8,6 +8,7 @@ using System.Text;
 public class Authentication {
 
     public static User _currentUser { get; set; }
+    
     private const string winderEmail = "thewinderapp@gmail.com";
     private const string emailCredential = "xltbqbsyderpqsxp";
     private const string validationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";

@@ -1014,8 +1014,6 @@ public class Database {
     
     public static List<string> AlgorithmForSwiping(string email) {
 
-       
-    
         //Get 10 users from the database within the criteria
         Queue<string> usersToSwipe = new Queue<string>();
 
@@ -1023,9 +1021,6 @@ public class Database {
         DateTime maxDate = DateTime.Now.AddYears(0 - Authentication._currentUser.maxAge);
         var formattedMin = minDate.ToString("yyyy-MM-dd HH:mm:ss");
         var formattedMax = maxDate.ToString("yyyy-MM-dd HH:mm:ss");
-
-
-
 
         List<string> interestsGivenUser = LoadInterestsFromDatabaseInListInteresses(email).ToList(); //Every interest of the current user
 

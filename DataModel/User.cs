@@ -37,9 +37,8 @@ public class User {
         this.school = school;
         this.major = major;
         this.minAge = minAge;
-        this.minAge = maxAge;
+        this.maxAge = maxAge;
 
-        
     }
     
     public User(){}
