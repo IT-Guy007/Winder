@@ -92,6 +92,7 @@ public partial class SettingsPage {
        
         int minAge = (int)minimaleLeeftijd.SelectedItem;
         database.SetMinAge(Authentication._currentUser.email, minAge);
+        Authentication._currentUser.minAge = minAge;
 
     }
     //sets the maximum age of what the user chose in the database
@@ -99,10 +100,10 @@ public partial class SettingsPage {
        
         int maxAge = (int)maximaleLeeftijd.SelectedItem;
         database.SetMaxAge(Authentication._currentUser.email, maxAge);
+        Authentication._currentUser.maxAge = maxAge;
 
     }
-    public async void deleteAccountbtn(object sender, EventArgs e)
-    {
+    private async void deleteAccountbtn(object sender, EventArgs e) {
 
         bool displayresult = await DisplayAlert("", "Weet u zeker dat u uw account wilt verwijderen?", "Ja", "Nee");
         if (displayresult)
@@ -116,7 +117,7 @@ public partial class SettingsPage {
 
     }
 
-    public async void logoutBtn(object sender, EventArgs e)
+    private async void logoutBtn(object sender, EventArgs e)
     {
         bool displayresult = await DisplayAlert("", "U wordt uitgelogd", "Ok", "Annuleren");
         if (displayresult)
@@ -142,6 +143,8 @@ public partial class SettingsPage {
                 SetMinAge();
                 SetMaxAge();
                 foutLeeftijd.IsVisible = false;
+                Authentication._profileQueue = new Queue<Profile>();
+                Authentication.CheckIfQueueNeedsMoreProfiles();
                 DisplayAlert("Melding", "Er zijn succesvol gegevens aangepast", "OK");
             }
             
@@ -151,15 +154,13 @@ public partial class SettingsPage {
         }
     }
     // shows a popup where you can edit your password
-    public void EditPasswordBtn(object sender, EventArgs e)
-    {
+    private void EditPasswordBtn(object sender, EventArgs e) {
         
         var popup = new EditPasswordPopUp();
         this.ShowPopup(popup);
     }
 
-    private void MyProfile_Clicked(object sender, EventArgs e)
-    {
+    private void MyProfile_Clicked(object sender, EventArgs e) {
         ProfileChange myProfile = new ProfileChange();
         
         myProfile.OriginPage = PageName;
