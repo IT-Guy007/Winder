@@ -350,8 +350,8 @@ public class Database {
                 var minAge = reader["min"] as int?;
                 var maxAge = reader["max"] as int?;
 
-                var minus = minAge ?? maxAgePreference;
-                var maxus = maxAge ?? minAgePreference;
+                var minus = minAge ?? minAgePreference;
+                var maxus = maxAge ?? maxAgePreference;
 
                 DateTime birthday = bday ?? minDateTimeBirth;
                 user = new User(firstName, middleName, lastName, birthday, preferences, email, "", gender, img, bio, school, major,minus,maxus);
