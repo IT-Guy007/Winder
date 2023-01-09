@@ -7,6 +7,11 @@
 
              BackgroundColor="#CC415F"
 >
+    
+    <Shell.BackButtonBehavior >
+        <BackButtonBehavior IsVisible="False" IsEnabled="False"></BackButtonBehavior>
+    </Shell.BackButtonBehavior>
+    
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
         <Image HeightRequest="400"
             HorizontalOptions="Center"

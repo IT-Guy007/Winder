@@ -25,66 +25,81 @@
             </Grid.ColumnDefinitions>
             <ImageButton
                 x:Name="Backbutton"
-                Source="backbutton.png"
-                HorizontalOptions="Start"
-                VerticalOptions="Start"
-                HeightRequest="40"
-                WidthRequest="40"
-                Clicked="Backbutton_Clicked"
-                Aspect="AspectFill"
-                IsVisible="true"
-                CornerRadius="50"
                 Grid.Row="0"
-                />
-            
-            <HorizontalStackLayout Grid.Column="2" HorizontalOptions="End" >
-
-
-
-                <Button 
-                    x:Name="chatButton"
-                Text="Chats"
-                VerticalOptions="Start" 
+                Aspect="AspectFill"
+                Clicked="Backbutton_Clicked"
+                CornerRadius="50"
+                HeightRequest="40"
                 HorizontalOptions="Start"
-                WidthRequest="120"
-                FontSize="15"
-                HeightRequest="50"
-                TextColor="Black"
-                  Clicked="ChatButton_Clicked"
-                
-            >
-                </Button>
-                <Button 
-                x:Name="matchPage"
-                Text="Swipe"
-                VerticalOptions="Start" 
-                HorizontalOptions="End"
-                WidthRequest="120"
-                FontSize="15"
-                HeightRequest="50"
-                TextColor="Black"
-                Clicked="matchPage_Clicked"
-                
-            >
-                </Button>
-                <Button 
-                Text="Mijn Profiel"
-                VerticalOptions="Start" 
-                HorizontalOptions="End"
-                WidthRequest="120"
-                FontSize="15"
-                HeightRequest="50"
-                Clicked="MyProfile_Clicked"
-                TextColor="Black"
-            >
+                IsVisible="true"
+                Source="backbutton.png"
+                VerticalOptions="Start"
+                WidthRequest="40" />
 
-                </Button>
+            <HorizontalStackLayout Grid.Column="2" HorizontalOptions="End">
+
+
+
+                <Button
+                    x:Name="chatButton"
+                    Clicked="ChatButton_Clicked"
+                    FontSize="15"
+                    HeightRequest="50"
+                    HorizontalOptions="Start"
+                    Text="Chats"
+                    TextColor="Black"
+                    VerticalOptions="Start"
+                    WidthRequest="120" />
+                <Button
+                    x:Name="matchPage"
+                    Clicked="matchPage_Clicked"
+                    FontSize="15"
+                    HeightRequest="50"
+                    HorizontalOptions="End"
+                    Text="Swipe"
+                    TextColor="Black"
+                    VerticalOptions="Start"
+                    WidthRequest="120" />
+                <Button
+                    Clicked="MyProfile_Clicked"
+                    FontSize="15"
+                    HeightRequest="50"
+                    HorizontalOptions="End"
+                    Text="Mijn Profiel"
+                    TextColor="Black"
+                    VerticalOptions="Start"
+                    WidthRequest="120" />
             </HorizontalStackLayout>
 
         </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="1"
+                FontSize="25"
+                HorizontalOptions="End"
+                Text="Filter:"
+                TextColor="Black"
+                VerticalOptions="End" />
+
+            <Label
+                x:Name="foutLeeftijd"
+                Grid.Column="1"
+                BackgroundColor="Black"
+                FontSize="20"
+                HorizontalOptions="Center"
+                IsVisible="false"
+                Text="Minimale leeftijd mag niet groter zijn dan maximale leeftijd"
+                TextColor="Red"
+                VerticalOptions="End" />
+        </Grid>
 
         <StackLayout
-            Margin="0,60,0,0"
+            Margin="0,0,0,0"
             BackgroundColor="#D9D9D9"
             HeightRequest="50"
             HorizontalOptions="FillAndExpand">
@@ -145,15 +160,17 @@
 
                     <Picker.ItemsSource />
                 </Picker>
-                <Label
-                    x:Name="foutLeeftijd"
+
+                <CheckBox
+                    x:Name="SeachOnAge"
                     Grid.Column="1"
-                    FontSize="20"
-                    HorizontalOptions="Center"
-                    IsVisible="false"
-                    Text="Minimale leeftijd mag niet groter zijn dan maximale leeftijd"
-                    TextColor="OrangeRed"
-                    VerticalOptions="Start" />
+                    Margin="5"
+                    BackgroundColor="AliceBlue"
+                    CheckedChanged="AgeAlgorithm"
+                    HorizontalOptions="End"
+                    IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                    VerticalOptions="Center" />
+
             </Grid>
         </StackLayout>
 
@@ -169,6 +186,7 @@
                     <ColumnDefinition Width="*" />
 
                 </Grid.ColumnDefinitions>
+
                 <Label
                     Margin="30,0,0,0"
                     FontSize="30"
@@ -193,9 +211,18 @@
                         <x:String>Anders</x:String>
                     </Picker.Items>
                 </Picker>
+
+                <CheckBox
+                    x:Name="SearchOnPreferance"
+                    Grid.Column="1"
+                    Margin="5"
+                    CheckedChanged="PreferenceAlgorithm"
+                    HorizontalOptions="End"
+                    IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                    VerticalOptions="Center" />
+
             </Grid>
         </StackLayout>
-
 
         <StackLayout
             Margin="0,15,0,0"
@@ -211,15 +238,19 @@
                 <Label
                     Margin="30,0,0,0"
                     FontSize="30"
-                    Text="Wachtwoord"
+                    Text="Interesses"
                     TextColor="Black"
                     VerticalOptions="Center" />
 
-                <Button
+                <CheckBox
+                    x:Name="SearchOnInterests"
                     Grid.Column="1"
-                    BackgroundColor="Gray"
-                    Clicked="EditPasswordBtn"
-                    Text="Wijzig wachtwoord" />
+                    Margin="5"
+                    CheckedChanged="InterestsAlgorithm"
+                    HorizontalOptions="End"
+                    IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                    VerticalOptions="Center" />
+
             </Grid>
         </StackLayout>
 
@@ -261,6 +292,31 @@
             </Grid>
         </StackLayout>
 
+        <StackLayout
+            Margin="0,15,0,0"
+            BackgroundColor="#D9D9D9"
+            HeightRequest="50"
+            HorizontalOptions="FillAndExpand">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label
+                    Margin="30,0,0,0"
+                    FontSize="30"
+                    Text="Wachtwoord"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+
+                <Button
+                    Grid.Column="1"
+                    BackgroundColor="Gray"
+                    Clicked="EditPasswordBtn"
+                    Text="Wijzig wachtwoord" />
+            </Grid>
+        </StackLayout>
+
         <Grid>
             <Grid.ColumnDefinitions>
 
@@ -271,20 +327,18 @@
             </Grid.ColumnDefinitions>
             <Button
                 BackgroundColor="#D9D9D9"
-                HeightRequest="60"
                 Clicked="deleteAccountbtn"
-                Text="Account verwijderen" 
-                TextColor="Black"
-                />
+                HeightRequest="60"
+                Text="Account verwijderen"
+                TextColor="Black" />
 
             <Button
                 Grid.Column="1"
                 BackgroundColor="#D9D9D9"
                 Clicked="logoutBtn"
                 HeightRequest="60"
-                Text="Uitloggen" 
-                TextColor="Black"
-                />
+                Text="Uitloggen"
+                TextColor="Black" />
 
             <Button
                 Grid.Column="2"
@@ -292,8 +346,7 @@
                 Clicked="EditDataBtn"
                 HeightRequest="60"
                 Text="Wijzigingen opslaan"
-                TextColor="Black"
-                />
+                TextColor="Black" />
 
 
 

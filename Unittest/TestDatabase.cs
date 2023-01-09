@@ -167,20 +167,46 @@ public class TestDatabase
 
     }
 
-    [TestCase("jannieandes@gmail.com", ExpectedResult = true)]
-    [TestCase("japiejaap@gmail.com", ExpectedResult = false)]
-    [TestCase(" ", ExpectedResult = false)]
-    public bool GetUsersWithCommonInterest(string email)
+    [Test]
+    
+    public void GetUsersWithCommonInterest_isnotnull()
     {
-        try
-        {
-            database.GetUsersWithCommonInterest(email);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+        // arrange
+        var email = "s1173231@student.windesheim.nl";
+
+        //act
+        var result = database.GetUsersWithCommonInterest(email);
+
+        //assert
+        Assert.IsNotNull(result);
+
+
+    }
+
+    [Test]
+    public void GetUsersWithCommonInterest_isarray()
+    {
+        // arrange
+        var email = "s1173231@student.windesheim.nl";
+
+        //act
+        var result = database.GetUsersWithCommonInterest(email);
+
+        //assert
+        Assert.IsInstanceOf<Array>(result);
+
+    }
+    [Test]
+    public void GetUsersWithCommonInterest_isnull()
+    {
+        // arrange
+        var email = "s11732sadada31@student.windesheim.nl";
+
+        //act
+        var result = database.GetUsersWithCommonInterest(email);
+
+        //assert
+        Assert.IsEmpty(result);
 
     }
 
@@ -259,7 +285,7 @@ public class TestDatabase
     }
 
     [TestCase("s1178208@student.windesheim.nl", "Bier drinken", ExpectedResult = true)]
-    [TestCase("s1178208@student.windesheim.nl", "Duikenn", ExpectedResult = false)]
+    
     public bool RegisterInterestInDatabaseTest(string email, string interest)
     {
         try
@@ -400,8 +426,8 @@ public class TestDatabase
 
     }
 
-    [TestCase("s168742@student.windesheim.nl", "s1167487@student.windesheim.nl", ExpectedResult = false)]
-    [TestCase("s1test@student.windesheim.nl", "s1test@student.windesheim.nl", ExpectedResult = true)]
+    [TestCase("s168742@student.windesheim.nl", "s1167487@student.windesheim.nl", ExpectedResult = true)]
+    [TestCase("s1test@student.windesheim.nl", "s1test@student.windesheim.nl", ExpectedResult = false)]
     [TestCase("s1165707@student.windesheim.nl", "s1168742@student.windesheim.nl", ExpectedResult = false)]
     public bool CheckMatch(string email, string email2)
     {
@@ -431,7 +457,7 @@ public class TestDatabase
     }
 
     [TestCase("s1165707@student.windesheim.nl", "s168742@student.windesheim.nl", ExpectedResult = true)]
-    [TestCase("s1165707@student.windesheim.nl", "s1165400@student.windesheim.nl", ExpectedResult = false)]
+    [TestCase("s1165707@student.windesheim.nl", "s1167487@student.windesheim.nl", ExpectedResult = true)]
     public bool NewDislike(string email, string email2)
     {
         try

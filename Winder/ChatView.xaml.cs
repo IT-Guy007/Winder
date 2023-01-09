@@ -17,6 +17,7 @@ public partial class ChatView {
 
     private readonly User sendFromUser;
     private readonly User sendToUser;
+   private bool _isTimerRunning;
 
     public ChatView(User sendFromUser, User sendToUser) {
         this.sendFromUser = sendFromUser;
@@ -27,7 +28,7 @@ public partial class ChatView {
         
         //Set content
         Initialize();
-
+        
     }
 
     private void Initialize() {
