@@ -909,102 +909,12 @@ public class Database {
         return users.ToArray();
     }
 
-
-    public Queue<string> GetRestOfUsers(string email) {
-        List<string> usersList = new List<string>();
-
-        string[] usersWhoLikedYou = GetUsersWhoLikedYou(email);
-        string[] usersWithCommonInterests = GetUsersWithCommonInterest(email);
-
-        OpenConnection();
-
-        SqlCommand command = new SqlCommand("SELECT TOP 10 email FROM Winder.Winder.[User] WHERE email != @email " +
-        "AND email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + // selects the users which have not disliked the given user
-        "AND email not in (select likedPerson from Winder.Winder.Liked where person = @email) " +               // selects the users that the given user had not disliked or already liked
-        "AND email not in (select person1 from Winder.Winder.Match where person2 = @email) " +                  // selects the users that the given user has not already matched with 
-        "AND email not in (select person2 from Winder.Winder.Match where person1 = @email) ", connection);                                                                                 //Limit to 5
-        command.Parameters.AddWithValue("@email", email);
-
-        try {
-            SqlDataReader reader = command.ExecuteReader(); // execute het command
-
-            while (reader.Read()) {
-                string person = reader["email"] as string ?? "Unknown";
-                usersList.Add(person);   // zet elk persoon in de users 
-            }
-
-        } catch (SqlException se) {
-            Console.WriteLine("Error retrieving rest of users from database");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            CloseConnection();
-        }
-
-        string[] users = usersList.ToArray();
-        users = users.Except(usersWhoLikedYou).ToArray();
-        users = users.Except(usersWithCommonInterests).ToArray();  // makes it so the rest of users does not contain the users that liked you or have common interests because we have different methods for them
-
-        Queue<string> queue = new Queue<string>();                 //make a queue from the users
-        foreach (string user in users) {
-            queue.Enqueue(user);
-        }
-
-        CloseConnection();
-        return queue;
-    }
-    public string[] GetUsersWithCommonInterest(string email){
-
-        List<string> users = new List<string>();
-
-        List<string> interestsGivenUser = LoadInterestsFromDatabaseInListInteresses(email).ToList();
-
-
-        string query = "SELECT UID FROM Winder.Winder.UserHasInterest WHERE UID != @email AND (interest = @interest"; // selects the users which have a common interest
-
-        for (int i = 1; i < interestsGivenUser.Count; i++)
-        {
-            query = query + " or interest =" + " '" + interestsGivenUser[i] + "' ";
-        }
-        query = query + ") AND UID not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + // selects the users which have not disliked the given user
-                        "and UID not in (select likedPerson from Winder.Winder.Liked where person = @email) " +// selects the users that the given user has not already disliked or liked
-                        "and UID not in (select person1 from Winder.Winder.Match where person2 = @email) " +
-                        "and UID not in (select person2 from Winder.Winder.Match where person1 = @email) ";          // selects the users that the given user has not matched with
-
-        OpenConnection();
-
-        // selects every user which has common interests except the ones which have disliked the given user or the given user has disliked
-        SqlCommand command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@email", email);
-        if (interestsGivenUser.Count > 0) command.Parameters.AddWithValue("@interest", interestsGivenUser[0]);
-        try
-        {
-            SqlDataReader reader = command.ExecuteReader(); // execute het command
-            while (reader.Read())
-            {
-                string person = reader["UID"] as string ?? "Unknown";
-                users.Add(person);   // zet elk persoon in de users tot het maxamount is bereikt of er niks meer te readen valt
-            }
-            //Close connection
-
-        }
-        catch (SqlException se)
-        {
-            Console.WriteLine("Error retrieving users with common interests from database");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            //Close connection
-            CloseConnection();
-        }
-        CloseConnection();
-        return users.ToArray();
-    }
-
     // Enque users to swipe
-    private static void EnqueUsersToSwipe(Queue<string> usersToSwipe, string email, string query)
-    {
+    private static void EnqueueUsersToSwipe(Queue<string> usersToSwipe, string email, string query) {
         //Random people
-        query = query + ") ORDER BY NEWID()";
-
+        query = query + " ORDER BY NEWID()";
+        Console.WriteLine(query);
+        
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@email", email);
 
@@ -1139,23 +1049,22 @@ public class Database {
             query = query + " and gender = (select preference from winder.winder.[User] where email = @email) "; //gender check
         }
 
-        if (interestsAlgorithm)
-        {
-            if (interestsGivenUser.Count > 0)
-            {
+        if (interestsAlgorithm) {
+            if (interestsGivenUser.Count > 0) {
                 //Add interests
                 query = query + " AND email in (select email from winder.winder.UserHasInterest where interest = " + "'" + interestsGivenUser[0] + "' ";
                 for (int i = 1; i < interestsGivenUser.Count; i++)
                 {
                     query = query + " or interest =" + " '" + interestsGivenUser[i] + "' ";
                 }
+                query = query + ")";
             }
         }
 
 
 
         // Enque users to swipe
-        EnqueUsersToSwipe(usersToSwipe, email, query);
+        EnqueueUsersToSwipe(usersToSwipe, email, query);
 
         //Get 5 users who likes you
         string[] usersWhoLikedYou = GetUsersWhoLikedYou(email);

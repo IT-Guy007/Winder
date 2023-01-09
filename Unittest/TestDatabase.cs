@@ -5,8 +5,7 @@ using NUnit.Framework;
 
 namespace Unittest;
 
-public class TestDatabase
-{
+public class TestDatabase {
 
 
     private Database database;
@@ -166,50 +165,6 @@ public class TestDatabase
         return false;
 
     }
-
-    [Test]
-    
-    public void GetUsersWithCommonInterest_isnotnull()
-    {
-        // arrange
-        var email = "s1173231@student.windesheim.nl";
-
-        //act
-        var result = database.GetUsersWithCommonInterest(email);
-
-        //assert
-        Assert.IsNotNull(result);
-
-
-    }
-
-    [Test]
-    public void GetUsersWithCommonInterest_isarray()
-    {
-        // arrange
-        var email = "s1173231@student.windesheim.nl";
-
-        //act
-        var result = database.GetUsersWithCommonInterest(email);
-
-        //assert
-        Assert.IsInstanceOf<Array>(result);
-
-    }
-    [Test]
-    public void GetUsersWithCommonInterest_isnull()
-    {
-        // arrange
-        var email = "s11732sadada31@student.windesheim.nl";
-
-        //act
-        var result = database.GetUsersWithCommonInterest(email);
-
-        //assert
-        Assert.IsEmpty(result);
-
-    }
-
 
     [TestCase("s1165707@student.windesheim.nl", ExpectedResult = true)]
     [TestCase("s1165700@student.windesheim.nl", ExpectedResult = false)]
