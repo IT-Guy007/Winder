@@ -64,12 +64,17 @@ public partial class ChatView {
         //Initialise content
         databaseChangeListener = new DatabaseChangeListener();
         databaseChangeListener.Initialize(sendFromUser, sendToUser);
-        
+
         //First row
-        HorizontalStackLayout horizontalStackLayout = new HorizontalStackLayout {
-            HorizontalOptions = LayoutOptions.FillAndExpand,
-            VerticalOptions = LayoutOptions.Fill,
-            BackgroundColor = Color.FromArgb("#CC415F"),
+        Grid headerGrid = new Grid {
+            HorizontalOptions = LayoutOptions.Fill,
+
+            ColumnDefinitions = {
+                new ColumnDefinition{ Width = new GridLength(50) },
+                new ColumnDefinition(),
+                new ColumnDefinition{ Width = new GridLength(50) }
+            },
+            RowDefinitions = { new RowDefinition() }
         };
 
 
@@ -84,7 +89,7 @@ public partial class ChatView {
             Navigation.PushAsync(new ChatsViewPage());
         };
         
-        horizontalStackLayout.Add(backButton);
+        headerGrid.Add(backButton, 0,0);
         
         ImageButton refreshButton = new ImageButton {
             Source = "refresh.png",
@@ -96,7 +101,7 @@ public partial class ChatView {
         refreshButton.Clicked += (_,_) => {
             Initialize();
         };
-        horizontalStackLayout.Add(refreshButton);
+        headerGrid.Add(refreshButton, 2,0);
 
         //All the chatmessages
         if (DatabaseChangeListener._chatCollection.Count == 0) {
@@ -180,8 +185,8 @@ public partial class ChatView {
         verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         scrollView.BackgroundColor = Color.FromArgb("#CC415F");
 
-        grid.SetRow(horizontalStackLayout, 0);
-        grid.Add(horizontalStackLayout);
+        grid.SetRow(headerGrid, 0);
+        grid.Add(headerGrid);
         grid.SetRow(scrollView, 1);
         grid.Add(scrollView);
         grid.SetRow(inputStackLayout, 2);

@@ -94,6 +94,10 @@
   }
 }</component>
   <component name="RunManager" selected="Xamarin.Mac.Winder">
+    <configuration name="Winder: MSIX-win10-x64" type="DotNetMsBuildPublish" factoryName="Publish to IIS">
+      <riderPublish publish_profile="MSIX-win10-x64.pubxml" pubxml_path="$PROJECT_DIR$/Winder/Properties/PublishProfiles/MSIX-win10-x64.pubxml" uuid_high="297160223462278676" uuid_low="-8538591488934008196" />
+      <method v="2" />
+    </configuration>
     <configuration name="WorkAround" type="RunExe" factoryName=".NET Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64/Winder.app/Contents/MacOS/Winder" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -132,6 +136,7 @@
     </configuration>
     <list>
       <item itemvalue=".NET Executable.WorkAround" />
+      <item itemvalue="Publish to IIS.Winder: MSIX-win10-x64" />
       <item itemvalue="UWP.Windows" />
       <item itemvalue="Xamarin.iOS.Winder" />
       <item itemvalue="Xamarin.Mac.Winder" />
