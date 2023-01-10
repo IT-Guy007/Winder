@@ -2,13 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             x:Class="MAUI.MainPage"
+             x:Class="Winder.MainPage"
              Shell.NavBarIsVisible="False"
 
              BackgroundColor="#CC415F"
-             xmlns:Winder="clr-namespace:MAUI.MainPage"
-    >
+>
+    
+    <Shell.BackButtonBehavior >
+        <BackButtonBehavior IsVisible="False" IsEnabled="False"></BackButtonBehavior>
+    </Shell.BackButtonBehavior>
+    
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
         <Image HeightRequest="400"
             HorizontalOptions="Center"

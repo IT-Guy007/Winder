@@ -1,36 +1,68 @@
 using System.Data.SqlClient;
+using Microsoft.Maui.Storage;
+
 
 namespace DataModel;
 
-using Microsoft.Maui.Controls;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 public class Database {
-    private Authentication _authentication = new Authentication();
-    public SqlConnection connection;
-    public void GenerateConnection() {
+    private static Authentication _authentication;
+    private static SqlConnection connection;
 
-        SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+    private const bool ageAlgorithm = true;
+    private const bool preferenceAlgorithm = true;
+    private const bool interestsAlgorithm = true;
 
-        builder.DataSource = "192.168.1.106,1433";
-        builder.UserID = "sa";
-        builder.Password = "Qwerty1@";
-        builder.InitialCatalog = "winder";
+    private static string dataSourceConnection = "192.168.1.106,1433";
+    private static string userIDConnection = "sa";
+    private static string passwordConnection = "Qwerty1@";
+    private static string initialCatalogConnection = "winder";
+
+    private static int minAgePreference = 18;
+    private static int maxAgePreference = 18;
+
+    private string emailHasToStartWith = "s";
+    private string emailHasToEndWith = "@student.windesheim.nl";
+
+    private static  DateTime minDateTimeBirth = new DateTime(1925, 01, 01, 0, 0, 0, 0);
+
+    private static int amountOfPictures = 6;
+
+    private static int amountOfUsersToReturnForAlgorithm = 5;
+    
+    public static void Initialize() {
+        _authentication = new Authentication();
+       GenerateConnection();
+    }
+    private static void GenerateConnection() {
+        
+        SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder {
+            DataSource = dataSourceConnection,
+            UserID = userIDConnection,
+            Password = passwordConnection,
+            InitialCatalog = initialCatalogConnection
+        };
 
         connection = new SqlConnection(builder.ConnectionString);
     }
 
-    public void OpenConnection() {
+    public static void OpenConnection() {
         if (connection == null) {
             GenerateConnection();
+            OpenConnection();
+        } else if (connection.State == System.Data.ConnectionState.Closed) {
+            connection.Open();
         }
-        connection.Open();
+
     }
 
-    public void CloseConnection() {
+    public static void CloseConnection() {
 
         if (connection == null) {
+
             GenerateConnection();
         }
         connection.Close();
@@ -39,7 +71,6 @@ public class Database {
     public void UpdateLocalUserFromDatabase(string email) {
 
         if (!string.IsNullOrWhiteSpace(email)) {
-
             //Start connection
             OpenConnection();
 
@@ -49,34 +80,33 @@ public class Database {
             query.Parameters.AddWithValue("@email", email);
 
 
-        //Execute query
-        try {
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read()) {
-                var firstName = reader["firstName"] as string;
-                var middleName = reader["middleName"] as string;
-                var lastName = reader["lastName"] as string;
-                var preferences = reader["preference"] as string;
-                var birthday = (DateTime)reader["birthday"];
-                var gender = reader["gender"] as string;
-                var profilePicture = reader["profilePicture"] as byte[];
-                var bio = reader["bio"] as string;
-                var school = reader["location"] as string;
-                var major = reader["education"] as string;
-                Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
-                    preferences, email, "", gender ,profilePicture, bio,school,major);
+            //Execute query
+            try {
+                SqlDataReader reader = query.ExecuteReader();
+                while (reader.Read()) {
+                    var firstName = reader["firstName"] as string;
+                    var middleName = reader["middleName"] as string;
+                    var lastName = reader["lastName"] as string;
+                    var preferences = reader["preference"] as string;
+                    var birthday = (DateTime)reader["birthday"];
+                    var gender = reader["gender"] as string;
+                    var profilePicture = reader["profilePicture"] as byte[];
+                    var bio = reader["bio"] as string;
+                    var school = reader["location"] as string;
+                    var major = reader["education"] as string;
+                    var minAge = reader["min"] as int?;
+                    var maxAge = reader["max"] as int?;
+                    
+                    var minus = minAge ?? minAgePreference;
+                    var maxus = maxAge ?? maxAgePreference;
+                    Authentication._currentUser = new User(firstName, middleName, lastName, birthday,
+                        preferences, email, "", gender, profilePicture, bio, school, major,minus,maxus);
                 }
-
-                //Close connection
-                CloseConnection();
 
             } catch (SqlException sql) {
                 Console.WriteLine("Error updating local User from Database");
                 Console.WriteLine(sql.ToString());
                 Console.WriteLine(sql.StackTrace);
-
-                //Close connection
-                CloseConnection();
             }
 
             //Close connection
@@ -84,13 +114,25 @@ public class Database {
         }
     }
 
-    public bool CheckLogin(string email, string password) {
-        
+    public bool CheckLogin(string email, string password)
+    {
+        Console.WriteLine("Check login");
         string hashed = _authentication.HashPassword(password);
         bool output = false;
 
+
         //Start connection
         OpenConnection();
+
+        if (!email.EndsWith(emailHasToEndWith))
+        {
+            email = email + emailHasToEndWith;
+
+        }
+        if (!email.StartsWith(emailHasToStartWith))
+        {
+            email = emailHasToStartWith + email;
+        }
 
         //Create query
         SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email", connection);
@@ -99,17 +141,30 @@ public class Database {
         //Execute query
         SqlDataReader reader = query.ExecuteReader();
 
-        while (reader.Read()) {
-            if (hashed == reader["password"] as string) {
+        Console.WriteLine("Checking login");
+        while (reader.Read())
+        {
+            if (hashed == reader["password"] as string)
+            {
+                Console.WriteLine("Getting password");
                 output = true;
+                try
+                {
+                    SetLoginEmail(email);
+            
+                }
+                catch
+                {
+                    Console.WriteLine("Error setting login email");
+                }
+                
             }
         }
-
         //Close connection
         CloseConnection();
         UpdateLocalUserFromDatabase(email);
         return output;
-        
+
     }
 
     public List<string> GetEmailFromDataBase() {
@@ -121,8 +176,8 @@ public class Database {
         try {
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read()) {
-                var iets1 = reader["email"] as string;
-                emails.Add(iets1);
+                var email = reader["email"] as string;
+                emails.Add(email);
             }
         } catch (SqlException e) {
             Console.WriteLine("Error getting emails from database");
@@ -168,17 +223,17 @@ public class Database {
 
     public void UpdatePassword(string email, string password)
     {
-        Authentication a = new Authentication();
-        if (a.EmailIsUnique(email) == false) // checken of email in de database staat
-        {
+        Authentication authentication = new Authentication();
+        // checken of email in de database staat
+        if (authentication.EmailIsUnique(email) == false)  {
 
             // connectieopzetten en query maken
-            
-            string hashedpassword = _authentication.HashPassword(password); // eerst het password hashen voor het updaten
+
+            string hashedPassword = _authentication.HashPassword(password); // eerst het password hashen voor het updaten
             OpenConnection();
             SqlCommand query = new SqlCommand("update winder.winder.[User] set password = @password where email = @Email", connection);
             query.Parameters.AddWithValue("@Email", email);
-            query.Parameters.AddWithValue("@password", hashedpassword);
+            query.Parameters.AddWithValue("@password", hashedPassword);
 
             //Execute query
             try {
@@ -203,7 +258,7 @@ public class Database {
     public void DeleteUser(string email) {
         Authentication authentication = new Authentication();
 
-        if (authentication.EmailIsUnique(email) == false) {
+        if (authentication.EmailIsUnique(email)) {
 
 
             OpenConnection(); // connectie opzetten
@@ -221,8 +276,8 @@ public class Database {
             SqlCommand queryMatchPerson2 = new SqlCommand("delete from winder.winder.Match where person2 = @Email", connection);
             queryMatchPerson2.Parameters.AddWithValue("@Email", email);
 
-            SqlCommand queryuserHasInterest = new SqlCommand("delete from winder.winder.userHasInterest where UID = @Email", connection);
-            queryuserHasInterest.Parameters.AddWithValue("@Email", email);
+            SqlCommand queryUserHasInterest = new SqlCommand("delete from winder.winder.userHasInterest where UID = @Email", connection);
+            queryUserHasInterest.Parameters.AddWithValue("@Email", email);
 
             SqlCommand queryUser = new SqlCommand("delete from winder.winder.[User] where email = @Email", connection);
             queryUser.Parameters.AddWithValue("@Email", email);
@@ -233,7 +288,7 @@ public class Database {
                 queryLikedLikedPerson.ExecuteNonQuery();
                 queryMatchPerson1.ExecuteNonQuery();
                 queryMatchPerson2.ExecuteNonQuery();
-                queryuserHasInterest.ExecuteNonQuery();
+                queryUserHasInterest.ExecuteNonQuery();
 
                 queryUser.ExecuteNonQuery();
 
@@ -272,13 +327,13 @@ public class Database {
         return interests;
     }
 
-    public User GetUserFromDatabase(string email) {
+    public static User GetUserFromDatabase(string email) {
         User user = null;
+        OpenConnection();
+        string query = "SELECT * FROM Winder.Winder.[User] where email = @Email";
+        SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@Email", email);
         try {
-            OpenConnection();
-            string sql = "SELECT * FROM Winder.Winder.[User] where email = @Email";
-            SqlCommand command = new SqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@Email", email);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read()) {
                 string? username = reader["email"] as string;
@@ -292,11 +347,15 @@ public class Database {
                 var school = reader["location"] as string;
                 var major = reader["education"] as string;
                 byte[] img = (byte[])(reader["profilePicture"]);
-                
-                DateTime birthday = bday ?? new DateTime(1925, 01, 01, 0, 0, 0, 0);
-                user = new User(firstName, middleName,lastName,birthday,preferences,email,"",gender, img, bio, school, major);
+                var minAge = reader["min"] as int?;
+                var maxAge = reader["max"] as int?;
+
+                var minus = minAge ?? minAgePreference;
+                var maxus = maxAge ?? maxAgePreference;
+
+                DateTime birthday = bday ?? minDateTimeBirth;
+                user = new User(firstName, middleName, lastName, birthday, preferences, email, "", gender, img, bio, school, major,minus,maxus);
             }
-            CloseConnection();
         } catch (SqlException e) {
             Console.WriteLine("Error retrieving user from database");
             Console.WriteLine(e.ToString());
@@ -307,13 +366,13 @@ public class Database {
         return user;
     }
 
-    public bool RegisterInterestInDatabase(string username, string interest) {
+    public bool RegisterInterestInDatabase(string userName, string interest) {
 
         try {
             OpenConnection();
-            string sql = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
-            SqlCommand command = new SqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@Email", username);
+            string query = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@Email", userName);
             command.Parameters.AddWithValue("@Interest", interest);
             command.ExecuteNonQuery();
             CloseConnection();
@@ -327,12 +386,12 @@ public class Database {
         }
     }
 
-    public bool RemoveInterestOfUser(string username, string interest) {
+    public bool RemoveInterestOfUser(string userName, string interest) {
         try {
             OpenConnection();
-            string sql = "Delete From winder.userHasInterest Where UID = @Email and interest = @Interest";
-            SqlCommand command = new SqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@Email", username);
+            string query = "Delete From winder.userHasInterest Where UID = @Email and interest = @Interest";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@Email", userName);
             command.Parameters.AddWithValue("@Interest", interest);
             command.ExecuteNonQuery();
             CloseConnection();
@@ -345,20 +404,18 @@ public class Database {
             return false;
         }
     }
-    public List<string> LoadInterestsFromDatabaseInListInteresses(string email) {
+    public static List<string> LoadInterestsFromDatabaseInListInteresses(string email) {
         List<string> interests = new List<string>();
-
+        OpenConnection();
+        string query = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
+        SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@Email", email);
         try {
-            OpenConnection();
-            string sql = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
-            SqlCommand command = new SqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@Email", email);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read()) {
                 var iets1 = reader["interest"] as string;
                 interests.Add(iets1);
             }
-            CloseConnection();
         } catch (SqlException e) {
             Console.WriteLine("Error retrieving interests from database");
             Console.WriteLine(e.ToString());
@@ -373,16 +430,17 @@ public class Database {
         try {
             //Start connection
             OpenConnection();
-            
+
             //Create query
             SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
-            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, education = @Education,birthday = @birthday, bio = @bio, profilePicture = @profilepicture " +
+            "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, education = @Education,birthday = @birthday, bio = @bio, gender = @Gender, preference = @Preference,profilePicture = @profilepicture " +
             "where email = @Email", connection);
             query.Parameters.AddWithValue("@firstname", user.firstName);
             query.Parameters.AddWithValue("@middlename", user.middleName);
             query.Parameters.AddWithValue("@lastname", user.lastName);
             query.Parameters.AddWithValue("@birthday", user.birthDay);
-            query.Parameters.AddWithValue("@preference", user.preference);
+            query.Parameters.AddWithValue("@Gender", user.gender);
+            query.Parameters.AddWithValue("@Preference", user.preference);
             query.Parameters.AddWithValue("@Email", user.email);
             query.Parameters.AddWithValue("@bio", user.bio);
             query.Parameters.AddWithValue("@Education", user.major);
@@ -402,12 +460,12 @@ public class Database {
         }
     }
 
-    public bool SaveProfilePictures(string email, byte[] profilepicture) {
+    public bool SaveProfilePictures(string email, byte[] profilePicture) {
         OpenConnection();
-        string sql = "INSERT INTO winder.winder.Photos (winder.[user], winder.photo) VALUES(@Email, @profilepicture)";
-        SqlCommand command = new SqlCommand(sql, connection);
+        string query = "INSERT INTO winder.winder.Photos (winder.[user], winder.photo) VALUES(@Email, @profilepicture)";
+        SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@Email", email);
-        command.Parameters.AddWithValue("@profilepicture", profilepicture);
+        command.Parameters.AddWithValue("@profilepicture", profilePicture);
         try {
             command.ExecuteNonQuery();
             CloseConnection();
@@ -422,14 +480,14 @@ public class Database {
         }
     }
 
-    public void RegistrationFunction(string firstname, string middlename, string lastname, string email, string preference, DateTime birthday, string gender,
+    public void RegistrationFunction(string firstName, string middleName, string lastName, string email, string preference, DateTime birthday, string gender,
                                  string bio, string password, byte[] proficePicture, bool active, string locatie, string opleiding) {
         OpenConnection();
         SqlCommand command = new SqlCommand("INSERT INTO Winder.Winder.[User](firstname, middlename, lastname, birthday, preference, email, password, gender, profilePicture, bio, active, location, education)" +
-                       "VALUES('" + firstname + "', '" + middlename + "', '" + lastname + "', @birthday, '" + preference + "', '" + email + "', '" + password + "', '" + gender + "', @img, '" + bio +
+                       "VALUES('" + firstName + "', '" + middleName + "', '" + lastName + "', @birthday, '" + preference + "', '" + email + "', '" + password + "', '" + gender + "', @img, '" + bio +
                        "', @active, '" + locatie + "', '" + opleiding + "')", connection);
         command.Parameters.AddWithValue("@img", proficePicture);
-        command.Parameters.AddWithValue("@active", active); 
+        command.Parameters.AddWithValue("@active", active);
         command.Parameters.AddWithValue("@birthday", birthday);
         try {
             command.ExecuteReader();
@@ -502,11 +560,11 @@ public class Database {
         // open connection
 
         OpenConnection();
-       
+
         SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET location = @Location WHERE email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
         query.Parameters.AddWithValue("@Location", location);
-        
+
         try {
             query.ExecuteReader();
             CloseConnection();
@@ -576,28 +634,32 @@ public class Database {
     }
 
     public void SetMinAge(string email, int minAge) {
+        
         // open connection
-
         OpenConnection();
 
-        SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET min = @minAge WHERE email = @Email", connection);
-        query.Parameters.AddWithValue("@Email", email);
-        query.Parameters.AddWithValue("@minAge", minAge);
+        if (minAge > 17 && minAge < 101) {
 
-        try {
-            query.ExecuteReader();
-            CloseConnection();
-        } catch (SqlException se) {
-            Console.WriteLine("Error inserting minAge in database");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            CloseConnection();
+
+            SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET min = @minAge WHERE email = @Email",
+                connection);
+            query.Parameters.AddWithValue("@Email", email);
+            query.Parameters.AddWithValue("@minAge", minAge);
+
+            try {
+                query.ExecuteReader();
+                CloseConnection();
+            } catch (SqlException se) {
+                Console.WriteLine("Error inserting minAge in database");
+                Console.WriteLine(se.ToString());
+                Console.WriteLine(se.StackTrace);
+                CloseConnection();
+            }
         }
-
     }
 
     public void SetMaxAge(string email, int maxAge) {
-        
+
         // open connection
         OpenConnection();
 
@@ -625,13 +687,13 @@ public class Database {
         SqlCommand query = new SqlCommand("SELECT min FROM winder.winder.[User] WHERE email = @Email", connection);
         query.Parameters.AddWithValue("@Email", email);
 
-        
+
         try {
             SqlDataReader reader = query.ExecuteReader();
             while (reader.Read()) {
                 int? minAge = reader["min"] as int?;
                 CloseConnection();
-                int minimalAge = minAge ?? 18;
+                int minimalAge = minAge ?? minAgePreference;
                 return minimalAge;
 
             }
@@ -659,7 +721,7 @@ public class Database {
             while (reader.Read()) {
                 int? minAge = reader["max"] as int?;
                 CloseConnection();
-                int minimalAge = minAge ?? 18;
+                int minimalAge = minAge ?? minAgePreference;
                 return minimalAge;
 
             }
@@ -686,7 +748,7 @@ public class Database {
 
         try {
             SqlDataReader reader = command.ExecuteReader();
-            
+
             reader.Read();
             match = reader.HasRows;
             //Close connection
@@ -699,7 +761,7 @@ public class Database {
             //Close connection
             CloseConnection();
         }
-        
+
         return match;
     }
 
@@ -764,6 +826,7 @@ public class Database {
             CloseConnection();
         }
     }
+    
     public void deleteLikeOnMatch(string emailCurrentUser, string emailLikedUser) {
         OpenConnection();
 
@@ -783,9 +846,9 @@ public class Database {
         }
     }
 
-    public byte[][] GetPicturesFromDatabase(string email) {
-        
-        byte[][] result = new byte[10][];
+    public static byte[][] GetPicturesFromDatabase(string email) {
+
+        byte[][] result = new byte[amountOfPictures][];
 
         //TO-DO: Get pictures from database
         //Start connection
@@ -799,12 +862,12 @@ public class Database {
         try {
             SqlDataReader reader = query.ExecuteReader();
             int i = 0;
-            while(reader.Read()) {
+            while (reader.Read()) {
                 var profilePicture = reader["photo"] as byte[];
                 result[i] = profilePicture;
                 i++;
             }
-        } catch(SqlException se) {
+        } catch (SqlException se) {
             Console.WriteLine("Error retrieving pictures from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
@@ -813,227 +876,223 @@ public class Database {
         CloseConnection();
         return result;
     }
-    
-    public string[] GetUsersWhoLikedYou(string email) {
-        
+
+    public static string[] GetUsersWhoLikedYou(string email) {
+
         List<string> users = new List<string>();
         OpenConnection();
 
-    
-        SqlCommand command = new SqlCommand("SELECT person FROM Winder.Winder.Liked WHERE likedPerson = @email AND liked = 1 " + // selects the users that have liked the given user
-            "AND person not in (select likedPerson from Winder.Winder.Liked where person = @email) ", connection); // except the ones that the given user has already disliked or liked
+        SqlCommand command = new SqlCommand("SELECT top 5 person FROM Winder.Winder.Liked " +
+                                            "WHERE likedPerson = @email AND liked = 1 " + // selects the users that have liked the given user
+                                            "AND person not in (select likedPerson from Winder.Winder.Liked where person = @email) " + // except the ones that the given user has already disliked or liked
+                                            "order by NEWID()", connection); 
         command.Parameters.AddWithValue("@email", email);
-        
+
         try {
             SqlDataReader reader = command.ExecuteReader(); // execute het command
-            
+
             while (reader.Read()) {
                 string person = reader["person"] as string ?? "Unknown";   
                 users.Add(person);   // zet elk persoon in de users 
             }
             //Close connection
-            
+
         } catch (SqlException se) {
             Console.WriteLine("Error retrieving users who liked you from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
             //Close connection
             CloseConnection();
-            
-            
+
         }
         CloseConnection();
         return users.ToArray();
     }
 
-    public Queue<string> GetRestOfUsers(string email) {
-        List<string> userslist = new List<string>();
-
-        string[] userswholikedyou = GetUsersWhoLikedYou(email);
-        string[] userswithcommoninterests = GetUsersWithCommonInterest(email);
+    // Enque users to swipe
+    private static void EnqueueUsersToSwipe(Queue<string> usersToSwipe, string email, string query) {
+        //Random people
+        query = query + " ORDER BY NEWID()";
+        Console.WriteLine(query);
         
-        OpenConnection();
-
-        SqlCommand command = new SqlCommand("SELECT TOP 10 email FROM Winder.Winder.[User] WHERE email != @email " +
-        "AND email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + // selects the users which have not disliked the given user
-        "AND email not in (select likedPerson from Winder.Winder.Liked where person = @email) " +               // selects the users that the given user had not disliked or already liked
-        "AND email not in (select person1 from Winder.Winder.Match where person2 = @email) " +                  // selects the users that the given user has not already matched with 
-        "AND email not in (select person2 from Winder.Winder.Match where person1 = @email) ", connection);                                                                                 //Limit to 5
-        command.Parameters.AddWithValue("@email", email);
-
-        try {
-            SqlDataReader reader = command.ExecuteReader(); // execute het command
-
-            while (reader.Read()) {
-                string person = reader["email"] as string ?? "Unknown";
-                userslist.Add(person);   // zet elk persoon in de users 
-            }
-             
-        } catch (SqlException se) {
-            Console.WriteLine("Error retrieving rest of users from database");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            CloseConnection();
-        }
-        
-        string[] users = userslist.ToArray();
-        users = users.Except(userswholikedyou).ToArray();
-        users = users.Except(userswithcommoninterests).ToArray();  // makes it so the rest of users does not contain the users that liked you or have common interests because we have different methods for them
-        
-        Queue<string> queue = new Queue<string>();                 //make a queue from the users
-        foreach (string user in users) {
-            queue.Enqueue(user);
-        }
-
-        CloseConnection();
-        return queue;
-    }
-
-    /*public string[] GetUsersWhoMatchPreferences(string email)
-    {
-        List<string> users = new List<string>();
-
-        OpenConnection();
-
-        SqlCommand command = new SqlCommand("select email from Winder.Winder.[User] where email != @email &" +
-
-        return users.ToArray();
-    }*/
-
-    public string[] GetUsersWithCommonInterest(string email) {
-        List<string> users = new List<string>();
-
-        List<string> interestsgivenuser = LoadInterestsFromDatabaseInListInteresses(email).ToList();
-
-
-        string query = "SELECT UID FROM Winder.Winder.UserHasInterest WHERE UID != @email AND (interest = @interest"; // selects the users which have a common interest
-
-        for (int i = 1; i < interestsgivenuser.Count; i++) {
-            query = query + " or interest =" + " '" + interestsgivenuser[i] + "' ";
-        }
-        query = query + ") AND UID not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + // selects the users which have not disliked the given user
-                        "and UID not in (select likedPerson from Winder.Winder.Liked where person = @email) " +// selects the users that the given user has not already disliked or liked
-                        "and UID not in (select person1 from Winder.Winder.Match where person2 = @email) " +
-                        "and UID not in (select person2 from Winder.Winder.Match where person1 = @email) ";          // selects the users that the given user has not matched with
-
-        OpenConnection();
-
-        // selects every user which has common interests except the ones which have disliked the given user or the given user has disliked
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@email", email);
-        command.Parameters.AddWithValue("@interest", interestsgivenuser[0]);
 
+        OpenConnection();
 
-        try {
+        try
+        {
             SqlDataReader reader = command.ExecuteReader(); // execute het command
-            while (reader.Read())
+            if (reader.HasRows)
             {
-                string person = reader["UID"] as string ?? "Unknown";
-                users.Add(person);   // zet elk persoon in de users tot het maxamount is bereikt of er niks meer te readen valt
+                while (reader.Read())
+                {
+                    string user = reader["email"] as string ?? "";
+                    usersToSwipe.Enqueue(user);
+                }
             }
-            //Close connection
-            
-        } catch (SqlException se) {
-            Console.WriteLine("Error retrieving users with common interests from database");
+            else
+            {
+                Console.WriteLine("No new profiles found to swipe");
+            }
+            CloseConnection();
+
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine("Error retrieving emails for algorithm");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
+
             //Close connection
             CloseConnection();
         }
         CloseConnection();
-        return users.ToArray();
     }
-    
 
-    public List<string> AlgorithmForSwiping(string email) {
-        Random rnd = new Random();
+    // Enque who liked you
+    private static void EnqueWhoLikedYou(Queue<string> likedQueue, string[] usersWhoLikedYou)
+    {
+        foreach (string user in usersWhoLikedYou)
+        {
+            likedQueue.Enqueue(user);
+        }
+    }
 
-        string[] usersWhoLikedYou = GetUsersWhoLikedYou(email); //Users that liked you
-        string[] usersWithCommonInterests = GetUsersWithCommonInterest(email);
+    // Loop though users and check if in currentQueue
+    private static void CheckCurrentQueue(List<string> result, Queue<string> usersToSwipe, Queue<string> likedQueue, int place)
+    {
+        while (result.Count != amountOfUsersToReturnForAlgorithm && (usersToSwipe.Count > 0 || likedQueue.Count > 0))
+        {
 
-        usersWithCommonInterests = usersWithCommonInterests.Where(x => !usersWhoLikedYou.Contains(x)).ToArray(); // is needed because they could have duplicates between the lists and is done this way because users who likedyou has a higher priority in the algorithm
-
-        Queue<string> restOfUsers = GetRestOfUsers(email); //Random Users
-        usersWhoLikedYou = usersWhoLikedYou.OrderBy(x => rnd.Next()).ToArray(); 
-        usersWithCommonInterests = usersWithCommonInterests.OrderBy(x => rnd.Next()).ToArray();     // shuffle the arrays randomly instead of how they are sorted in the database
-
-        usersWithCommonInterests = usersWithCommonInterests.GroupBy(x => x).ToList().OrderByDescending(g => g.Count()).Select(g => g.Key).ToArray(); // sorts so that the values with the most duplicates are in front and removes the duplicates
-
-        List<string> users = new List<string>(); //Result
-        for (int i = 0; i < 5; i++) {
             var userToAdd = "";
-            if (i < 3 && usersWithCommonInterests.Length >= 3) {    // preferebaly we want 3 people with common interests{
-                userToAdd = usersWithCommonInterests[i];
 
-            } else if (i == 3 & usersWhoLikedYou.Length > 0) {      //1 person who has liked
-                userToAdd = usersWhoLikedYou.First();
-
-            } else {          //Fill up with random people
-                if(restOfUsers.Count > 0) {
-                    userToAdd = restOfUsers.Dequeue();
-                }
-            }
-
-            //Check if already exists in current Queue, otherwise add random
-            var alreadyExists = Authentication._profileQueue.Where(i => i.user.email == userToAdd);
-            if (alreadyExists.Count() <= 0 && alreadyExists != null) {
-                users.Add(userToAdd);
-            } else { 
-                while (string.IsNullOrWhiteSpace(userToAdd) && restOfUsers.Count != 0) {
-                    var nextUsers = restOfUsers.Dequeue();
-                    var alreadyExistsLoop = Authentication._profileQueue.Where(i => i.user.email == nextUsers);
-                    if(alreadyExistsLoop.Count() == 0) {
-                        userToAdd = nextUsers;
+            try
+            {
+                if (place == result.Count)
+                {
+                    //For the liked user place else random user
+                    if (likedQueue.Count > 0)
+                    {
+                        userToAdd = likedQueue.Dequeue();
+                    }
+                    else
+                    {
+                        userToAdd = usersToSwipe.Dequeue();
                     }
                 }
-                if (!string.IsNullOrWhiteSpace(userToAdd) && userToAdd != "") {
-                users.Add(userToAdd);
+                else
+                {
+                    if (usersToSwipe.Count > 0)
+                    {
+                        userToAdd = usersToSwipe.Dequeue();
+                    }
+                    else
+                    {
+                        userToAdd = likedQueue.Dequeue();
+                    }
+                }
+
+                //Check if already exists in current Queue
+                IEnumerable<Profile> alreadyExists = Authentication._profileQueue.Where(i => i.user.email == userToAdd);
+                if (!alreadyExists.Any() && !usersToSwipe.Contains(userToAdd) && !string.IsNullOrEmpty(userToAdd))
+                {
+                    Console.WriteLine("Adding user");
+                    result.Add(userToAdd);
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error adding user to queue");
+                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.StackTrace);
+            }
+
         }
+    }
+
+    
+    public static List<string> AlgorithmForSwiping(string email) {
+
+        //Get 10 users from the database within the criteria
+        Queue<string> usersToSwipe = new Queue<string>();
+
+        DateTime minDate = DateTime.Now.AddYears(0 - Authentication._currentUser.minAge);
+        DateTime maxDate = DateTime.Now.AddYears(0 - Authentication._currentUser.maxAge);
+        var formattedMin = minDate.ToString("yyyy-MM-dd HH:mm:ss");
+        var formattedMax = maxDate.ToString("yyyy-MM-dd HH:mm:ss");
+
+        List<string> interestsGivenUser = LoadInterestsFromDatabaseInListInteresses(email).ToList(); //Every interest of the current user
+
+
+        string query = "select top 10 email " +
+                       "from winder.[User] " +
+                       "where email != @email " + //Not themself
+                       "and email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 1) " + //Not disliked by other person
+                       "and email not in (select likedPerson from winder.winder.Liked where person = @email) " + //Not already a person that you liked
+                       "and email not in (select winder.winder.Match.person1 from Winder.Winder.Match where person2 = @email) " + //Not matched
+                       "and email not in (select winder.winder.Match.person2 from Winder.Winder.Match where person1 = @email) " + //Not matched
+                       "And location = (select location from winder.winder.[User] where email = @email) "; // location check
+
+        if (ageAlgorithm)
+        {
+            query = query + " and birthday <= '" + formattedMax + "' and birthday >= '" + formattedMin + "'  "; //In age range
+        }
+
+        if (preferenceAlgorithm)
+        {
+            query = query + " and gender = (select preference from winder.winder.[User] where email = @email) "; //gender check
+        }
+
+        if (interestsAlgorithm) {
+            if (interestsGivenUser.Count > 0) {
+                //Add interests
+                query = query + " AND email in (select email from winder.winder.UserHasInterest where interest = " + "'" + interestsGivenUser[0] + "' ";
+                for (int i = 1; i < interestsGivenUser.Count; i++)
+                {
+                    query = query + " or interest =" + " '" + interestsGivenUser[i] + "' ";
+                }
+                query = query + ")";
+            }
+        }
+
+
+
+        // Enque users to swipe
+        EnqueueUsersToSwipe(usersToSwipe, email, query);
+
+        //Get 5 users who likes you
+        string[] usersWhoLikedYou = GetUsersWhoLikedYou(email);
+        Queue<string> likedQueue = new Queue<string>();
+        
+        //Liked into queue
+        EnqueWhoLikedYou(likedQueue, usersWhoLikedYou);
+
+        //Place for the users who liked you
+        Random random = new Random();
+        int place = random.Next(0, amountOfUsersToReturnForAlgorithm);
+
 
         //Check if users contains empty strings
         List<string> result = new List<string>();
-        foreach (var user in users) {
-            if(user != "") {
-                result.Add(user);
-            }
-        }
+
+
+        //Loop though users and check if in currentQueue
+        CheckCurrentQueue(result,usersToSwipe,likedQueue,place);
+
+
         return result;
     }
 
-    //User to get the profiles for the match(run async)
-    public Profile[] Get5Profiles(string email) {
-        //The algorithm that determines who to get
-
-        //The users(email) to get
-        List<string> usersToRetrief = new List<string>();
-
-        usersToRetrief = AlgorithmForSwiping(email); 
-
-        //Results
-        Profile[] profiles = new Profile[usersToRetrief.Count()];
+    private async Task SetLoginEmail(string email) {
+        Console.WriteLine("Setting login email");
+        await SecureStorage.SetAsync("email", email);
         
-        //Retrieving
-        for (int i = 0; i < usersToRetrief.Count(); i++) {
-
-            //Get the user
-            User user = GetUserFromDatabase(usersToRetrief[i]);
-
-            //Get the interests of the user
-            user.interests = LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]).ToArray();
-
-            //Get the images of the user
-            byte[][] images = GetPicturesFromDatabase(usersToRetrief[i]);
-            var profile = new Profile(user, images);
-            
-            profiles[i] = profile;
-        }
-        return profiles;
     }
+    
+ 
 
-    public List<User> GetMatchedStudentsFromUser(string email)
-    {
+    public List<User> GetMatchedStudentsFromUser(string email) {
         List<User> users = new List<User>();
         List<string> emails = new List<string>();
         try
@@ -1069,5 +1128,81 @@ public class Database {
         CloseConnection();
         return users;
     }
+
+    public bool InsertPictureInDatabase(string email, byte[] imageToUpload)
+    {
+        try
+        {
+            OpenConnection();
+            string query = "INSERT INTO winder.winder.Photos (winder.[user], winder.photo) VALUES(@Email, @profilepicture)";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@Email", email);
+            command.Parameters.AddWithValue("@profilepicture", imageToUpload);
+            command.ExecuteNonQuery();
+            CloseConnection();
+        }
+        catch (SqlException se)
+        {
+            Console.WriteLine("Error inserting picture in database");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+            CloseConnection();
+        }
+        CloseConnection();
+        return false;
+    }
+
+    public static bool SendMessage(string personFrom, string personTo, string message) {
+        try {
+
+            OpenConnection();
+            DateTime sendDate = DateTime.Now;
+            SqlCommand query = new SqlCommand("INSERT INTO winder.winder.[ChatMessage] (personFrom, personTo,chatMessage,sendDate,[readMessage]) VALUES ('" + personFrom + "' , '" + personTo + "','" + message + "', @sendDate, 0)", connection);
+            query.Parameters.AddWithValue("@sendDate", sendDate);
+
+            query.ExecuteNonQuery();
+            CloseConnection();
+            return true;
+        } catch (SqlException se) {
+            Console.WriteLine("Error sending the message");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+            return false;
+        }
+    }
+
+    public static void SetRead(string personFrom, string personTo){
+        try {
+            OpenConnection();
+            SqlCommand query = new SqlCommand("UPDATE winder.winder.[ChatMessage] SET [readMessage] = 1 WHERE personTo = '" + personFrom + "' AND personFrom = '" + personTo + "'", connection);
+            query.ExecuteNonQuery();
+            CloseConnection();
+        } catch (SqlException se) {
+            Console.WriteLine("Error updating read message");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+        }
+
+    }
+    
+    public void DeleteAllPhotosFromDatabase(User currentUser) {
+        try {
+            OpenConnection();
+            string query = "delete from winder.winder.Photos WHERE [user] = @Email";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@Email", currentUser.email);
+            command.ExecuteNonQuery();
+            CloseConnection();
+        } catch (SqlException se) {
+            Console.WriteLine("Error deleting pictures from database");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            CloseConnection();
+        }
+    }
+
 }
 
