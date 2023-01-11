@@ -111,12 +111,16 @@ public class TestDatabase {
     }
 
 
+    
+    [TestCase("s1test", ExpectedResult = false)]
     [TestCase("@student.windesheim.nl", ExpectedResult = false)]
     [TestCase("s1test@student.windesheim.nl", ExpectedResult = true)]
     public bool LoadInterestsFromDatabaseInListInteressesTest(string email)
     {
         return Database.LoadInterestsFromDatabaseInListInteresses(email).Count > 0;
     }
+
+    
 
     [TestCase("s1178208@student.windesheim.nl", "Lezen", ExpectedResult = true)]
     [TestCase("s141689d30@student.windesheim.nl", "bestaat niet", ExpectedResult = false)]
