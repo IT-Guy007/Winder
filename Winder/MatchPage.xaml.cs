@@ -307,7 +307,6 @@ public partial class MatchPage {
             buttonStackLayout.Add(likeButton);
             verticalStackLayout.GestureRecognizers.Add(rightSwipe);
             verticalStackLayout.GestureRecognizers.Add(leftSwipe);
-            
         }
 
         //Add the different stacklayouts
@@ -316,6 +315,8 @@ public partial class MatchPage {
 
         verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
+
+        
     }
     
     private void BackButton_Clicked(object sender, EventArgs e) {
@@ -382,6 +383,10 @@ public partial class MatchPage {
             Initialize();
         }
 
+        if (Authentication._profileQueue.Count() <= 0)
+        {
+            Navigation.PushAsync(new MatchPage());
+        }
     }
 
     //Give match popup
@@ -440,7 +445,6 @@ public partial class MatchPage {
     
     private void OnLike(object sender, EventArgs e)
     {
-        CheckIfQueueNeedsMoreProfiles();
         string emailCurrentUser = Authentication._currentUser.email;
         string emailLikedUser = Authentication._currentProfile.user.email;
         if (database.CheckMatch(emailCurrentUser, emailLikedUser))
@@ -453,17 +457,17 @@ public partial class MatchPage {
         {
             database.NewLike(emailCurrentUser, emailLikedUser);
         }
+        CheckIfQueueNeedsMoreProfiles();
         NextProfile();
     }
 
     private void OnDislike(object sender, EventArgs e)
     {
-        CheckIfQueueNeedsMoreProfiles();
         string emailCurrentUser = Authentication._currentUser.email;
         string emaildDislikedUser = Authentication._currentProfile.user.email;
 
         database.NewDislike(emailCurrentUser, emaildDislikedUser);
-
+        CheckIfQueueNeedsMoreProfiles();
         NextProfile();
     }
 }

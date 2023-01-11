@@ -1028,7 +1028,7 @@ public class Database {
         string query = "select top 10 email " +
                        "from winder.[User] " +
                        "where email != @email " + //Not themself
-                       "and email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 0) " + //Not disliked by other person
+                       "and email not in (select person from Winder.Winder.Liked where likedPerson = @email and liked = 1) " + //Not disliked by other person
                        "and email not in (select likedPerson from winder.winder.Liked where person = @email) " + //Not already a person that you liked or disliked
                        "and email not in (select winder.winder.Match.person1 from Winder.Winder.Match where person2 = @email) " + //Not matched
                        "and email not in (select winder.winder.Match.person2 from Winder.Winder.Match where person1 = @email) " + //Not matched
