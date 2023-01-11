@@ -719,10 +719,10 @@ public class Database {
         try {
             SqlDataReader reader = query.ExecuteReader();
             while (reader.Read()) {
-                int? minAge = reader["max"] as int?;
+                int? maxAge = reader["max"] as int?;
                 CloseConnection();
-                int minimalAge = minAge ?? minAgePreference;
-                return minimalAge;
+                int maximalAge = maxAge ?? maxAgePreference;
+                return maximalAge;
 
             }
         }
