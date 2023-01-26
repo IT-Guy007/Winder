@@ -1,4 +1,5 @@
 ﻿using DataModel;
+using EmailMessage = DataModel.EmailMessage;
 
 namespace Winder;
 public partial class ForgotPasswordPage {
@@ -23,13 +24,15 @@ public partial class ForgotPasswordPage {
             
         } else {
 
-            //Creates random code
-            authenticationCode = Authentication.RandomString(6);  
+            //Send forgotten password email
+            string code = Authentication.RandomString(8);
+        
             string body = "<h1>Authenticatie-code voor Winder</h1>" + 
-                "De authenthenticatie-code voor het resetten van het wachtwoord van uw Winder account is: <b>" + $"{authenticationCode}</b>" +
-                "<br>Met vriendelijke groet,     Het Winder team";
+                          "De authenthenticatie-code voor het resetten van het wachtwoord van uw Winder account is: <b>" + $"{code}</b>" +
+                          "<br>Met vriendelijke groet, <br> Het Winder team";
+        
             string subject = "Authenticatie-code";
-            auth.SendEmail(email, body, subject);
+            new EmailMessage(email, body, subject).SendEmail();
 
             //Enables the rest of the page
             Emailadres.IsVisible = false;

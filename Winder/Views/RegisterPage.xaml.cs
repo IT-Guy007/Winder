@@ -199,7 +199,7 @@ public partial class RegisterPage {
                 FoutEmail.IsVisible = true;
                 aantalchecks -= 1;
             }
-            if (auth.CheckEmail(Email.Text))
+            if (CheckEmail(Email.Text))
             {
                 email = Email.Text;
                 aantalchecks += 1;
@@ -385,6 +385,14 @@ public partial class RegisterPage {
 
     private void Backbutton_Clicked(object sender, EventArgs e) {
         Navigation.PushAsync(new MainPage());
+    }
+    
+    // checks if email belongs to Windesheim, returns true if so
+    private bool CheckEmail(string email) {
+        if (email.EndsWith(Authentication.emailEndsWith) && email.StartsWith(Authentication.emailStartsWith)) {
+            return true;
+        }
+        return false;
     }
 }
 

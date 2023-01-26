@@ -1,6 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Net;
-using System.Net.Mail;
 
 namespace DataModel;
 using System.Security.Cryptography;
@@ -9,14 +7,6 @@ using System.Text;
 public class Authentication {
 
     public static User _currentUser { get; set; }
-    private const string winderEmail = "thewinderapp@gmail.com";
-    private const string emailCredential = "xltbqbsyderpqsxp";
-    private const string validationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
-    private const string emailEndsWith = "@student.windesheim.nl";
-    private const string emailStartsWith = "s";
-    private const int passwordLength =  8;
-    private const string smtpClientGmail = "smtp.gmail.com";
-    private const int portEmail = 587;
     public static bool isScaled = false;
 
     //Match
@@ -25,8 +15,15 @@ public class Authentication {
     public static int selectedImage;
     private static bool isGettingProfiles;
     
+    private const int passwordLength =  8;
+    
     //Chat
     public static ObservableCollection<ChatMessage> ChatCollection;
+    
+    //Mail check
+    private const string validationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
+    public const string emailEndsWith = "@student.windesheim.nl";
+    public const string emailStartsWith = "s";
 
     public static void Initialize() {
         _profileQueue = new Queue<Profile>();
@@ -78,19 +75,11 @@ public class Authentication {
         return false;
     }
 
-    // checks if email belongs to Windesheim, returns true if so
-    public bool CheckEmail(string email)
-    {
-        if (email.EndsWith(emailEndsWith) && email.StartsWith(emailStartsWith))
-        {
-            return true;
-        }
-        return false;
-    }
 
-    private bool PasswordLength(string password)
-    {
+    private bool PasswordLength(string password) {
+
         return password.Length >= passwordLength;
+        
     }
 
     private bool PasswordContainsNumber(string password)
@@ -103,54 +92,6 @@ public class Authentication {
         return password.Any(char.IsUpper);
     }
 
-
-    //maakt de authenticatiecode aan
-    public static string RandomString(int length)
-    {
-        
-        StringBuilder res = new StringBuilder();
-        using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
-        {
-            byte[] uintBuffer = new byte[sizeof(uint)];
-
-            while (length-- > 0)
-            {
-                rng.GetBytes(uintBuffer);
-                uint num = BitConverter.ToUInt32(uintBuffer, 0);
-                res.Append(validationCharacters[(int)(num % (uint)validationCharacters.Length)]);
-            }
-        }
-
-        return res.ToString();
-    }
-
-
-    //verstuurd de mail
-    public void SendEmail(string email, string body, string subject)
-    {
-        //zet de client op
-        SmtpClient smtpClient = new SmtpClient(smtpClientGmail)
-        {
-            Port = portEmail,
-            UseDefaultCredentials = false,
-            Credentials = new NetworkCredential(winderEmail, emailCredential),
-            EnableSsl = true,
-
-        };
-
-        // maakt de mail aan
-        MailMessage mailMessage = new MailMessage
-        {
-            From = new MailAddress(winderEmail),
-            Subject = subject,
-            Body = body,
-            IsBodyHtml = true,
-        };
-
-        mailMessage.To.Add(email);
-        // verstuurd de mail
-        smtpClient.Send(mailMessage);
-    }
 
     //User to get the profiles for the match(run async)
     public static Profile[] Get5Profiles(string email) {
@@ -217,5 +158,22 @@ public class Authentication {
         Database database = new Database();
         database.SetChatMessages(fromUser, toUser);
         
+    }
+    
+  
+    public static string RandomString(int length) {
+        
+        StringBuilder res = new StringBuilder();
+        using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider()) {
+            byte[] uintBuffer = new byte[sizeof(uint)];
+
+            while (length-- > 0) {
+                rng.GetBytes(uintBuffer);
+                uint num = BitConverter.ToUInt32(uintBuffer, 0);
+                res.Append(validationCharacters[(int)(num % (uint)validationCharacters.Length)]);
+            }
+        }
+
+        return res.ToString();
     }
 }

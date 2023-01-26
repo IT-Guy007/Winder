@@ -44,7 +44,7 @@ public partial class ChatsViewPage {
 
     private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e) {
         var tappedItem = e.Item as MatchedPerson;
-        Navigation.PushAsync(new ChatView(Authentication._currentUser, Database.GetUserFromDatabase(tappedItem.Email)));
+        Navigation.PushAsync(new ChatPage(Authentication._currentUser, Database.GetUserFromDatabase(tappedItem.Email)));
     }
 
     private void MyProfile_Clicked(object sender, EventArgs e) {

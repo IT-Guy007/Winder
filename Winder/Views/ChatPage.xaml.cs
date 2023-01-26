@@ -7,7 +7,7 @@ using Microsoft.Maui.Graphics;
 
 namespace Winder;
 
-public partial class ChatView {
+public partial class ChatPage {
 
     //MAUI
     private ScrollView scrollView;
@@ -16,9 +16,8 @@ public partial class ChatView {
 
     private readonly User sendFromUser;
     private readonly User sendToUser;
-   private bool _isTimerRunning;
 
-    public ChatView(User sendFromUser, User sendToUser) {
+    public ChatPage(User sendFromUser, User sendToUser) {
         this.sendFromUser = sendFromUser;
         this.sendToUser = sendToUser;
 

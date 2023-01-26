@@ -2,6 +2,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Maui.Storage;
 
+
 namespace DataModel;
 
 using System;
@@ -1090,8 +1091,7 @@ public class Database {
         
     }
     
- 
-
+    
     public List<User> GetMatchedStudentsFromUser(string email) {
         List<User> users = new List<User>();
         List<string> emails = new List<string>();

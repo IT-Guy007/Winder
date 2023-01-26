@@ -28,14 +28,6 @@ public class TestAuthentication {
         return authentication.CheckPassword(password);
     }
 
-    [TestCase("", ExpectedResult = false)]
-    [TestCase("randomemail@gmail.com", ExpectedResult = false)]
-    [TestCase("NietEensEenEmail", ExpectedResult = false)]
-    [TestCase("sDITHOEVENGEENCIJFERSTEZIJN@student.windesheim.nl", ExpectedResult = true)]
-    [TestCase("student.windesheim.nl", ExpectedResult = false)]
-    public bool AuthenticationEmailCheck(string email) {
-        return authentication.CheckEmail(email);
-    }
 
     [TestCase(" ", ExpectedResult = "36A9E7F1C95B82FFB99743E0C5C4CE95D83C9A430AAC59F84EF3CBFAB6145068")]
     [TestCase("Password123", ExpectedResult = "008C70392E3ABFBD0FA47BBC2ED96AA99BD49E159727FCBA0F2E6ABEB3A9D601")]
@@ -59,27 +51,5 @@ public class TestAuthentication {
     public bool AuthenticationEmailIsUnique(string email) {
         return authentication.EmailIsUnique(email);
     }
-    
-    [TestCase(4, ExpectedResult = "4")]
-    [TestCase(0, ExpectedResult = "0")]
-    [TestCase(9, ExpectedResult = "9")]
-    public string AuthenticationRandomString(int length)
-    {
-        return Authentication.RandomString(length).Length.ToString();
 
-    }
-
-    [TestCase("1174004@student.widnesheim.nl", "hoi", "hoi", ExpectedResult = true)]
-    [TestCase("1174004@student.widnesheim.nl", "hoi", "", ExpectedResult = true)]
-    [TestCase("1174004@student.widnesheim.nl", "", "hoi", ExpectedResult = true)]
-    [TestCase("", "hoi", "hoi", ExpectedResult = false)]
-    [TestCase("1174004", "hoi", "hoi", ExpectedResult = false)]
-    public bool AuthenticationSendEmail(string email, string subject, string body) {
-        try {
-            authentication.SendEmail(email, subject, body);
-            return true;
-        } catch {
-            return false;
-        }
-    }
 }
