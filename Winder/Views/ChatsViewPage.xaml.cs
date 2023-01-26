@@ -12,7 +12,7 @@ public partial class ChatsViewPage {
         Database = new Database();
         InitializeComponent();
         
-        List<User> MatchedStudents = Database.GetMatchedStudentsFromUser(Authentication._currentUser.email);
+        List<User> MatchedStudents = Database.GetMatchedStudentsFromUser(Authentication.CurrentUser.Email);
         List<MatchedPerson> MatchedPeople = ConvertUserToMatchPerson(MatchedStudents);
         ListOfMatches.ItemsSource = MatchedPeople;
     }
@@ -44,7 +44,7 @@ public partial class ChatsViewPage {
 
     private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e) {
         var tappedItem = e.Item as MatchedPerson;
-        Navigation.PushAsync(new ChatPage(Authentication._currentUser, Database.GetUserFromDatabase(tappedItem.Email)));
+        Navigation.PushAsync(new ChatPage(Authentication.CurrentUser, new User().GetUserFromDatabase(tappedItem.Email, Database2.ReleaseConnection)));
     }
 
     private void MyProfile_Clicked(object sender, EventArgs e) {

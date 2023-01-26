@@ -157,7 +157,7 @@ public partial class RegisterPage {
             database.RegistrationFunction(firstname, middleName, lastname, email, preference, dateOfBirth, gender, " ", password, profilePicture, true, school, major);
             database.SaveProfilePictures(email, profilePicture);
             User currentUser = new User(firstname, middleName, lastname, dateOfBirth, preference, email, password, gender, profilePicture, " ", school, major,18,23);
-            Authentication._currentUser = currentUser;
+            Authentication.CurrentUser = currentUser;
 
             foreach (string interesse in chosenInterestsList) {
                 database.RegisterInterestInDatabase(email, interesse);
@@ -178,7 +178,7 @@ public partial class RegisterPage {
         geboortedatumtijdelijk = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
 
 
-        #region email checks
+        #region Email checks
         if (Email.Text == null)
         {
             FoutEmail.Text = "Email mag niet leeg zijn";
@@ -387,7 +387,7 @@ public partial class RegisterPage {
         Navigation.PushAsync(new MainPage());
     }
     
-    // checks if email belongs to Windesheim, returns true if so
+    // checks if Email belongs to Windesheim, returns true if so
     private bool CheckEmail(string email) {
         if (email.EndsWith(Authentication.emailEndsWith) && email.StartsWith(Authentication.emailStartsWith)) {
             return true;

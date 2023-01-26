@@ -97,16 +97,16 @@ public class TestDatabase {
     {
 
         User testUser = new User();
-        testUser.firstName = firstname;
-        testUser.middleName = middlename;
-        testUser.lastName = lastname;
-        testUser.preference = preference;
-        testUser.birthDay = birthday;
-        testUser.gender = gender;
-        testUser.bio = bio;
-        testUser.email = email;
-        testUser.major = major;
-        testUser.profilePicture = profilePicture;
+        testUser.FirstName = firstname;
+        testUser.MiddleName = middlename;
+        testUser.LastName = lastname;
+        testUser.Preference = preference;
+        testUser.BirthDay = birthday;
+        testUser.Gender = gender;
+        testUser.Bio = bio;
+        testUser.Email = email;
+        testUser.Major = major;
+        testUser.ProfilePicture = profilePicture;
         return database.UpdateUserInDatabaseWithNewUserData(testUser);
     }
 
@@ -170,20 +170,6 @@ public class TestDatabase {
 
     }
 
-    [TestCase("s1165707@student.windesheim.nl", ExpectedResult = true)]
-    [TestCase("s1165700@student.windesheim.nl", ExpectedResult = false)]
-    public bool UpdateLocalUserFromDatabase(string email)
-    {
-        database.UpdateLocalUserFromDatabase(email);
-
-        if (Authentication._currentUser.email == email)
-        {
-            return true;
-        }
-        return false;
-
-    }
-
     [Test]
     public void GetEmailFromDataBase()
     {
@@ -226,21 +212,6 @@ public class TestDatabase {
     public void GetInterestFromDatabase()
     {
         Assert.IsNotEmpty(database.GetInterestsFromDataBase());
-    }
-
-    [TestCase("s1165707@student.windesheim.nl", ExpectedResult = true)]
-    [TestCase("s1164000@student.windesheim.nl", ExpectedResult = true)]
-    public bool GetUserFromDatabase(string email)
-    {
-        try
-        {
-            Database.GetUserFromDatabase(email);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
     }
 
     [TestCase("s1178208@student.windesheim.nl", "Bier drinken", ExpectedResult = true)]
@@ -367,7 +338,7 @@ public class TestDatabase {
     }
 
     [TestCase("s1165707@student.windesheim.nl", ExpectedResult = true)]
-    [TestCase("not real email", ExpectedResult = false)]
+    [TestCase("not real Email", ExpectedResult = false)]
     public bool GetMinAge(string email)
     {
         int minAge = database.GetMinAge(email);
@@ -375,7 +346,7 @@ public class TestDatabase {
     }
 
     [TestCase("s1165707@student.windesheim.nl", ExpectedResult = true)]
-    [TestCase("not real email", ExpectedResult = false)]
+    [TestCase("not real Email", ExpectedResult = false)]
     public bool GetMaxAge(string email)
     {
 

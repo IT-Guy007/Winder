@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using Microsoft.Maui.Storage;
 
 namespace DataModel;
 using System.Security.Cryptography;
@@ -6,13 +7,12 @@ using System.Text;
 
 public class Authentication {
 
-    public static User _currentUser { get; set; }
-    public static bool isScaled = false;
+    public static User CurrentUser { get; set; }
+    public static bool IsScaled = false;
 
     //Match
-    public static Queue<Profile> _profileQueue;
-    public static Profile _currentProfile;
-    public static int selectedImage;
+    public static Queue<Profile> ProfileQueue;
+    public static Profile CurrentProfile;
     private static bool isGettingProfiles;
     
     private const int passwordLength =  8;
@@ -26,14 +26,13 @@ public class Authentication {
     public const string emailStartsWith = "s";
 
     public static void Initialize() {
-        _profileQueue = new Queue<Profile>();
-        selectedImage = 0;
-        _currentUser = new User();
+        ProfileQueue = new Queue<Profile>();
+        CurrentUser = new User();
         
     }
 
 
-    // checking if email is already in database, returns true if unique
+    // checking if Email is already in database, returns true if unique
     public bool EmailIsUnique(string email)
     {
         Database db = new Database();
@@ -97,7 +96,7 @@ public class Authentication {
     public static Profile[] Get5Profiles(string email) {
         
 
-        //The users(email) to get
+        //The users(Email) to get
         List<string> usersToRetrief = new List<string>();
 
         usersToRetrief = Database.AlgorithmForSwiping(email);
@@ -109,10 +108,10 @@ public class Authentication {
         for (int i = 0; i < usersToRetrief.Count(); i++) {
 
             //Get the user
-            User user = Database.GetUserFromDatabase(usersToRetrief[i]);
+            User user = new User().GetUserFromDatabase(email,Database2.ReleaseConnection);
 
             //Get the interests of the user
-            user.interests = Database.LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]).ToArray();
+            user.Interests = Database.LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]).ToArray();
 
             //Get the images of the user
             byte[][] images = Database.GetPicturesFromDatabase(usersToRetrief[i]);
@@ -125,18 +124,18 @@ public class Authentication {
     }
 
     public static async Task GetProfiles() {
-        Profile[] profiles = Get5Profiles(_currentUser.email);
+        Profile[] profiles = Get5Profiles(CurrentUser.Email);
         foreach (var profile in profiles) {
 
             if (profile != null) {
-                _profileQueue.Enqueue(profile);
+                ProfileQueue.Enqueue(profile);
             }
         }
     }
 
     public static async void CheckIfQueueNeedsMoreProfiles()
     {
-        if (_profileQueue.Count < 5 && !isGettingProfiles)
+        if (ProfileQueue.Count < 5 && !isGettingProfiles)
         {
             isGettingProfiles = true;
             await GetProfiles();
@@ -148,8 +147,8 @@ public class Authentication {
 
     public static void SetCurrentProfile() {
         CheckIfQueueNeedsMoreProfiles();
-        if (_profileQueue.Count > 0) {
-            _currentProfile = _profileQueue.Dequeue();
+        if (ProfileQueue.Count > 0) {
+            CurrentProfile = ProfileQueue.Dequeue();
         }
     }
     
@@ -175,5 +174,11 @@ public class Authentication {
         }
 
         return res.ToString();
+    }
+    
+    public static async Task SetLoginEmail(string email) {
+        Console.WriteLine("Setting login Email");
+        await SecureStorage.SetAsync("Email", email);
+        
     }
 }

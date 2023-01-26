@@ -12,19 +12,19 @@ public partial class ForgotPasswordPage {
 
     private string authenticationCode;
     
-    //Button to send email
+    //Button to send Email
     private void SendEmailButton(object sender, EventArgs e) {
         
         Authentication auth = new Authentication();
         string email = Emailadres.Text;
         
-        //Check if email exists
+        //Check if Email exists
         if (auth.EmailIsUnique(email.ToLower())) {
             DisplayAlert("", "Dit emailadres is niet bekend bij ons", "OK"); // popup
             
         } else {
 
-            //Send forgotten password email
+            //Send forgotten password Email
             string code = Authentication.RandomString(8);
         
             string body = "<h1>Authenticatie-code voor Winder</h1>" + 
@@ -42,7 +42,7 @@ public partial class ForgotPasswordPage {
             HerhaalWachtwoord.IsVisible=true;
             ResetWachtwoord.IsVisible = true;
 
-            DisplayAlert("", "Er is een email verstuurd naar " + email.ToLower(), "OK"); // popup
+            DisplayAlert("", "Er is een Email verstuurd naar " + email.ToLower(), "OK"); // popup
             Emailadres.IsEnabled = false;  
         }
         

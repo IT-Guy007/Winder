@@ -21,7 +21,7 @@ public partial class ChatPage {
         this.sendFromUser = sendFromUser;
         this.sendToUser = sendToUser;
 
-        Database.SetRead(sendFromUser.email, sendToUser.email);
+        Database.SetRead(sendFromUser.Email, sendToUser.Email);
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         
         //Set content
@@ -114,7 +114,7 @@ public partial class ChatPage {
                     VerticalOptions = LayoutOptions.Fill,
                 };
 
-                if (message.fromUser == Authentication._currentUser.email) {
+                if (message.fromUser == Authentication.CurrentUser.Email) {
                     //From me
                     chatBorder.HorizontalOptions = LayoutOptions.End;
                     chatBorder.StrokeShape = new BoxView() {
@@ -166,7 +166,7 @@ public partial class ChatPage {
         sendButton.Clicked += (_, _) => {
             if (!string.IsNullOrWhiteSpace(chatInput.Text)) {
                 chatInput.Text = char.ToUpper(chatInput.Text[0]) + chatInput.Text.Substring(1);
-                Database.SendMessage(sendFromUser.email, sendToUser.email, chatInput.Text);
+                Database.SendMessage(sendFromUser.Email, sendToUser.Email, chatInput.Text);
                 Initialize();
             }
         };

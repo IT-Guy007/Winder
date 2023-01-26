@@ -52,11 +52,11 @@ public partial class MainPage : ContentPage {
 
 
             //Check if user was previously logged in
-            var userEmail = await SecureStorage.Default.GetAsync("email");
+            var userEmail = await SecureStorage.Default.GetAsync("Email");
             if (!String.IsNullOrWhiteSpace(userEmail))
             {
                 Console.WriteLine("Found user who was logged in, restoring session");
-                db.UpdateLocalUserFromDatabase(userEmail);
+                Authentication.CurrentUser = new User().GetUserFromDatabase(userEmail, Database2.ReleaseConnection);
                 Console.WriteLine("Restored");
                 Authentication.Get5Profiles(userEmail);
             }
@@ -65,7 +65,7 @@ public partial class MainPage : ContentPage {
                 Console.WriteLine("No user found");
             }
 
-            if (!String.IsNullOrWhiteSpace(Authentication._currentUser.email))
+            if (!String.IsNullOrWhiteSpace(Authentication.CurrentUser.Email))
             {
                 Console.WriteLine("Pusing new MatchPage");
                 await Navigation.PushAsync(new MatchPage());

@@ -42,7 +42,7 @@ public partial class SettingsPage {
     //sets the location in the database
     private void SetLocation() {
         string location = Location.SelectedItem.ToString();
-        if (location != null) database.InsertLocation(Authentication._currentUser.email, location);
+        if (location != null) database.InsertLocation(Authentication.CurrentUser.Email, location);
     }
     
     // checks if the min age is lower then the max age
@@ -69,21 +69,21 @@ public partial class SettingsPage {
   
     //sets location in the picker what the user already has in the database
     private void PlaceLocation() {
-        string placeLocation = database.GetLocation(Authentication._currentUser.email);
+        string placeLocation = database.GetLocation(Authentication.CurrentUser.Email);
         Location.SelectedItem = placeLocation;
         
         }
     //sets minimum age in the picker what the user already has in the database
     private void PlaceMinAge() {
         
-        int placeMinAge = database.GetMinAge(Authentication._currentUser.email);
+        int placeMinAge = database.GetMinAge(Authentication.CurrentUser.Email);
             minimaleLeeftijd.SelectedItem = placeMinAge;
         
     }
     //sets maximum age in the picker what the user already has in the database
     private void PlaceMaxAge() {
        
-        int placeMaxAge = database.GetMaxAge(Authentication._currentUser.email);
+        int placeMaxAge = database.GetMaxAge(Authentication.CurrentUser.Email);
         maximaleLeeftijd.SelectedItem = placeMaxAge;
         
     }
@@ -91,16 +91,16 @@ public partial class SettingsPage {
     private void SetMinAge() {
        
         int minAge = (int)minimaleLeeftijd.SelectedItem;
-        database.SetMinAge(Authentication._currentUser.email, minAge);
-        Authentication._currentUser.minAge = minAge;
+        database.SetMinAge(Authentication.CurrentUser.Email, minAge);
+        Authentication.CurrentUser.MinAge = minAge;
 
     }
     //sets the maximum age of what the user chose in the database
     private void SetMaxAge() {
        
         int maxAge = (int)maximaleLeeftijd.SelectedItem;
-        database.SetMaxAge(Authentication._currentUser.email, maxAge);
-        Authentication._currentUser.maxAge = maxAge;
+        database.SetMaxAge(Authentication.CurrentUser.Email, maxAge);
+        Authentication.CurrentUser.MaxAge = maxAge;
 
     }
     private async void deleteAccountbtn(object sender, EventArgs e) {
@@ -108,9 +108,9 @@ public partial class SettingsPage {
         bool displayresult = await DisplayAlert("", "Weet u zeker dat u uw account wilt verwijderen?", "Ja", "Nee");
         if (displayresult)
         {
-            database.DeleteUser(Authentication._currentUser.email);
-            SecureStorage.Default.Remove("email");
-            SecureStorage.Remove("email");
+            database.DeleteUser(Authentication.CurrentUser.Email);
+            SecureStorage.Default.Remove("Email");
+            SecureStorage.Remove("Email");
             SecureStorage.RemoveAll();
             await Navigation.PushAsync(new MainPage());
         }
@@ -122,8 +122,8 @@ public partial class SettingsPage {
         bool displayresult = await DisplayAlert("", "U wordt uitgelogd", "Ok", "Annuleren");
         if (displayresult)
         {
-            SecureStorage.Default.Remove("email");
-            SecureStorage.Remove("email");
+            SecureStorage.Default.Remove("Email");
+            SecureStorage.Remove("Email");
             SecureStorage.RemoveAll();
             await Navigation.PushAsync(new StartPage());
         }
@@ -143,7 +143,7 @@ public partial class SettingsPage {
                 SetMinAge();
                 SetMaxAge();
                 foutLeeftijd.IsVisible = false;
-                Authentication._profileQueue = new Queue<Profile>();
+                Authentication.ProfileQueue = new Queue<Profile>();
                 Authentication.CheckIfQueueNeedsMoreProfiles();
                 DisplayAlert("Melding", "Er zijn succesvol gegevens aangepast", "OK");
             }
