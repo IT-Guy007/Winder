@@ -63,26 +63,38 @@
     </ItemGroup>
 
     <ItemGroup>
-      <MauiXaml Update="editPasswordPopUp.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </MauiXaml>
-
-      <MauiXaml Update="LoginPage.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
       <MauiXaml Update="ChatPage.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
-      <MauiXaml Update="MatchPage.xaml">
+      <MauiXaml Update="Views\ProfileChangePage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="ProfileChangePage.xaml">
+      <MauiXaml Update="Views\RegisterPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="RegisterPage.xaml">
+      <MauiXaml Update="Views\SettingsPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="ForgotPasswordPage.xaml">
+      <MauiXaml Update="Views\StartPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\LoginPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\MatchPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\ChatsViewPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\ChatView.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\editPasswordPopUp.xaml">
+        <SubType>Designer</SubType>
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+      <MauiXaml Update="Views\ForgotPasswordPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
     </ItemGroup>
@@ -91,30 +103,47 @@
       <Compile Update="MainPage.xaml.cs">
         <DependentUpon>MainPage.xaml</DependentUpon>
       </Compile>
-      <Compile Update="LoginPage.xaml.cs">
-        <DependentUpon>LoginPage.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
       <Compile Update="ChatPage.xaml.cs">
         <DependentUpon>ChatPage.xaml</DependentUpon>
       </Compile>
-      <Compile Update="StartPage.xaml.cs">
-        <DependentUpon>StartPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Update="MatchPage.xaml.cs">
-        <DependentUpon>MatchPage.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="ProfileChangePage.xaml.cs">
+      <Compile Update="Views\ProfileChangePage.xaml.cs">
         <DependentUpon>ProfileChangePage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="RegisterPage.xaml.cs">
+      <Compile Update="Views\RegisterPage.xaml.cs">
         <DependentUpon>RegisterPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="ForgotPasswordPage.xaml.cs">
-        <DependentUpon>ForgotPassword.xaml</DependentUpon>
+      <Compile Update="Views\SettingsPage.xaml.cs">
+        <DependentUpon>SettingsPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\StartPage.xaml.cs">
+        <DependentUpon>StartPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\LoginPage.xaml.cs">
+        <DependentUpon>LoginPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\MatchPage.xaml.cs">
+        <DependentUpon>MatchPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\ChatsViewPage.xaml.cs">
+        <DependentUpon>ChatsViewPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\ChatView.xaml.cs">
+        <DependentUpon>ChatView.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\editPasswordPopUp.xaml.cs">
+        <DependentUpon>editPasswordPopUp.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\ForgotPasswordPage.xaml.cs">
+        <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
