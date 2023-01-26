@@ -8,7 +8,6 @@ using Microsoft.Maui.Graphics;
 namespace Winder;
 
 public partial class ChatView {
-    private DatabaseChangeListener databaseChangeListener;
 
     //MAUI
     private ScrollView scrollView;
@@ -63,9 +62,8 @@ public partial class ChatView {
         
         
         //Initialise content
-        databaseChangeListener = new DatabaseChangeListener();
-        databaseChangeListener.Initialize(sendFromUser, sendToUser);
-        
+        Authentication.GetChatMessages(sendFromUser, sendToUser);
+
         //First row
         HorizontalStackLayout horizontalStackLayout = new HorizontalStackLayout {
             HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -100,7 +98,7 @@ public partial class ChatView {
         horizontalStackLayout.Add(refreshButton);
 
         //All the chatmessages
-        if (DatabaseChangeListener._chatCollection.Count == 0) {
+        if (Authentication.ChatCollection.Count == 0) {
             Label noMessagesFound = new Label {
                 Text = "No messages found", 
                 HorizontalOptions = LayoutOptions.Center, 
@@ -109,7 +107,7 @@ public partial class ChatView {
             };
             verticalStackLayout.Add(noMessagesFound);
         } else  {
-            foreach (var message in DatabaseChangeListener._chatCollection) {
+            foreach (var message in Authentication.ChatCollection) {
                 Border chatBorder = new Border {
                     Padding = 10,
                     Margin = 10,

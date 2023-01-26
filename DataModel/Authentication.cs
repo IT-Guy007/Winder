@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Net;
 using System.Net.Mail;
 
@@ -8,7 +9,6 @@ using System.Text;
 public class Authentication {
 
     public static User _currentUser { get; set; }
-    
     private const string winderEmail = "thewinderapp@gmail.com";
     private const string emailCredential = "xltbqbsyderpqsxp";
     private const string validationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
@@ -24,6 +24,9 @@ public class Authentication {
     public static Profile _currentProfile;
     public static int selectedImage;
     private static bool isGettingProfiles;
+    
+    //Chat
+    public static ObservableCollection<ChatMessage> ChatCollection;
 
     public static void Initialize() {
         _profileQueue = new Queue<Profile>();
@@ -201,12 +204,18 @@ public class Authentication {
         }
     }
 
-    
 
     public static void SetCurrentProfile() {
         CheckIfQueueNeedsMoreProfiles();
         if (_profileQueue.Count > 0) {
             _currentProfile = _profileQueue.Dequeue();
         }
+    }
+    
+    public static void GetChatMessages(User fromUser, User toUser) {
+        ChatCollection = new ObservableCollection<ChatMessage>();
+        Database database = new Database();
+        database.SetChatMessages(fromUser, toUser);
+        
     }
 }

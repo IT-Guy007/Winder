@@ -1,11 +1,10 @@
+using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Maui.Storage;
-
 
 namespace DataModel;
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 public class Database {
@@ -1202,6 +1201,34 @@ public class Database {
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
             CloseConnection();
+        }
+    }
+
+    public void SetChatMessages(User fromUser, User toUser) {
+        
+        string query = "SELECT [winder].[ChatMessage].[personFrom], [winder].[ChatMessage].[personTo], [winder].[ChatMessage].[sendDate], [winder].[ChatMessage].[chatMessage], [winder].[ChatMessage].[readMessage] " +
+                       "FROM [winder].[ChatMessage] " +
+                       "WHERE ([winder].[ChatMessage].[personFrom] = '" + fromUser.email + "' AND [winder].[ChatMessage].[personTo] = '" + toUser.email + "') " +
+                       "OR ([winder].[ChatMessage].[personFrom] = '" + toUser.email + "' AND [winder].[ChatMessage].[personTo] = '" + fromUser.email + "') order by sendDate";
+        
+        //Create command
+        SqlCommand sqlCommand = new SqlCommand(query, connection);
+        
+        //Create result table
+        var dataTable = new DataTable();
+        
+        //Fill table
+        dataTable.Load(sqlCommand.ExecuteReader(CommandBehavior.CloseConnection));
+        
+        foreach (DataRow row in dataTable.Rows) {
+            string fromUserData = row["personFrom"].ToString() ?? "";
+            string toUserData = row["personTo"].ToString() ?? "";
+            DateTime date = DateTime.Parse(row["sendDate"].ToString() ?? "");
+            string message = row["chatMessage"].ToString() ?? "";
+            int read = int.Parse(row["readMessage"].ToString() ?? "0");
+            if (fromUserData != "" && toUserData != "" && message != "") {
+                Authentication.ChatCollection.Add(new ChatMessage(fromUserData, toUserData, date, message, read != 0));
+            }
         }
     }
 
