@@ -14,14 +14,12 @@ public partial class ChatPage {
     private StackLayout verticalStackLayout;
     private Grid grid;
 
-    private readonly User sendFromUser;
-    private readonly User sendToUser;
+    private ChatModel ChatModel;
 
     public ChatPage(User sendFromUser, User sendToUser) {
-        this.sendFromUser = sendFromUser;
-        this.sendToUser = sendToUser;
+        ChatModel = new ChatModel(sendFromUser, sendToUser, Database2.ReleaseConnection);
 
-        Database.SetRead(sendFromUser.Email, sendToUser.Email);
+        ChatModel.SetRead(Database2.ReleaseConnection);
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         
         //Set content
@@ -58,10 +56,6 @@ public partial class ChatPage {
                 new RowDefinition { Height = new GridLength(50)}
             }
         };
-        
-        
-        //Initialise content
-        Authentication.GetChatMessages(sendFromUser, sendToUser);
 
         //First row
         HorizontalStackLayout horizontalStackLayout = new HorizontalStackLayout {
@@ -97,7 +91,7 @@ public partial class ChatPage {
         horizontalStackLayout.Add(refreshButton);
 
         //All the chatmessages
-        if (Authentication.ChatCollection.Count == 0) {
+        if (ChatModel.Messages.Count == 0) {
             Label noMessagesFound = new Label {
                 Text = "No messages found", 
                 HorizontalOptions = LayoutOptions.Center, 
@@ -106,7 +100,7 @@ public partial class ChatPage {
             };
             verticalStackLayout.Add(noMessagesFound);
         } else  {
-            foreach (var message in Authentication.ChatCollection) {
+            foreach (var message in ChatModel.Messages) {
                 Border chatBorder = new Border {
                     Padding = 10,
                     Margin = 10,
@@ -114,17 +108,17 @@ public partial class ChatPage {
                     VerticalOptions = LayoutOptions.Fill,
                 };
 
-                if (message.fromUser == Authentication.CurrentUser.Email) {
+                if (message.FromUser == ChatModel.FromUser.Email) {
                     //From me
                     chatBorder.HorizontalOptions = LayoutOptions.End;
                     chatBorder.StrokeShape = new BoxView() {
                         CornerRadius = new CornerRadius(10, 10, 10, 0)
                     };
                     chatBorder.BackgroundColor = Color.FromArgb("#ffffff");
-                    chatBorder.Stroke = message.read ? Color.FromArgb("#2B0B98") : Color.FromArgb("#808080");
+                    chatBorder.Stroke = message.Read ? Color.FromArgb("#2B0B98") : Color.FromArgb("#808080");
                     chatBorder.StrokeThickness = 5;
                     chatBorder.Content = new Label {
-                        Text = message.message,
+                        Text = message.Message,
                         TextColor = Colors.Black,
                         FontSize = 20
                     };
@@ -137,7 +131,7 @@ public partial class ChatPage {
                     };
                     chatBorder.BackgroundColor = Color.FromArgb("#25D366");
                     chatBorder.Content = new Label {
-                        Text = message.message,
+                        Text = message.Message,
                         TextColor = Colors.White,
                         FontSize = 20
                     };
@@ -166,7 +160,7 @@ public partial class ChatPage {
         sendButton.Clicked += (_, _) => {
             if (!string.IsNullOrWhiteSpace(chatInput.Text)) {
                 chatInput.Text = char.ToUpper(chatInput.Text[0]) + chatInput.Text.Substring(1);
-                Database.SendMessage(sendFromUser.Email, sendToUser.Email, chatInput.Text);
+                new ChatMessage(ChatModel.FromUser.Email, ChatModel.ToUser.Email, DateTime.Now, chatInput.Text, false).SendMessage(Database2.ReleaseConnection);
                 Initialize();
             }
         };

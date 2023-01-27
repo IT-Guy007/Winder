@@ -19,7 +19,7 @@ public partial class ForgotPasswordPage {
         string email = Emailadres.Text;
         
         //Check if Email exists
-        if (auth.EmailIsUnique(email.ToLower())) {
+        if (new UserModel().EmailIsUnique(email.ToLower(),Database2.ReleaseConnection)) {
             DisplayAlert("", "Dit emailadres is niet bekend bij ons", "OK"); // popup
             
         } else {
@@ -68,8 +68,10 @@ public partial class ForgotPasswordPage {
                         DisplayAlert("", "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten", "OK"); // popup
                         
                 } else {
-
-                    database.UpdatePassword(email, newPassword); 
+                    User user = new User() {
+                        Email = email
+                    };
+                    user.UpdatePassword(newPassword,Database2.ReleaseConnection); 
                     
                     DisplayAlert("", "Wachtwoord is succesvol gewijzigd", "OK"); // popup
                     Navigation.PushAsync(new LoginPage()); // terug naar het loginscherm

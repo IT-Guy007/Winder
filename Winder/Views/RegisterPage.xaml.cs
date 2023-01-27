@@ -187,7 +187,7 @@ public partial class RegisterPage {
         }
         else
         {
-            if (auth.EmailIsUnique(Email.Text))
+            if (new UserModel().EmailIsUnique(Email.Text, Database2.ReleaseConnection))
             {
                 FoutEmail.IsVisible = false;
                 email = Email.Text;
@@ -199,7 +199,7 @@ public partial class RegisterPage {
                 FoutEmail.IsVisible = true;
                 aantalchecks -= 1;
             }
-            if (CheckEmail(Email.Text))
+            if (new UserModel().CheckEmail(Email.Text))
             {
                 email = Email.Text;
                 aantalchecks += 1;
@@ -273,7 +273,7 @@ public partial class RegisterPage {
             else
             {
                 FoutWachtwoord.IsVisible = false;
-                password = auth.HashPassword(Wachtwoord.Text);
+                password = new UserModel().HashPassword(Wachtwoord.Text);
                 aantalchecks += 1;
             }
 
@@ -385,14 +385,6 @@ public partial class RegisterPage {
 
     private void Backbutton_Clicked(object sender, EventArgs e) {
         Navigation.PushAsync(new MainPage());
-    }
-    
-    // checks if Email belongs to Windesheim, returns true if so
-    private bool CheckEmail(string email) {
-        if (email.EndsWith(Authentication.emailEndsWith) && email.StartsWith(Authentication.emailStartsWith)) {
-            return true;
-        }
-        return false;
     }
 }
 

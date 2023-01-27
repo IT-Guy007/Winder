@@ -106,9 +106,8 @@ public partial class SettingsPage {
     private async void deleteAccountbtn(object sender, EventArgs e) {
 
         bool displayresult = await DisplayAlert("", "Weet u zeker dat u uw account wilt verwijderen?", "Ja", "Nee");
-        if (displayresult)
-        {
-            database.DeleteUser(Authentication.CurrentUser.Email);
+        if (displayresult) {
+            Authentication.CurrentUser.DeleteUser(Database2.ReleaseConnection);
             SecureStorage.Default.Remove("Email");
             SecureStorage.Remove("Email");
             SecureStorage.RemoveAll();

@@ -61,198 +61,6 @@ public class Database {
         connection.Close();
     }
 
-    public bool CheckLogin(string email, string password)
-    {
-        Console.WriteLine("Check login");
-        string hashed = _authentication.HashPassword(password);
-        bool output = false;
-
-
-        //Start connection
-        OpenConnection();
-
-        if (!email.EndsWith(emailHasToEndWith))
-        {
-            email = email + emailHasToEndWith;
-
-        }
-        if (!email.StartsWith(emailHasToStartWith))
-        {
-            email = emailHasToStartWith + email;
-        }
-
-        //Create query
-        SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email", connection);
-        query.Parameters.AddWithValue("@Email", email);
-
-        //Execute query
-        SqlDataReader reader = query.ExecuteReader();
-
-        Console.WriteLine("Checking login");
-        while (reader.Read())
-        {
-            if (hashed == reader["password"] as string)
-            {
-                Console.WriteLine("Getting password");
-                output = true;
-                try
-                {
-                    Authentication.SetLoginEmail(email);
-            
-                }
-                catch
-                {
-                    Console.WriteLine("Error setting login Email");
-                }
-                
-            }
-        }
-        //Close connection
-        CloseConnection();
-        Authentication.CurrentUser = new User().GetUserFromDatabase(email, Database2.ReleaseConnection);
-        return output;
-
-    }
-
-    public List<string> GetEmailFromDataBase() {
-
-        List<string> emails = new List<string>();
-        OpenConnection();
-        string sql = "SELECT Email FROM Winder.Winder.[User];";
-        SqlCommand command = new SqlCommand(sql, connection);
-        try {
-            SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read()) {
-                var email = reader["Email"] as string;
-                emails.Add(email);
-            }
-        } catch (SqlException e) {
-            Console.WriteLine("Error getting emails from database");
-            Console.WriteLine(e.ToString());
-            Console.WriteLine(e.StackTrace);
-        }
-        CloseConnection();
-        return emails;
-    }
-
-    public bool ToggleActivation(string email, bool activate) {
-
-        //Open connection
-        OpenConnection();
-
-        SqlCommand query = new SqlCommand("update winder.winder.[User] set active = @Active where Email = @Email",
-            connection);
-        query.Parameters.AddWithValue("@Email", email);
-        query.Parameters.AddWithValue("@Active", activate);
-
-        //Execute query
-        try {
-            int rows = query.ExecuteNonQuery();
-
-            //Close connection
-            CloseConnection();
-            if (rows != 0) {
-                return true;
-            }
-
-            return false;
-        } catch (SqlException se) {
-            Console.WriteLine("Error toggling activation");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            //Close connection
-            CloseConnection();
-            return false;
-        }
-
-    }
-
-
-    public void UpdatePassword(string email, string password)
-    {
-        Authentication authentication = new Authentication();
-        // checken of Email in de database staat
-        if (authentication.EmailIsUnique(email) == false)  {
-
-            // connectieopzetten en query maken
-
-            string hashedPassword = _authentication.HashPassword(password); // eerst het password hashen voor het updaten
-            OpenConnection();
-            SqlCommand query = new SqlCommand("update winder.winder.[User] set password = @password where Email = @Email", connection);
-            query.Parameters.AddWithValue("@Email", email);
-            query.Parameters.AddWithValue("@password", hashedPassword);
-
-            //Execute query
-            try {
-                query.ExecuteNonQuery();
-
-                //Close connection
-                CloseConnection();
-
-
-            } catch (SqlException se) {
-                Console.WriteLine("Error updating password");
-                Console.WriteLine(se.ToString());
-                Console.WriteLine(se.StackTrace);
-
-                //Close connection
-                CloseConnection();
-
-            }
-        }
-    }
-
-    public void DeleteUser(string email) {
-        Authentication authentication = new Authentication();
-
-        if (authentication.EmailIsUnique(email)) {
-
-
-            OpenConnection(); // connectie opzetten
-
-            email = email.ToLower();
-
-            //querys maken
-            SqlCommand queryLikedPerson = new SqlCommand("delete from winder.winder.Liked where person = @Email", connection);
-            queryLikedPerson.Parameters.AddWithValue("@Email", email);
-            SqlCommand queryLikedLikedPerson = new SqlCommand("delete from winder.winder.Liked where likedPerson = @Email", connection);
-            queryLikedLikedPerson.Parameters.AddWithValue("@Email", email);
-
-            SqlCommand queryMatchPerson1 = new SqlCommand("delete from winder.winder.Match where person1 = @Email", connection);
-            queryMatchPerson1.Parameters.AddWithValue("@Email", email);
-            SqlCommand queryMatchPerson2 = new SqlCommand("delete from winder.winder.Match where person2 = @Email", connection);
-            queryMatchPerson2.Parameters.AddWithValue("@Email", email);
-
-            SqlCommand queryUserHasInterest = new SqlCommand("delete from winder.winder.userHasInterest where UID = @Email", connection);
-            queryUserHasInterest.Parameters.AddWithValue("@Email", email);
-
-            SqlCommand queryUser = new SqlCommand("delete from winder.winder.[User] where Email = @Email", connection);
-            queryUser.Parameters.AddWithValue("@Email", email);
-
-            //Execute querys
-            try {
-                queryLikedPerson.ExecuteNonQuery();
-                queryLikedLikedPerson.ExecuteNonQuery();
-                queryMatchPerson1.ExecuteNonQuery();
-                queryMatchPerson2.ExecuteNonQuery();
-                queryUserHasInterest.ExecuteNonQuery();
-
-                queryUser.ExecuteNonQuery();
-
-                //Close connection
-                CloseConnection();
-            } catch (SqlException se) {
-                Console.WriteLine("Error deleting user");
-                Console.WriteLine(se.ToString());
-                Console.WriteLine(se.StackTrace);
-
-                //Close connection
-                CloseConnection();
-
-            }
-        }
-
-    }
     public List<string> GetInterestsFromDataBase() {
         List<string> interests = new List<string>();
         OpenConnection();
@@ -311,28 +119,6 @@ public class Database {
             CloseConnection();
             return false;
         }
-    }
-    public static List<string> LoadInterestsFromDatabaseInListInteresses(string email) {
-        List<string> interests = new List<string>();
-        OpenConnection();
-        string query = "SELECT * FROM Winder.Winder.[userHasInterest] where UID = @Email;";
-        SqlCommand command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@Email", email);
-        try {
-            SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read()) {
-                var iets1 = reader["interest"] as string;
-                interests.Add(iets1);
-            }
-        } catch (SqlException e) {
-            Console.WriteLine("Error retrieving interests from database");
-            Console.WriteLine(e.ToString());
-            Console.WriteLine(e.StackTrace);
-            CloseConnection();
-        }
-        CloseConnection();
-
-        return interests;
     }
     public bool UpdateUserInDatabaseWithNewUserData(User user) {
         try {
@@ -920,7 +706,7 @@ public class Database {
     }
 
     
-    public static List<string> AlgorithmForSwiping(string email) {
+    public static List<string> AlgorithmForSwiping() {
 
         //Get 10 users from the database within the criteria
         Queue<string> usersToSwipe = new Queue<string>();
@@ -929,9 +715,6 @@ public class Database {
         DateTime maxDate = DateTime.Now.AddYears(0 - Authentication.CurrentUser.MaxAge);
         var formattedMin = minDate.ToString("yyyy-MM-dd HH:mm:ss");
         var formattedMax = maxDate.ToString("yyyy-MM-dd HH:mm:ss");
-
-        List<string> interestsGivenUser = LoadInterestsFromDatabaseInListInteresses(email).ToList(); //Every interest of the current user
-
 
         string query = "select top 10 Email " +
                        "from winder.[User] " +
@@ -964,9 +747,7 @@ public class Database {
                 query = query + ")";
             }
         }
-
-
-
+        
         // Enque users to swipe
         EnqueueUsersToSwipe(usersToSwipe, email, query);
 
@@ -1029,109 +810,6 @@ public class Database {
         }
         CloseConnection();
         return users;
-    }
-
-    public bool InsertPictureInDatabase(string email, byte[] imageToUpload)
-    {
-        try
-        {
-            OpenConnection();
-            string query = "INSERT INTO winder.winder.Photos (winder.[user], winder.photo) VALUES(@Email, @profilepicture)";
-            SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@Email", email);
-            command.Parameters.AddWithValue("@profilepicture", imageToUpload);
-            command.ExecuteNonQuery();
-            CloseConnection();
-        }
-        catch (SqlException se)
-        {
-            Console.WriteLine("Error inserting picture in database");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            CloseConnection();
-            CloseConnection();
-        }
-        CloseConnection();
-        return false;
-    }
-
-    public static bool SendMessage(string personFrom, string personTo, string message) {
-        try {
-
-            OpenConnection();
-            DateTime sendDate = DateTime.Now;
-            SqlCommand query = new SqlCommand("INSERT INTO winder.winder.[ChatMessage] (personFrom, personTo,chatMessage,sendDate,[readMessage]) VALUES ('" + personFrom + "' , '" + personTo + "','" + message + "', @sendDate, 0)", connection);
-            query.Parameters.AddWithValue("@sendDate", sendDate);
-
-            query.ExecuteNonQuery();
-            CloseConnection();
-            return true;
-        } catch (SqlException se) {
-            Console.WriteLine("Error sending the message");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            CloseConnection();
-            return false;
-        }
-    }
-
-    public static void SetRead(string personFrom, string personTo){
-        try {
-            OpenConnection();
-            SqlCommand query = new SqlCommand("UPDATE winder.winder.[ChatMessage] SET [readMessage] = 1 WHERE personTo = '" + personFrom + "' AND personFrom = '" + personTo + "'", connection);
-            query.ExecuteNonQuery();
-            CloseConnection();
-        } catch (SqlException se) {
-            Console.WriteLine("Error updating read message");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            CloseConnection();
-        }
-
-    }
-    
-    public void DeleteAllPhotosFromDatabase(User currentUser) {
-        try {
-            OpenConnection();
-            string query = "delete from winder.winder.Photos WHERE [user] = @Email";
-            SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@Email", currentUser.Email);
-            command.ExecuteNonQuery();
-            CloseConnection();
-        } catch (SqlException se) {
-            Console.WriteLine("Error deleting pictures from database");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            CloseConnection();
-        }
-    }
-
-    public void SetChatMessages(User fromUser, User toUser) {
-        
-        string query = "SELECT [winder].[ChatMessage].[personFrom], [winder].[ChatMessage].[personTo], [winder].[ChatMessage].[sendDate], [winder].[ChatMessage].[chatMessage], [winder].[ChatMessage].[readMessage] " +
-                       "FROM [winder].[ChatMessage] " +
-                       "WHERE ([winder].[ChatMessage].[personFrom] = '" + fromUser.Email + "' AND [winder].[ChatMessage].[personTo] = '" + toUser.Email + "') " +
-                       "OR ([winder].[ChatMessage].[personFrom] = '" + toUser.Email + "' AND [winder].[ChatMessage].[personTo] = '" + fromUser.Email + "') order by sendDate";
-        
-        //Create command
-        SqlCommand sqlCommand = new SqlCommand(query, connection);
-        
-        //Create result table
-        var dataTable = new DataTable();
-        
-        //Fill table
-        dataTable.Load(sqlCommand.ExecuteReader(CommandBehavior.CloseConnection));
-        
-        foreach (DataRow row in dataTable.Rows) {
-            string fromUserData = row["personFrom"].ToString() ?? "";
-            string toUserData = row["personTo"].ToString() ?? "";
-            DateTime date = DateTime.Parse(row["sendDate"].ToString() ?? "");
-            string message = row["chatMessage"].ToString() ?? "";
-            int read = int.Parse(row["readMessage"].ToString() ?? "0");
-            if (fromUserData != "" && toUserData != "" && message != "") {
-                Authentication.ChatCollection.Add(new ChatMessage(fromUserData, toUserData, date, message, read != 0));
-            }
-        }
     }
 
 }

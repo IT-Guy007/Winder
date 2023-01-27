@@ -12,13 +12,18 @@ public class Database2 {
 
     //The connection
     public static SqlConnection ReleaseConnection { get; private set; }
+    public static SqlConnection DebugConnection { get; private set; }
 
     public Database2() {
-        GenerateConnection();
+        GenerateReleaseConnection();
         ReleaseConnection.Open();
     }
     
-    private static void GenerateConnection() {
+    
+    /// <summary>
+    /// Generates the releaseconnection
+    /// </summary>
+    private static void GenerateReleaseConnection() {
         
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder {
             DataSource = DataSourceConnection,
@@ -30,28 +35,21 @@ public class Database2 {
         ReleaseConnection = new SqlConnection(builder.ConnectionString);
     }
     
-    public static SqlDataReader ExecuteReader(string query) {
-        try {
-            SqlCommand command = new SqlCommand(query, ReleaseConnection);
-            return command.ExecuteReader();
-        } catch(SqlException e) {
-            Console.WriteLine("Error in ExecuteReader:");
-            Console.WriteLine(e.Message);
-            Console.WriteLine(e.StackTrace);
-            SqlDataReader reader = null;
-            return reader;
-        }
+    
+    /// <summary>
+    /// Generates the debugConnection
+    /// </summary>
+    private static void GenerateDebugConnection() {
+        
+        SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder {
+            DataSource = DataSourceConnection,
+            UserID = UserIdConnection,
+            Password = PasswordConnection,
+            InitialCatalog = InitialCatalogConnection
+        };
+
+        DebugConnection = new SqlConnection(builder.ConnectionString);
     }
     
-    public static void ExecuteUpdate(string query) {
-        try {
-            SqlCommand command = new SqlCommand(query, ReleaseConnection);
-            command.ExecuteNonQuery();
-        } catch (SqlException e) {
-            Console.WriteLine("Error in Executing update:");
-            Console.WriteLine(e.Message);
-            Console.WriteLine(e.StackTrace);
-        }
-    }
-    
+
 }

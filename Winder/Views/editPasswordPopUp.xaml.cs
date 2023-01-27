@@ -32,9 +32,7 @@ public partial class EditPasswordPopUp {
                 foutMelding.Text = "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten!";
                 foutMelding.IsVisible = true;
             } else {
-                Database db = new Database();
-                
-                db.UpdatePassword(email, newPassword);
+                Authentication.CurrentUser.UpdatePassword(newPassword,Database2.ReleaseConnection);
 
                 Close();
             }

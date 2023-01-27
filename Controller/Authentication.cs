@@ -6,6 +6,8 @@ using System.Security.Cryptography;
 using System.Text;
 
 public class Authentication {
+    
+    private const string ValidationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
 
     public static User CurrentUser { get; set; }
     public static bool IsScaled = false;
@@ -16,42 +18,11 @@ public class Authentication {
     private static bool isGettingProfiles;
     
     private const int passwordLength =  8;
-    
-    //Chat
-    public static ObservableCollection<ChatMessage> ChatCollection;
-    
-    //Mail check
-    private const string validationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
-    public const string emailEndsWith = "@student.windesheim.nl";
-    public const string emailStartsWith = "s";
 
     public static void Initialize() {
         ProfileQueue = new Queue<Profile>();
         CurrentUser = new User();
         
-    }
-
-
-    // checking if Email is already in database, returns true if unique
-    public bool EmailIsUnique(string email)
-    {
-        Database db = new Database();
-        List<string> emails = db.GetEmailFromDataBase();
-        if (emails.Contains(email))
-        {
-            return false;
-        }
-        return true;
-    }
-
-    // Hashing the password
-    public string HashPassword(string password) {
-        if (!string.IsNullOrEmpty(password)) {
-            String result = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
-            Console.WriteLine(result);
-            return result;
-        }
-        return "";
     }
 
     // Calculating the age by using date as parameter
@@ -110,9 +81,6 @@ public class Authentication {
             //Get the user
             User user = new User().GetUserFromDatabase(email,Database2.ReleaseConnection);
 
-            //Get the interests of the user
-            user.Interests = Database.LoadInterestsFromDatabaseInListInteresses(usersToRetrief[i]).ToArray();
-
             //Get the images of the user
             byte[][] images = Database.GetPicturesFromDatabase(usersToRetrief[i]);
             var profile = new Profile(user, images);
@@ -169,16 +137,11 @@ public class Authentication {
             while (length-- > 0) {
                 rng.GetBytes(uintBuffer);
                 uint num = BitConverter.ToUInt32(uintBuffer, 0);
-                res.Append(validationCharacters[(int)(num % (uint)validationCharacters.Length)]);
+                res.Append(ValidationCharacters[(int)(num % (uint)ValidationCharacters.Length)]);
             }
         }
 
         return res.ToString();
     }
-    
-    public static async Task SetLoginEmail(string email) {
-        Console.WriteLine("Setting login Email");
-        await SecureStorage.SetAsync("Email", email);
-        
-    }
+
 }

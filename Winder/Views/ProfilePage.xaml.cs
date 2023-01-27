@@ -32,8 +32,7 @@ public partial class ProfileChange {
         ProfilePictures = new byte[6][];
         LoadUserFromDatabaseInForm();
         InterestSelection.ItemsSource = database.GetInterestsFromDataBase();
-        interests = Database.LoadInterestsFromDatabaseInListInteresses(Authentication.CurrentUser.Email);
-        ListInterests.ItemsSource = interests;
+        ListInterests.ItemsSource = Authentication.CurrentUser.Interests;
     }
     //Fills the form inputs placeholders with the user data
     private void LoadUserFromDatabaseInForm() {
@@ -130,7 +129,7 @@ private int GetPreferenceFromUser()
         if (firstname && middleName && lastname && birthday  && preference && gender && bio && education ) {
             UpdateUserPropertiesPrepareForUpdateQuery();
             database.UpdateUserInDatabaseWithNewUserData(Authentication.CurrentUser);
-            database.DeleteAllPhotosFromDatabase(Authentication.CurrentUser);
+            Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database2.ReleaseConnection);
             InsertAllPhotosInDatabase(Authentication.CurrentUser);
             RegisterInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
@@ -148,7 +147,7 @@ private int GetPreferenceFromUser()
         if (ProfilePictures != null) {
             foreach (byte[] bytes in ProfilePictures) {
                 if (bytes != null) {
-                    database.InsertPictureInDatabase(currentUser.Email, bytes);
+                    Authentication.CurrentUser.InsertPictureInDatabase(bytes, Database2.ReleaseConnection);
                 }
             }
         }
