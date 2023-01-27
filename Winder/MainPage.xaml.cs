@@ -58,7 +58,6 @@ public partial class MainPage : ContentPage {
                 Console.WriteLine("Found user who was logged in, restoring session");
                 Authentication.CurrentUser = new User().GetUserFromDatabase(userEmail, Database2.ReleaseConnection);
                 Console.WriteLine("Restored");
-                Authentication.Get5Profiles(userEmail);
             }
             else
             {

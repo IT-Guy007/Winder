@@ -142,8 +142,6 @@ public partial class SettingsPage {
                 SetMinAge();
                 SetMaxAge();
                 foutLeeftijd.IsVisible = false;
-                Authentication.ProfileQueue = new Queue<Profile>();
-                Authentication.CheckIfQueueNeedsMoreProfiles();
                 DisplayAlert("Melding", "Er zijn succesvol gegevens aangepast", "OK");
             }
             

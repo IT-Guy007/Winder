@@ -275,7 +275,6 @@ private int GetPreferenceFromUser()
         switch (OriginPage)
         {
             case "matchpage":
-                Authentication.SetCurrentProfile();
                 Navigation.PushAsync(new MatchPage());
                 break;
             case "settingspage":
