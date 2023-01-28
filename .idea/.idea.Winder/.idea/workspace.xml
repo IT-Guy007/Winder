@@ -12,22 +12,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Controller/UserController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DataModel/InterestsModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/ControllerTests/AuthenticationTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/ControllerTests/DatabaseTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/ControllerTests/ProfileQueueControllerTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/ControllerTests/SwipeControllerTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/ControllerTests/UserControllerTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/ChatMessageTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/ChatModelTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/EmailMessageTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/InterestModelTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/MatchTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/ProfileQueueTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/ProfileTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/UserModelTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/UserTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Authentication.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Database.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ChatPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ChatPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ChatsViewPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ChatsViewPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ForgotPasswordPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ForgotPasswordPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/LoginPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/LoginPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/RegisterPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/RegisterPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/SettingsPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/SettingsPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/editPasswordPopUp.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/editPasswordPopUp.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unittest/TestAuthentication.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unittest/TestDatabase.cs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +181,7 @@
       <workItem from="1673395992147" duration="480000" />
       <workItem from="1673453991471" duration="1470000" />
       <workItem from="1674909371920" duration="16000" />
-      <workItem from="1674909397327" duration="4580000" />
+      <workItem from="1674909397327" duration="5260000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>
