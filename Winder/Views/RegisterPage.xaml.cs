@@ -15,20 +15,18 @@ public partial class RegisterPage {
     private string major;
     private string school;
     private byte[] profilePicture;
-
-    private readonly Database database;
+    
     private readonly List<string> interestsList;
     private readonly List<string> chosenInterestsList;
 
 
 
     public RegisterPage() {
-        database = new Database();
         interestsList = new List<string>();
         chosenInterestsList = new List<string>();
         
         InitializeComponent();
-        interestsList = database.GetInterestsFromDataBase();
+        interestsList = new InterestsModel().GetInterestsFromDataBase(Database.ReleaseConnection);
         foreach (string interest in interestsList) {
             Interesses.Items.Add(interest);
         }
@@ -155,10 +153,10 @@ public partial class RegisterPage {
             middleName ??= "";
 
             
-            Authentication.CurrentUser = new User().Registration(firstname,middleName,lastname,email,preference,dateOfBirth,gender," ",password,profilePicture,true,school,major,Database2.ReleaseConnection);
+            Authentication.CurrentUser = new User().Registration(firstname,middleName,lastname,email,preference,dateOfBirth,gender," ",password,profilePicture,true,school,major,Database.ReleaseConnection);
 
             foreach (string interesse in chosenInterestsList) {
-                Authentication.CurrentUser.SetInterestInDatabase(interesse,Database2.ReleaseConnection);
+                Authentication.CurrentUser.SetInterestInDatabase(interesse,Database.ReleaseConnection);
             }
 
             Navigation.PushAsync(new StartPage());
@@ -185,7 +183,7 @@ public partial class RegisterPage {
         }
         else
         {
-            if (new UserModel().EmailIsUnique(Email.Text, Database2.ReleaseConnection))
+            if (new UserModel().EmailIsUnique(Email.Text, Database.ReleaseConnection))
             {
                 FoutEmail.IsVisible = false;
                 email = Email.Text;
@@ -262,7 +260,7 @@ public partial class RegisterPage {
         }
         else
         {
-            if (auth.CheckPassword(Wachtwoord.Text) == false)
+            if (new UserController().CheckPassword(Wachtwoord.Text) == false)
             {
                 FoutWachtwoord.Text = "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten";
                 FoutWachtwoord.IsVisible = true;
@@ -282,7 +280,7 @@ public partial class RegisterPage {
 
         #region geboortedatum checks
 
-        if (Authentication.CalculateAge(geboortedatumtijdelijk) < 18)
+        if (new UserController().CalculateAge(geboortedatumtijdelijk) < 18)
         {
             FoutLeeftijd.IsVisible = true;
             aantalchecks -= 1;

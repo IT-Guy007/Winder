@@ -20,7 +20,7 @@ public partial class LoginPage {
     private void Login(object sender, EventArgs e) {
         var email = Emailadres.Text;
         var password = Wachtwoord.Text;
-        User loginUser = new User().CheckLogin(email, password, Database2.ReleaseConnection);
+        User loginUser = new User().CheckLogin(email, password, Database.ReleaseConnection);
         if (!string.IsNullOrEmpty(loginUser.Email)) {
             FoutmeldingInloggen.IsVisible = false;
             

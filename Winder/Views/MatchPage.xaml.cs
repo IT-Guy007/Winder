@@ -25,7 +25,7 @@ public partial class MatchPage
 
     public MatchPage() {
         //Gets the controller
-        ProfileQueueController = new ProfileQueueController(Authentication.CurrentUser,Database2.ReleaseConnection);
+        ProfileQueueController = new ProfileQueueController(Authentication.CurrentUser,Database.ReleaseConnection);
         SwipeController = new SwipeController();
         //Set first profile
         if (ProfileQueueController.GetQueueCount() > 0) {
@@ -227,7 +227,7 @@ public partial class MatchPage
             StackLayout ageStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             
             var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var birthday = Authentication.CalculateAge(ProfileQueueController.CurrentProfile.user.BirthDay);
+            var birthday = new UserController().CalculateAge(ProfileQueueController.CurrentProfile.user.BirthDay);
             var age = new Label { Text = birthday.ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to Stack
@@ -362,7 +362,7 @@ public partial class MatchPage
     
     private void NextProfile() {
 
-        ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database2.ReleaseConnection);
+        ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database.ReleaseConnection);
         if (ProfileQueueController.GetQueueCount() != 0) {
             ProfileQueueController.GetNextProfile();
 
@@ -432,14 +432,14 @@ public partial class MatchPage
         string emailCurrentUser = Authentication.CurrentUser.Email;
         string emailLikedUser = ProfileQueueController.CurrentProfile.user.Email;
 
-        if(SwipeController.CheckMatch(emailCurrentUser, emailLikedUser, Database2.ReleaseConnection)) {
-            SwipeController.NewMatch(emailCurrentUser, emailLikedUser, Database2.ReleaseConnection);
-            SwipeController.DeleteLike(emailCurrentUser, emailLikedUser, Database2.ReleaseConnection);
+        if(SwipeController.CheckMatch(emailCurrentUser, emailLikedUser, Database.ReleaseConnection)) {
+            SwipeController.NewMatch(emailCurrentUser, emailLikedUser, Database.ReleaseConnection);
+            SwipeController.DeleteLike(emailCurrentUser, emailLikedUser, Database.ReleaseConnection);
             MatchPopup();
         } else {
-            SwipeController.NewLike(emailCurrentUser, emailLikedUser, Database2.ReleaseConnection);
+            SwipeController.NewLike(emailCurrentUser, emailLikedUser, Database.ReleaseConnection);
         }
-        ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database2.ReleaseConnection);
+        ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database.ReleaseConnection);
         NextProfile();
     }
 
@@ -447,8 +447,8 @@ public partial class MatchPage
         string emailCurrentUser = Authentication.CurrentUser.Email;
         string emaildDislikedUser = ProfileQueueController.CurrentProfile.user.Email;
 
-        SwipeController.NewDislike(emailCurrentUser, emaildDislikedUser, Database2.ReleaseConnection);
-        ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database2.ReleaseConnection);
+        SwipeController.NewDislike(emailCurrentUser, emaildDislikedUser, Database.ReleaseConnection);
+        ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database.ReleaseConnection);
         NextProfile();
     }
 }

@@ -9,7 +9,6 @@ public partial class ProfileChange {
     private const string PageName = "profilepage";
 
     private readonly List<string> interests;
-    private readonly Database database;
     private readonly Color errorColor;
     private byte[][] ProfilePictures { get; set;}
     private bool firstname = true;
@@ -23,7 +22,6 @@ public partial class ProfileChange {
     
     //Load all necessary components to the page
     public ProfileChange() {
-        database = new Database();
         interests = new List<string>();
         errorColor = new Color(255, 243, 5);
         
@@ -31,12 +29,12 @@ public partial class ProfileChange {
         
         ProfilePictures = new byte[6][];
         LoadUserFromDatabaseInForm();
-        InterestSelection.ItemsSource = database.GetInterestsFromDataBase();
+        InterestSelection.ItemsSource = new InterestsModel().GetInterestsFromDataBase(Database.ReleaseConnection);
         ListInterests.ItemsSource = Authentication.CurrentUser.Interests;
     }
     //Fills the form inputs placeholders with the user data
     private void LoadUserFromDatabaseInForm() {
-        ProfilePictures = Authentication.CurrentUser.GetPicturesFromDatabase(Database2.ReleaseConnection);
+        ProfilePictures = Authentication.CurrentUser.GetPicturesFromDatabase(Database.ReleaseConnection);
         SetAllImageButtons();
         Firstname.Placeholder = Authentication.CurrentUser.FirstName;
         Middlename.Placeholder = Authentication.CurrentUser.MiddleName;
@@ -128,8 +126,8 @@ private int GetPreferenceFromUser()
     private void ChangeUserData(object sender, EventArgs e) {
         if (firstname && middleName && lastname && birthday  && preference && gender && bio && education ) {
             UpdateUserPropertiesPrepareForUpdateQuery();
-            Authentication.CurrentUser.UpdateUserDataToDatabase(Database2.ReleaseConnection);
-            Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database2.ReleaseConnection);
+            Authentication.CurrentUser.UpdateUserDataToDatabase(Database.ReleaseConnection);
+            Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database.ReleaseConnection);
             InsertAllPhotosInDatabase(Authentication.CurrentUser);
             RegisterInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
@@ -147,7 +145,7 @@ private int GetPreferenceFromUser()
         if (ProfilePictures != null) {
             foreach (byte[] bytes in ProfilePictures) {
                 if (bytes != null) {
-                    Authentication.CurrentUser.InsertPictureInDatabase(bytes, Database2.ReleaseConnection);
+                    Authentication.CurrentUser.InsertPictureInDatabase(bytes, Database.ReleaseConnection);
                 }
             }
         }
@@ -177,7 +175,7 @@ private int GetPreferenceFromUser()
     //Adds all interests to users list of interests
     private void RegisterInterestsInDatabase() {
         foreach (var interest in interests) {
-            Authentication.CurrentUser.SetInterestInDatabase(interest, Database2.ReleaseConnection);
+            Authentication.CurrentUser.SetInterestInDatabase(interest, Database.ReleaseConnection);
         }
     }
     //Update the users data 
@@ -433,7 +431,7 @@ private int GetPreferenceFromUser()
         InterestSelection.TitleColor = default;
         var interest = ListInterests.SelectedItem.ToString();
         if (interest != null) {
-            Authentication.CurrentUser.DeleteInterestInDatabase(interest,Database2.ReleaseConnection);
+            Authentication.CurrentUser.DeleteInterestInDatabase(interest,Database.ReleaseConnection);
             interests.Remove(interest);
         }
 

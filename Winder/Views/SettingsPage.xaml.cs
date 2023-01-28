@@ -6,11 +6,9 @@ using Microsoft.Maui.ApplicationModel.Communication;
 namespace Winder;
 
 public partial class SettingsPage {
-    private readonly Database database;
     private const string PageName = "settingspage";
     public string OriginPage;
     public SettingsPage() {
-        database = new Database();
 
         InitializeComponent();
         GetMinimaleLeeftijd();
@@ -40,7 +38,7 @@ public partial class SettingsPage {
     //sets the location in the database
     private void SetLocation() {
         string location = Location.SelectedItem.ToString();
-        if (location != null) Authentication.CurrentUser.SetSchool(location, Database2.ReleaseConnection);
+        if (location != null) Authentication.CurrentUser.SetSchool(location, Database.ReleaseConnection);
     }
     
     // checks if the min age is lower then the max age
@@ -67,37 +65,37 @@ public partial class SettingsPage {
   
     //sets location in the picker what the user already has in the database
     private void PlaceLocation() {
-        Location.SelectedItem = Authentication.CurrentUser.GetSchool(Database2.ReleaseConnection);
+        Location.SelectedItem = Authentication.CurrentUser.GetSchool(Database.ReleaseConnection);
         
         }
     //sets minimum age in the picker what the user already has in the database
     private void PlaceMinAge() {
-        minimaleLeeftijd.SelectedItem = Authentication.CurrentUser.GetMinAge(Database2.ReleaseConnection);
+        minimaleLeeftijd.SelectedItem = Authentication.CurrentUser.GetMinAge(Database.ReleaseConnection);
         
     }
     //sets maximum age in the picker what the user already has in the database
     private void PlaceMaxAge() {
         
-        maximaleLeeftijd.SelectedItem = Authentication.CurrentUser.GetMaxAge(Database2.ReleaseConnection);
+        maximaleLeeftijd.SelectedItem = Authentication.CurrentUser.GetMaxAge(Database.ReleaseConnection);
         
     }
     //sets the minimum age of what the user chose in the database
     private void SetMinAge() {
         
-        Authentication.CurrentUser.SetMinAge((int)minimaleLeeftijd.SelectedItem, Database2.ReleaseConnection);
+        Authentication.CurrentUser.SetMinAge((int)minimaleLeeftijd.SelectedItem, Database.ReleaseConnection);
 
     }
     //sets the maximum age of what the user chose in the database
     private void SetMaxAge() {
         
-       Authentication.CurrentUser.SetMaxAge((int)maximaleLeeftijd.SelectedItem, Database2.ReleaseConnection);
+       Authentication.CurrentUser.SetMaxAge((int)maximaleLeeftijd.SelectedItem, Database.ReleaseConnection);
 
     }
     private async void DeleteAccountButton(object sender, EventArgs e) {
 
         bool displayresult = await DisplayAlert("", "Weet u zeker dat u uw account wilt verwijderen?", "Ja", "Nee");
         if (displayresult) {
-            Authentication.CurrentUser.DeleteUser(Database2.ReleaseConnection);
+            Authentication.CurrentUser.DeleteUser(Database.ReleaseConnection);
             await Navigation.PushAsync(new MainPage());
         }
 

@@ -3,10 +3,8 @@ using EmailMessage = DataModel.EmailMessage;
 
 namespace Winder;
 public partial class ForgotPasswordPage {
-    private readonly Database database;
 
     public ForgotPasswordPage() {
-        this.database = new Database();
         InitializeComponent();
     }
 
@@ -19,13 +17,13 @@ public partial class ForgotPasswordPage {
         string email = Emailadres.Text;
         
         //Check if Email exists
-        if (new UserModel().EmailIsUnique(email.ToLower(),Database2.ReleaseConnection)) {
+        if (new UserModel().EmailIsUnique(email.ToLower(),Database.ReleaseConnection)) {
             DisplayAlert("", "Dit emailadres is niet bekend bij ons", "OK"); // popup
             
         } else {
 
             //Send forgotten password Email
-            string code = Authentication.RandomString(8);
+            string code = new UserController().RandomString();
         
             string body = "<h1>Authenticatie-code voor Winder</h1>" + 
                           "De authenthenticatie-code voor het resetten van het wachtwoord van uw Winder account is: <b>" + $"{code}</b>" +
@@ -64,14 +62,14 @@ public partial class ForgotPasswordPage {
             } else if (newPassword.Equals(repeatedPassword)) {
                 
                 //Checks for different requirements
-                if (auth.CheckPassword(newPassword) == false) {
+                if (new UserController().CheckPassword(newPassword) == false) {
                         DisplayAlert("", "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten", "OK"); // popup
                         
                 } else {
                     User user = new User() {
                         Email = email
                     };
-                    user.UpdatePassword(newPassword,Database2.ReleaseConnection); 
+                    user.UpdatePassword(newPassword,Database.ReleaseConnection); 
                     
                     DisplayAlert("", "Wachtwoord is succesvol gewijzigd", "OK"); // popup
                     Navigation.PushAsync(new LoginPage()); // terug naar het loginscherm

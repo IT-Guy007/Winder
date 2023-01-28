@@ -28,11 +28,11 @@ public partial class EditPasswordPopUp {
         } else if (newPassword.Equals(repeatPassword)) {
 
             // checkt of het wachtwoord voldoet aan de eisen
-            if (auth.CheckPassword(newPassword) == false) {
+            if (new UserController().CheckPassword(newPassword) == false) {
                 foutMelding.Text = "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten!";
                 foutMelding.IsVisible = true;
             } else {
-                Authentication.CurrentUser.UpdatePassword(newPassword,Database2.ReleaseConnection);
+                Authentication.CurrentUser.UpdatePassword(newPassword,Database.ReleaseConnection);
 
                 Close();
             }

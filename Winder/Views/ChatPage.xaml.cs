@@ -17,7 +17,7 @@ public partial class ChatPage {
     private ChatModel ChatModel;
 
     public ChatPage(User sendFromUser, User sendToUser) {
-        ChatModel = new ChatModel(sendFromUser, sendToUser, Database2.ReleaseConnection);
+        ChatModel = new ChatModel(sendFromUser, sendToUser, Database.ReleaseConnection);
         
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         
@@ -159,7 +159,7 @@ public partial class ChatPage {
         sendButton.Clicked += (_, _) => {
             if (!string.IsNullOrWhiteSpace(chatInput.Text)) {
                 chatInput.Text = char.ToUpper(chatInput.Text[0]) + chatInput.Text.Substring(1);
-                new ChatMessage(ChatModel.FromUser.Email, ChatModel.ToUser.Email, DateTime.Now, chatInput.Text, false).SendMessage(Database2.ReleaseConnection);
+                new ChatMessage(ChatModel.FromUser.Email, ChatModel.ToUser.Email, DateTime.Now, chatInput.Text, false).SendMessage(Database.ReleaseConnection);
                 Initialize();
             }
         };
