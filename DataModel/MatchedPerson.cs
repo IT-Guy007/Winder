@@ -9,10 +9,10 @@ public class MatchedPerson {
     public ImageSource ProfilePicture { get; set; }
 
     public MatchedPerson(User MatchedStudent) {
-        Email = MatchedStudent.email;
-        FirstName = MatchedStudent.firstName;
-        LastName = MatchedStudent.lastName;
-        MemoryStream ms = new MemoryStream(MatchedStudent.profilePicture);
+        Email = MatchedStudent.Email;
+        FirstName = MatchedStudent.FirstName;
+        LastName = MatchedStudent.LastName;
+        MemoryStream ms = new MemoryStream(MatchedStudent.ProfilePicture);
         ProfilePicture = ImageSource.FromStream(() => ms);
     }
 

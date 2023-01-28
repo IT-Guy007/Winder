@@ -18,7 +18,7 @@ public partial class EditPasswordPopUp {
         Authentication auth = new Authentication();
         string newPassword = NieuwWachtwoord.Text;
         string repeatPassword = HerhaalWachtwoord.Text;
-        string email = Authentication._currentUser.email;
+        string email = Authentication.CurrentUser.Email;
 
         if (newPassword == null) {
             foutMelding.Text = "Wachtwoord mag niet leeg zijn!";
@@ -28,13 +28,11 @@ public partial class EditPasswordPopUp {
         } else if (newPassword.Equals(repeatPassword)) {
 
             // checkt of het wachtwoord voldoet aan de eisen
-            if (auth.CheckPassword(newPassword) == false) {
+            if (new UserController().CheckPassword(newPassword) == false) {
                 foutMelding.Text = "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten!";
                 foutMelding.IsVisible = true;
             } else {
-                Database db = new Database();
-                
-                db.UpdatePassword(email, newPassword);
+                Authentication.CurrentUser.UpdatePassword(newPassword,Database.ReleaseConnection);
 
                 Close();
             }

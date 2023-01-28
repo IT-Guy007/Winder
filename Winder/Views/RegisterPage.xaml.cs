@@ -15,20 +15,18 @@ public partial class RegisterPage {
     private string major;
     private string school;
     private byte[] profilePicture;
-
-    private readonly Database database;
+    
     private readonly List<string> interestsList;
     private readonly List<string> chosenInterestsList;
 
 
 
     public RegisterPage() {
-        database = new Database();
         interestsList = new List<string>();
         chosenInterestsList = new List<string>();
         
         InitializeComponent();
-        interestsList = database.GetInterestsFromDataBase();
+        interestsList = new InterestsModel().GetInterestsFromDataBase(Database.ReleaseConnection);
         foreach (string interest in interestsList) {
             Interesses.Items.Add(interest);
         }
@@ -154,13 +152,11 @@ public partial class RegisterPage {
         if (SaveEventChecks()) {
             middleName ??= "";
 
-            database.RegistrationFunction(firstname, middleName, lastname, email, preference, dateOfBirth, gender, " ", password, profilePicture, true, school, major);
-            database.SaveProfilePictures(email, profilePicture);
-            User currentUser = new User(firstname, middleName, lastname, dateOfBirth, preference, email, password, gender, profilePicture, " ", school, major,18,23);
-            Authentication._currentUser = currentUser;
+            
+            Authentication.CurrentUser = new User().Registration(firstname,middleName,lastname,email,preference,dateOfBirth,gender," ",password,profilePicture,true,school,major,Database.ReleaseConnection);
 
             foreach (string interesse in chosenInterestsList) {
-                database.RegisterInterestInDatabase(email, interesse);
+                Authentication.CurrentUser.SetInterestInDatabase(interesse,Database.ReleaseConnection);
             }
 
             Navigation.PushAsync(new StartPage());
@@ -178,7 +174,7 @@ public partial class RegisterPage {
         geboortedatumtijdelijk = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
 
 
-        #region email checks
+        #region Email checks
         if (Email.Text == null)
         {
             FoutEmail.Text = "Email mag niet leeg zijn";
@@ -187,7 +183,7 @@ public partial class RegisterPage {
         }
         else
         {
-            if (auth.EmailIsUnique(Email.Text))
+            if (new UserModel().EmailIsUnique(Email.Text, Database.ReleaseConnection))
             {
                 FoutEmail.IsVisible = false;
                 email = Email.Text;
@@ -199,7 +195,7 @@ public partial class RegisterPage {
                 FoutEmail.IsVisible = true;
                 aantalchecks -= 1;
             }
-            if (auth.CheckEmail(Email.Text))
+            if (new UserModel().CheckEmail(Email.Text))
             {
                 email = Email.Text;
                 aantalchecks += 1;
@@ -264,7 +260,7 @@ public partial class RegisterPage {
         }
         else
         {
-            if (auth.CheckPassword(Wachtwoord.Text) == false)
+            if (new UserController().CheckPassword(Wachtwoord.Text) == false)
             {
                 FoutWachtwoord.Text = "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten";
                 FoutWachtwoord.IsVisible = true;
@@ -273,7 +269,7 @@ public partial class RegisterPage {
             else
             {
                 FoutWachtwoord.IsVisible = false;
-                password = auth.HashPassword(Wachtwoord.Text);
+                password = new UserModel().HashPassword(Wachtwoord.Text);
                 aantalchecks += 1;
             }
 
@@ -284,7 +280,7 @@ public partial class RegisterPage {
 
         #region geboortedatum checks
 
-        if (Authentication.CalculateAge(geboortedatumtijdelijk) < 18)
+        if (new UserController().CalculateAge(geboortedatumtijdelijk) < 18)
         {
             FoutLeeftijd.IsVisible = true;
             aantalchecks -= 1;

@@ -5,67 +5,53 @@ using MAUI;
 namespace Winder;
 
 
-public partial class MainPage : ContentPage {
+public partial class MainPage {
 
     private bool connectionsucceeded = true;
     private bool displayresult;
     public MainPage() {
         InitializeComponent();
         
-
     }
 
     protected override async void OnAppearing() {
-
-        // wait for 4 seconds
-        //await Task.Delay(3000);
+        
         Console.WriteLine("App started");
-        Authentication.Initialize();
-        Database.Initialize();
-        Database db = new Database();
 
         try{
             Console.WriteLine("Testing database connection");
-            Database.OpenConnection();
+            Database.InitializeReleaseConnection();
             Console.WriteLine("Successful connection");
         }
-        catch (SqlException se)
-        {
+        catch (SqlException se) {
             Console.WriteLine("Failed to open connection");
             Console.WriteLine(se.Message);
             Console.WriteLine(se.StackTrace);
             displayresult = await DisplayAlert("", "Oeps, er is iets mis gegaan met de database connectie", "Probeer opnieuw", "Sluit de app");
             connectionsucceeded = false;
-            if (displayresult)
-            {
+            if (displayresult) {
                 await Navigation.PushAsync(new StartPage());
-            }
-            else
-            {
+            } else {
                 Application.Current.Quit();
             }
         }
 
-        if (connectionsucceeded)
-        {
-            Database.CloseConnection();
-
-
+        if (connectionsucceeded) {
+            
             //Check if user was previously logged in
-            var userEmail = await SecureStorage.Default.GetAsync("email");
+            var userEmail = await SecureStorage.Default.GetAsync("Email");
             if (!String.IsNullOrWhiteSpace(userEmail))
             {
                 Console.WriteLine("Found user who was logged in, restoring session");
-                db.UpdateLocalUserFromDatabase(userEmail);
+                Authentication.CurrentUser = new User().GetUserFromDatabase(userEmail, Database.ReleaseConnection);
                 Console.WriteLine("Restored");
-                Authentication.Get5Profiles(userEmail);
             }
             else
             {
                 Console.WriteLine("No user found");
             }
 
-            if (!String.IsNullOrWhiteSpace(Authentication._currentUser.email))
+            if (!String.IsNullOrWhiteSpace(Authentication.CurrentUser.Email))
             {
                 Console.WriteLine("Pusing new MatchPage");
                 await Navigation.PushAsync(new MatchPage());

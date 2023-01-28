@@ -5,9 +5,6 @@ namespace Winder;
 public partial class LoginPage {
     private readonly Button loginButton = new Button();
     private readonly Button forgotPasswordButton = new Button();
-
-    readonly Database database = new Database();
-
     public LoginPage() {
         InitializeComponent();
         
@@ -23,7 +20,8 @@ public partial class LoginPage {
     private void Login(object sender, EventArgs e) {
         var email = Emailadres.Text;
         var password = Wachtwoord.Text;
-        if (database.CheckLogin(email, password)) {
+        User loginUser = new User().CheckLogin(email, password, Database.ReleaseConnection);
+        if (!string.IsNullOrEmpty(loginUser.Email)) {
             FoutmeldingInloggen.IsVisible = false;
             
             Navigation.PushAsync(new MatchPage());

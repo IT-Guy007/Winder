@@ -5,14 +5,12 @@ namespace Winder;
 
 public partial class ChatsViewPage {
     public string OriginPage;
-    private Database Database;
     private const string pageName = "Chatpage";
-
+    
     public ChatsViewPage() {
-        Database = new Database();
         InitializeComponent();
-        
-        List<User> MatchedStudents = Database.GetMatchedStudentsFromUser(Authentication._currentUser.email);
+
+        List<User> MatchedStudents = Authentication.CurrentUser.GetMatchedStudentsFromUser(Database.ReleaseConnection);
         List<MatchedPerson> MatchedPeople = ConvertUserToMatchPerson(MatchedStudents);
         ListOfMatches.ItemsSource = MatchedPeople;
     }
@@ -44,7 +42,7 @@ public partial class ChatsViewPage {
 
     private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e) {
         var tappedItem = e.Item as MatchedPerson;
-        Navigation.PushAsync(new ChatView(Authentication._currentUser, Database.GetUserFromDatabase(tappedItem.Email)));
+        Navigation.PushAsync(new ChatPage(Authentication.CurrentUser, new User().GetUserFromDatabase(tappedItem.Email, Database.ReleaseConnection)));
     }
 
     private void MyProfile_Clicked(object sender, EventArgs e) {

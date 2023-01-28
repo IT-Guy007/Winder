@@ -237,7 +237,7 @@
             </Grid.ColumnDefinitions>
             <Button
                 BackgroundColor="#D9D9D9"
-                Clicked="deleteAccountbtn"
+                Clicked="DeleteAccountButton"
                 HeightRequest="60"
                 Text="Account verwijderen"
                 TextColor="Black" />

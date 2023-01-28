@@ -9,7 +9,6 @@ public partial class ProfileChange {
     private const string PageName = "profilepage";
 
     private readonly List<string> interests;
-    private readonly Database database;
     private readonly Color errorColor;
     private byte[][] ProfilePictures { get; set;}
     private bool firstname = true;
@@ -23,7 +22,6 @@ public partial class ProfileChange {
     
     //Load all necessary components to the page
     public ProfileChange() {
-        database = new Database();
         interests = new List<string>();
         errorColor = new Color(255, 243, 5);
         
@@ -31,20 +29,19 @@ public partial class ProfileChange {
         
         ProfilePictures = new byte[6][];
         LoadUserFromDatabaseInForm();
-        InterestSelection.ItemsSource = database.GetInterestsFromDataBase();
-        interests = Database.LoadInterestsFromDatabaseInListInteresses(Authentication._currentUser.email);
-        ListInterests.ItemsSource = interests;
+        InterestSelection.ItemsSource = new InterestsModel().GetInterestsFromDataBase(Database.ReleaseConnection);
+        ListInterests.ItemsSource = Authentication.CurrentUser.Interests;
     }
     //Fills the form inputs placeholders with the user data
     private void LoadUserFromDatabaseInForm() {
-        ProfilePictures = Database.GetPicturesFromDatabase(Authentication._currentUser.email);
+        ProfilePictures = Authentication.CurrentUser.GetPicturesFromDatabase(Database.ReleaseConnection);
         SetAllImageButtons();
-        Firstname.Placeholder = Authentication._currentUser.firstName;
-        Middlename.Placeholder = Authentication._currentUser.middleName;
-        Lastname.Placeholder = Authentication._currentUser.lastName;
-        Birthdate.Date = Authentication._currentUser.birthDay;
-        Bio.Placeholder = Authentication._currentUser.bio;
-        Education.Placeholder = Authentication._currentUser.major;
+        Firstname.Placeholder = Authentication.CurrentUser.FirstName;
+        Middlename.Placeholder = Authentication.CurrentUser.MiddleName;
+        Lastname.Placeholder = Authentication.CurrentUser.LastName;
+        Birthdate.Date = Authentication.CurrentUser.BirthDay;
+        Bio.Placeholder = Authentication.CurrentUser.Bio;
+        Education.Placeholder = Authentication.CurrentUser.Major;
         Gender.SelectedIndex = GetGenderFromUser();
         Preference.SelectedIndex = GetPreferenceFromUser();
     }
@@ -111,27 +108,27 @@ public partial class ProfileChange {
 #endif
 }
 
-//Gets the preference of user
+//Gets the Preference of user
 private int GetPreferenceFromUser()
     {
-        if (Authentication._currentUser.preference == "Man") return 1;
-        if (Authentication._currentUser.preference == "Vrouw") return 2;
+        if (Authentication.CurrentUser.Preference == "Man") return 1;
+        if (Authentication.CurrentUser.Preference == "Vrouw") return 2;
         return 0;
     }
-    //Gets the gender of user
+    //Gets the Gender of user
     private int GetGenderFromUser()
     {
-        if (Authentication._currentUser.gender == "Man") return 1;
-        if (Authentication._currentUser.gender == "Vrouw") return 2;
+        if (Authentication.CurrentUser.Gender == "Man") return 1;
+        if (Authentication.CurrentUser.Gender == "Vrouw") return 2;
         return 0;
     }
     //Changes the userdata en updates the form
     private void ChangeUserData(object sender, EventArgs e) {
         if (firstname && middleName && lastname && birthday  && preference && gender && bio && education ) {
             UpdateUserPropertiesPrepareForUpdateQuery();
-            database.UpdateUserInDatabaseWithNewUserData(Authentication._currentUser);
-            database.DeleteAllPhotosFromDatabase(Authentication._currentUser);
-            InsertAllPhotosInDatabase(Authentication._currentUser);
+            Authentication.CurrentUser.UpdateUserDataToDatabase(Database.ReleaseConnection);
+            Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database.ReleaseConnection);
+            InsertAllPhotosInDatabase(Authentication.CurrentUser);
             RegisterInterestsInDatabase();
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             ClearTextFromEntries();
@@ -148,7 +145,7 @@ private int GetPreferenceFromUser()
         if (ProfilePictures != null) {
             foreach (byte[] bytes in ProfilePictures) {
                 if (bytes != null) {
-                    database.InsertPictureInDatabase(currentUser.email, bytes);
+                    Authentication.CurrentUser.InsertPictureInDatabase(bytes, Database.ReleaseConnection);
                 }
             }
         }
@@ -159,12 +156,12 @@ private int GetPreferenceFromUser()
     private void UpdatePlaceholders()
     {
 
-        Firstname.Placeholder = Authentication._currentUser.firstName;
-        Middlename.Placeholder = Authentication._currentUser.middleName;
-        Lastname.Placeholder = Authentication._currentUser.lastName;
-        Birthdate.Date = Authentication._currentUser.birthDay;
-        Bio.Placeholder = Authentication._currentUser.bio;
-        Education.Placeholder = Authentication._currentUser.major;
+        Firstname.Placeholder = Authentication.CurrentUser.FirstName;
+        Middlename.Placeholder = Authentication.CurrentUser.MiddleName;
+        Lastname.Placeholder = Authentication.CurrentUser.LastName;
+        Birthdate.Date = Authentication.CurrentUser.BirthDay;
+        Bio.Placeholder = Authentication.CurrentUser.Bio;
+        Education.Placeholder = Authentication.CurrentUser.Major;
     }
     //Clears all text from input after profile change
     private void ClearTextFromEntries()
@@ -176,24 +173,21 @@ private int GetPreferenceFromUser()
         Education.Text = "";
     }
     //Adds all interests to users list of interests
-    private void RegisterInterestsInDatabase()
-    {
-        foreach (var interest in interests)
-        {
-            database.RegisterInterestInDatabase(Authentication._currentUser.email, interest);
+    private void RegisterInterestsInDatabase() {
+        foreach (var interest in interests) {
+            Authentication.CurrentUser.SetInterestInDatabase(interest, Database.ReleaseConnection);
         }
     }
     //Update the users data 
-    private void UpdateUserPropertiesPrepareForUpdateQuery()
-    {
-        if (Authentication._currentUser.firstName != Firstname.Text && !string.IsNullOrEmpty(Firstname.Text)) Authentication._currentUser.firstName = Firstname.Text;
-        if (Authentication._currentUser.middleName != Middlename.Text && !string.IsNullOrEmpty(Middlename.Text)) Authentication._currentUser.middleName = Middlename.Text;
-        if (Authentication._currentUser.lastName != Lastname.Text && !string.IsNullOrEmpty(Lastname.Text)) Authentication._currentUser.lastName = Lastname.Text;
-        if (Authentication._currentUser.major != Education.Text && !string.IsNullOrEmpty(Education.Text)) Authentication._currentUser.major = Education.Text;
-        if (Authentication._currentUser.birthDay != Birthdate.Date) Authentication._currentUser.birthDay = Birthdate.Date;
-        if (Authentication._currentUser.bio != Bio.Text && !string.IsNullOrEmpty(Bio.Text)) Authentication._currentUser.bio = Bio.Text;
-        if (Authentication._currentUser.gender != Gender.SelectedItem.ToString()) Authentication._currentUser.gender = Gender.SelectedItem.ToString() ?? string.Empty;
-        if (Authentication._currentUser.preference != Preference.SelectedItem.ToString()) Authentication._currentUser.preference = Preference.SelectedItem.ToString() ?? string.Empty;
+    private void UpdateUserPropertiesPrepareForUpdateQuery() {
+        if (Authentication.CurrentUser.FirstName != Firstname.Text && !string.IsNullOrEmpty(Firstname.Text)) Authentication.CurrentUser.FirstName = Firstname.Text;
+        if (Authentication.CurrentUser.MiddleName != Middlename.Text && !string.IsNullOrEmpty(Middlename.Text)) Authentication.CurrentUser.MiddleName = Middlename.Text;
+        if (Authentication.CurrentUser.LastName != Lastname.Text && !string.IsNullOrEmpty(Lastname.Text)) Authentication.CurrentUser.LastName = Lastname.Text;
+        if (Authentication.CurrentUser.Major != Education.Text && !string.IsNullOrEmpty(Education.Text)) Authentication.CurrentUser.Major = Education.Text;
+        if (Authentication.CurrentUser.BirthDay != Birthdate.Date) Authentication.CurrentUser.BirthDay = Birthdate.Date;
+        if (Authentication.CurrentUser.Bio != Bio.Text && !string.IsNullOrEmpty(Bio.Text)) Authentication.CurrentUser.Bio = Bio.Text;
+        if (Authentication.CurrentUser.Gender != Gender.SelectedItem.ToString()) Authentication.CurrentUser.Gender = Gender.SelectedItem.ToString() ?? string.Empty;
+        if (Authentication.CurrentUser.Preference != Preference.SelectedItem.ToString()) Authentication.CurrentUser.Preference = Preference.SelectedItem.ToString() ?? string.Empty;
     }
     //Checks if the firstname input is valid
     private void FirstnameTextChanged(object sender, TextChangedEventArgs e) {
@@ -210,7 +204,7 @@ private int GetPreferenceFromUser()
             }
         }
     }
-    //Checks if the middleName input is valid
+    //Checks if the MiddleName input is valid
     private void MiddlenameTextChanged(object sender, TextChangedEventArgs e)
     {
         if (Middlename.Text != "")
@@ -276,7 +270,6 @@ private int GetPreferenceFromUser()
         switch (OriginPage)
         {
             case "matchpage":
-                Authentication.SetCurrentProfile();
                 Navigation.PushAsync(new MatchPage());
                 break;
             case "settingspage":
@@ -438,7 +431,7 @@ private int GetPreferenceFromUser()
         InterestSelection.TitleColor = default;
         var interest = ListInterests.SelectedItem.ToString();
         if (interest != null) {
-            database.RemoveInterestOfUser(Authentication._currentUser.email, interest);
+            Authentication.CurrentUser.DeleteInterestInDatabase(interest,Database.ReleaseConnection);
             interests.Remove(interest);
         }
 

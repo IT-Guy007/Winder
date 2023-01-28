@@ -66,7 +66,7 @@
       <MauiXaml Update="ChatPage.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
-      <MauiXaml Update="Views\ProfileChangePage.xaml">
+      <MauiXaml Update="Views\ProfilePage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
       <MauiXaml Update="Views\RegisterPage.xaml">
@@ -87,10 +87,10 @@
       <MauiXaml Update="Views\ChatsViewPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="Views\ChatView.xaml">
+      <MauiXaml Update="Views\ChatPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="Views\editPasswordPopUp.xaml">
+      <MauiXaml Update="Views\EditPasswordPopUp.xaml">
         <SubType>Designer</SubType>
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
@@ -106,7 +106,7 @@
       <Compile Update="ChatPage.xaml.cs">
         <DependentUpon>ChatPage.xaml</DependentUpon>
       </Compile>
-      <Compile Update="Views\ProfileChangePage.xaml.cs">
+      <Compile Update="Views\ProfilePage.xaml.cs">
         <DependentUpon>ProfileChangePage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
@@ -134,11 +134,11 @@
         <DependentUpon>ChatsViewPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Views\ChatView.xaml.cs">
+      <Compile Update="Views\ChatPage.xaml.cs">
         <DependentUpon>ChatView.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Views\editPasswordPopUp.xaml.cs">
+      <Compile Update="Views\EditPasswordPopUp.xaml.cs">
         <DependentUpon>editPasswordPopUp.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
@@ -149,6 +149,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Controller\Controller.csproj" />
       <ProjectReference Include="..\DataModel\DataModel.csproj" />
     </ItemGroup>
 

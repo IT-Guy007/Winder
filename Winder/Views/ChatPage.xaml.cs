@@ -7,22 +7,18 @@ using Microsoft.Maui.Graphics;
 
 namespace Winder;
 
-public partial class ChatView {
+public partial class ChatPage {
 
     //MAUI
     private ScrollView scrollView;
     private StackLayout verticalStackLayout;
     private Grid grid;
 
-    private readonly User sendFromUser;
-    private readonly User sendToUser;
-   private bool _isTimerRunning;
+    private ChatModel ChatModel;
 
-    public ChatView(User sendFromUser, User sendToUser) {
-        this.sendFromUser = sendFromUser;
-        this.sendToUser = sendToUser;
-
-        Database.SetRead(sendFromUser.email, sendToUser.email);
+    public ChatPage(User sendFromUser, User sendToUser) {
+        ChatModel = new ChatModel(sendFromUser, sendToUser, Database.ReleaseConnection);
+        
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         
         //Set content
@@ -59,10 +55,6 @@ public partial class ChatView {
                 new RowDefinition { Height = new GridLength(50)}
             }
         };
-        
-        
-        //Initialise content
-        Authentication.GetChatMessages(sendFromUser, sendToUser);
 
         //First row
         HorizontalStackLayout horizontalStackLayout = new HorizontalStackLayout {
@@ -98,7 +90,7 @@ public partial class ChatView {
         horizontalStackLayout.Add(refreshButton);
 
         //All the chatmessages
-        if (Authentication.ChatCollection.Count == 0) {
+        if (ChatModel.Messages.Count == 0) {
             Label noMessagesFound = new Label {
                 Text = "No messages found", 
                 HorizontalOptions = LayoutOptions.Center, 
@@ -107,7 +99,7 @@ public partial class ChatView {
             };
             verticalStackLayout.Add(noMessagesFound);
         } else  {
-            foreach (var message in Authentication.ChatCollection) {
+            foreach (var message in ChatModel.Messages) {
                 Border chatBorder = new Border {
                     Padding = 10,
                     Margin = 10,
@@ -115,17 +107,17 @@ public partial class ChatView {
                     VerticalOptions = LayoutOptions.Fill,
                 };
 
-                if (message.fromUser == Authentication._currentUser.email) {
+                if (message.FromUser == ChatModel.FromUser.Email) {
                     //From me
                     chatBorder.HorizontalOptions = LayoutOptions.End;
                     chatBorder.StrokeShape = new BoxView() {
                         CornerRadius = new CornerRadius(10, 10, 10, 0)
                     };
                     chatBorder.BackgroundColor = Color.FromArgb("#ffffff");
-                    chatBorder.Stroke = message.read ? Color.FromArgb("#2B0B98") : Color.FromArgb("#808080");
+                    chatBorder.Stroke = message.Read ? Color.FromArgb("#2B0B98") : Color.FromArgb("#808080");
                     chatBorder.StrokeThickness = 5;
                     chatBorder.Content = new Label {
-                        Text = message.message,
+                        Text = message.Message,
                         TextColor = Colors.Black,
                         FontSize = 20
                     };
@@ -138,7 +130,7 @@ public partial class ChatView {
                     };
                     chatBorder.BackgroundColor = Color.FromArgb("#25D366");
                     chatBorder.Content = new Label {
-                        Text = message.message,
+                        Text = message.Message,
                         TextColor = Colors.White,
                         FontSize = 20
                     };
@@ -167,7 +159,7 @@ public partial class ChatView {
         sendButton.Clicked += (_, _) => {
             if (!string.IsNullOrWhiteSpace(chatInput.Text)) {
                 chatInput.Text = char.ToUpper(chatInput.Text[0]) + chatInput.Text.Substring(1);
-                Database.SendMessage(sendFromUser.email, sendToUser.email, chatInput.Text);
+                new ChatMessage(ChatModel.FromUser.Email, ChatModel.ToUser.Email, DateTime.Now, chatInput.Text, false).SendMessage(Database.ReleaseConnection);
                 Initialize();
             }
         };
