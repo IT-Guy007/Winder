@@ -5,8 +5,10 @@ using Image = Microsoft.Maui.Controls.Image;
 
 namespace Winder;
 
-public partial class MatchPage {
+public partial class MatchPage
+{
 
+    private SwipeController SwipeController;
     public string OriginPage;
     private const string PageName = "matchpage";
     private const string BackbuttonImage = "backbutton.png";
@@ -19,13 +21,12 @@ public partial class MatchPage {
 
     private ProfileQueueController ProfileQueueController;
 
-    private Database database;
+
 
     public MatchPage() {
         //Gets the controller
         ProfileQueueController = new ProfileQueueController(Authentication.CurrentUser,Database2.ReleaseConnection);
-        database = new Database();
-
+        SwipeController = new SwipeController();
         //Set first profile
         if (ProfileQueueController.GetQueueCount() > 0) {
             try {
@@ -430,15 +431,13 @@ public partial class MatchPage {
     {
         string emailCurrentUser = Authentication.CurrentUser.Email;
         string emailLikedUser = ProfileQueueController.CurrentProfile.user.Email;
-        if (database.CheckMatch(emailCurrentUser, emailLikedUser))
-        {
-            database.NewMatch(emailLikedUser, emailCurrentUser);
-            database.deleteLikeOnMatch(emailCurrentUser, emailLikedUser);
+
+        if(SwipeController.CheckMatch(emailCurrentUser, emailLikedUser, Database2.ReleaseConnection)) {
+            SwipeController.NewMatch(emailCurrentUser, emailLikedUser, Database2.ReleaseConnection);
+            SwipeController.DeleteLike(emailCurrentUser, emailLikedUser, Database2.ReleaseConnection);
             MatchPopup();
-        }
-        else
-        {
-            database.NewLike(emailCurrentUser, emailLikedUser);
+        } else {
+            SwipeController.NewLike(emailCurrentUser, emailLikedUser, Database2.ReleaseConnection);
         }
         ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database2.ReleaseConnection);
         NextProfile();
@@ -448,7 +447,7 @@ public partial class MatchPage {
         string emailCurrentUser = Authentication.CurrentUser.Email;
         string emaildDislikedUser = ProfileQueueController.CurrentProfile.user.Email;
 
-        database.NewDislike(emailCurrentUser, emaildDislikedUser);
+        SwipeController.NewDislike(emailCurrentUser, emaildDislikedUser, Database2.ReleaseConnection);
         ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database2.ReleaseConnection);
         NextProfile();
     }

@@ -36,7 +36,7 @@ public partial class ProfileChange {
     }
     //Fills the form inputs placeholders with the user data
     private void LoadUserFromDatabaseInForm() {
-        ProfilePictures = Database.GetPicturesFromDatabase(Authentication.CurrentUser.Email);
+        ProfilePictures = Authentication.CurrentUser.GetPicturesFromDatabase(Database2.ReleaseConnection);
         SetAllImageButtons();
         Firstname.Placeholder = Authentication.CurrentUser.FirstName;
         Middlename.Placeholder = Authentication.CurrentUser.MiddleName;
@@ -128,7 +128,7 @@ private int GetPreferenceFromUser()
     private void ChangeUserData(object sender, EventArgs e) {
         if (firstname && middleName && lastname && birthday  && preference && gender && bio && education ) {
             UpdateUserPropertiesPrepareForUpdateQuery();
-            database.UpdateUserInDatabaseWithNewUserData(Authentication.CurrentUser);
+            Authentication.CurrentUser.UpdateUserDataToDatabase(Database2.ReleaseConnection);
             Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database2.ReleaseConnection);
             InsertAllPhotosInDatabase(Authentication.CurrentUser);
             RegisterInterestsInDatabase();
@@ -175,16 +175,13 @@ private int GetPreferenceFromUser()
         Education.Text = "";
     }
     //Adds all interests to users list of interests
-    private void RegisterInterestsInDatabase()
-    {
-        foreach (var interest in interests)
-        {
-            database.RegisterInterestInDatabase(Authentication.CurrentUser.Email, interest);
+    private void RegisterInterestsInDatabase() {
+        foreach (var interest in interests) {
+            Authentication.CurrentUser.SetInterestInDatabase(interest, Database2.ReleaseConnection);
         }
     }
     //Update the users data 
-    private void UpdateUserPropertiesPrepareForUpdateQuery()
-    {
+    private void UpdateUserPropertiesPrepareForUpdateQuery() {
         if (Authentication.CurrentUser.FirstName != Firstname.Text && !string.IsNullOrEmpty(Firstname.Text)) Authentication.CurrentUser.FirstName = Firstname.Text;
         if (Authentication.CurrentUser.MiddleName != Middlename.Text && !string.IsNullOrEmpty(Middlename.Text)) Authentication.CurrentUser.MiddleName = Middlename.Text;
         if (Authentication.CurrentUser.LastName != Lastname.Text && !string.IsNullOrEmpty(Lastname.Text)) Authentication.CurrentUser.LastName = Lastname.Text;
@@ -436,7 +433,7 @@ private int GetPreferenceFromUser()
         InterestSelection.TitleColor = default;
         var interest = ListInterests.SelectedItem.ToString();
         if (interest != null) {
-            database.RemoveInterestOfUser(Authentication.CurrentUser.Email, interest);
+            Authentication.CurrentUser.DeleteInterestInDatabase(interest,Database2.ReleaseConnection);
             interests.Remove(interest);
         }
 

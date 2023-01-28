@@ -154,13 +154,11 @@ public partial class RegisterPage {
         if (SaveEventChecks()) {
             middleName ??= "";
 
-            database.RegistrationFunction(firstname, middleName, lastname, email, preference, dateOfBirth, gender, " ", password, profilePicture, true, school, major);
-            database.SaveProfilePictures(email, profilePicture);
-            User currentUser = new User(firstname, middleName, lastname, dateOfBirth, preference, email, password, gender, profilePicture, " ", school, major,18,23);
-            Authentication.CurrentUser = currentUser;
+            
+            Authentication.CurrentUser = new User().Registration(firstname,middleName,lastname,email,preference,dateOfBirth,gender," ",password,profilePicture,true,school,major,Database2.ReleaseConnection);
 
             foreach (string interesse in chosenInterestsList) {
-                database.RegisterInterestInDatabase(email, interesse);
+                Authentication.CurrentUser.SetInterestInDatabase(interesse,Database2.ReleaseConnection);
             }
 
             Navigation.PushAsync(new StartPage());

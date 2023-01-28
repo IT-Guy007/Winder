@@ -110,7 +110,7 @@ public class ProfileQueueController {
             User user = new User().GetUserFromDatabase(usersToRetrief[i],Database2.ReleaseConnection);
 
             //Get the images of the user
-            byte[][] images = Database.GetPicturesFromDatabase(usersToRetrief[i]);
+            byte[][] images = user.GetPicturesFromDatabase(Database2.ReleaseConnection);
             var profile = new Profile(user, images);
 
             profiles[i] = profile;
