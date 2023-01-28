@@ -5,14 +5,12 @@ namespace Winder;
 
 public partial class ChatsViewPage {
     public string OriginPage;
-    private Database Database;
     private const string pageName = "Chatpage";
-
+    
     public ChatsViewPage() {
-        Database = new Database();
         InitializeComponent();
-        
-        List<User> MatchedStudents = Database.GetMatchedStudentsFromUser(Authentication.CurrentUser.Email);
+
+        List<User> MatchedStudents = Authentication.CurrentUser.GetMatchedStudentsFromUser(Database2.ReleaseConnection);
         List<MatchedPerson> MatchedPeople = ConvertUserToMatchPerson(MatchedStudents);
         ListOfMatches.ItemsSource = MatchedPeople;
     }

@@ -1,6 +1,7 @@
 
 
 using System.Data.SqlClient;
+using Microsoft.Maui.Storage;
 
 namespace DataModel;
 
@@ -255,6 +256,10 @@ public class User {
             }
             
         }
+        
+        SecureStorage.Default.Remove("Email");
+        SecureStorage.Remove("Email");
+        SecureStorage.RemoveAll();
 
     }
     
@@ -295,6 +300,146 @@ public class User {
         
         return this;
 
+    }
+
+    public List<User> GetMatchedStudentsFromUser(SqlConnection connection) {
+        List<User> users = new List<User>();
+        List<string> emails = new List<string>();
+        try {
+            string query = "SELECT person1, person2 FROM Winder.Winder.Match WHERE person1 = @Email OR person2 = @Email";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@Email", Email);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string person1 = reader["person1"] as string ?? "Unknown";
+                string person2 = reader["person2"] as string ?? "Unknown";
+                if (person1 == Email) {
+                    emails.Add(person2);
+                } else {
+                    emails.Add(person1);
+                }
+            }
+            emails.ForEach(x => users.Add(new User().GetUserFromDatabase(x, connection)));
+        } catch (SqlException se) {
+            Console.WriteLine("Error retrieving matches from database");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+        }
+        return users;
+    }
+
+    /// <summary>
+    /// Sets the minimum preferred age in the database and local
+    /// </summary>
+    /// <param name="minAge">The preferred age</param>
+    /// <param name="connection">The database connection</param>
+    public void SetMinAge(int minAge, SqlConnection connection) {
+        if (minAge > MinAgePreference && minAge < MaxAgePreference) {
+
+            SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET min = @minAge WHERE Email = @Email", connection);
+            query.Parameters.AddWithValue("@Email", Email);
+            query.Parameters.AddWithValue("@minAge", minAge);
+
+            try {
+                query.ExecuteReader();
+
+            } catch (SqlException se) {
+                Console.WriteLine("Error inserting minAge in database");
+                Console.WriteLine(se.ToString());
+                Console.WriteLine(se.StackTrace);
+
+            }
+        }
+    }
+
+    /// <summary>
+      /// Sets the max age in the database and local
+      /// </summary>
+      /// <param name="maxAge">The max age in integer</param>
+      /// <param name="connection">The database connection</param>
+    public void SetMaxAge(int maxAge, SqlConnection connection) {
+          if (maxAge > MinAgePreference && maxAge < MaxAgePreference) {
+
+              SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET max = @maxAge WHERE Email = @Email",
+                  connection);
+              query.Parameters.AddWithValue("@Email", Email);
+              query.Parameters.AddWithValue("@maxAge", maxAge);
+
+              try
+              {
+                  query.ExecuteReader();
+                  MaxAge = maxAge;
+              }
+              catch (SqlException se)
+              {
+                  Console.WriteLine("Error inserting maxAge in database");
+                  Console.WriteLine(se.ToString());
+                  Console.WriteLine(se.StackTrace);
+              }
+          }
+    }
+
+    /// <summary>
+    /// Gets the max age from the database and sets it local and returns it
+    /// </summary>
+    /// <param name="connection"></param>
+    /// <returns></returns>
+    public int GetMinAge(SqlConnection connection) {
+
+        SqlCommand query = new SqlCommand("SELECT min FROM winder.winder.[User] WHERE Email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", Email);
+
+
+        try {
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read()) {
+                int? minAge = reader["min"] as int?;
+                int minimalAge = minAge ?? MinAgePreference;
+                
+                MinAge = minimalAge;
+                return MinAge;
+
+            }
+        } catch (SqlException se) {
+            Console.WriteLine("Error inserting minAge in database");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            return MinAgePreference;
+        }
+
+        return MinAgePreference;
+    }
+    
+    
+    /// <summary>
+    /// Gets the max preferred age from the database and sets it local and returns it
+    /// </summary>
+    /// <param name="connection">The database connection</param>
+    /// <returns>Integer of the max preffered age</returns>
+    public int GetMaxAge(SqlConnection connection) {
+
+        SqlCommand query = new SqlCommand("SELECT max FROM winder.winder.[User] WHERE Email = @Email", connection);
+        query.Parameters.AddWithValue("@Email", Email);
+
+        try {
+            SqlDataReader reader = query.ExecuteReader();
+            while (reader.Read()) {
+                int? maxAge = reader["max"] as int?;
+                int maximalAge = maxAge ?? MaxAgePreference;
+                
+                MaxAge = maximalAge;
+                return MaxAge;
+
+            }
+        }
+        catch (SqlException se) {
+            Console.WriteLine("Error inserting maxAge in database");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            return 0;
+        }
+        return 0;
     }
 
 }

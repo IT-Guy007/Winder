@@ -14,6 +14,7 @@ public class ChatModel {
         ToUser = toUser;
         Messages = new ObservableCollection<ChatMessage>();
         GetChatMessages(connection);
+        SetRead(connection);
     }
     
     /// <summary>
@@ -22,7 +23,7 @@ public class ChatModel {
     /// <param name="fromUser">The first person, the one that is loggedin</param>
     /// <param name="toUser">The second person, the other person</param>
     /// <param name="connection">The database connection</param>
-    public void GetChatMessages(SqlConnection connection) {
+    private void GetChatMessages(SqlConnection connection) {
         
         string query = "SELECT [winder].[ChatMessage].[personFrom], [winder].[ChatMessage].[personTo], [winder].[ChatMessage].[sendDate], [winder].[ChatMessage].[chatMessage], [winder].[ChatMessage].[readMessage] " +
                        "FROM [winder].[ChatMessage] " +
@@ -57,7 +58,7 @@ public class ChatModel {
     /// <param name="personFrom">Person who sees the messages</param>
     /// <param name="personTo">Person who send the messages</param>
     /// <param name="connection">The database connection</param>
-    public void SetRead(SqlConnection connection){
+    private void SetRead(SqlConnection connection){
         try {
             SqlCommand query = new SqlCommand("UPDATE winder.winder.[ChatMessage] SET [readMessage] = 1 WHERE personTo = '" + FromUser.Email + "' AND personFrom = '" + ToUser.Email + "'", connection);
             query.ExecuteNonQuery();

@@ -18,8 +18,7 @@ public partial class ChatPage {
 
     public ChatPage(User sendFromUser, User sendToUser) {
         ChatModel = new ChatModel(sendFromUser, sendToUser, Database2.ReleaseConnection);
-
-        ChatModel.SetRead(Database2.ReleaseConnection);
+        
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         
         //Set content
