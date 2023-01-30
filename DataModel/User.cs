@@ -12,7 +12,6 @@ public class User {
     public DateTime BirthDay { get; set; }
     public string Preference { get; set; }
     public string Email { get; set; }
-    private string Password { get; set; }
     public string Gender { get; set; }
     public byte[] ProfilePicture { get; set; }
     public string Bio { get; set; }
@@ -244,6 +243,13 @@ public class User {
 
     }
     
+    /// <summary>
+    /// Checks if the given email and password are correct and returns a user object
+    /// </summary>
+    /// <param name="email">The email</param>
+    /// <param name="password">The password</param>
+    /// <param name="connection">The database connection</param>
+    /// <returns>Returns user if login is valid</returns>
     public User CheckLogin(string email, string password, SqlConnection connection) {
         UserModel userModel = new UserModel();
         Console.WriteLine("Check login");
@@ -283,6 +289,11 @@ public class User {
 
     }
 
+    /// <summary>
+    /// Gets all the users that are matched with the user
+    /// </summary>
+    /// <param name="connection">The database connection</param>
+    /// <returns>List with matches</returns>
     public List<User> GetMatchedStudentsFromUser(SqlConnection connection) {
         List<User> users = new List<User>();
         List<string> emails = new List<string>();
@@ -611,6 +622,11 @@ public class User {
     }
     
     
+    /// <summary>
+    /// Sets the interest in the database for the specific user
+    /// </summary>
+    /// <param name="interest">The interest</param>
+    /// <param name="connection">The database connection</param>
     public void SetInterestInDatabase(string interest, SqlConnection connection) {
 
         try {

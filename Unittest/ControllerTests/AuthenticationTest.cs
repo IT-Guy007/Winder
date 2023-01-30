@@ -5,8 +5,11 @@ namespace Unittest.ControllerTests;
 
 public class AuthenticationTest {
     
-    [SetUp]
-    public void Setup() {
-        Database.InitializeDebugConnection();
+    
+    [Test]
+    public void SetterCurrentUser() {
+        var user = new User();
+        Authentication.CurrentUser = user;
+        Assert.AreEqual(user, Authentication.CurrentUser);
     }
 }

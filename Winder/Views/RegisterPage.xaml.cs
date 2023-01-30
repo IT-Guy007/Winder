@@ -168,8 +168,7 @@ public partial class RegisterPage {
     //checkt of waardes naar eisen voldoen en declareert de variabelen
     private bool RegisterBtnEventCheck() {
         int aantalchecks = 0;
-        Authentication auth = new Authentication();
-       
+
         DateTime geboortedatumtijdelijk;
         geboortedatumtijdelijk = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
 

@@ -92,7 +92,7 @@ public class ProfileQueueController {
     /// Gets the profiles from the database async
     /// </summary>
     /// <param name="email"></param>
-    /// <returns></returns>
+    /// <returns>Array of profiles</returns>
     private Profile[] GetProfiles(SqlConnection connection) {
         
         //The users(Email) to get
@@ -107,10 +107,10 @@ public class ProfileQueueController {
         for (int i = 0; i < usersToRetrief.Count(); i++) {
 
             //Get the user
-            User user = new User().GetUserFromDatabase(usersToRetrief[i],Database.ReleaseConnection);
+            User user = new User().GetUserFromDatabase(usersToRetrief[i],connection);
 
             //Get the images of the user
-            byte[][] images = user.GetPicturesFromDatabase(Database.ReleaseConnection);
+            byte[][] images = user.GetPicturesFromDatabase(connection);
             var profile = new Profile(user, images);
 
             profiles[i] = profile;

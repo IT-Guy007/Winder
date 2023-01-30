@@ -4,9 +4,11 @@ using NUnit.Framework;
 namespace Unittest.ControllerTests;
 
 public class DatabaseTest {
-    
-    [SetUp]
-    public void Setup() {
+
+    [Test]
+    public void TestReleaseConnection() {
         Database.InitializeDebugConnection();
+        Database.InitializeReleaseConnection();
+        Assert.Pass();
     }
 }

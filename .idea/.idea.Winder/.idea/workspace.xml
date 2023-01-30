@@ -12,23 +12,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Unittest/ControllerTests/AuthenticationTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Unittest/ControllerTests/DatabaseTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Unittest/ControllerTests/ProfileQueueControllerTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Unittest/ControllerTests/SwipeControllerTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Unittest/ControllerTests/UserControllerTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/ChatMessageTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/ChatModelTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/EmailMessageTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/InterestModelTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/MatchTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/ProfileQueueTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/ProfileTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/UserModelTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Unittest/DataModelTests/UserTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unittest/TestAuthentication.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unittest/TestDatabase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Authentication.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unittest/ControllerTests/AuthenticationTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/ControllerTests/AuthenticationTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unittest/ControllerTests/DatabaseTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/ControllerTests/DatabaseTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unittest/ControllerTests/ProfileQueueControllerTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/ControllerTests/ProfileQueueControllerTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/ForgotPasswordPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ForgotPasswordPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/RegisterPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/RegisterPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/editPasswordPopUp.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/editPasswordPopUp.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +37,6 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/82c9bb5e221a173c1fdea3a72e50e7c731b51a6a7d3bc7e38ab8f5fb42194b7/Array.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="InvalidFacetManager">
     <ignored-facets>
@@ -181,7 +173,8 @@
       <workItem from="1673395992147" duration="480000" />
       <workItem from="1673453991471" duration="1470000" />
       <workItem from="1674909371920" duration="16000" />
-      <workItem from="1674909397327" duration="5260000" />
+      <workItem from="1674909397327" duration="7741000" />
+      <workItem from="1675077584031" duration="841000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>
@@ -265,6 +258,19 @@
           </properties>
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Unittest/ControllerTests/AuthenticationTest.cs</url>
+          <line>9</line>
+          <properties documentPath="$PROJECT_DIR$/Unittest/ControllerTests/AuthenticationTest.cs" initialLine="9" containingFunctionPresentation="method 'SetterCurrentUser'">
+            <startOffsets>
+              <option value="169" />
+            </startOffsets>
+            <endOffsets>
+              <option value="170" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
