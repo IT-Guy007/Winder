@@ -3,9 +3,8 @@ using System.Data.SqlClient;
 namespace DataModel;
 
 public class SwipeController {
-    
-    
-    
+
+
     /// <summary>
     /// Checks in the database if there is a match between the current user and the liked person
     /// </summary>

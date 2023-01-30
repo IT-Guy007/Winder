@@ -13,15 +13,8 @@
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Authentication.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unittest/ControllerTests/AuthenticationTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/ControllerTests/AuthenticationTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unittest/ControllerTests/DatabaseTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/ControllerTests/DatabaseTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unittest/ControllerTests/ProfileQueueControllerTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/ControllerTests/ProfileQueueControllerTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ForgotPasswordPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ForgotPasswordPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/RegisterPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/RegisterPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/editPasswordPopUp.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/editPasswordPopUp.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/ProfileQueue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/ProfileQueue.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +167,7 @@
       <workItem from="1673453991471" duration="1470000" />
       <workItem from="1674909371920" duration="16000" />
       <workItem from="1674909397327" duration="7741000" />
-      <workItem from="1675077584031" duration="841000" />
+      <workItem from="1675077584031" duration="1884000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>

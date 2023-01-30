@@ -28,9 +28,9 @@ public partial class MatchPage
         ProfileQueueController = new ProfileQueueController(Authentication.CurrentUser,Database.ReleaseConnection);
         SwipeController = new SwipeController();
         //Set first profile
-        if (ProfileQueueController.GetQueueCount() > 0) {
+        if (ProfileQueueController.ProfileQueue.GetCount() > 0) {
             try {
-                ProfileQueueController.GetNextProfile();
+                ProfileQueueController.ProfileQueue.GetNextProfile();
 
             } catch (Exception e) {
                 
@@ -39,7 +39,7 @@ public partial class MatchPage
                 Console.WriteLine(e.StackTrace);
             }
         } else {
-            ProfileQueueController.ClearCurrentProfile();
+            ProfileQueueController.ProfileQueue.Clear();
         }
         
         //Set content
@@ -363,18 +363,18 @@ public partial class MatchPage
     private void NextProfile() {
 
         ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database.ReleaseConnection);
-        if (ProfileQueueController.GetQueueCount() != 0) {
-            ProfileQueueController.GetNextProfile();
+        if (ProfileQueueController.ProfileQueue.GetCount() != 0) {
+            ProfileQueueController.ProfileQueue.GetNextProfile();
 
             SelectedImage = 0;
             Initialize();
 
         } else {
-            ProfileQueueController.ClearQueue();
+            ProfileQueueController.ProfileQueue.Clear();
             Initialize();
         }
 
-        if (ProfileQueueController.GetQueueCount() <= 0)
+        if (ProfileQueueController.ProfileQueue.GetCount() <= 0)
         {
             Navigation.PushAsync(new MatchPage());
         }

@@ -3,8 +3,8 @@ using System.Data.SqlClient;
 namespace DataModel;
 
 public class ProfileQueueController {
+    public ProfileQueue ProfileQueue;
     
-    private Queue<Profile> ProfileQueue { get; }
     public Profile CurrentProfile { get; private set; }
     private bool IsGettingProfiles { get; set; }
     
@@ -19,55 +19,16 @@ public class ProfileQueueController {
     private const bool InterestsAlgorithm = true;
     
     public ProfileQueueController(User user, SqlConnection connection) {
-        ProfileQueue = new Queue<Profile>();
+        ProfileQueue = new ProfileQueue();
         User = user;
         CheckIfQueueNeedsMoreProfiles(connection);
     }
-    
-    /// <summary>
-    /// Gets the next profile in the queue
-    /// </summary>
-    /// <returns>Profile</returns>
-    public void GetNextProfile() {
-        try {
-            CurrentProfile = ProfileQueue.Dequeue();
-        } catch {
-            Console.WriteLine("No more profiles to swipe at this moment");
-        }
-    }
-    
-    /// <summary>
-    /// Empties the queue
-    /// </summary>
-    public void ClearQueue() {
-        ProfileQueue.Clear();
-    }
-    
-    public void ClearCurrentProfile() {
-        CurrentProfile = null;
-    }
-    
-    /// <summary>
-    /// Gets the amount of profiles in the queue
-    /// </summary>
-    /// <returns>Integer of the amount of profiles</returns>
-    public int GetQueueCount() {
-        return ProfileQueue.Count;
-    }
-    
-    /// <summary>
-    /// Adds a profile to the queue
-    /// </summary>
-    /// <param name="profile">Given profile</param>
-    private void AddProfile(Profile profile) {
-        ProfileQueue.Enqueue(profile);
-    }
-    
+
     /// <summary>
     /// Check's if a queue needs more profiles
     /// </summary>
     public async void CheckIfQueueNeedsMoreProfiles(SqlConnection connection) {
-        if (ProfileQueue.Count < AmountOfProfilesInQueue && !IsGettingProfiles) {
+        if (ProfileQueue.GetCount() < AmountOfProfilesInQueue && !IsGettingProfiles) {
             IsGettingProfiles = true;
             await GetProfilesTask(connection);
             IsGettingProfiles = false;
@@ -83,7 +44,7 @@ public class ProfileQueueController {
         Profile[] profiles = GetProfiles(connection);
         foreach (var profile in profiles) {
             if (profile != null) {
-                AddProfile(profile);
+                ProfileQueue.Add(profile);
             }
         }
     }
@@ -272,8 +233,7 @@ public class ProfileQueueController {
                 }
 
                 //Check if already exists in current Queue
-                IEnumerable<Profile> alreadyExists = ProfileQueue.Where(i => i.user.Email == userToAdd);
-                if (!alreadyExists.Any() && !usersToSwipe.Contains(userToAdd) && !string.IsNullOrEmpty(userToAdd)) {
+                if (!ProfileQueue.Contains(userToAdd) && !usersToSwipe.Contains(userToAdd) && !string.IsNullOrEmpty(userToAdd)) {
                     Console.WriteLine("Adding user");
                     result.Add(userToAdd);
                 }
