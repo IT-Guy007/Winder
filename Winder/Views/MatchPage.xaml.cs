@@ -390,8 +390,8 @@ public partial class MatchPage
 #if WINDOWS
         
 
-        if (Authentication.IsScaled == false) {
-            Authentication.IsScaled = true;
+        if (IsScaled == false) {
+            IsScaled = true;
             using var memoryStream = new MemoryStream();
             memoryStream.Write(bytes, 0, Convert.ToInt32(bytes.Length));
             memoryStream.Seek(0, SeekOrigin.Begin);

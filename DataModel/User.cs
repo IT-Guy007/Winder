@@ -43,9 +43,8 @@ public class User {
         string query = "SELECT * FROM Winder.Winder.[User] WHERE email = @Email";
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@Email", email);
-        SqlDataReader reader;
         try {
-            reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader();
             while (reader.Read()) {
                 Email = reader["email"] as string ?? string.Empty;
                 FirstName = reader["firstname"] as string ?? string.Empty;
@@ -308,7 +307,7 @@ public class User {
                 }
             }
             reader.Close();
-            emails.ForEach(x => users.Add(new User().GetUserFromDatabase(x, connection)));
+            emails.ForEach(x => matches.Add(new Match(this,new User().GetUserFromDatabase(x, connection))));
         } catch (SqlException se) {
             Console.WriteLine("Error retrieving matches from database");
             Console.WriteLine(se.ToString());

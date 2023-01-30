@@ -8,10 +8,6 @@ public class MatchModel
         Matches = matches;
     }
 
-    public void AddMatch(Match match) {
-        Matches.Add(match);
-    }
-    
     public List<User> GetUsers() {
         return Matches.Select(x => x.Person2).ToList();
     }

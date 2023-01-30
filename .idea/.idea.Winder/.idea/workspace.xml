@@ -12,12 +12,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/DataModel/MatchModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/5166b5f0-d40a-457d-a6d6-a5088f825b84.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/7cabfc40-9465-452b-84bf-03b8d5ee54b4.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/bd7c31eb-a266-4a40-b185-3323a10ea353.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/c1c970c3-ca17-4ebb-8e6c-5f3690f9e927.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/d0e005cb-bdc0-49cb-8afd-ad9982ed2496.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/.wsuo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/.wsuo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/slnx.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/slnx.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/Match.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Match.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/MatchedPerson.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/MatchModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/MatchModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ChatsViewPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ChatsViewPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +92,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="Xamarin.Mac.Winder">
+  <component name="RunManager" selected="UWP.Windows">
     <configuration name="WorkAround" type="RunExe" factoryName=".NET Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64/Winder.app/Contents/MacOS/Winder" />
       <option name="PROGRAM_PARAMETERS" value="" />

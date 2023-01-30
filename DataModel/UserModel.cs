@@ -28,10 +28,13 @@ public class UserModel {
                 var item = reader["Email"] as string;
                 emails.Add(item);
             }
+            reader.Close();
         } catch (SqlException e) {
             Console.WriteLine("Error getting emails from database");
             Console.WriteLine(e.ToString());
             Console.WriteLine(e.StackTrace);
+            connection.Close();
+            connection.Open();
         }
 
         if (emails.Contains(email)) {

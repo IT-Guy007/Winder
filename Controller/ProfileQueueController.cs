@@ -1,4 +1,5 @@
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace DataModel;
 
@@ -94,33 +95,32 @@ public class ProfileQueueController {
         var formattedMin = minDate.ToString("yyyy-MM-dd HH:mm:ss");
         var formattedMax = maxDate.ToString("yyyy-MM-dd HH:mm:ss");
 
-        string query = "select top " + AmountOfProfilesInQueue * 2 + " Email " +
-                       "from winder.[User] " +
-                       "where Email != @Email " + //Not themself
-                       "and active = 1 " + //Is active
-                       "and Email not in (select person from Winder.Winder.Liked where likedPerson = @Email and liked = 1) " + //Not disliked by other person
-                       "and Email not in (select likedPerson from winder.winder.Liked where person = @Email) " + //Not already a person that you liked or disliked
-                       "and Email not in (select winder.winder.Match.person1 from Winder.Winder.Match where person2 = @Email) " + //Not matched
-                       "and Email not in (select winder.winder.Match.person2 from Winder.Winder.Match where person1 = @Email) " + //Not matched
-                       "And location = (select location from winder.winder.[User] where Email = @Email) "; // location check
+        string query = "SELECT TOP " + AmountOfProfilesInQueue * 2 + " Email " +
+                       "FROM winder.[User] " +
+                       "WHERE Email != @Email " + //Not themself
+                       "AND active = 1 " + //Is active
+                       "AND Email NOT IN (SELECT person FROM Winder.Winder.Liked WHERE likedPerson = @Email AND liked = 1) " + //Not disliked by other person
+                       "AND Email NOT IN (SELECT likedPerson FROM winder.winder.Liked WHERE person = @Email) " + //Not already a person that you liked or disliked
+                       "AND Email NOT IN (SELECT winder.winder.Match.person1 FROM Winder.Winder.Match WHERE person2 = @Email) " + //Not matched
+                       "AND Email NOT IN (SELECT winder.winder.Match.person2 FROM Winder.Winder.Match WHERE person1 = @Email) " + //Not matched
+                       "AND location = (SELECT location FROM winder.winder.[User] WHERE Email = @Email) "; // location check
 
         if (AgeAlgorithm) {
-            query = query + " and birthday >= '" + formattedMax + "' and birthday <= '" + formattedMin + "'  "; //In age range
+            query = query + " AND birthday >= '" + formattedMax + "' AND birthday <= '" + formattedMin + "'  "; //In age range
         }
 
-        if (PreferenceAlgorithm)
-        {
-            query = query + " and Gender = (select Preference from winder.winder.[User] where Email = @Email) "; //Gender check
-            query = query + " and Preference = (select Gender from winder.winder.[User] where Email = @Email) "; //Preference check
+        if (PreferenceAlgorithm) {
+            query = query + " AND Gender = (SELECT Preference FROM winder.winder.[User] WHERE Email = @Email) "; //Gender check
+            query = query + " AND Preference = (SELECT Gender FROM winder.winder.[User] WHERE Email = @Email) "; //Preference check
         }
 
         if (InterestsAlgorithm) {
             if (User.Interests.Length > 0) {
                 //Add interests
-                query = query + " AND Email in (select UID from winder.winder.UserHasInterest where interest = " + "'" + User.Interests[0] + "' ";
+                query = query + " AND Email IN (SELECT UID FROM winder.winder.UserHasInterest WHERE interest = " + "'" + User.Interests[0] + "' ";
                 for (int i = 1; i < User.Interests.Length; i++)
                 {
-                    query = query + " or interest =" + " '" + User.Interests[i] + "' ";
+                    query = query + " OR interest =" + " '" + User.Interests[i] + "' ";
                 }
                 query = query + ")";
             }
@@ -141,10 +141,13 @@ public class ProfileQueueController {
             } else {
                 Console.WriteLine("No new profiles found to swipe");
             }
+            reader.Close();
         } catch(SqlException e) {
             Console.WriteLine("Error retrieving the users for the algorithm");
             Console.WriteLine(e.Message);
             Console.WriteLine(e.StackTrace);
+            connection.Close();
+            connection.Open();
         }
         
 
@@ -171,10 +174,10 @@ public class ProfileQueueController {
 
         Queue<string> users = new Queue<string>();
 
-        SqlCommand command = new SqlCommand("SELECT top " + UsersInQueueWhoLikedYou + " person FROM Winder.Winder.Liked " +
+        SqlCommand command = new SqlCommand("SELECT TOP " + UsersInQueueWhoLikedYou + " person FROM Winder.Winder.Liked " +
                                             "WHERE likedPerson = @Email AND liked = 1 " + // selects the users that have liked the given user
-                                            "AND person not in (select likedPerson from Winder.Winder.Liked where person = @Email) " + // except the ones that the given user has already disliked or liked
-                                            "order by NEWID()", connection); 
+                                            "AND person NOT IN (SELECT likedPerson FROM Winder.Winder.Liked WHERE person = @Email) " + // except the ones that the given user has already disliked or liked
+                                            "ORDER BY NEWID()", connection); 
         command.Parameters.AddWithValue("@Email", User.Email);
 
         try {
@@ -185,12 +188,13 @@ public class ProfileQueueController {
                 users.Enqueue(person);   // zet elk persoon in de users 
             }
 
-
+            reader.Close();
         } catch (SqlException se) {
             Console.WriteLine("Error retrieving users who liked you from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
-
+            connection.Close();
+            connection.Open();
 
         }
         

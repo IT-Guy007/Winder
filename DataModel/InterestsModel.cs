@@ -14,11 +14,13 @@ public class InterestsModel {
                 var item = reader["name"] as string;
                 interests.Add(item);
             }
+            reader.Close();
         } catch (SqlException e) {
             Console.WriteLine("Error retrieving interests from database");
             Console.WriteLine(e.ToString());
             Console.WriteLine(e.StackTrace);
-
+            connection.Close();
+            connection.Open();
         }
 
         return interests;

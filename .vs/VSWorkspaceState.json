@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Controller",
     "\\DataModel"
   ],
+  "SelectedNode": "\\Controller\\Database.cs",
   "PreviewInSolutionExplorer": false
 }
