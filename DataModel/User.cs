@@ -294,8 +294,8 @@ public class User {
     /// </summary>
     /// <param name="connection">The database connection</param>
     /// <returns>List with matches</returns>
-    public List<User> GetMatchedStudentsFromUser(SqlConnection connection) {
-        List<User> users = new List<User>();
+    public List<Match> GetMatchedStudentsFromUser(SqlConnection connection) {
+        List<Match> matches = new List<Match>();
         List<string> emails = new List<string>();
         try {
             string query = "SELECT person1, person2 FROM Winder.Winder.Match WHERE person1 = @Email OR person2 = @Email";
@@ -312,13 +312,13 @@ public class User {
                     emails.Add(person1);
                 }
             }
-            emails.ForEach(x => users.Add(new User().GetUserFromDatabase(x, connection)));
+            emails.ForEach(x => matches.Add(new Match(this,new User().GetUserFromDatabase(x, connection))));
         } catch (SqlException se) {
             Console.WriteLine("Error retrieving matches from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
         }
-        return users;
+        return matches;
     }
 
     /// <summary>

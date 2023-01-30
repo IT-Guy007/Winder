@@ -6,25 +6,15 @@ namespace Winder;
 public partial class ChatsViewPage {
     public string OriginPage;
     private const string pageName = "Chatpage";
+
+    private MatchModel MatchModel;
     
     public ChatsViewPage() {
         InitializeComponent();
-
-        List<User> MatchedStudents = Authentication.CurrentUser.GetMatchedStudentsFromUser(Database.ReleaseConnection);
-        List<MatchedPerson> MatchedPeople = ConvertUserToMatchPerson(MatchedStudents);
-        ListOfMatches.ItemsSource = MatchedPeople;
+        MatchModel = new MatchModel(Authentication.CurrentUser.GetMatchedStudentsFromUser(Database.ReleaseConnection));
+        ListOfMatches.ItemsSource = MatchModel.GetUsers();
     }
-
-    private List<MatchedPerson> ConvertUserToMatchPerson(List<User> MatchedStudents) {
-        List<MatchedPerson> matchedPeople = new List<MatchedPerson>();
-
-        foreach (var student in MatchedStudents) {
-            matchedPeople.Add(new MatchedPerson(student));
-        }
-
-        return matchedPeople;
-    }
-
+    
     private void Backbutton_Clicked(object sender, EventArgs e) {
         switch (OriginPage) {
             case "matchpage":
@@ -41,7 +31,7 @@ public partial class ChatsViewPage {
     }
 
     private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e) {
-        var tappedItem = e.Item as MatchedPerson;
+        var tappedItem = e.Item as User;
         Navigation.PushAsync(new ChatPage(Authentication.CurrentUser, new User().GetUserFromDatabase(tappedItem.Email, Database.ReleaseConnection)));
     }
 
