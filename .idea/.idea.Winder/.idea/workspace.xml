@@ -33,6 +33,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Winder/Platforms/Windows/App.xaml.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="InvalidFacetManager">
     <ignored-facets>
@@ -43,7 +44,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="SWEA" />
   </component>
   <component name="ProjectId" id="2IXh0gUq4gGfG1ZtGTJa2sn2Fwy" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -76,9 +77,9 @@
       &quot;sqlserver&quot;
     ],
     &quot;rider.external.source.directories&quot;: [
-      &quot;/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
-      &quot;/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
-      &quot;/Users/jeroendenotter/.local/share/Symbols/src&quot;
+      &quot;C:\\Users\\wesse\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\wesse\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\wesse\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
 }</component>
