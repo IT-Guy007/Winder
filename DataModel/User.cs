@@ -54,13 +54,12 @@ public class User {
                 Bio = reader["bio"] as string ?? string.Empty;
                 School = reader["location"] as string ?? string.Empty;
                 Major = reader["education"] as string ?? string.Empty;
-                ProfilePicture = ImageSource.FromStream(() => new MemoryStream(reader["profilePicture"] as byte[] ?? new byte[0]));
+                ProfilePicture = ImageSource.FromStream(() => new MemoryStream((byte[])reader["profilePicture"] ?? new byte[0]));
                 var minAge = reader["min"] as int?;
                 var maxAge = reader["max"] as int?;
 
                 MinAge = minAge ?? MinAgePreference;
                 MaxAge = maxAge ?? MaxAgePreference;
-                
                 
             }
             reader.Close();
@@ -541,7 +540,7 @@ public class User {
         BirthDay = birthday;
         Gender = gender;
         Bio = bio;
-        ProfilePicture = ImageSource.FromStream(() => new MemoryStream(profilePicture));;
+        ProfilePicture = ImageSource.FromStream(() => new MemoryStream(profilePicture));
         School = school;
         Major = major;
 

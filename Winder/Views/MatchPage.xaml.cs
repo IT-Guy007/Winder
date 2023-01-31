@@ -5,18 +5,19 @@ using Image = Microsoft.Maui.Controls.Image;
 
 namespace Winder;
 
-public partial class MatchPage {
+public partial class MatchPage
+{
 
     private SwipeController SwipeController;
     public string OriginPage;
     private const string PageName = "matchpage";
     private const string BackbuttonImage = "backbutton.png";
     public bool BackButtonVisible;
-
+    
     private StackLayout verticalStackLayout;
 
-    private static int SelectedImage = 0;
-    private readonly int Swipes = 0;
+    private int SelectedImage = 0;
+    private readonly int swipes = 0;
 
     private ProfileQueueController ProfileQueueController;
 
@@ -24,7 +25,7 @@ public partial class MatchPage {
 
     public MatchPage() {
         //Gets the controller
-        ProfileQueueController = new ProfileQueueController(Authentication.CurrentUser, Database.ReleaseConnection);
+        ProfileQueueController = new ProfileQueueController(Authentication.CurrentUser,Database.ReleaseConnection);
         SwipeController = new SwipeController();
         //Set first profile
         if (ProfileQueueController.ProfileQueue.GetCount() > 0) {
@@ -32,7 +33,7 @@ public partial class MatchPage {
                 ProfileQueueController.ProfileQueue.GetNextProfile();
 
             } catch (Exception e) {
-
+                
                 //No profiles found
                 Console.WriteLine("Error dequeuing profile: " + e);
                 Console.WriteLine(e.StackTrace);
@@ -40,7 +41,7 @@ public partial class MatchPage {
         } else {
             ProfileQueueController.ProfileQueue.Clear();
         }
-
+        
         //Set content
         Initialize();
     }
@@ -49,7 +50,7 @@ public partial class MatchPage {
 
         Title = "Make your match now!";
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
-
+        
 
         verticalStackLayout = new StackLayout {
             Orientation = StackOrientation.Vertical, VerticalOptions = LayoutOptions.Fill,
@@ -63,9 +64,9 @@ public partial class MatchPage {
             }
         };
         HorizontalStackLayout horizontalLayout = new HorizontalStackLayout() {
-            HorizontalOptions = LayoutOptions.End
+           HorizontalOptions = LayoutOptions.End
         };
-
+        
         // backbutton
         var backButton = new ImageButton {
             Source = BackbuttonImage,
@@ -77,9 +78,9 @@ public partial class MatchPage {
             IsVisible = BackButtonVisible
         };
         backButton.Clicked += BackButton_Clicked;
-        gridLayout.Add(backButton, 0);
-
-
+        gridLayout.Add(backButton,0);
+        
+        
         //Chat button
         var chatButton = new Button {
             Text = "Chats",
@@ -91,7 +92,7 @@ public partial class MatchPage {
         chatButton.Clicked += ChatButton_Clicked;
         chatButton.HorizontalOptions = LayoutOptions.End;
 
-
+       
 
         //my profile button
         var myProfile = new Button {
@@ -117,9 +118,9 @@ public partial class MatchPage {
         horizontalLayout.Children.Add(chatButton);
         horizontalLayout.Children.Add(myProfile);
         horizontalLayout.Children.Add(settings);
-        gridLayout.Add(horizontalLayout, 2);
+        gridLayout.Add(horizontalLayout,2);
         verticalStackLayout.Add(gridLayout);
-
+        
         //The stack with left the image and right the info.
         StackLayout imageLayout = new StackLayout {
             Orientation = StackOrientation.Horizontal,
@@ -133,155 +134,165 @@ public partial class MatchPage {
         };
 
         //Images
-        StackLayout infoStackLayout = new StackLayout { Orientation = StackOrientation.Vertical };
+        if (ProfileQueueController.CurrentProfile == null) {
+            if (Authentication.CurrentUser.ProfilePicture.IsEmpty) {
 
+                var profileImage = new Image {
+                    Source = Authentication.CurrentUser.ProfilePicture,
+                    Aspect = Aspect.AspectFit,
+                    WidthRequest = 800,
+                    HeightRequest = 800,
+                    BackgroundColor = Color.FromArgb("#CC415F")
+                };
+                verticalStackLayout.Add(profileImage);
 
-        //Image carousel
-        var currentImage = new ImageButton();
-        currentImage.WidthRequest = 600;
-        currentImage.HeightRequest = 600;
-
-        currentImage.Clicked += (_, _) => {
-            if (SelectedImage < ProfileQueueController.CurrentProfile.profileImages.Count(x => x != null) - 1)
-            {
-                SelectedImage++;
-                Initialize();
             } else {
-                SelectedImage = 0;
-                Initialize();
-            }
-        };
 
-        imageLayout.Add(currentImage);
-
-        //Name
-        StackLayout nameStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-
-        var namelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-        var name = new Label {
-            Text = ProfileQueueController.CurrentProfile.user.FirstName, FontSize = 20,
-            HorizontalOptions = LayoutOptions.Start
-        };
-
-        //Add to stack
-        nameStackLayout.Add(namelbl);
-        nameStackLayout.Add(name);
-        infoStackLayout.Add(nameStackLayout);
-
-
-        //Gender
-        StackLayout genderStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-
-        var genderlbl = new Label { Text = "Geslacht: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-        var gender = new Label {
-            Text = ProfileQueueController.CurrentProfile.user.Gender, FontSize = 20,
-            HorizontalOptions = LayoutOptions.Start
-        };
-
-        //Add to Stack
-        genderStackLayout.Add(genderlbl);
-        genderStackLayout.Add(gender);
-        infoStackLayout.Add(genderStackLayout);
-
-
-        //Age
-        StackLayout ageStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-
-        var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-        var birthday = new UserController().CalculateAge(ProfileQueueController.CurrentProfile.user.BirthDay);
-        var age = new Label { Text = birthday.ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-
-        //Add to Stack
-        ageStackLayout.Add(agelbl);
-        ageStackLayout.Add(age);
-        infoStackLayout.Add(ageStackLayout);
-
-
-        //Location
-        StackLayout locationStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-
-        var locationlbl = new Label
-            { Text = "Windesheim locatie: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-        var location = new Label {
-            Text = ProfileQueueController.CurrentProfile.user.School, FontSize = 20,
-            HorizontalOptions = LayoutOptions.Start
-        };
-
-        //Add to Stack
-        locationStackLayout.Add(locationlbl);
-        locationStackLayout.Add(location);
-        infoStackLayout.Add(locationStackLayout);
-
-
-        //Education
-        StackLayout educationStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-
-        var educationlbl = new Label { Text = "Opleiding: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-        var education = new Label {
-            Text = ProfileQueueController.CurrentProfile.user.Major, FontSize = 20,
-            HorizontalOptions = LayoutOptions.Start
-        };
-
-        //Add to stack
-        educationStackLayout.Add(educationlbl);
-        educationStackLayout.Add(education);
-        infoStackLayout.Add(educationStackLayout);
-
-        //Bio
-        StackLayout bioStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-        var biolbl = new Label { Text = "Bio: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-        var bio = new Label {
-            Text = ProfileQueueController.CurrentProfile.user.Bio, FontSize = 20,
-            HorizontalOptions = LayoutOptions.Start
-        };
-
-
-        //Add to stack
-        bioStackLayout.Add(biolbl);
-        bioStackLayout.Add(bio);
-        infoStackLayout.Add(bioStackLayout);
-
-        //Interests
-        StackLayout InterestsStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-        var interestslbl = new Label { Text = "Interesses: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-
-        InterestsStackLayout.Add(interestslbl);
-
-        for (int i = 0; i < ProfileQueueController.CurrentProfile.user.Interests.Length; i++) {
-            if (i != 0) {
-                var spacecommavar = new Label { FontSize = 20, HorizontalOptions = LayoutOptions.Start, Text = ", " };
-                InterestsStackLayout.Add(spacecommavar);
+                var profileImage = new Image {
+                    Source = "noprofile.jpg",
+                    Aspect = Aspect.AspectFit,
+                    WidthRequest = 800,
+                    HeightRequest = 800,
+                    BackgroundColor = Color.FromArgb("#CC415F")
+                };
+                verticalStackLayout.Add(profileImage);
             }
 
-            var interestvar = new Label {
-                Text = ProfileQueueController.CurrentProfile.user.Interests[i], FontSize = 20,
-                HorizontalOptions = LayoutOptions.Start
-            };
-            InterestsStackLayout.Add(interestvar);
+            var label = new Label { Text = "No more profiles to match with for now", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
+            verticalStackLayout.Add(label);
 
         }
+        else {
+            StackLayout infoStackLayout = new StackLayout { Orientation = StackOrientation.Vertical };
 
-        infoStackLayout.Add(InterestsStackLayout);
 
-        //Buttons
-        var likeButton = new Button { Text = "Like", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
-        var dislikeButton = new Button { Text = "Dislike", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
-        var rightSwipe = new SwipeGestureRecognizer { Direction = SwipeDirection.Right };
-        var leftSwipe = new SwipeGestureRecognizer { Direction = SwipeDirection.Left };
+            //Image carousel
+            var currentImage = new ImageButton();
 
-        rightSwipe.Swiped += OnSwipe;
-        leftSwipe.Swiped += OnSwipe;
-        likeButton.Clicked += OnLike;
-        dislikeButton.Clicked += OnDislike;
+            currentImage.WidthRequest = 600;
+            currentImage.HeightRequest = 600;
 
-        //Add info to ImageLayout
-        imageLayout.Add(infoStackLayout);
+            currentImage.Clicked += (_, _) => {
+                if (SelectedImage < ProfileQueueController.CurrentProfile.profileImages.Count(x => x != null) - 1) {
+                    SelectedImage++;
+                    Initialize();
+                } else {
+                    SelectedImage = 0;
+                    Initialize();
+                }
+            };
 
-        buttonStackLayout.Add(dislikeButton);
-        buttonStackLayout.Add(likeButton);
-        verticalStackLayout.GestureRecognizers.Add(rightSwipe);
-        verticalStackLayout.GestureRecognizers.Add(leftSwipe);
+            imageLayout.Add(currentImage);
 
+            //Name
+            StackLayout nameStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            
+            var namelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var name = new Label { Text = ProfileQueueController.CurrentProfile.user.FirstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+
+            //Add to stack
+            nameStackLayout.Add(namelbl);
+            nameStackLayout.Add(name);
+            infoStackLayout.Add(nameStackLayout);
+
+
+            //Gender
+            StackLayout genderStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            
+            var genderlbl = new Label { Text = "Geslacht: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var gender = new Label { Text = ProfileQueueController.CurrentProfile.user.Gender, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+
+            //Add to Stack
+            genderStackLayout.Add(genderlbl);
+            genderStackLayout.Add(gender);
+            infoStackLayout.Add(genderStackLayout);
+
+
+            //Age
+            StackLayout ageStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            
+            var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var birthday = new UserController().CalculateAge(ProfileQueueController.CurrentProfile.user.BirthDay);
+            var age = new Label { Text = birthday.ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+
+            //Add to Stack
+            ageStackLayout.Add(agelbl);
+            ageStackLayout.Add(age);
+            infoStackLayout.Add(ageStackLayout);
+
+
+            //Location
+            StackLayout locationStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            
+            var locationlbl = new Label { Text = "Windesheim locatie: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var location = new Label { Text = ProfileQueueController.CurrentProfile.user.School, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            
+            //Add to Stack
+            locationStackLayout.Add(locationlbl);
+            locationStackLayout.Add(location);
+            infoStackLayout.Add(locationStackLayout);
+
+
+            //Education
+            StackLayout educationStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            
+            var educationlbl = new Label { Text = "Opleiding: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var education = new Label { Text = ProfileQueueController.CurrentProfile.user.Major, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+
+            //Add to stack
+            educationStackLayout.Add(educationlbl);
+            educationStackLayout.Add(education);
+            infoStackLayout.Add(educationStackLayout);
+
+            //Bio
+            StackLayout bioStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            var biolbl = new Label { Text = "Bio: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var bio = new Label { Text = ProfileQueueController.CurrentProfile.user.Bio ,FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+
+
+            //Add to stack
+            bioStackLayout.Add(biolbl);
+            bioStackLayout.Add(bio);
+            infoStackLayout.Add(bioStackLayout);
+            
+            //Interests
+            StackLayout InterestsStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            var interestslbl = new Label { Text = "Interesses: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+
+            InterestsStackLayout.Add(interestslbl);
+
+            for (int i = 0; i < ProfileQueueController.CurrentProfile.user.Interests.Length; i++) {
+                if (i != 0) {
+                    var spacecommavar = new Label { FontSize = 20, HorizontalOptions = LayoutOptions.Start, Text = ", " };
+                    InterestsStackLayout.Add(spacecommavar);
+                }
+                
+                var interestvar = new Label { Text = ProfileQueueController.CurrentProfile.user.Interests[i], FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+                InterestsStackLayout.Add(interestvar);
+
+            }
+
+            infoStackLayout.Add(InterestsStackLayout);
+
+            //Buttons
+            var likeButton = new Button { Text = "Like", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
+            var dislikeButton = new Button { Text = "Dislike", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
+            var rightSwipe = new SwipeGestureRecognizer { Direction = SwipeDirection.Right };
+            var leftSwipe = new SwipeGestureRecognizer { Direction = SwipeDirection.Left };
+
+            rightSwipe.Swiped += OnSwipe;
+            leftSwipe.Swiped += OnSwipe;
+            likeButton.Clicked += OnLike;
+            dislikeButton.Clicked += OnDislike;
+
+            //Add info to ImageLayout
+            imageLayout.Add(infoStackLayout);
+
+            buttonStackLayout.Add(dislikeButton);
+            buttonStackLayout.Add(likeButton);
+            verticalStackLayout.GestureRecognizers.Add(rightSwipe);
+            verticalStackLayout.GestureRecognizers.Add(leftSwipe);
+        }
 
         //Add the different stacklayouts
         verticalStackLayout.Add(imageLayout);
@@ -290,11 +301,12 @@ public partial class MatchPage {
         verticalStackLayout.BackgroundColor = Color.FromArgb("#CC415F");
         Content = verticalStackLayout;
 
-
+        
     }
-
+    
     private void BackButton_Clicked(object sender, EventArgs e) {
-        switch (OriginPage) {
+        switch (OriginPage)
+        {
             case "profilepage":
                 Navigation.PushAsync(new ProfileChange());
                 break;
@@ -306,17 +318,18 @@ public partial class MatchPage {
     }
 
     // my profile button clicked
-    private void MyProfile_Clicked(object sender, EventArgs e) {
+    private void MyProfile_Clicked(object sender, EventArgs e)
+    {
         //declares origin page, in the my profile page
         ProfileChange myProfile = new ProfileChange();
         BackButtonVisible = true;
         myProfile.OriginPage = PageName;
         Navigation.PushAsync(myProfile);
     }
-
+    
     // matches button clicked
     private void ChatButton_Clicked(object obj, EventArgs e) {
-
+        
         ChatsViewPage chatsViews = new ChatsViewPage();
         BackButtonVisible = true;
         //declares origin page, in the matches page
@@ -324,13 +337,14 @@ public partial class MatchPage {
         Navigation.PushAsync(chatsViews);
     }
 
-    private void Settings_Clicked(object sender, EventArgs e) {
+    private void Settings_Clicked(object sender, EventArgs e)
+    {
         SettingsPage settingsPage = new SettingsPage();
         BackButtonVisible = true;
         settingsPage.OriginPage = PageName;
         Navigation.PushAsync(settingsPage);
     }
-
+    
     private void NextProfile() {
 
         ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database.ReleaseConnection);
@@ -345,33 +359,29 @@ public partial class MatchPage {
             Initialize();
         }
 
-        if (ProfileQueueController.ProfileQueue.GetCount() <= 0) {
+        if (ProfileQueueController.ProfileQueue.GetCount() <= 0)
+        {
             Navigation.PushAsync(new MatchPage());
         }
     }
 
     //Give match popup
-    private async void MatchPopup() {
+    private async void MatchPopup()
+    {
         await DisplayAlert("Match", "You have a match", "OK");
     }
-
-    private void OnSwipe(object sender, SwipedEventArgs e)
-    {
-        switch (e.Direction)
-        {
+    
+    private void OnSwipe(object sender, SwipedEventArgs e) {
+        switch (e.Direction) {
             case SwipeDirection.Right:
-                if (Swipes % 2 == 0)
-                {
+                if (swipes % 2 == 0) {
                     OnLike(sender, e);
                 }
-
                 break;
             case SwipeDirection.Left:
-                if (Swipes % 2 == 0)
-                {
+                if (swipes % 2 == 0) {
                     OnDislike(sender, e);
                 }
-
                 break;
         }
     }
@@ -381,23 +391,18 @@ public partial class MatchPage {
         string emailCurrentUser = Authentication.CurrentUser.Email;
         string emailLikedUser = ProfileQueueController.CurrentProfile.user.Email;
 
-        if (SwipeController.CheckMatch(emailCurrentUser, emailLikedUser, Database.ReleaseConnection))
-        {
+        if(SwipeController.CheckMatch(emailCurrentUser, emailLikedUser, Database.ReleaseConnection)) {
             SwipeController.NewMatch(emailCurrentUser, emailLikedUser, Database.ReleaseConnection);
             SwipeController.DeleteLike(emailCurrentUser, emailLikedUser, Database.ReleaseConnection);
             MatchPopup();
-        }
-        else
-        {
+        } else {
             SwipeController.NewLike(emailCurrentUser, emailLikedUser, Database.ReleaseConnection);
         }
-
         ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database.ReleaseConnection);
         NextProfile();
     }
 
-    private void OnDislike(object sender, EventArgs e)
-    {
+    private void OnDislike(object sender, EventArgs e) {
         string emailCurrentUser = Authentication.CurrentUser.Email;
         string emaildDislikedUser = ProfileQueueController.CurrentProfile.user.Email;
 

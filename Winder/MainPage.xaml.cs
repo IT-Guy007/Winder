@@ -45,14 +45,12 @@ public partial class MainPage {
                 Console.WriteLine("Found user who was logged in, restoring session");
                 Authentication.CurrentUser = new User().GetUserFromDatabase(userEmail, Database.ReleaseConnection);
                 Console.WriteLine("Restored");
-            }
-            else
-            {
+            } else {
                 Console.WriteLine("No user found");
+                await Navigation.PushAsync(new StartPage());
             }
 
-            if (!String.IsNullOrWhiteSpace(Authentication.CurrentUser.Email))
-            {
+            if (!String.IsNullOrWhiteSpace(Authentication.CurrentUser.Email)) {
                 Console.WriteLine("Pusing new MatchPage");
                 await Navigation.PushAsync(new MatchPage());
             }
