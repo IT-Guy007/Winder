@@ -56,7 +56,8 @@ public class User {
                 Bio = reader["bio"] as string ?? string.Empty;
                 School = reader["location"] as string ?? string.Empty;
                 Major = reader["education"] as string ?? string.Empty;
-                ProfilePicture = ImageSource.FromStream(() => new MemoryStream((byte[])reader["profilePicture"] ?? new byte[0]));
+                byte[] pictureData = (byte[])reader["profilePicture"];
+                ProfilePicture = ImageSource.FromStream(() => new MemoryStream(pictureData));
                 var minAge = reader["min"] as int?;
                 var maxAge = reader["max"] as int?;
 
@@ -263,24 +264,32 @@ public class User {
         query.Parameters.AddWithValue("@Email", email);
 
         //Execute query
-        SqlDataReader reader = query.ExecuteReader();
-        Console.WriteLine("Getting password");
+        try {
+            SqlDataReader reader = query.ExecuteReader();
 
-        Console.WriteLine("Checking login");
-        while (reader.Read()) {
-            if (hashed == reader["password"] as string) {
-                
-                try {
-                    userModel.SetLoginEmail(email);
-            
-                } catch {
-                    Console.WriteLine("Error setting login Email");
+            Console.WriteLine("Checking login");
+            while (reader.Read()) {
+
+                if (hashed == reader["password"] as string) {
+
+                    try {
+
+                        userModel.SetLoginEmail(email);
+
+                    } catch {
+                        Console.WriteLine("Error setting login Email");
+                    }
                 }
-                
             }
+            reader.Close();
+        } catch (SqlException se) {
+            Console.WriteLine("Error deleting user");
+            Console.WriteLine(se.ToString());
+            Console.WriteLine(se.StackTrace);
+            connection.Close();
+            connection.Open();
         }
-        reader.Close();
-
+        
         GetUserFromDatabase(email, connection);
         return this;
 
@@ -438,8 +447,8 @@ public class User {
             if (reader.Read()) {
                 var location = reader["location"] as string;
                 School = location;
+                reader.Close();
                 return location;
-
             }
         } catch (SqlException se) {
             Console.WriteLine("Error inserting location in database");
