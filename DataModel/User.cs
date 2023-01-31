@@ -1,4 +1,5 @@
 using System.Data.SqlClient;
+using System.Net;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
@@ -261,11 +262,12 @@ public class User {
 
         //Execute query
         SqlDataReader reader = query.ExecuteReader();
+        Console.WriteLine("Getting password");
 
         Console.WriteLine("Checking login");
         while (reader.Read()) {
             if (hashed == reader["password"] as string) {
-                Console.WriteLine("Getting password");
+                
                 try {
                     userModel.SetLoginEmail(email);
             
@@ -276,7 +278,8 @@ public class User {
             }
         }
         reader.Close();
-        
+
+        GetUserFromDatabase(email, connection);
         return this;
 
     }
@@ -639,6 +642,6 @@ public class User {
             Console.WriteLine(e.StackTrace);
         }
     }
-    
+
 }
 

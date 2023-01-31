@@ -1,5 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Maui.Storage;
+
 namespace DataModel;
 
 public class UserController {
@@ -88,4 +90,43 @@ public class UserController {
 
         return res.ToString();
     }
+    
+
+    /// <summary>
+    /// Gets the picker data for the age picker
+    /// </summary>
+    /// <returns></returns>
+    public int[] GetPickerData() {
+        int[] leeftijd = new int[82];
+        for (int i = 0; i < leeftijd.Length; i++) {
+            leeftijd[i] = i + 18;
+
+        }
+
+        return leeftijd;
+
+    }
+
+    public void SetPreference(int minAge, int maxAge, string school) {
+        Authentication.CurrentUser.SetMinAge(minAge, Database.ReleaseConnection);
+        Authentication.CurrentUser.SetMaxAge(maxAge, Database.ReleaseConnection);
+        Authentication.CurrentUser.SetSchool(school, Database.ReleaseConnection);
+    }
+
+    public void DeleteAccount() {
+        Authentication.CurrentUser.DeleteUser(Database.ReleaseConnection);
+        Authentication.CurrentUser = null;
+        SecureStorage.Default.Remove("Email");
+        SecureStorage.Remove("Email");
+        SecureStorage.RemoveAll();
+    }
+
+    public void Logout() {
+        Authentication.CurrentUser = null;
+        SecureStorage.Default.Remove("Email");
+        SecureStorage.Remove("Email");
+        SecureStorage.RemoveAll();
+        
+    }
+    
 }

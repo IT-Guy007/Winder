@@ -21,7 +21,6 @@ public partial class LoginPage {
         var email = Emailadres.Text;
         var password = Wachtwoord.Text;
         User loginUser = new User().CheckLogin(email, password, Database.ReleaseConnection);
-        //Console.WriteLine($"Firstname is: " + loginUser.FirstName);
         if (!string.IsNullOrEmpty(loginUser.Email)) {
             FoutmeldingInloggen.IsVisible = false;
             
