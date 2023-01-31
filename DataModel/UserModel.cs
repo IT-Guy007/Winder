@@ -51,7 +51,6 @@ public class UserModel {
     public string HashPassword(string password) {
         if (!string.IsNullOrEmpty(password)) {
             String result = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
-            Console.WriteLine(result);
             return result;
         }
         return "";

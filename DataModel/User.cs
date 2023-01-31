@@ -1,7 +1,5 @@
-
-
 using System.Data.SqlClient;
-using System.Reflection.PortableExecutable;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
 
@@ -15,7 +13,7 @@ public class User {
     public string Preference { get; set; }
     public string Email { get; set; }
     public string Gender { get; set; }
-    public byte[] ProfilePicture { get; set; }
+    public ImageSource ProfilePicture { get; set; }
     public string Bio { get; set; }
     public string School { get; set; }
     public string Major { get; set; }
@@ -56,12 +54,13 @@ public class User {
                 Bio = reader["bio"] as string ?? string.Empty;
                 School = reader["location"] as string ?? string.Empty;
                 Major = reader["education"] as string ?? string.Empty;
-                ProfilePicture = (byte[])(reader["profilePicture"]);
+                ProfilePicture = ImageSource.FromStream(() => new MemoryStream(reader["profilePicture"] as byte[] ?? new byte[0]));
                 var minAge = reader["min"] as int?;
                 var maxAge = reader["max"] as int?;
 
                 MinAge = minAge ?? MinAgePreference;
                 MaxAge = maxAge ?? MaxAgePreference;
+                
                 
             }
             reader.Close();
@@ -527,13 +526,13 @@ public class User {
     /// <param name="gender">The gender of the user</param>
     /// <param name="bio">The bio of the user</param>
     /// <param name="password">The password of the user</param>
-    /// <param name="proficePicture">The first profile Picture of the user</param>
+    /// <param name="profilePicture">The first profile Picture of the user</param>
     /// <param name="active">Activation status of the account</param>
     /// <param name="school">The school of the user</param>
     /// <param name="major">The major of the user</param>
     /// <param name="connection">The database connection</param>
     /// <returns></returns>
-    public User Registration(string firstName, string middleName, string lastName, string email, string preference, DateTime birthday, string gender, string bio, string password, byte[] proficePicture, bool active, string school, string major, SqlConnection connection) {
+    public User Registration(string firstName, string middleName, string lastName, string email, string preference, DateTime birthday, string gender, string bio, string password, byte[] profilePicture, bool active, string school, string major, SqlConnection connection) {
         FirstName = firstName;
         MiddleName = middleName;
         LastName = lastName;
@@ -542,7 +541,7 @@ public class User {
         BirthDay = birthday;
         Gender = gender;
         Bio = bio;
-        ProfilePicture = proficePicture;
+        ProfilePicture = ImageSource.FromStream(() => new MemoryStream(profilePicture));;
         School = school;
         Major = major;
 
@@ -552,7 +551,7 @@ public class User {
             "VALUES('" + firstName + "', '" + middleName + "', '" + lastName + "', @birthday, '" + preference + "', '" +
             email + "', '" + password + "', '" + gender + "', @img, '" + bio +
             "', @active, '" + school + "', '" + major + "')", connection);
-        command.Parameters.AddWithValue("@img", proficePicture);
+        command.Parameters.AddWithValue("@img", profilePicture);
         command.Parameters.AddWithValue("@active", active);
         command.Parameters.AddWithValue("@birthday", birthday);
         try {

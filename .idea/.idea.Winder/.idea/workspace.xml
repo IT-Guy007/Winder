@@ -12,21 +12,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Controller-Debug.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/5166b5f0-d40a-457d-a6d6-a5088f825b84.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/7cabfc40-9465-452b-84bf-03b8d5ee54b4.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/bd7c31eb-a266-4a40-b185-3323a10ea353.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/c1c970c3-ca17-4ebb-8e6c-5f3690f9e927.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/d0e005cb-bdc0-49cb-8afd-ad9982ed2496.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/.wsuo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/.wsuo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/slnx.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/slnx.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/UserPrefs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/UserPrefs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/DataModel-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/DataModel-Debug.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Unittest-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Unittest-Debug.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-ios.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-ios.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-maccatalyst.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-maccatalyst.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Match.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Match.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/MatchModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/MatchModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/UserModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/UserModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unittest/Unittest.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/Unittest.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Winder.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Winder.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +55,7 @@
   </component>
   <component name="ProjectId" id="2IXh0gUq4gGfG1ZtGTJa2sn2Fwy" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -92,7 +91,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="UWP.Windows">
+  <component name="RunManager" selected="Xamarin.Mac.Winder">
     <configuration name="WorkAround" type="RunExe" factoryName=".NET Executable">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64/Winder.app/Contents/MacOS/Winder" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -181,6 +180,7 @@
       <workItem from="1674909371920" duration="16000" />
       <workItem from="1674909397327" duration="7741000" />
       <workItem from="1675077584031" duration="1884000" />
+      <workItem from="1675169276735" duration="2399000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>
@@ -199,38 +199,47 @@
     <option name="coveragePercentColumnWidth" value="150" />
     <option name="sortOrder" value="DESCENDING" />
     <option name="sortedColumn" value="1" />
-    <option name="symbolColumnWidth" value="335" />
+    <option name="symbolColumnWidth" value="465" />
     <coverage-tree-state>
       <expand>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 3% 1026/1060" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 3% 1026/1060" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DataModel 1% 700/703" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="(1.0.0.0, net7.0) 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 3% 1026/1060" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DataModel 1% 700/703" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="(1.0.0.0, net7.0) 1% 700/703" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="(1.0.0.0, net7.0) 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 3% 1026/1060" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DataModel 1% 700/703" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="(1.0.0.0, net7.0) 1% 700/703" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DataModel 1% 700/703" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="(1.0.0.0, net7.0) 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="TestDatabase 71% 71/244" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 3% 1026/1060" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DataModel 1% 700/703" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="(1.0.0.0, net7.0) 1% 700/703" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DataModel 1% 700/703" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="User 1% 465/468" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="Total 3% 1026/1060" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DataModel 1% 700/703" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="(1.0.0.0, net7.0) 1% 700/703" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DataModel 1% 700/703" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="User 1% 465/468" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="FirstName 0% 2/2" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
       </expand>
       <select />

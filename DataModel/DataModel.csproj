@@ -23,8 +23,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Reference Include="Microsoft.Maui.Controls">
+        <HintPath>..\..\..\..\..\..\usr\local\share\dotnet\packs\Microsoft.Maui.Controls.Ref.ios\7.0.58\ref\net7.0-ios13.6\Microsoft.Maui.Controls.dll</HintPath>
+      </Reference>
       <Reference Include="Microsoft.Maui.Essentials">
-        <HintPath>..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.Maui.Essentials.Ref.maccatalyst\7.0.58\ref\net7.0-maccatalyst13.5\Microsoft.Maui.Essentials.dll</HintPath>
+        <HintPath>..\..\..\..\..\..\usr\local\share\dotnet\packs\Microsoft.Maui.Essentials.Ref.ios\7.0.58\ref\net7.0-ios13.6\Microsoft.Maui.Essentials.dll</HintPath>
       </Reference>
     </ItemGroup>
     
