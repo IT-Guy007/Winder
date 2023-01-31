@@ -12,11 +12,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/ChatModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/ChatModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/InterestsModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/InterestsModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/UserModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/UserModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unittest/ControllerTests/UserControllerTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/ControllerTests/UserControllerTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unittest/DataModelTests/UserTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/DataModelTests/UserTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/ChatPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ChatPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/ChatsViewPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ChatsViewPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/LoginPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/LoginPage.xaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +181,7 @@
       <workItem from="1674909397327" duration="7741000" />
       <workItem from="1675077584031" duration="1884000" />
       <workItem from="1675169276735" duration="4400000" />
-      <workItem from="1675173776719" duration="4777000" />
+      <workItem from="1675173776719" duration="10552000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>
@@ -265,6 +273,12 @@
             <option name="internal" value="false" />
           </properties>
           <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet Exception Breakpoints">
+          <properties exception="System.BadImageFormatException" isInternal="false" displayValue="BadImageFormatException" namespaceName="System">
+            <option name="internal" value="false" />
+          </properties>
+          <option name="timeStamp" value="3" />
         </breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Unittest/ControllerTests/AuthenticationTest.cs</url>

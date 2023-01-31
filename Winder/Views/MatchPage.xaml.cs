@@ -27,7 +27,7 @@ public partial class MatchPage {
         //Set first profile
         if (ProfileQueueController.ProfileQueue.GetCount() > 0) {
             try {
-                ProfileQueueController.ProfileQueue.GetNextProfile();
+                ProfileQueueController.NextProfile(Database.ReleaseConnection);
 
             } catch (Exception e) {
                 
@@ -391,7 +391,7 @@ public partial class MatchPage {
         if (ProfileQueueController.SwipeController.CheckMatch(Authentication.CurrentUser.Email, ProfileQueueController.CurrentProfile.user.Email, Database.ReleaseConnection)) {
             MatchPopup();
         }
-        ProfileQueueController.OnLike();
+        ProfileQueueController.OnLike(Database.ReleaseConnection);
         SelectedImage = 0;
         Initialize();
     }
@@ -402,7 +402,7 @@ public partial class MatchPage {
     /// <param name="sender">The sender</param>
     /// <param name="e">The event args</param>
     private void OnDislike(object sender, EventArgs e) {
-        ProfileQueueController.OnDislike();
+        ProfileQueueController.OnDislike(Database.ReleaseConnection);
         SelectedImage = 0;
         Initialize();
     }

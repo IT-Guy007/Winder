@@ -35,18 +35,33 @@ public partial class ChatsViewPage {
         Navigation.PushAsync(new ChatPage(Authentication.CurrentUser, new User().GetUserFromDatabase(tappedItem.Email, Database.ReleaseConnection)));
     }
 
+    /// <summary>
+    /// The profile button clicked in the header
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The event args</param>
     private void MyProfile_Clicked(object sender, EventArgs e) {
         ProfileChange myProfile = new ProfileChange();
         myProfile.OriginPage = pageName;
         Navigation.PushAsync(myProfile);
     }
 
+    /// <summary>
+    /// The settings button clicked in the header
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The event args</param>
     private void Settings_Clicked(object sender, EventArgs e) {
         SettingsPage settings = new SettingsPage();
         settings.OriginPage = pageName;
         Navigation.PushAsync(settings);
     }
 
+    /// <summary>
+    /// Match button clicked in the header
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The event args</param>
     private void MatchPage_Clicked(object sender, EventArgs e) {
         MatchPage matchPage = new MatchPage();
         matchPage.OriginPage = pageName;

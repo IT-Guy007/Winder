@@ -132,9 +132,12 @@ public class ProfileQueueController {
         query = query + " ORDER BY NEWID()";
         
         SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@Email", User.Email);
+        
         //Get the users emails
+        SqlDataReader reader = null;
         try {
-            SqlDataReader reader = command.ExecuteReader(); // execute het command
+             reader = command.ExecuteReader(); // execute het command
             if (reader.HasRows) {
                 while (reader.Read()) {
                     string user = reader["Email"] as string ?? "";
@@ -143,14 +146,15 @@ public class ProfileQueueController {
             } else {
                 Console.WriteLine("No new profiles found to swipe");
             }
-            reader.Close();
-        } catch(SqlException e) {
+            
+        } catch (SqlException e) {
             Console.WriteLine("Error retrieving the users for the algorithm");
             Console.WriteLine(e.Message);
             Console.WriteLine(e.StackTrace);
-            connection.Close();
-            connection.Open();
+        } finally  {
+            if (reader != null) reader.Close();
         }
+        
         
 
         //Get 5 users who likes you and add to qu
@@ -182,8 +186,9 @@ public class ProfileQueueController {
                                             "ORDER BY NEWID()", connection); 
         command.Parameters.AddWithValue("@Email", User.Email);
 
+        SqlDataReader reader = null;
         try {
-            SqlDataReader reader = command.ExecuteReader(); // execute het command
+            reader = command.ExecuteReader(); // execute het command
 
             while (reader.Read()) {
                 string person = reader["person"] as string ?? "Unknown";   
@@ -195,9 +200,9 @@ public class ProfileQueueController {
             Console.WriteLine("Error retrieving users who liked you from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
-            connection.Close();
-            connection.Open();
 
+        } finally  {
+            if (reader != null) reader.Close();
         }
         
         return users;
@@ -254,12 +259,11 @@ public class ProfileQueueController {
         return result;
     }
     
-    public void NextProfile() {
+    public void NextProfile(SqlConnection connection) {
 
-       CheckIfQueueNeedsMoreProfiles(Database.ReleaseConnection);
+       CheckIfQueueNeedsMoreProfiles(connection);
         if (ProfileQueue.GetCount() != 0) {
             ProfileQueue.GetNextProfile();
-
 
         } else {
             ProfileQueue.Clear();
@@ -267,19 +271,21 @@ public class ProfileQueueController {
 
     }
     
-    public void OnLike() {
+    public void OnLike(SqlConnection connection) {
         if(SwipeController.CheckMatch(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection)) {
             SwipeController.NewMatch(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection);
             SwipeController.DeleteLike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection);
         } else {
             SwipeController.NewLike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection);
         }
-        NextProfile();
+        NextProfile(connection);
     }
 
-    public void OnDislike() {
+    public void OnDislike(SqlConnection connection) {
         SwipeController.NewDislike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection);
-        NextProfile();
+        NextProfile(connection);
     }
+    
+    
     
 }

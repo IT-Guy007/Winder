@@ -23,12 +23,17 @@ public class ChatModel {
     /// <param name="fromUser">The first person, the one that is loggedin</param>
     /// <param name="toUser">The second person, the other person</param>
     /// <param name="connection">The database connection</param>
+    
+    SqlDataReader reader = null;
     private void GetChatMessages(SqlConnection connection) {
         try {
-            string query = "SELECT [winder].[ChatMessage].[personFrom], [winder].[ChatMessage].[personTo], [winder].[ChatMessage].[sendDate], [winder].[ChatMessage].[chatMessage], [winder].[ChatMessage].[readMessage] " +
-                           "FROM [winder].[ChatMessage] " +
-                           "WHERE ([winder].[ChatMessage].[personFrom] = '" + FromUser.Email + "' AND [winder].[ChatMessage].[personTo] = '" + ToUser.Email + "') " +
-                           "OR ([winder].[ChatMessage].[personFrom] = '" + ToUser.Email + "' AND [winder].[ChatMessage].[personTo] = '" + FromUser.Email + "') order by sendDate";
+            string query =
+                "SELECT [winder].[ChatMessage].[personFrom], [winder].[ChatMessage].[personTo], [winder].[ChatMessage].[sendDate], [winder].[ChatMessage].[chatMessage], [winder].[ChatMessage].[readMessage] " +
+                "FROM [winder].[ChatMessage] " +
+                "WHERE ([winder].[ChatMessage].[personFrom] = '" + FromUser.Email +
+                "' AND [winder].[ChatMessage].[personTo] = '" + ToUser.Email + "') " +
+                "OR ([winder].[ChatMessage].[personFrom] = '" + ToUser.Email +
+                "' AND [winder].[ChatMessage].[personTo] = '" + FromUser.Email + "') order by sendDate";
 
             //Create command
             SqlCommand sqlCommand = new SqlCommand(query, connection);
@@ -37,11 +42,10 @@ public class ChatModel {
             var dataTable = new DataTable();
 
             //Fill table
-            SqlDataReader reader = sqlCommand.ExecuteReader();
+            reader = sqlCommand.ExecuteReader();
             dataTable.Load(reader);
 
-            foreach (DataRow row in dataTable.Rows)
-            {
+            foreach (DataRow row in dataTable.Rows) {
                 string fromUserData = row["personFrom"].ToString() ?? "";
                 string toUserData = row["personTo"].ToString() ?? "";
                 DateTime date = DateTime.Parse(row["sendDate"].ToString() ?? "");
@@ -52,13 +56,13 @@ public class ChatModel {
                     Messages.Add(new ChatMessage(fromUserData, toUserData, date, message, read != 0));
                 }
             }
-            reader.Close();
+            
         } catch (SqlException se) {
             Console.WriteLine("Error retrieving chat messages from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
-            connection.Close();
-            connection.Open();
+        }  finally  {
+            if (reader != null) reader.Close();
         }
     }
     

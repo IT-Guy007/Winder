@@ -14,16 +14,14 @@ public partial class ChatPage {
     private StackLayout verticalStackLayout;
     private Grid grid;
 
-    private ChatModel ChatModel;
+    private readonly ChatModel ChatModel;
 
     public ChatPage(User sendFromUser, User sendToUser) {
         ChatModel = new ChatModel(sendFromUser, sendToUser, Database.ReleaseConnection);
-        
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         
         //Set content
         Initialize();
-        
     }
 
     private void Initialize() {

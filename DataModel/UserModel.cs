@@ -22,19 +22,22 @@ public class UserModel {
         
         string sql = "SELECT Email FROM Winder.Winder.[User];";
         SqlCommand command = new SqlCommand(sql, connection);
+        
+        SqlDataReader reader = null;
         try {
-            SqlDataReader reader = command.ExecuteReader();
+            reader = command.ExecuteReader();
             while (reader.Read()) {
                 var item = reader["Email"] as string;
                 emails.Add(item);
             }
-            reader.Close();
+
         } catch (SqlException e) {
             Console.WriteLine("Error getting emails from database");
             Console.WriteLine(e.ToString());
             Console.WriteLine(e.StackTrace);
-            connection.Close();
-            connection.Open();
+
+        } finally  {
+            if (reader != null) reader.Close();
         }
 
         if (emails.Contains(email)) {

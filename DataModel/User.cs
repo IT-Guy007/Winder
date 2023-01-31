@@ -1,5 +1,4 @@
 using System.Data.SqlClient;
-using System.Net;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 
@@ -42,8 +41,10 @@ public class User {
         string query = "SELECT * FROM Winder.Winder.[User] WHERE email = @Email";
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@Email", email);
+        
+        SqlDataReader reader = null;
         try {
-            SqlDataReader reader = command.ExecuteReader();
+            reader = command.ExecuteReader();
             while (reader.Read()) {
                 Email = reader["email"] as string ?? string.Empty;
                 FirstName = reader["firstname"] as string ?? string.Empty;
@@ -63,15 +64,14 @@ public class User {
                 MaxAge = maxAge ?? MaxAgePreference;
                 
             }
-            reader.Close();
 
             LoadInterestsFromDatabaseInForUser(connection);
         } catch (SqlException e) {
             Console.WriteLine("Error retrieving user from database");
             Console.WriteLine(e.ToString());
             Console.WriteLine(e.StackTrace);
-            connection.Close();
-            connection.Open();
+        } finally  {
+            if (reader != null) reader.Close();
         }
 
         return this;
@@ -86,21 +86,23 @@ public class User {
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@Email", Email);
         List<string> interestList = new List<string>();
+        
+        SqlDataReader reader = null;
         try {
-            SqlDataReader reader = command.ExecuteReader();
+            reader = command.ExecuteReader();
             while (reader.Read()) {
                 var item = reader["interest"] as string;
                 interestList.Add(item);
             }
-            reader.Close();
 
             Interests = interestList.ToArray();
         } catch (SqlException e) {
             Console.WriteLine("Error retrieving interests from database");
             Console.WriteLine(e.ToString());
             Console.WriteLine(e.StackTrace);
-            connection.Close();
-            connection.Open();
+
+        } finally  {
+            if (reader != null) reader.Close();
         }
         
     }
@@ -292,11 +294,12 @@ public class User {
     public List<Match> GetMatchedStudentsFromUser(SqlConnection connection) {
         List<Match> matches = new List<Match>();
         List<string> emails = new List<string>();
+        SqlDataReader reader = null;
         try {
             string query = "SELECT person1, person2 FROM Winder.Winder.Match WHERE person1 = @Email OR person2 = @Email";
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@Email", Email);
-            SqlDataReader reader = command.ExecuteReader();
+            reader = command.ExecuteReader();
             while (reader.Read())
             {
                 string person1 = reader["person1"] as string ?? "Unknown";
@@ -307,14 +310,13 @@ public class User {
                     emails.Add(person1);
                 }
             }
-            reader.Close();
             emails.ForEach(x => matches.Add(new Match(this,new User().GetUserFromDatabase(x, connection))));
         } catch (SqlException se) {
             Console.WriteLine("Error retrieving matches from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
-            connection.Close();
-            connection.Open();
+        } finally  {
+            if (reader != null) reader.Close();
         }
         return matches;
     }
@@ -365,73 +367,6 @@ public class User {
     }
 
     /// <summary>
-    /// Gets the max age from the database and sets it local and returns it
-    /// </summary>
-    /// <param name="connection"></param>
-    /// <returns></returns>
-    public int GetMinAge(SqlConnection connection) {
-
-        SqlCommand query = new SqlCommand("SELECT min FROM winder.winder.[User] WHERE Email = @Email", connection);
-        query.Parameters.AddWithValue("@Email", Email);
-
-
-        try {
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read()) {
-                int? minAge = reader["min"] as int?;
-                int minimalAge = minAge ?? MinAgePreference;
-                
-                MinAge = minimalAge;
-                return MinAge;
-
-            }
-            reader.Close();
-        } catch (SqlException se) {
-            Console.WriteLine("Error inserting minAge in database");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            connection.Close();
-            connection.Open();
-            return MinAgePreference;
-        }
-
-        return MinAgePreference;
-    }
-    
-    
-    /// <summary>
-    /// Gets the max preferred age from the database and sets it local and returns it
-    /// </summary>
-    /// <param name="connection">The database connection</param>
-    /// <returns>Integer of the max preffered age</returns>
-    public int GetMaxAge(SqlConnection connection) {
-
-        SqlCommand query = new SqlCommand("SELECT max FROM winder.winder.[User] WHERE Email = @Email", connection);
-        query.Parameters.AddWithValue("@Email", Email);
-
-        try {
-            SqlDataReader reader = query.ExecuteReader();
-            while (reader.Read()) {
-                int? maxAge = reader["max"] as int?;
-                int maximalAge = maxAge ?? MaxAgePreference;
-                
-                MaxAge = maximalAge;
-                return MaxAge;
-
-            }
-            reader.Close();
-        } catch (SqlException se) {
-            Console.WriteLine("Error inserting maxAge in database");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-            connection.Close();
-            connection.Open();
-            return 0;
-        }
-        return 0;
-    }
-    
-    /// <summary>
     /// Gets the profile pictures from the database
     /// </summary>
     /// <param name="connection">The database connection</param>
@@ -445,21 +380,23 @@ public class User {
         query.Parameters.AddWithValue("@Email", Email);
 
         //Execute query
+        SqlDataReader reader = null;
         try {
-            SqlDataReader reader = query.ExecuteReader();
+            reader = query.ExecuteReader();
             int i = 0;
             while (reader.Read()) {
                 var profilePicture = reader["photo"] as byte[];
                 result[i] = profilePicture;
                 i++;
             }
-            reader.Close();
+
         } catch (SqlException se) {
             Console.WriteLine("Error retrieving pictures from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
-            connection.Close();
-            connection.Open();
+
+        } finally  {
+            if (reader != null) reader.Close();
         }
 
         return result;
@@ -495,22 +432,23 @@ public class User {
         SqlCommand query = new SqlCommand("SELECT location FROM winder.winder.[User] WHERE Email = @Email", connection);
         query.Parameters.AddWithValue("@Email", Email);
 
+        SqlDataReader reader = null;
         try {
-            SqlDataReader reader = query.ExecuteReader();
+            reader = query.ExecuteReader();
             if (reader.Read()) {
                 var location = reader["location"] as string;
                 School = location;
                 return location;
 
             }
-            reader.Close();
         } catch (SqlException se) {
             Console.WriteLine("Error inserting location in database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
-            connection.Close();
-            connection.Open();
+
             return "";
+        } finally  {
+            if (reader != null) reader.Close();
         }
         return "";
     }
