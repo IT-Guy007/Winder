@@ -22,16 +22,22 @@ public class UserModel {
         
         string sql = "SELECT Email FROM Winder.Winder.[User];";
         SqlCommand command = new SqlCommand(sql, connection);
+        
+        SqlDataReader reader = null;
         try {
-            SqlDataReader reader = command.ExecuteReader();
+            reader = command.ExecuteReader();
             while (reader.Read()) {
                 var item = reader["Email"] as string;
                 emails.Add(item);
             }
+
         } catch (SqlException e) {
             Console.WriteLine("Error getting emails from database");
             Console.WriteLine(e.ToString());
             Console.WriteLine(e.StackTrace);
+
+        } finally  {
+            if (reader != null) reader.Close();
         }
 
         if (emails.Contains(email)) {
@@ -48,7 +54,6 @@ public class UserModel {
     public string HashPassword(string password) {
         if (!string.IsNullOrEmpty(password)) {
             String result = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
-            Console.WriteLine(result);
             return result;
         }
         return "";

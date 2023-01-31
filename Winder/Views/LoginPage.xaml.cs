@@ -18,15 +18,11 @@ public partial class LoginPage {
     }
 
     private void Login(object sender, EventArgs e) {
-        var email = Emailadres.Text;
-        var password = Wachtwoord.Text;
-        User loginUser = new User().CheckLogin(email, password, Database.ReleaseConnection);
+        User loginUser = new User().CheckLogin(Emailadres.Text, Wachtwoord.Text, Database.ReleaseConnection);
         if (!string.IsNullOrEmpty(loginUser.Email)) {
             FoutmeldingInloggen.IsVisible = false;
-            
             Navigation.PushAsync(new MatchPage());
-        }
-        else {
+        } else {
             FoutmeldingInloggen.IsVisible = true;
         }
     }

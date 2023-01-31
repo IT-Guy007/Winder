@@ -1,10 +1,12 @@
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace DataModel;
 
 public class ProfileQueueController {
+    public ProfileQueue ProfileQueue;
+    public SwipeController SwipeController;
     
-    private Queue<Profile> ProfileQueue { get; }
     public Profile CurrentProfile { get; private set; }
     private bool IsGettingProfiles { get; set; }
     
@@ -19,57 +21,19 @@ public class ProfileQueueController {
     private const bool InterestsAlgorithm = true;
     
     public ProfileQueueController(User user, SqlConnection connection) {
-        ProfileQueue = new Queue<Profile>();
+        ProfileQueue = new ProfileQueue();
+        SwipeController = new SwipeController();
         User = user;
         CheckIfQueueNeedsMoreProfiles(connection);
     }
-    
-    /// <summary>
-    /// Gets the next profile in the queue
-    /// </summary>
-    /// <returns>Profile</returns>
-    public void GetNextProfile() {
-        try {
-            CurrentProfile = ProfileQueue.Dequeue();
-        } catch {
-            Console.WriteLine("No more profiles to swipe at this moment");
-        }
-    }
-    
-    /// <summary>
-    /// Empties the queue
-    /// </summary>
-    public void ClearQueue() {
-        ProfileQueue.Clear();
-    }
-    
-    public void ClearCurrentProfile() {
-        CurrentProfile = null;
-    }
-    
-    /// <summary>
-    /// Gets the amount of profiles in the queue
-    /// </summary>
-    /// <returns>Integer of the amount of profiles</returns>
-    public int GetQueueCount() {
-        return ProfileQueue.Count;
-    }
-    
-    /// <summary>
-    /// Adds a profile to the queue
-    /// </summary>
-    /// <param name="profile">Given profile</param>
-    private void AddProfile(Profile profile) {
-        ProfileQueue.Enqueue(profile);
-    }
-    
+
     /// <summary>
     /// Check's if a queue needs more profiles
     /// </summary>
     public async void CheckIfQueueNeedsMoreProfiles(SqlConnection connection) {
-        if (ProfileQueue.Count < AmountOfProfilesInQueue && !IsGettingProfiles) {
+        if (ProfileQueue.GetCount() < AmountOfProfilesInQueue && !IsGettingProfiles) {
             IsGettingProfiles = true;
-            await GetProfilesTask(connection);
+            GetProfilesTask(connection);
             IsGettingProfiles = false;
         }
     }
@@ -83,7 +47,7 @@ public class ProfileQueueController {
         Profile[] profiles = GetProfiles(connection);
         foreach (var profile in profiles) {
             if (profile != null) {
-                AddProfile(profile);
+                ProfileQueue.Add(profile);
             }
         }
     }
@@ -92,7 +56,7 @@ public class ProfileQueueController {
     /// Gets the profiles from the database async
     /// </summary>
     /// <param name="email"></param>
-    /// <returns></returns>
+    /// <returns>Array of profiles</returns>
     private Profile[] GetProfiles(SqlConnection connection) {
         
         //The users(Email) to get
@@ -107,10 +71,10 @@ public class ProfileQueueController {
         for (int i = 0; i < usersToRetrief.Count(); i++) {
 
             //Get the user
-            User user = new User().GetUserFromDatabase(usersToRetrief[i],Database.ReleaseConnection);
+            User user = new User().GetUserFromDatabase(usersToRetrief[i],connection);
 
             //Get the images of the user
-            byte[][] images = user.GetPicturesFromDatabase(Database.ReleaseConnection);
+            byte[][] images = user.GetPicturesFromDatabase(connection);
             var profile = new Profile(user, images);
 
             profiles[i] = profile;
@@ -133,33 +97,32 @@ public class ProfileQueueController {
         var formattedMin = minDate.ToString("yyyy-MM-dd HH:mm:ss");
         var formattedMax = maxDate.ToString("yyyy-MM-dd HH:mm:ss");
 
-        string query = "select top " + AmountOfProfilesInQueue * 2 + " Email " +
-                       "from winder.[User] " +
-                       "where Email != @Email " + //Not themself
-                       "and active = 1 " + //Is active
-                       "and Email not in (select person from Winder.Winder.Liked where likedPerson = @Email and liked = 1) " + //Not disliked by other person
-                       "and Email not in (select likedPerson from winder.winder.Liked where person = @Email) " + //Not already a person that you liked or disliked
-                       "and Email not in (select winder.winder.Match.person1 from Winder.Winder.Match where person2 = @Email) " + //Not matched
-                       "and Email not in (select winder.winder.Match.person2 from Winder.Winder.Match where person1 = @Email) " + //Not matched
-                       "And location = (select location from winder.winder.[User] where Email = @Email) "; // location check
+        string query = "SELECT TOP " + AmountOfProfilesInQueue * 2 + " Email " +
+                       "FROM winder.[User] " +
+                       "WHERE Email != @Email " + //Not themself
+                       "AND active = 1 " + //Is active
+                       "AND Email NOT IN (SELECT person FROM Winder.Winder.Liked WHERE likedPerson = @Email AND liked = 1) " + //Not disliked by other person
+                       "AND Email NOT IN (SELECT likedPerson FROM winder.winder.Liked WHERE person = @Email) " + //Not already a person that you liked or disliked
+                       "AND Email NOT IN (SELECT winder.winder.Match.person1 FROM Winder.Winder.Match WHERE person2 = @Email) " + //Not matched
+                       "AND Email NOT IN (SELECT winder.winder.Match.person2 FROM Winder.Winder.Match WHERE person1 = @Email) " + //Not matched
+                       "AND location = (SELECT location FROM winder.winder.[User] WHERE Email = @Email) "; // location check
 
         if (AgeAlgorithm) {
-            query = query + " and birthday >= '" + formattedMax + "' and birthday <= '" + formattedMin + "'  "; //In age range
+            query = query + " AND birthday >= '" + formattedMax + "' AND birthday <= '" + formattedMin + "'  "; //In age range
         }
 
-        if (PreferenceAlgorithm)
-        {
-            query = query + " and Gender = (select Preference from winder.winder.[User] where Email = @Email) "; //Gender check
-            query = query + " and Preference = (select Gender from winder.winder.[User] where Email = @Email) "; //Preference check
+        if (PreferenceAlgorithm) {
+            query = query + " AND Gender = (SELECT Preference FROM winder.winder.[User] WHERE Email = @Email) "; //Gender check
+            query = query + " AND Preference = (SELECT Gender FROM winder.winder.[User] WHERE Email = @Email) "; //Preference check
         }
 
         if (InterestsAlgorithm) {
             if (User.Interests.Length > 0) {
                 //Add interests
-                query = query + " AND Email in (select UID from winder.winder.UserHasInterest where interest = " + "'" + User.Interests[0] + "' ";
+                query = query + " AND Email IN (SELECT UID FROM winder.winder.UserHasInterest WHERE interest = " + "'" + User.Interests[0] + "' ";
                 for (int i = 1; i < User.Interests.Length; i++)
                 {
-                    query = query + " or interest =" + " '" + User.Interests[i] + "' ";
+                    query = query + " OR interest =" + " '" + User.Interests[i] + "' ";
                 }
                 query = query + ")";
             }
@@ -169,9 +132,12 @@ public class ProfileQueueController {
         query = query + " ORDER BY NEWID()";
         
         SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@Email", User.Email);
+        
         //Get the users emails
+        SqlDataReader reader = null;
         try {
-            SqlDataReader reader = command.ExecuteReader(); // execute het command
+             reader = command.ExecuteReader(); // execute het command
             if (reader.HasRows) {
                 while (reader.Read()) {
                     string user = reader["Email"] as string ?? "";
@@ -180,11 +146,15 @@ public class ProfileQueueController {
             } else {
                 Console.WriteLine("No new profiles found to swipe");
             }
-        } catch(SqlException e) {
+            
+        } catch (SqlException e) {
             Console.WriteLine("Error retrieving the users for the algorithm");
             Console.WriteLine(e.Message);
             Console.WriteLine(e.StackTrace);
+        } finally  {
+            if (reader != null) reader.Close();
         }
+        
         
 
         //Get 5 users who likes you and add to qu
@@ -210,27 +180,29 @@ public class ProfileQueueController {
 
         Queue<string> users = new Queue<string>();
 
-        SqlCommand command = new SqlCommand("SELECT top " + UsersInQueueWhoLikedYou + " person FROM Winder.Winder.Liked " +
+        SqlCommand command = new SqlCommand("SELECT TOP " + UsersInQueueWhoLikedYou + " person FROM Winder.Winder.Liked " +
                                             "WHERE likedPerson = @Email AND liked = 1 " + // selects the users that have liked the given user
-                                            "AND person not in (select likedPerson from Winder.Winder.Liked where person = @Email) " + // except the ones that the given user has already disliked or liked
-                                            "order by NEWID()", connection); 
+                                            "AND person NOT IN (SELECT likedPerson FROM Winder.Winder.Liked WHERE person = @Email) " + // except the ones that the given user has already disliked or liked
+                                            "ORDER BY NEWID()", connection); 
         command.Parameters.AddWithValue("@Email", User.Email);
 
+        SqlDataReader reader = null;
         try {
-            SqlDataReader reader = command.ExecuteReader(); // execute het command
+            reader = command.ExecuteReader(); // execute het command
 
             while (reader.Read()) {
                 string person = reader["person"] as string ?? "Unknown";   
                 users.Enqueue(person);   // zet elk persoon in de users 
             }
 
-
+            reader.Close();
         } catch (SqlException se) {
             Console.WriteLine("Error retrieving users who liked you from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
 
-
+        } finally  {
+            if (reader != null) reader.Close();
         }
         
         return users;
@@ -272,8 +244,7 @@ public class ProfileQueueController {
                 }
 
                 //Check if already exists in current Queue
-                IEnumerable<Profile> alreadyExists = ProfileQueue.Where(i => i.user.Email == userToAdd);
-                if (!alreadyExists.Any() && !usersToSwipe.Contains(userToAdd) && !string.IsNullOrEmpty(userToAdd)) {
+                if (!ProfileQueue.Contains(userToAdd) && !usersToSwipe.Contains(userToAdd) && !string.IsNullOrEmpty(userToAdd)) {
                     Console.WriteLine("Adding user");
                     result.Add(userToAdd);
                 }
@@ -287,5 +258,35 @@ public class ProfileQueueController {
 
         return result;
     }
+    
+    public void NextProfile(SqlConnection connection) {
+
+       CheckIfQueueNeedsMoreProfiles(connection);
+        if (ProfileQueue.GetCount() != 0) {
+            CurrentProfile = ProfileQueue.GetNextProfile();
+
+        } else {
+            ProfileQueue.Clear();
+            CurrentProfile = null;
+        }
+
+    }
+    
+    public void OnLike(SqlConnection connection) {
+        if(SwipeController.CheckMatch(Authentication.CurrentUser.Email, CurrentProfile.user.Email, connection)) {
+            SwipeController.NewMatch(Authentication.CurrentUser.Email, CurrentProfile.user.Email, connection);
+            SwipeController.DeleteLike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, connection);
+        } else {
+            SwipeController.NewLike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, connection);
+        }
+        NextProfile(connection);
+    }
+
+    public void OnDislike(SqlConnection connection) {
+        SwipeController.NewDislike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, connection);
+        NextProfile(connection);
+    }
+    
+    
     
 }

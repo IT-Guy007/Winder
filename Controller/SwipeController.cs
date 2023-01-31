@@ -3,9 +3,8 @@ using System.Data.SqlClient;
 namespace DataModel;
 
 public class SwipeController {
-    
-    
-    
+
+
     /// <summary>
     /// Checks in the database if there is a match between the current user and the liked person
     /// </summary>
@@ -13,6 +12,7 @@ public class SwipeController {
     /// <param name="emailLikedPerson">email of the likedUser</param>
     /// <param name="connection">The databaseconnection</param>
     /// <returns></returns>
+    SqlDataReader reader = null;
     public bool CheckMatch(string emailCurrentUser, string emailLikedPerson, SqlConnection connection) {
 
         SqlCommand command = new SqlCommand("SELECT * FROM Winder.Winder.[Liked] WHERE person = @emailLikedPerson AND likedPerson = @emailCurrentUser AND liked = 1", connection);
@@ -20,7 +20,7 @@ public class SwipeController {
         command.Parameters.AddWithValue("@emailCurrentUser", emailCurrentUser);
 
         try {
-            SqlDataReader reader = command.ExecuteReader();
+            reader = command.ExecuteReader();
 
             reader.Read();
             return reader.HasRows;
@@ -31,6 +31,8 @@ public class SwipeController {
             Console.WriteLine(se.StackTrace);
             return false;
 
+        } finally  {
+            if (reader != null) reader.Close();
         }
     }
 
@@ -48,7 +50,7 @@ public class SwipeController {
         command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
 
         try {
-            command.ExecuteReader();
+            command.ExecuteNonQuery();
         } catch (SqlException se) {
             Console.WriteLine("Error inserting like in database");
             Console.WriteLine(se.ToString());
@@ -71,7 +73,7 @@ public class SwipeController {
         command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
 
         try {
-            command.ExecuteReader();
+            command.ExecuteNonQuery();
         } catch (SqlException se) {
             Console.WriteLine("Error inserting dislike in database");
             Console.WriteLine(se.ToString());
@@ -93,7 +95,7 @@ public class SwipeController {
         command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
 
         try {
-            command.ExecuteReader();
+            command.ExecuteNonQuery();
         } catch (SqlException se) {
             Console.WriteLine("Error inserting match in database");
             Console.WriteLine(se.ToString());
@@ -115,7 +117,7 @@ public class SwipeController {
         command.Parameters.AddWithValue("@emailCurrentUser", emailCurrentUser);
 
         try {
-            command.ExecuteReader();
+            command.ExecuteNonQuery();
 
         } catch (SqlException se) {
             Console.WriteLine("Error deleting like on match in database");

@@ -8,140 +8,75 @@ namespace Winder;
 public partial class SettingsPage {
     private const string PageName = "settingspage";
     public string OriginPage;
+
+    private UserController UserController;
     public SettingsPage() {
 
         InitializeComponent();
-        GetMinimaleLeeftijd();
-      
-        PlaceLocation();
-        PlaceMinAge();
-        PlaceMaxAge();
-
-    }
-
-    // puts the min and max age in the picker.
-    private void GetMinimaleLeeftijd()
-    {
-        int[] leeftijd = new int[82];
-        for (int i = 0; i < leeftijd.Length; i++)
-        {
-            leeftijd[i] = i + 18;
-
-        }
-
-        minimaleLeeftijd.ItemsSource = leeftijd;
-        maximaleLeeftijd.ItemsSource = leeftijd;
-
-
-    }
-    
-    //sets the location in the database
-    private void SetLocation() {
-        string location = Location.SelectedItem.ToString();
-        if (location != null) Authentication.CurrentUser.SetSchool(location, Database.ReleaseConnection);
-    }
-    
-    // checks if the min age is lower then the max age
-    private bool CheckIfMinAgeLowerThenMax() {
-        try {
-            int minAge = (int)minimaleLeeftijd.SelectedItem;
-            int maxAge = (int)maximaleLeeftijd.SelectedItem;
-            if (minAge > maxAge) {
-
-                return false;
-            }
-
-            return true;
-
-        } catch (Exception e) {
-            Console.WriteLine("Error for checking if minage is lower then maxage");
-            Console.WriteLine(e.ToString());
-            Console.WriteLine(e.StackTrace);
-            return false;
-            
-        }
-    }
- 
-  
-    //sets location in the picker what the user already has in the database
-    private void PlaceLocation() {
+        UserController = new UserController();
+        
         Location.SelectedItem = Authentication.CurrentUser.GetSchool(Database.ReleaseConnection);
+        minimaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge;
+        maximaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge;
         
-        }
-    //sets minimum age in the picker what the user already has in the database
-    private void PlaceMinAge() {
-        minimaleLeeftijd.SelectedItem = Authentication.CurrentUser.GetMinAge(Database.ReleaseConnection);
-        
-    }
-    //sets maximum age in the picker what the user already has in the database
-    private void PlaceMaxAge() {
-        
-        maximaleLeeftijd.SelectedItem = Authentication.CurrentUser.GetMaxAge(Database.ReleaseConnection);
-        
-    }
-    //sets the minimum age of what the user chose in the database
-    private void SetMinAge() {
-        
-        Authentication.CurrentUser.SetMinAge((int)minimaleLeeftijd.SelectedItem, Database.ReleaseConnection);
+        minimaleLeeftijd.ItemsSource = UserController.GetPickerData();
+        maximaleLeeftijd.ItemsSource = UserController.GetPickerData();
 
     }
-    //sets the maximum age of what the user chose in the database
-    private void SetMaxAge() {
-        
-       Authentication.CurrentUser.SetMaxAge((int)maximaleLeeftijd.SelectedItem, Database.ReleaseConnection);
 
-    }
+    /// <summary>
+    /// Delete the account button
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The event args</param>
     private async void DeleteAccountButton(object sender, EventArgs e) {
-
-        bool displayresult = await DisplayAlert("", "Weet u zeker dat u uw account wilt verwijderen?", "Ja", "Nee");
-        if (displayresult) {
-            Authentication.CurrentUser.DeleteUser(Database.ReleaseConnection);
-            await Navigation.PushAsync(new MainPage());
-        }
-
+        if (!await DisplayAlert("", "Weet u zeker dat u uw account wilt verwijderen?", "Ja", "Nee")) return;
+        UserController.DeleteAccount();
+        await Navigation.PushAsync(new MainPage());
     }
 
-    private async void logoutBtn(object sender, EventArgs e)
-    {
-        bool displayresult = await DisplayAlert("", "U wordt uitgelogd", "Ok", "Annuleren");
-        if (displayresult)
-        {
-            SecureStorage.Default.Remove("Email");
-            SecureStorage.Remove("Email");
-            SecureStorage.RemoveAll();
-            await Navigation.PushAsync(new StartPage());
-        }
+    /// <summary>
+    /// Logout button
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The event args</param>
+    private async void LogoutButton(object sender, EventArgs e) {
+        if (!await DisplayAlert("", "U wordt uitgelogd", "Ok", "Annuleren")) return;
+        UserController.Logout();
+        await Navigation.PushAsync(new StartPage());
     }
-    //all the data that has been changed will be replaced in the database
-    private void EditDataBtn(object sender, EventArgs e) {
-       
-        try {
-             CheckIfMinAgeLowerThenMax();
-            if (CheckIfMinAgeLowerThenMax() == false) {
 
-                foutLeeftijd.IsVisible = true;
-
-            } else {
-               
-                SetLocation();
-                SetMinAge();
-                SetMaxAge();
-                foutLeeftijd.IsVisible = false;
-                DisplayAlert("Melding", "Er zijn succesvol gegevens aangepast", "OK");
-            }
+    
+    /// <summary>
+    /// Edit data button, this will set the preferences the data of the user
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The event args</param>
+    private void EditDataButton(object sender, EventArgs e) {
+        if ((int)minimaleLeeftijd.SelectedItem > (int)maximaleLeeftijd.SelectedItem) {
+            foutLeeftijd.IsVisible = true;
+        } else {
+            UserController.SetPreference((int)minimaleLeeftijd.SelectedItem, (int)maximaleLeeftijd.SelectedItem, Location.SelectedItem.ToString());
+            foutLeeftijd.IsVisible = false;
+            DisplayAlert("Melding", "Er zijn succesvol gegevens aangepast", "OK");
+        }
             
-        } catch {
-
-           DisplayAlert("Melding", "Er zijn geen gegevens aangepast", "OK");
-        }
     }
-    // shows a popup where you can edit your password
+
+    /// <summary>
+    /// The edit password button
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The event args</param>
     private void EditPasswordBtn(object sender, EventArgs e) {
-        
-        var popup = new EditPasswordPopUp();
-        this.ShowPopup(popup);
+        this.ShowPopup(new EditPasswordPopUp());
     }
 
+    /// <summary>
+    /// The profile clicked button, pushed new Profile page
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The eventargs</param>
     private void MyProfile_Clicked(object sender, EventArgs e) {
         ProfileChange myProfile = new ProfileChange();
         
@@ -150,6 +85,11 @@ public partial class SettingsPage {
 
     }
 
+    /// <summary>
+    /// The back button, takes the user to the previous page
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The event args</param>
     private void Backbutton_Clicked(object sender, EventArgs e) {
         switch (OriginPage) {
             case "matchpage":
@@ -168,6 +108,11 @@ public partial class SettingsPage {
 
     }
 
+    /// <summary>
+    /// The chat button in the header, pushes a new ChatsViewPage
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The eventargs</param>
     private void ChatButton_Clicked(object sender, EventArgs e) {
         ChatsViewPage chatsViews = new ChatsViewPage {
             OriginPage = PageName
@@ -176,6 +121,11 @@ public partial class SettingsPage {
 
     }
 
+    /// <summary>
+    /// The match button in the header, pushes a new MatchPage
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The object</param>
     private void matchPage_Clicked(object sender, EventArgs e) {
         MatchPage page = new MatchPage {
             OriginPage = PageName

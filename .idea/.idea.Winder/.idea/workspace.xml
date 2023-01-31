@@ -7,121 +7,38 @@
     <projectFile kind="XamarinMacOS">Winder/Winder.csproj</projectFile>
     <projectFile pubXmlPath="Winder/Properties/PublishProfiles/FolderProfile net7.0-maccatalyst.pubxml">Winder/Winder.csproj</projectFile>
   </component>
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Controller/UserController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DataModel/InterestsModel.cs" afterDir="false" />
+    <list default="true" id="7f76b6aa-328d-4379-ada0-068e259b500b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/Authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Authentication.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Database.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ChatPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ChatPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ChatsViewPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ChatsViewPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ForgotPasswordPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ForgotPasswordPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/LoginPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/LoginPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/SwipeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/SwipeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/RegisterPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/RegisterPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/SettingsPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/SettingsPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/editPasswordPopUp.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/editPasswordPopUp.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="US-Chatten" />
-      </map>
-    </option>
-  </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Users/jeroendenotter/Documents/6. GitHub/Winder/DataModel/User.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/82c9bb5e221a173c1fdea3a72e50e7c731b51a6a7d3bc7e38ab8f5fb42194b7/Array.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/jeroendenotter/Documents/6. GitHub/Winder/DataModel/User.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/jeroendenotter/Documents/6. GitHub/Winder/DataModel/User.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Winder/Platforms/Windows/App.xaml.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
-  <component name="InvalidFacetManager">
-    <ignored-facets>
-      <facet id="Winder/invalid/Android Facet - Winder" />
-    </ignored-facets>
-  </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
-  <component name="ProjectId" id="2IXh0gUq4gGfG1ZtGTJa2sn2Fwy" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Device#class com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSSimulatorKind#com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSDevicesProvider#Xamarin.iOS: Winder&quot;: &quot;iPhone 14&quot;,
-    &quot;DeviceKind#com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSDevicesProvider&quot;: &quot;Simulator&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;rider.run.widget.enabled.cache&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlserver&quot;
-    ],
-    &quot;rider.external.source.directories&quot;: [
-      &quot;/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
-      &quot;/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
-      &quot;/Users/jeroendenotter/.local/share/Symbols/src&quot;
-    ]
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "rider.run.widget.enabled.cache": "false"
   }
-}</component>
-  <component name="RunManager" selected="Xamarin.Mac.Winder">
-    <configuration name="WorkAround" type="RunExe" factoryName=".NET Executable">
-      <option name="EXE_PATH" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64/Winder.app/Contents/MacOS/Winder" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64/Winder.app/Contents/MacOS" />
-      <option name="PASS_PARENT_ENVS" value="1" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      <option name="USE_MONO" value="0" />
-      <option name="RUNTIME_ARGUMENTS" value="" />
-      <option name="RUNTIME_TYPE" value="coreclr" />
-      <method v="2">
-        <option name="Build" default="false" projectName="Winder" projectPath="file://$PROJECT_DIR$/Winder/Winder.csproj" />
-        <option name="Build Solution" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Windows" type="UwpProject" factoryName="UWP">
-      <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <method v="2">
-        <option name="Build" />
-      </method>
-    </configuration>
-    <configuration name="Winder" type="XamarinIOSProject" factoryName="Xamarin.iOS">
-      <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="IS_PASS_PARENT_ENVS" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Winder" type="XamarinMacProject" factoryName="Xamarin.Mac">
+}]]></component>
+  <component name="RunManager">
+    <configuration name="MacOS" type="XamarinMacProject" factoryName="Xamarin.Mac">
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64" />
@@ -130,114 +47,11 @@
         <option name="Build" />
       </method>
     </configuration>
-    <list>
-      <item itemvalue=".NET Executable.WorkAround" />
-      <item itemvalue="UWP.Windows" />
-      <item itemvalue="Xamarin.iOS.Winder" />
-      <item itemvalue="Xamarin.Mac.Winder" />
-    </list>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="" />
-      <created>1670333620927</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1670333620927</updated>
-      <workItem from="1670333630372" duration="1909000" />
-      <workItem from="1670336283276" duration="336000" />
-      <workItem from="1670336668242" duration="640000" />
-      <workItem from="1670404561422" duration="241000" />
-      <workItem from="1670411575246" duration="1034000" />
-      <workItem from="1670503808689" duration="64000" />
-      <workItem from="1670503908227" duration="500000" />
-      <workItem from="1670510576115" duration="159000" />
-      <workItem from="1670578793215" duration="2918000" />
-      <workItem from="1670585417117" duration="2630000" />
-      <workItem from="1670589797915" duration="872000" />
-      <workItem from="1671032462832" duration="1572000" />
-      <workItem from="1671098314429" duration="4647000" />
-      <workItem from="1671103011991" duration="3494000" />
-      <workItem from="1671117100244" duration="2272000" />
-      <workItem from="1671125366467" duration="3225000" />
-      <workItem from="1671182617452" duration="1997000" />
-      <workItem from="1671184820548" duration="6045000" />
-      <workItem from="1671198590206" duration="141000" />
-      <workItem from="1671199029651" duration="588000" />
-      <workItem from="1671713624549" duration="35000" />
-      <workItem from="1671713673979" duration="86000" />
-      <workItem from="1671713774162" duration="676000" />
-      <workItem from="1671721717923" duration="3743000" />
-      <workItem from="1671804217285" duration="737000" />
-      <workItem from="1672071684016" duration="429000" />
-      <workItem from="1673095320489" duration="747000" />
-      <workItem from="1673096267855" duration="1666000" />
-      <workItem from="1673098503762" duration="384000" />
-      <workItem from="1673264078545" duration="77000" />
-      <workItem from="1673273354614" duration="286000" />
-      <workItem from="1673299622616" duration="199000" />
-      <workItem from="1673395992147" duration="480000" />
-      <workItem from="1673453991471" duration="1470000" />
-      <workItem from="1674909371920" duration="16000" />
-      <workItem from="1674909397327" duration="4580000" />
-    </task>
-    <task id="LOCAL-00001" summary="Fixed currentUser">
-      <created>1670416017951</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1670416017951</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="UnitTestsCoverage.Settings">
-    <option name="coveragePercentColumnWidth" value="150" />
-    <option name="sortOrder" value="DESCENDING" />
-    <option name="sortedColumn" value="1" />
-    <option name="symbolColumnWidth" value="335" />
-    <coverage-tree-state>
-      <expand>
-        <path>
-          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-        </path>
-        <path>
-          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-        </path>
-        <path>
-          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="(1.0.0.0, net7.0) 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-        </path>
-        <path>
-          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="(1.0.0.0, net7.0) 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-        </path>
-        <path>
-          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 58% 646/1533" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="(1.0.0.0, net7.0) 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Unittest 74% 71/277" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="TestDatabase 71% 71/244" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-        </path>
-      </expand>
-      <select />
-    </coverage-tree-state>
-  </component>
-  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
-  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -249,23 +63,7 @@
       </map>
     </option>
   </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Fixed currentUser" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed currentUser" />
-  </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="DotNet Exception Breakpoints">
-          <properties exception="System.NullReferenceException" isInternal="false" displayValue="NullReferenceException" namespaceName="System">
-            <option name="internal" value="false" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Frame#DataModel.Database.UpdatePassword" memberName="authentication" />

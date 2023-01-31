@@ -13,7 +13,6 @@ public partial class ForgotPasswordPage {
     //Button to send Email
     private void SendEmailButton(object sender, EventArgs e) {
         
-        Authentication auth = new Authentication();
         string email = Emailadres.Text;
         
         //Check if Email exists
@@ -47,7 +46,6 @@ public partial class ForgotPasswordPage {
 
     }
     private void ResetPasswordButton(object sender, EventArgs e) {
-        Authentication auth = new Authentication();
         string email = Emailadres.Text;
         
         string authenticationText = Authenticatiecode.Text;

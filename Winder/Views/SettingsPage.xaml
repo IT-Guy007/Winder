@@ -245,7 +245,7 @@
             <Button
                 Grid.Column="1"
                 BackgroundColor="#D9D9D9"
-                Clicked="logoutBtn"
+                Clicked="LogoutButton"
                 HeightRequest="60"
                 Text="Uitloggen"
                 TextColor="Black" />
@@ -253,7 +253,7 @@
             <Button
                 Grid.Column="2"
                 BackgroundColor="#D9D9D9"
-                Clicked="EditDataBtn"
+                Clicked="EditDataButton"
                 HeightRequest="60"
                 Text="Wijzigingen opslaan"
                 TextColor="Black" />

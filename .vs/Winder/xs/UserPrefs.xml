@@ -1,30 +1,25 @@
 ﻿<Properties StartupConfiguration="{041FB9A6-18D8-4614-8980-D447BBEA2A7C}|Default">
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Winder PreferredExecutionTarget="MyAppleMacCatalystID" />
-  <Xamarin.Addins.Core.Project ActiveDebugTarget="MyAppleMacCatalystID" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Winder/MatchPage.xaml.cs">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../../.nuget/packages/communitytoolkit.maui/4.0.0/ReadMe.txt">
     <Files>
-      <File FileName="Winder/MatchPage.xaml.cs" Line="182" Column="53" />
-      <File FileName="DataModel/Database.cs" Line="966" Column="1" />
+      <File FileName="../../../.nuget/packages/communitytoolkit.maui/4.0.0/readme.txt" Line="29" Column="3" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Winder" expanded="True">
+          <Node name="Winder" expanded="True" selected="True">
             <Node name="DataModel" expanded="True" />
-            <Node name="Winder" expanded="True">
-              <Node name="MatchPage.xaml" expanded="True">
-                <Node name="MatchPage.xaml.cs" selected="True" />
-              </Node>
-            </Node>
+            <Node name="Winder" expanded="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Winder PreferredExecutionTarget="MyAppleMacCatalystID" />
+  <Xamarin.Addins.Core.Project ActiveDebugTarget="MyAppleMacCatalystID" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
