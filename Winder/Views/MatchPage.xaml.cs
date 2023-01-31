@@ -24,21 +24,10 @@ public partial class MatchPage {
     public MatchPage() {
         //Gets the controller
         ProfileQueueController = new ProfileQueueController(Authentication.CurrentUser,Database.ReleaseConnection);
-        //Set first profile
-        if (ProfileQueueController.ProfileQueue.GetCount() > 0) {
-            try {
-                ProfileQueueController.NextProfile(Database.ReleaseConnection);
 
-            } catch (Exception e) {
-                
-                //No profiles found
-                Console.WriteLine("Error dequeuing profile: " + e);
-                Console.WriteLine(e.StackTrace);
-            }
-        } else {
-            ProfileQueueController.ProfileQueue.Clear();
-        }
-        
+        //Set first profile
+        ProfileQueueController.NextProfile(Database.ReleaseConnection);
+
         //Set content
         Initialize();
     }
@@ -167,6 +156,8 @@ public partial class MatchPage {
 
             currentImage.WidthRequest = 600;
             currentImage.HeightRequest = 600;
+
+            currentImage.Source = ImageSource.FromStream(() => new MemoryStream(ProfileQueueController.CurrentProfile.profileImages[SelectedImage]));
 
             currentImage.Clicked += (_, _) => {
                 if (SelectedImage < ProfileQueueController.CurrentProfile.profileImages.Count(x => x != null) - 1) {

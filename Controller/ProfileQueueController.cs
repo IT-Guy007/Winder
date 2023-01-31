@@ -33,7 +33,7 @@ public class ProfileQueueController {
     public async void CheckIfQueueNeedsMoreProfiles(SqlConnection connection) {
         if (ProfileQueue.GetCount() < AmountOfProfilesInQueue && !IsGettingProfiles) {
             IsGettingProfiles = true;
-            await GetProfilesTask(connection);
+            GetProfilesTask(connection);
             IsGettingProfiles = false;
         }
     }
@@ -267,6 +267,7 @@ public class ProfileQueueController {
 
         } else {
             ProfileQueue.Clear();
+            CurrentProfile = null;
         }
 
     }

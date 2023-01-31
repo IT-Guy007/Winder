@@ -50,7 +50,7 @@ public class SwipeController {
         command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
 
         try {
-            command.ExecuteReader();
+            command.ExecuteNonQuery();
         } catch (SqlException se) {
             Console.WriteLine("Error inserting like in database");
             Console.WriteLine(se.ToString());
@@ -73,7 +73,7 @@ public class SwipeController {
         command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
 
         try {
-            command.ExecuteReader();
+            command.ExecuteNonQuery();
         } catch (SqlException se) {
             Console.WriteLine("Error inserting dislike in database");
             Console.WriteLine(se.ToString());
@@ -95,7 +95,7 @@ public class SwipeController {
         command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
 
         try {
-            command.ExecuteReader();
+            command.ExecuteNonQuery();
         } catch (SqlException se) {
             Console.WriteLine("Error inserting match in database");
             Console.WriteLine(se.ToString());
@@ -117,7 +117,7 @@ public class SwipeController {
         command.Parameters.AddWithValue("@emailCurrentUser", emailCurrentUser);
 
         try {
-            command.ExecuteReader();
+            command.ExecuteNonQuery();
 
         } catch (SqlException se) {
             Console.WriteLine("Error deleting like on match in database");
