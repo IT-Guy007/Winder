@@ -12,6 +12,7 @@ public class SwipeController {
     /// <param name="emailLikedPerson">email of the likedUser</param>
     /// <param name="connection">The databaseconnection</param>
     /// <returns></returns>
+    SqlDataReader reader = null;
     public bool CheckMatch(string emailCurrentUser, string emailLikedPerson, SqlConnection connection) {
 
         SqlCommand command = new SqlCommand("SELECT * FROM Winder.Winder.[Liked] WHERE person = @emailLikedPerson AND likedPerson = @emailCurrentUser AND liked = 1", connection);
@@ -19,7 +20,7 @@ public class SwipeController {
         command.Parameters.AddWithValue("@emailCurrentUser", emailCurrentUser);
 
         try {
-            SqlDataReader reader = command.ExecuteReader();
+            reader = command.ExecuteReader();
 
             reader.Read();
             return reader.HasRows;
@@ -30,6 +31,8 @@ public class SwipeController {
             Console.WriteLine(se.StackTrace);
             return false;
 
+        } finally  {
+            if (reader != null) reader.Close();
         }
     }
 

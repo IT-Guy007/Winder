@@ -263,7 +263,7 @@ public class ProfileQueueController {
 
        CheckIfQueueNeedsMoreProfiles(connection);
         if (ProfileQueue.GetCount() != 0) {
-            ProfileQueue.GetNextProfile();
+            CurrentProfile = ProfileQueue.GetNextProfile();
 
         } else {
             ProfileQueue.Clear();
@@ -272,17 +272,17 @@ public class ProfileQueueController {
     }
     
     public void OnLike(SqlConnection connection) {
-        if(SwipeController.CheckMatch(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection)) {
-            SwipeController.NewMatch(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection);
-            SwipeController.DeleteLike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection);
+        if(SwipeController.CheckMatch(Authentication.CurrentUser.Email, CurrentProfile.user.Email, connection)) {
+            SwipeController.NewMatch(Authentication.CurrentUser.Email, CurrentProfile.user.Email, connection);
+            SwipeController.DeleteLike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, connection);
         } else {
-            SwipeController.NewLike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection);
+            SwipeController.NewLike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, connection);
         }
         NextProfile(connection);
     }
 
     public void OnDislike(SqlConnection connection) {
-        SwipeController.NewDislike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection);
+        SwipeController.NewDislike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, connection);
         NextProfile(connection);
     }
     

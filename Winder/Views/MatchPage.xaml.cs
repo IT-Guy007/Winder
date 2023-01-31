@@ -353,7 +353,6 @@ public partial class MatchPage {
     }
     
     
-
     /// <summary>
     /// The popup that there is a match
     /// </summary>

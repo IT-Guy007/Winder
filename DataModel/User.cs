@@ -66,13 +66,14 @@ public class User {
                 
             }
 
-            LoadInterestsFromDatabaseInForUser(connection);
+            
         } catch (SqlException e) {
             Console.WriteLine("Error retrieving user from database");
             Console.WriteLine(e.ToString());
             Console.WriteLine(e.StackTrace);
         } finally  {
             if (reader != null) reader.Close();
+            LoadInterestsFromDatabaseInForUser(connection);
         }
 
         return this;
@@ -264,8 +265,9 @@ public class User {
         query.Parameters.AddWithValue("@Email", email);
 
         //Execute query
+        SqlDataReader reader = null;
         try {
-            SqlDataReader reader = query.ExecuteReader();
+             reader = query.ExecuteReader();
 
             Console.WriteLine("Checking login");
             while (reader.Read()) {
@@ -281,13 +283,12 @@ public class User {
                     }
                 }
             }
-            reader.Close();
         } catch (SqlException se) {
             Console.WriteLine("Error deleting user");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
-            connection.Close();
-            connection.Open();
+        } finally  {
+            if (reader != null) reader.Close();
         }
         
         GetUserFromDatabase(email, connection);
