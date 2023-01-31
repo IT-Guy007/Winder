@@ -5,6 +5,7 @@ namespace DataModel;
 
 public class ProfileQueueController {
     public ProfileQueue ProfileQueue;
+    public SwipeController SwipeController;
     
     public Profile CurrentProfile { get; private set; }
     private bool IsGettingProfiles { get; set; }
@@ -21,6 +22,7 @@ public class ProfileQueueController {
     
     public ProfileQueueController(User user, SqlConnection connection) {
         ProfileQueue = new ProfileQueue();
+        SwipeController = new SwipeController();
         User = user;
         CheckIfQueueNeedsMoreProfiles(connection);
     }
@@ -250,6 +252,34 @@ public class ProfileQueueController {
         }
 
         return result;
+    }
+    
+    public void NextProfile() {
+
+       CheckIfQueueNeedsMoreProfiles(Database.ReleaseConnection);
+        if (ProfileQueue.GetCount() != 0) {
+            ProfileQueue.GetNextProfile();
+
+
+        } else {
+            ProfileQueue.Clear();
+        }
+
+    }
+    
+    public void OnLike() {
+        if(SwipeController.CheckMatch(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection)) {
+            SwipeController.NewMatch(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection);
+            SwipeController.DeleteLike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection);
+        } else {
+            SwipeController.NewLike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection);
+        }
+        NextProfile();
+    }
+
+    public void OnDislike() {
+        SwipeController.NewDislike(Authentication.CurrentUser.Email, CurrentProfile.user.Email, Database.ReleaseConnection);
+        NextProfile();
     }
     
 }

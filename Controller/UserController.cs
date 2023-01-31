@@ -129,4 +129,34 @@ public class UserController {
         
     }
     
+    public byte[] ScaleImage(byte[] bytes, int width, int height) {
+#if WINDOWS
+    using (MemoryStream ms = new MemoryStream(bytes)) {
+        using (Bitmap image = new Bitmap(ms)) {
+            Bitmap resizedImage = new Bitmap(width, height);
+            using (Graphics gfx = Graphics.FromImage(resizedImage))
+            {
+                gfx.DrawImage(image, 0, 0, width, height);
+            }
+
+            using (MemoryStream output = new MemoryStream())
+            {
+                resizedImage.Save(output, image.RawFormat);
+                return output.ToArray();
+            }
+        }
+    }
+#else
+        return bytes;
+#endif
+    }
+    
+    /// <summary>
+    /// Man of vrouw converter naar integer
+    /// </summary>
+    /// <returns>Integer of man of vrouw</returns>
+    public int GetPreferenceFromUser(string preference) {
+        return preference == "Man" ? 1 : 2;
+    }
+
 }

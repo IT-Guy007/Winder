@@ -5,10 +5,8 @@ using Image = Microsoft.Maui.Controls.Image;
 
 namespace Winder;
 
-public partial class MatchPage
-{
-
-    private SwipeController SwipeController;
+public partial class MatchPage {
+    
     public string OriginPage;
     private const string PageName = "matchpage";
     private const string BackbuttonImage = "backbutton.png";
@@ -16,7 +14,7 @@ public partial class MatchPage
     
     private StackLayout verticalStackLayout;
 
-    private int SelectedImage = 0;
+    private int SelectedImage;
     private readonly int swipes = 0;
 
     private ProfileQueueController ProfileQueueController;
@@ -26,7 +24,6 @@ public partial class MatchPage
     public MatchPage() {
         //Gets the controller
         ProfileQueueController = new ProfileQueueController(Authentication.CurrentUser,Database.ReleaseConnection);
-        SwipeController = new SwipeController();
         //Set first profile
         if (ProfileQueueController.ProfileQueue.GetCount() > 0) {
             try {
@@ -161,8 +158,7 @@ public partial class MatchPage
             var label = new Label { Text = "No more profiles to match with for now", FontSize = 20, HorizontalOptions = LayoutOptions.Center };
             verticalStackLayout.Add(label);
 
-        }
-        else {
+        } else {
             StackLayout infoStackLayout = new StackLayout { Orientation = StackOrientation.Vertical };
 
 
@@ -305,8 +301,7 @@ public partial class MatchPage
     }
     
     private void BackButton_Clicked(object sender, EventArgs e) {
-        switch (OriginPage)
-        {
+        switch (OriginPage) {
             case "profilepage":
                 Navigation.PushAsync(new ProfileChange());
                 break;
@@ -317,9 +312,12 @@ public partial class MatchPage
 
     }
 
-    // my profile button clicked
-    private void MyProfile_Clicked(object sender, EventArgs e)
-    {
+    /// <summary>
+    /// The back button clicked in the header
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The event args</param>
+    private void MyProfile_Clicked(object sender, EventArgs e) {
         //declares origin page, in the my profile page
         ProfileChange myProfile = new ProfileChange();
         BackButtonVisible = true;
@@ -327,7 +325,11 @@ public partial class MatchPage
         Navigation.PushAsync(myProfile);
     }
     
-    // matches button clicked
+    /// <summary>
+    /// Chat button clicked in the header
+    /// </summary>
+    /// <param name="obj">The sender</param>
+    /// <param name="e">The event args</param>
     private void ChatButton_Clicked(object obj, EventArgs e) {
         
         ChatsViewPage chatsViews = new ChatsViewPage();
@@ -337,6 +339,11 @@ public partial class MatchPage
         Navigation.PushAsync(chatsViews);
     }
 
+    /// <summary>
+    /// Settings button clicked in the header
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The event args</param>
     private void Settings_Clicked(object sender, EventArgs e)
     {
         SettingsPage settingsPage = new SettingsPage();
@@ -345,32 +352,21 @@ public partial class MatchPage
         Navigation.PushAsync(settingsPage);
     }
     
-    private void NextProfile() {
+    
 
-        ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database.ReleaseConnection);
-        if (ProfileQueueController.ProfileQueue.GetCount() != 0) {
-            ProfileQueueController.ProfileQueue.GetNextProfile();
-
-            SelectedImage = 0;
-            Initialize();
-
-        } else {
-            ProfileQueueController.ProfileQueue.Clear();
-            Initialize();
-        }
-
-        if (ProfileQueueController.ProfileQueue.GetCount() <= 0)
-        {
-            Navigation.PushAsync(new MatchPage());
-        }
-    }
-
-    //Give match popup
+    /// <summary>
+    /// The popup that there is a match
+    /// </summary>
     private async void MatchPopup()
     {
         await DisplayAlert("Match", "You have a match", "OK");
     }
     
+    /// <summary>
+    /// The swipe gesture recognizer is triggered
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The objecy</param>
     private void OnSwipe(object sender, SwipedEventArgs e) {
         switch (e.Direction) {
             case SwipeDirection.Right:
@@ -386,28 +382,28 @@ public partial class MatchPage
         }
     }
 
-    private void OnLike(object sender, EventArgs e)
-    {
-        string emailCurrentUser = Authentication.CurrentUser.Email;
-        string emailLikedUser = ProfileQueueController.CurrentProfile.user.Email;
-
-        if(SwipeController.CheckMatch(emailCurrentUser, emailLikedUser, Database.ReleaseConnection)) {
-            SwipeController.NewMatch(emailCurrentUser, emailLikedUser, Database.ReleaseConnection);
-            SwipeController.DeleteLike(emailCurrentUser, emailLikedUser, Database.ReleaseConnection);
+    /// <summary>
+    /// The like button is clicked
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The event args</param>
+    private void OnLike(object sender, EventArgs e) {
+        if (ProfileQueueController.SwipeController.CheckMatch(Authentication.CurrentUser.Email, ProfileQueueController.CurrentProfile.user.Email, Database.ReleaseConnection)) {
             MatchPopup();
-        } else {
-            SwipeController.NewLike(emailCurrentUser, emailLikedUser, Database.ReleaseConnection);
         }
-        ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database.ReleaseConnection);
-        NextProfile();
+        ProfileQueueController.OnLike();
+        SelectedImage = 0;
+        Initialize();
     }
 
+    /// <summary>
+    /// The dislike button is clicked
+    /// </summary>
+    /// <param name="sender">The sender</param>
+    /// <param name="e">The event args</param>
     private void OnDislike(object sender, EventArgs e) {
-        string emailCurrentUser = Authentication.CurrentUser.Email;
-        string emaildDislikedUser = ProfileQueueController.CurrentProfile.user.Email;
-
-        SwipeController.NewDislike(emailCurrentUser, emaildDislikedUser, Database.ReleaseConnection);
-        ProfileQueueController.CheckIfQueueNeedsMoreProfiles(Database.ReleaseConnection);
-        NextProfile();
+        ProfileQueueController.OnDislike();
+        SelectedImage = 0;
+        Initialize();
     }
 }

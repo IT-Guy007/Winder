@@ -642,6 +642,16 @@ public class User {
             Console.WriteLine(e.StackTrace);
         }
     }
+    
+    public void InsertAllPhotosInDatabase(byte[][] ProfilePictures, SqlConnection connection) {
+        if (ProfilePictures != null) {
+            foreach (byte[] bytes in ProfilePictures) {
+                if (bytes != null) {
+                    InsertPictureInDatabase(bytes, connection);
+                }
+            }
+        }
+    }
 
 }
 
