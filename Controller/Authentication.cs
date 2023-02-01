@@ -1,4 +1,6 @@
-namespace DataModel;
+using DataModel;
+
+namespace Controller;
 
 
 public static class Authentication {

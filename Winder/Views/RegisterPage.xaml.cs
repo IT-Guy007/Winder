@@ -1,4 +1,5 @@
-﻿using DataModel;
+﻿using Controller;
+using DataModel;
 using MAUI;
 
 namespace Winder;
@@ -18,8 +19,6 @@ public partial class RegisterPage {
     
     private readonly List<string> interestsList;
     private readonly List<string> chosenInterestsList;
-
-
 
     public RegisterPage() {
         interestsList = new List<string>();

@@ -1,6 +1,6 @@
 using System.Data.SqlClient;
 
-namespace DataModel;
+namespace Controller;
 
 public static  class Database {
     

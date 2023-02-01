@@ -22,7 +22,7 @@ public class ProfileQueue {
     public Profile GetNextProfile() {
         try {
             return ProfileItems.Dequeue();
-        } catch(Exception e) {
+        } catch(Exception) {
             Console.WriteLine("No more profiles in queue");
             return null;
         }

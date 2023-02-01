@@ -1,6 +1,6 @@
 using System.Data.SqlClient;
 
-namespace DataModel;
+namespace Controller;
 
 public class SwipeController {
 
@@ -42,7 +42,7 @@ public class SwipeController {
     /// <param name="emailCurrentUser">Email of the current user</param>
     /// <param name="emailLikedPerson">Email of the liked user</param>
     /// <param name="connection">The database connection</param>
-    public void NewLike(string emailCurrentUser, string emailLikedPerson,SqlConnection connection) {
+    public void NewLike(string emailCurrentUser, string emailLikedPerson, SqlConnection connection) {
         //There is no match yet
         SqlCommand command = new SqlCommand("INSERT INTO Winder.Winder.[Liked] (person, likedPerson, liked) " +
                                             "VALUES (@currentUser, @likedUser, 1)", connection);
