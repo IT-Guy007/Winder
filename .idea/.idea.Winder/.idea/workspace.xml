@@ -8,11 +8,7 @@
     <projectFile pubXmlPath="Winder/Properties/PublishProfiles/FolderProfile net7.0-maccatalyst.pubxml">Winder/Winder.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f76b6aa-328d-4379-ada0-068e259b500b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/RegisterPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/RegisterPage.xaml.cs" afterDir="false" />
-    </list>
+    <list default="true" id="7f76b6aa-328d-4379-ada0-068e259b500b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,7 +30,6 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Winder/Platforms/Windows/App.xaml.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a645e44f75643f7f28fd898e1a63637571b24ee0c1937ce879de58e92b/AnyAll.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -66,16 +61,27 @@
     ]
   }
 }</component>
-  <component name="RunManager">
-    <configuration name="MacOS" type="XamarinMacProject" factoryName="Xamarin.Mac">
+  <component name="RunManager" selected="UWP.Unnamed">
+    <configuration name="Unnamed" type="UwpProject" factoryName="UWP">
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
       <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64" />
-      <option name="PASS_PARENT_ENVS_MAC" value="1" />
       <method v="2">
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="MacOS" type="XamarinMacProject" factoryName="Xamarin.Mac">
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="UWP.Unnamed" />
+      <item itemvalue="Xamarin.Mac.MacOS" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
