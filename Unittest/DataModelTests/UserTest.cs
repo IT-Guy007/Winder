@@ -1,5 +1,4 @@
-using System.Data.SqlClient;
-using DataModel;
+using Controller;
 using NUnit.Framework;
 
 namespace Unittest.DataModelTests;
