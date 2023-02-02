@@ -12,7 +12,7 @@ public partial class ChatsViewPage {
     public ChatsViewPage() {
         InitializeComponent();
         MatchModel = new MatchModel(Authentication.CurrentUser.GetMatchedStudentsFromUser(Database.ReleaseConnection));
-        ListOfMatches.ItemsSource = MatchModel.GetUsers();
+        ListOfMatches.ItemsSource = MatchModel.Matches.GetUsers();
     }
     
     private void Backbutton_Clicked(object sender, EventArgs e) {

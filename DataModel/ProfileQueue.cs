@@ -50,17 +50,14 @@ public class ProfileQueue {
     public void Clear() {
         ProfileItems.Clear();
     }
-    
+
     /// <summary>
-    /// Remove specific profile from queue
+    /// Returns true if the queue contains the email
     /// </summary>
-    /// <param name="profile">The profile to remove from the queue</param>
-    public void Remove(Profile profile) {
-        ProfileItems = new Queue<Profile>(ProfileItems.Where(p => p.user.Email != profile.user.Email));
-    }
-    
+    /// <param name="email">The email to check for</param>
+    /// <returns>The integer if the email exists</returns>
     public Boolean Contains(string email) {
-        return ProfileItems.Any(p => p.user.Email == email);
+        return ProfileItems.Any(p => p.User.Email == email);
     }
 
 }
