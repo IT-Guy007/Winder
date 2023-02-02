@@ -8,6 +8,7 @@ public partial class ProfileChange {
     private const string PageName = "profilepage";
 
     private UserController UserController;
+  
 
     private readonly List<string> interests;
     private readonly Color errorColor;
@@ -21,6 +22,7 @@ public partial class ProfileChange {
     private readonly bool gender = true;
     private bool bio = true;
     private bool education = true;
+  
     
 
     /// <summary>
@@ -100,7 +102,7 @@ public partial class ProfileChange {
             Authentication.CurrentUser.UpdateUserDataToDatabase(Database.ReleaseConnection);
             Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database.ReleaseConnection);
             Authentication.CurrentUser.InsertAllPhotosInDatabase(ProfilePictures,Database.ReleaseConnection);
-            RegisterInterestsInDatabase();
+            Database.RegisterInterestsInDatabase(interests);
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             ClearTextFromEntries();
             UpdatePlaceholders();
@@ -108,7 +110,7 @@ public partial class ProfileChange {
             DisplayAlert("Er is iets verkeerd gegaan...", "Vul alle gegevens in", "OK");
         }
     }
-
+    
     //Updates the placeholders value after a change has been made
     private void UpdatePlaceholders() {
 
@@ -129,13 +131,7 @@ public partial class ProfileChange {
         Education.Text = "";
     }
 
-    
-    //Adds all interests to users list of interests
-    private void RegisterInterestsInDatabase() {
-        foreach (var interest in interests) {
-            Authentication.CurrentUser.SetInterestInDatabase(interest, Database.ReleaseConnection);
-        }
-    }
+
     //Update the users data 
     private void UpdateUserPropertiesPrepareForUpdateQuery() {
         if (Authentication.CurrentUser.FirstName != Firstname.Text && !string.IsNullOrEmpty(Firstname.Text)) Authentication.CurrentUser.FirstName = Firstname.Text;
@@ -261,8 +257,7 @@ public partial class ProfileChange {
         Navigation.PushAsync(settings); 
     }
 
-    
-    
+
     private async void OnProfilePictureClicked(object sender, EventArgs e)
     {
         try
