@@ -8,13 +8,13 @@ public partial class ProfileChange {
     private const string PageName = "profilepage";
 
     private UserController UserController;
-  
+    private DataCheckController DataCheck;
 
     private readonly List<string> interests;
     private readonly Color errorColor;
-    private DataCheckController DataCheck;
+    
     private byte[][] ProfilePictures { get; set;}
-    private bool firstname = true;
+    private bool Firstname = true;
     private bool middleName = true;
     private bool lastname = true;
     private bool birthday = true;
@@ -97,7 +97,7 @@ public partial class ProfileChange {
     
     //Changes the userdata en updates the form
     private void ChangeUserData(object sender, EventArgs e) {
-        if (firstname && middleName && lastname && birthday  && preference && gender && bio && education ) {
+        if (Firstname && middleName && lastname && birthday  && preference && gender && bio && education ) {
             UpdateUserPropertiesPrepareForUpdateQuery();
             Authentication.CurrentUser.UpdateUserDataToDatabase(Database.ReleaseConnection);
             Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database.ReleaseConnection);
@@ -147,11 +147,11 @@ public partial class ProfileChange {
     private void FirstnameTextChanged(object sender, TextChangedEventArgs e) {
         if (!string.IsNullOrWhiteSpace(Firstname.Text)) {
             if (!DataCheck.CheckIfTextIsOnlyLetters(Firstname.Text)) {
-                firstname = false;
+                Firstname = false;
                 lblFirstname.Text = "Voornaam mag alleen letters bevatten";
                 lblFirstname.TextColor = errorColor;
             } else {
-                firstname = true;
+                Firstname = true;
                 lblFirstname.Text = "Voornaam";
                 lblFirstname.TextColor = default;
                 Firstname.Text = Firstname.Text.First().ToString().ToUpper() + Firstname.Text[1..].ToLower();
