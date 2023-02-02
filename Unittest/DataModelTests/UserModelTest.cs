@@ -1,4 +1,4 @@
-using DataModel;
+using Controller;
 using NUnit.Framework;
 
 namespace Unittest.DataModelTests;

@@ -1,5 +1,4 @@
-﻿using DataModel;
-using Winder;
+﻿using Winder;
 
 namespace MAUI;
 
