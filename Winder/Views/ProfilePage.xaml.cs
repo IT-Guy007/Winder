@@ -1,4 +1,5 @@
-﻿using DataModel;
+﻿using Controller;
+using DataModel;
 
 namespace Winder;
 
@@ -10,6 +11,7 @@ public partial class ProfileChange {
 
     private readonly List<string> interests;
     private readonly Color errorColor;
+    private DataCheckController DataCheck;
     private byte[][] ProfilePictures { get; set;}
     private bool firstname = true;
     private bool middleName = true;
@@ -25,6 +27,7 @@ public partial class ProfileChange {
     /// Default constructor, loads the data
     /// </summary>
     public ProfileChange() {
+        DataCheck = new DataCheckController();
         interests = new List<string>();
         errorColor = new Color(255, 243, 5);
         ProfilePictures = new byte[6][];
