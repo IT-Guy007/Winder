@@ -1,7 +1,6 @@
 using CommunityToolkit.Maui.Views;
-using DataModel;
+using Controller;
 using MAUI;
-using Microsoft.Maui.ApplicationModel.Communication;
 
 namespace Winder;
 

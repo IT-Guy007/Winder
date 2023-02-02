@@ -1,7 +1,7 @@
+using DataModel;
 using System.Data.SqlClient;
-using System.Text.RegularExpressions;
 
-namespace DataModel;
+namespace Controller;
 
 public class ProfileQueueController {
     public ProfileQueue ProfileQueue;
