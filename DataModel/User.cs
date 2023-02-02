@@ -574,7 +574,7 @@ public class User {
     /// </summary>
     /// <param name="interest">The interest</param>
     /// <param name="connection">The database connection</param>
-    public void SetInterestInDatabase(string interest, SqlConnection connection) {
+    public void SetInterests(string interest, SqlConnection connection) {
 
         try {
             string query = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
@@ -598,6 +598,12 @@ public class User {
                     InsertPictureInDatabase(bytes, connection);
                 }
             }
+        }
+    }
+
+    public void SetMultipleInterests(List<string> interests, SqlConnection connection) {
+        foreach (var interest in interests) {
+            SetInterests(interest,connection);
         }
     }
 
