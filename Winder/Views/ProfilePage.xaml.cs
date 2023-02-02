@@ -102,7 +102,7 @@ public partial class ProfileChange {
             Authentication.CurrentUser.UpdateUserDataToDatabase(Database.ReleaseConnection);
             Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database.ReleaseConnection);
             Authentication.CurrentUser.InsertAllPhotosInDatabase(ProfilePictures,Database.ReleaseConnection);
-            UserController.RegisterInterestsInDatabase(interests);
+            Authentication.CurrentUser.SetMultipleInterests(interests, Database.ReleaseConnection);
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             ClearTextFromEntries();
             UpdatePlaceholders();

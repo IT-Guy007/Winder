@@ -155,7 +155,7 @@ public partial class RegisterPage {
             Authentication.CurrentUser = new User().Registration(firstname,middleName,lastname,email,preference,dateOfBirth,gender," ",password,profilePicture,true,school,major,Database.ReleaseConnection);
 
             foreach (string interesse in chosenInterestsList) {
-                Authentication.CurrentUser.SetInterestInDatabase(interesse,Database.ReleaseConnection);
+                Authentication.CurrentUser.SetInterests(interesse,Database.ReleaseConnection);
             }
 
             Navigation.PushAsync(new StartPage());
