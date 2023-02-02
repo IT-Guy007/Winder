@@ -128,6 +128,8 @@ public partial class ProfileChange {
         Bio.Text = "";
         Education.Text = "";
     }
+
+    
     //Adds all interests to users list of interests
     private void RegisterInterestsInDatabase() {
         foreach (var interest in interests) {
@@ -148,7 +150,7 @@ public partial class ProfileChange {
     //Checks if the firstname input is valid
     private void FirstnameTextChanged(object sender, TextChangedEventArgs e) {
         if (!string.IsNullOrWhiteSpace(Firstname.Text)) {
-            if (!CheckIfTextIsOnlyLetters(Firstname.Text)) {
+            if (!DataCheck.CheckIfTextIsOnlyLetters(Firstname.Text)) {
                 firstname = false;
                 lblFirstname.Text = "Voornaam mag alleen letters bevatten";
                 lblFirstname.TextColor = errorColor;
@@ -165,7 +167,7 @@ public partial class ProfileChange {
     {
         if (Middlename.Text != "")
         {
-            if (!CheckIfTextIsOnlyLetters(Middlename.Text))
+            if (!DataCheck.CheckIfTextIsOnlyLetters(Middlename.Text))
             {
                 middleName = false;
                 lblMiddlename.Text = "Tussenvoegsel mag alleen letters bevatten";
@@ -185,7 +187,7 @@ public partial class ProfileChange {
     {
         if (Lastname.Text != "")
         {
-            if (!CheckIfTextIsOnlyLetters(Lastname.Text))
+            if (!DataCheck.CheckIfTextIsOnlyLetters(Lastname.Text))
             {
                 lastname = false;
                 lblLastname.Text = "Achternaam mag alleen letters bevatten";
@@ -205,7 +207,7 @@ public partial class ProfileChange {
     {
         if (Education.Text != "")
         {
-            if (!CheckIfTextIsOnlyLettersAndSpaces(Education.Text))
+            if (!DataCheck.CheckIfTextIsOnlyLettersAndSpaces(Education.Text))
             {
                 education = false;
                 lblEducation.Text = "Opleiding mag alleen letters bevatten";
@@ -259,30 +261,8 @@ public partial class ProfileChange {
         Navigation.PushAsync(settings); 
     }
 
-    //Checks if input has spaces, letters or dashes
-    private bool CheckIfTextIsOnlyLettersAndSpaces(string text)
-    {
-        foreach (char c in text)
-        {
-            if (!char.IsLetter(c) && c != ' ' && c != '-' && c != '\n' && c != '\r')
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-    //Check if input only consists of letters
-    private bool CheckIfTextIsOnlyLetters(string text)
-    {
-        if (text.All(char.IsLetter))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+    
+    
     private async void OnProfilePictureClicked(object sender, EventArgs e)
     {
         try
@@ -367,10 +347,8 @@ public partial class ProfileChange {
 
     //Checks if selected birthdate is a birthdate that is 18 years or older
     private void DateOfBirthSelectedDate(object sender, DateChangedEventArgs e) {
-        DateTime today = DateTime.Today;
-        int age = today.Year - Birthdate.Date.Year;
-        if (Birthdate.Date > today.AddYears(-age)) age--;
-        if (age >= 18) {
+        int age = DataCheck.CalculateAge(Birthdate.Date);
+        if (age >= 18) { 
             birthday = true;
             lblBirthdate.Text = "Leeftijd : " + age;
             lblBirthdate.BackgroundColor = default;
@@ -400,7 +378,7 @@ public partial class ProfileChange {
     {
         if (Bio.Text != "")
         {
-            if (!CheckIfTextIsOnlyLettersAndSpaces(Bio.Text))
+            if (!DataCheck.CheckIfTextIsOnlyLettersAndSpaces(Bio.Text))
             {
                 bio = false;
                 lblBio.Text = "Bio mag alleen letters bevatten";
