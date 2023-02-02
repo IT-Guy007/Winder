@@ -44,7 +44,7 @@ public class User {
         
         SqlDataReader reader = null;
         try {
-            reader = command.ExecuteReader();
+           
             while (reader.Read()) {
                 Email = reader["email"] as string ?? string.Empty;
                 FirstName = reader["firstname"] as string ?? string.Empty;

@@ -9,22 +9,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f76b6aa-328d-4379-ada0-068e259b500b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/DataModel/AlgorithmModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DataModel/MatchList.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/UserPrefs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/UserPrefs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Controller-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Controller-Debug.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/DataModel-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/DataModel-Debug.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Unittest-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Unittest-Debug.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-ios.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-ios.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-maccatalyst.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/xs/project-cache/Winder-Debug-net7.0-maccatalyst.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/ProfileQueueController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/SwipeController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/MatchModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/MatchModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/Profile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/Profile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/ProfileQueue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/ProfileQueue.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ChatsViewPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ChatsViewPage.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/Controller.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Controller.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/DataCheckController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/DataCheckController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +26,6 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Winder/Platforms/Windows/App.xaml.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a645e44f75643f7f28fd898e1a63637571b24ee0c1937ce879de58e92b/AnyAll.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -59,9 +50,9 @@
   },
   "keyToStringList": {
     "rider.external.source.directories": [
-      "/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache",
-      "/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache",
-      "/Users/jeroendenotter/.local/share/Symbols/src"
+      "C:\\Users\\Gebruiker\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\Gebruiker\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\Gebruiker\\AppData\\Local\\Symbols\\src"
     ]
   }
 }]]></component>
@@ -70,7 +61,7 @@
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Winder/bin/Debug/net7.0-maccatalyst/maccatalyst-x64" />
-      <option name="PASS_PARENT_ENVS_MAC" value="1" />
+      <option name="PASS_PARENT_ENVS" value="1" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -87,6 +78,7 @@
       <workItem from="1675194045892" duration="1198000" />
       <workItem from="1675339178673" duration="1660000" />
       <workItem from="1675340950089" duration="5285000" />
+      <workItem from="1675354726445" duration="1066000" />
     </task>
     <servers />
   </component>

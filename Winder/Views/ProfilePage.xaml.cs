@@ -14,7 +14,7 @@ public partial class ProfileChange {
     private readonly Color errorColor;
     
     private byte[][] ProfilePictures { get; set;}
-    private bool Firstname = true;
+    private bool firstname = true;
     private bool middleName = true;
     private bool lastname = true;
     private bool birthday = true;
@@ -97,7 +97,7 @@ public partial class ProfileChange {
     
     //Changes the userdata en updates the form
     private void ChangeUserData(object sender, EventArgs e) {
-        if (Firstname && middleName && lastname && birthday  && preference && gender && bio && education ) {
+        if (firstname && middleName && lastname && birthday  && preference && gender && bio && education ) {
             UpdateUserPropertiesPrepareForUpdateQuery();
             Authentication.CurrentUser.UpdateUserDataToDatabase(Database.ReleaseConnection);
             Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database.ReleaseConnection);
@@ -147,11 +147,11 @@ public partial class ProfileChange {
     private void FirstnameTextChanged(object sender, TextChangedEventArgs e) {
         if (!string.IsNullOrWhiteSpace(Firstname.Text)) {
             if (!DataCheck.CheckIfTextIsOnlyLetters(Firstname.Text)) {
-                Firstname = false;
+                firstname = false;
                 lblFirstname.Text = "Voornaam mag alleen letters bevatten";
                 lblFirstname.TextColor = errorColor;
             } else {
-                Firstname = true;
+                firstname = true;
                 lblFirstname.Text = "Voornaam";
                 lblFirstname.TextColor = default;
                 Firstname.Text = Firstname.Text.First().ToString().ToUpper() + Firstname.Text[1..].ToLower();
