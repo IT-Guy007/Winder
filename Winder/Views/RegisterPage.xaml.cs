@@ -32,7 +32,7 @@ public partial class RegisterPage {
     }
 
 
-    //Gebruiker verwijdert een " interesse " uit de selectie door erop te klikken
+    //user deletes a interest from list by clicking on it
     private void SelectedItemsOfInterests(object sender, EventArgs e) {
         if (Gekozeninteresses.SelectedItem != null) {
             chosenInterestsList.Remove(Gekozeninteresses.SelectedItem.ToString());
@@ -49,7 +49,7 @@ public partial class RegisterPage {
 
     }
 
-    // Voegt geselecteerde items toe aan listbox zodat de gebruiker zijn selectie kan zien
+    // adds selected items to list
     private void OnSelectedItems(object sender, EventArgs e) {
         if (chosenInterestsList.Count() < 5 && Interesses.SelectedItem != null) {
             if (chosenInterestsList.Contains(Interesses.SelectedItem.ToString())) {
@@ -164,7 +164,7 @@ public partial class RegisterPage {
     }
 
 
-    //checkt of waardes naar eisen voldoen en declareert de variabelen
+    //Checks if values are allowed
     private bool RegisterBtnEventCheck() {
         int aantalchecks = 0;
 
@@ -314,7 +314,7 @@ public partial class RegisterPage {
         }
     }
 
-    // maakt gegevens van gebruiker zichtbaar en onzichtbaar
+    // Proceeds the registerform
     private void RegisterBtnEvent(object sender, EventArgs e) {
 
         if (RegisterBtnEventCheck()) {
