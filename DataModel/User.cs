@@ -83,7 +83,7 @@ public class User {
     /// Add's the interests of the user to the interests list
     /// </summary>
     /// <param name="connection"></param>
-    public void LoadInterestsFromDatabaseInForUser(SqlConnection connection) {
+    private void LoadInterestsFromDatabaseInForUser(SqlConnection connection) {
         string query = "SELECT * FROM Winder.Winder.[userHasInterest] WHERE UID = @Email;";
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@Email", Email);
@@ -106,6 +106,7 @@ public class User {
         } finally  {
             if (reader != null) reader.Close();
         }
+        
     }
     
     /// <summary>
@@ -249,12 +250,11 @@ public class User {
         UserModel userModel = new UserModel();
         Console.WriteLine("Check login");
         string hashed = new UserModel().HashPassword(password);
-        bool output = false;
 
         if (!email.EndsWith(userModel.EmailEndsWith)) {
             email = email + userModel.EmailEndsWith;
-
         }
+
         if (!email.StartsWith(userModel.EmailStartsWith)) {
             email = userModel.EmailStartsWith + email;
         }
@@ -266,7 +266,7 @@ public class User {
         //Execute query
         SqlDataReader reader = null;
         try {
-             reader = query.ExecuteReader();
+            reader = query.ExecuteReader();
 
             Console.WriteLine("Checking login");
             while (reader.Read()) {
@@ -283,10 +283,10 @@ public class User {
                 }
             }
         } catch (SqlException se) {
-            Console.WriteLine("Error deleting user");
+            Console.WriteLine("Error logging in user");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
-        } finally  {
+        } finally {
             if (reader != null) reader.Close();
         }
         
@@ -319,6 +319,7 @@ public class User {
                     emails.Add(person1);
                 }
             }
+           
         } catch (SqlException se) {
             Console.WriteLine("Error retrieving matches from database");
             Console.WriteLine(se.ToString());
@@ -573,7 +574,7 @@ public class User {
     /// </summary>
     /// <param name="interest">The interest</param>
     /// <param name="connection">The database connection</param>
-    public void SetInterests(string interest, SqlConnection connection) {
+    public void SetInterestInDatabase(string interest, SqlConnection connection) {
 
         try {
             string query = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
@@ -597,12 +598,6 @@ public class User {
                     InsertPictureInDatabase(bytes, connection);
                 }
             }
-        }
-    }
-
-    public void SetMultipleInterests(List<string> interests, SqlConnection connection) {
-        foreach (var interest in interests) {
-            SetInterests(interest,connection);
         }
     }
 

@@ -20,9 +20,18 @@ public partial class LoginPage {
 
     private void Login(object sender, EventArgs e) {
         User loginUser = new User().CheckLogin(Emailadres.Text, Wachtwoord.Text, Database.ReleaseConnection);
+        
         if (!string.IsNullOrEmpty(loginUser.Email)) {
+
+            //Logging in went well
             FoutmeldingInloggen.IsVisible = false;
+
+            //Set the CurrentUser to the user who logged in
+            Authentication.CurrentUser = loginUser;
+
+            //Bring the user to the swipe screen
             Navigation.PushAsync(new MatchPage());
+
         } else {
             FoutmeldingInloggen.IsVisible = true;
         }

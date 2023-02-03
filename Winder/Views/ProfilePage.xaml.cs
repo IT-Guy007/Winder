@@ -102,7 +102,7 @@ public partial class ProfileChange {
             Authentication.CurrentUser.UpdateUserDataToDatabase(Database.ReleaseConnection);
             Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database.ReleaseConnection);
             Authentication.CurrentUser.InsertAllPhotosInDatabase(ProfilePictures,Database.ReleaseConnection);
-            Authentication.CurrentUser.SetMultipleInterests(interests, Database.ReleaseConnection);
+            UserController.RegisterInterestsInDatabase(interests);
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             ClearTextFromEntries();
             UpdatePlaceholders();
@@ -147,9 +147,11 @@ public partial class ProfileChange {
     private void FirstnameTextChanged(object sender, TextChangedEventArgs e) {
         if (!string.IsNullOrWhiteSpace(Firstname.Text)) {
             if (!DataCheck.CheckIfTextIsOnlyLetters(Firstname.Text)) {
+                firstname = false;
                 lblFirstname.Text = "Voornaam mag alleen letters bevatten";
                 lblFirstname.TextColor = errorColor;
             } else {
+                firstname = true;
                 lblFirstname.Text = "Voornaam";
                 lblFirstname.TextColor = default;
                 Firstname.Text = Firstname.Text.First().ToString().ToUpper() + Firstname.Text[1..].ToLower();
