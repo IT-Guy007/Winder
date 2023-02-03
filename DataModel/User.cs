@@ -44,7 +44,7 @@ public class User {
         
         SqlDataReader reader = null;
         try {
-           
+            reader = command.ExecuteReader();
             while (reader.Read()) {
                 Email = reader["email"] as string ?? string.Empty;
                 FirstName = reader["firstname"] as string ?? string.Empty;
@@ -320,13 +320,14 @@ public class User {
                     emails.Add(person1);
                 }
             }
-            emails.ForEach(x => matches.Add(new Match(this,new User().GetUserFromDatabase(x, connection))));
+           
         } catch (SqlException se) {
             Console.WriteLine("Error retrieving matches from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
         } finally  {
             if (reader != null) reader.Close();
+            emails.ForEach(x => matches.Add(new Match(this, new User().GetUserFromDatabase(x, connection))));
         }
         return matches;
     }

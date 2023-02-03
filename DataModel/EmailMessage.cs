@@ -23,18 +23,17 @@ public class EmailMessage {
 
     
     
-    //verstuurd de mail
+    //Sends the mail
     public void SendEmail() {
-        //zet de client op
+        //sets the client
         SmtpClient smtpClient = new SmtpClient(smtpClientGmail) {
             Port = portEmail,
             UseDefaultCredentials = false,
             Credentials = new NetworkCredential(winderEmail, emailCredential),
             EnableSsl = true,
-
         };
 
-        // maakt de mail aan
+        // Makes the email
         MailMessage mailMessage = new MailMessage {
             From = new MailAddress(winderEmail),
             Subject = Subject,
