@@ -250,12 +250,11 @@ public class User {
         UserModel userModel = new UserModel();
         Console.WriteLine("Check login");
         string hashed = new UserModel().HashPassword(password);
-        bool output = false;
 
         if (!email.EndsWith(userModel.EmailEndsWith)) {
             email = email + userModel.EmailEndsWith;
-
         }
+
         if (!email.StartsWith(userModel.EmailStartsWith)) {
             email = userModel.EmailStartsWith + email;
         }
@@ -267,7 +266,7 @@ public class User {
         //Execute query
         SqlDataReader reader = null;
         try {
-             reader = query.ExecuteReader();
+            reader = query.ExecuteReader();
 
             Console.WriteLine("Checking login");
             while (reader.Read()) {
@@ -284,10 +283,10 @@ public class User {
                 }
             }
         } catch (SqlException se) {
-            Console.WriteLine("Error deleting user");
+            Console.WriteLine("Error logging in user");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
-        } finally  {
+        } finally {
             if (reader != null) reader.Close();
         }
         
@@ -320,13 +319,13 @@ public class User {
                     emails.Add(person1);
                 }
             }
-            emails.ForEach(x => matches.Add(new Match(this,new User().GetUserFromDatabase(x, connection))));
         } catch (SqlException se) {
             Console.WriteLine("Error retrieving matches from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
         } finally  {
             if (reader != null) reader.Close();
+            emails.ForEach(x => matches.Add(new Match(this, new User().GetUserFromDatabase(x, connection))));
         }
         return matches;
     }

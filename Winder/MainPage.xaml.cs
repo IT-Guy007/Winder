@@ -51,7 +51,7 @@ public partial class MainPage {
                 await Navigation.PushAsync(new StartPage());
             }
 
-            if (!String.IsNullOrWhiteSpace(Authentication.CurrentUser.Email)) {
+            if (!(Authentication.CurrentUser == null)) {
                 Console.WriteLine("Pushing new MatchPage");
                 await Navigation.PushAsync(new MatchPage());
             }
