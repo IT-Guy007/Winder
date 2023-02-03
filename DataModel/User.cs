@@ -83,7 +83,7 @@ public class User {
     /// Add's the interests of the user to the interests list
     /// </summary>
     /// <param name="connection"></param>
-    private void LoadInterestsFromDatabaseInForUser(SqlConnection connection) {
+    public void LoadInterestsFromDatabaseInForUser(SqlConnection connection) {
         string query = "SELECT * FROM Winder.Winder.[userHasInterest] WHERE UID = @Email;";
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@Email", Email);
@@ -106,7 +106,6 @@ public class User {
         } finally  {
             if (reader != null) reader.Close();
         }
-        
     }
     
     /// <summary>
@@ -320,13 +319,13 @@ public class User {
                     emails.Add(person1);
                 }
             }
-            emails.ForEach(x => matches.Add(new Match(this,new User().GetUserFromDatabase(x, connection))));
         } catch (SqlException se) {
             Console.WriteLine("Error retrieving matches from database");
             Console.WriteLine(se.ToString());
             Console.WriteLine(se.StackTrace);
         } finally  {
             if (reader != null) reader.Close();
+            emails.ForEach(x => matches.Add(new Match(this, new User().GetUserFromDatabase(x, connection))));
         }
         return matches;
     }
