@@ -19,4 +19,6 @@
         <HintPath>..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.Maui.Essentials.Ref.maccatalyst\7.0.58\ref\net7.0-maccatalyst13.5\Microsoft.Maui.Essentials.dll</HintPath>
       </Reference>
     </ItemGroup>
+
+    
 </Project>

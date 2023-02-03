@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Maui.Storage;
 
+
 namespace Controller;
 
 public class UserController {
@@ -90,7 +91,19 @@ public class UserController {
 
         return res.ToString();
     }
-    
+
+    /// <summary>
+    /// Adds all interests to users list of interests
+    /// </summary>
+    /// <param name="interests"></param>
+    public void RegisterInterestsInDatabase(List<string> interests)
+    {
+        foreach (var interest in interests)
+        {
+            Authentication.CurrentUser.SetInterestInDatabase(interest, Database.ReleaseConnection);
+        }
+    }
+
 
     /// <summary>
     /// Gets the picker data for the age picker
