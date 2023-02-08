@@ -1,6 +1,5 @@
 using Controller;
 using DataModel;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 using NUnit.Framework;
 
 
@@ -27,7 +26,14 @@ public class UserTest {
         string gender = "male";
         string bio = "Hello, I'm John Doe";
         string password = "password";
-        byte[] profilePicture = File.ReadAllBytes("C:\\Users\\vahen\\Documents\\GitHub\\Winder\\Winder\\Resources\\Images\\logo.png");
+
+        string imgLocation = "C:/Users/wesse/source/repos/Winder/Winder/Resources/Images/achtergrond.png";
+
+        FileStream fileStream = new FileStream(imgLocation, FileMode.Open, FileAccess.Read);
+        BinaryReader binary = new BinaryReader(fileStream);
+        byte[] imageArr = binary.ReadBytes((int)fileStream.Length);
+        byte[] profilePicture = imageArr;
+
         bool active = true;
         string school = "Stanford University";
         string major = "Computer Science";

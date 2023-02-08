@@ -1,7 +1,5 @@
 ﻿using Controller;
 using DataModel;
-using Color = Microsoft.Maui.Graphics.Color;
-using Image = Microsoft.Maui.Controls.Image;
 
 namespace Winder;
 

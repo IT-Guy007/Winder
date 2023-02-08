@@ -11,12 +11,9 @@ public class ProfileQueueController {
     public Profile CurrentProfile { get; private set; }
     private bool IsGettingProfiles { get; set; }
 
-    private User User { get; }
-
     public ProfileQueueController(User user, SqlConnection connection) {
         ProfileQueue = new ProfileQueue();
         MatchModel = new MatchModel(user.GetMatchedStudentsFromUser(connection));
-        User = user;
         CheckIfQueueNeedsMoreProfiles(connection);
     }
 
@@ -72,7 +69,5 @@ public class ProfileQueueController {
         MatchModel.NewDislike(Authentication.CurrentUser.Email, CurrentProfile.User.Email, connection);
         NextProfile(connection);
     }
-    
-    
     
 }

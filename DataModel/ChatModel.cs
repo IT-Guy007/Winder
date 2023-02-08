@@ -33,7 +33,7 @@ public class ChatModel {
                 "WHERE ([winder].[ChatMessage].[personFrom] = '" + FromUser.Email +
                 "' AND [winder].[ChatMessage].[personTo] = '" + ToUser.Email + "') " +
                 "OR ([winder].[ChatMessage].[personFrom] = '" + ToUser.Email +
-                "' AND [winder].[ChatMessage].[personTo] = '" + FromUser.Email + "') order by sendDate";
+                "' AND [winder].[ChatMessage].[personTo] = '" + FromUser.Email + "') ORDER BY sendDate";
 
             //Create command
             SqlCommand sqlCommand = new SqlCommand(query, connection);

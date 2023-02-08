@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Maui.Storage;
+using DataModel;
 
 
 namespace Controller;
@@ -10,7 +11,7 @@ public class UserController {
     private const int RequiredMinimumPasswordLength =  8;
     private const string ValidationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
     private static int EmailVerificationCodeCharacters = 6;
-    
+
     /// <summary>
     /// Calculates the age of a date
     /// </summary>
