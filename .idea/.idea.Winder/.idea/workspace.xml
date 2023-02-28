@@ -13,6 +13,9 @@
       <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/7e0084d0-4fe6-4ae9-b03c-ee9078b075f7.vsidx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/f634a9f9-3f0f-41e0-aa64-ef0b8ab76a2f.vsidx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/fb580f18-bce7-4c12-b2f3-3f34a8189821.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/Controller.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Controller.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/DataModel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/DataModel.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +78,7 @@
       <workItem from="1675339178673" duration="1660000" />
       <workItem from="1675340950089" duration="5285000" />
       <workItem from="1675354726445" duration="1066000" />
-      <workItem from="1677493176617" duration="306000" />
+      <workItem from="1677493176617" duration="1100000" />
     </task>
     <servers />
   </component>

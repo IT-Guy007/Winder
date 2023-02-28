@@ -15,6 +15,7 @@
     <ItemGroup>
       <PackageReference Include="CommunityToolkit.Maui" Version="4.0.0" />
       <PackageReference Include="CommunityToolkit.Maui.Core" Version="4.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
       <PackageReference Include="Microsoft.QualityTools.Testing.Fakes" Version="17.5.0-beta.23060.1" />
       <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
 

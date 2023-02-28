@@ -1,12 +1,24 @@
 using Controller;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-
+using System.Data.SqlClient;
+using Winder.Repositories;
 namespace Unittest.DataModelTests;
 
-public class ChatMessageTest {
-    
+public class ChatMessageTest
+{
+    ChatMessageRepository chatMessageRepository;
+
     [SetUp]
     public void Setup() {
-        Database.InitializeDebugConnection();
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+                .AddJsonFile("configdatabase.test.json")
+                .Build();
+        chatMessageRepository = new ChatMessageRepository(configuration);
+    }
+    [TestCase(ExpectedResult = true)]
+    public bool Test1()
+    {
+        return chatMessageRepository.SendMessage("Test", "s1178208@student.windesheim.nl", "s1178208@student.windesheim.nl");
     }
 }
