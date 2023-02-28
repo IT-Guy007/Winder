@@ -9,5 +9,7 @@ namespace Winder.Repositories.Interfaces
     public interface IChatMessageRepository
     {
         public bool SendMessage(string message, string senderEmail, string receiverEmail);
+        public List<string> GetMessages(string senderEmail, string receiverEmail);
+        public bool SetRead(string senderEmail, string receiverEmail);
     }
 }

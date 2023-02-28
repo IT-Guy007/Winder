@@ -8,5 +8,6 @@ namespace Winder.Repositories.Interfaces
 {
     internal interface IPhotosRepository
     {
+        
     }
 }

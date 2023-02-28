@@ -17,7 +17,7 @@ public class ChatMessageTest
         chatMessageRepository = new ChatMessageRepository(configuration);
     }
     [TestCase(ExpectedResult = true)]
-    public bool Test1()
+    public bool TestSendingMessage()
     {
         return chatMessageRepository.SendMessage("Test", "s1178208@student.windesheim.nl", "s1178208@student.windesheim.nl");
     }

@@ -8,5 +8,6 @@ namespace Winder.Repositories
 {
     internal class PhotosRepository
     {
+        
     }
 }

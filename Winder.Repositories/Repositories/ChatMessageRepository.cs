@@ -18,6 +18,11 @@ namespace Winder.Repositories
             _configuration = configuration;
         }
 
+        public List<string> GetMessages(string senderEmail, string receiverEmail)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool SendMessage(string message, string senderEmail, string receiverEmail)
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
@@ -30,6 +35,11 @@ namespace Winder.Repositories
                 command.ExecuteNonQuery();
                 return true;
             }
+        }
+
+        public bool SetRead(string senderEmail, string receiverEmail)
+        {
+            return true;
         }
     }
 }

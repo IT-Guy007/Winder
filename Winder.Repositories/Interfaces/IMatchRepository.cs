@@ -1,12 +1,16 @@
-﻿using System;
+﻿using DataModel;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Winder.Repositories.Interfaces
 {
-    internal interface IMatchRepository
+    internal interface IMatchRepository 
     {
+        public List<Match> GetMatchedStudentsFromUser(string email);
+        public bool AddMatch(string emailLikedPerson, string emailCurrentUser);
     }
 }
