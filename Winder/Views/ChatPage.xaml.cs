@@ -14,12 +14,12 @@ public partial class ChatPage {
 
     private readonly ChatModel ChatModel;
     private readonly ChatMessageController _chatMessageController;
-    public ChatPage(User sendFromUser, User sendToUser, ChatMessageController chatMessageController) {
+    public ChatPage(User sendFromUser, User sendToUser) {
         ChatModel = new ChatModel(sendFromUser, sendToUser, Database.ReleaseConnection);
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         //Set content
         Initialize();
-        _chatMessageController = chatMessageController;
+        this._chatMessageController = MauiProgram.ServiceProvider.GetService<ChatMessageController>();
     }
 
     private void Initialize() {
