@@ -4,7 +4,9 @@ using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
 using Microsoft.Extensions.Configuration;
 using Winder.Repositories;
-using Winder.Repositories.Interfaces;   
+using Winder.Repositories.Interfaces;
+using Controller;
+
 namespace Winder;
 
 public static class MauiProgram
@@ -20,7 +22,14 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
+        builder.Services.AddSingleton<IConfiguration>(new ConfigurationBuilder()
+            .AddJsonFile("configdatabase.test.json")
+            .Build());
 
+        // Add the repositories
+        builder.Services.AddSingleton<IChatMessageRepository, ChatMessageRepository>();
+        builder.Services.AddSingleton<ChatMessageController>(sp =>
+            new ChatMessageController(sp.GetService<IChatMessageRepository>()));
         // Initialise the toolkit
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
     //    IConfigurationRoot configuration = new ConfigurationBuilder()

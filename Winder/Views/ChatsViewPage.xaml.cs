@@ -1,5 +1,7 @@
 using Controller;
 using DataModel;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace Winder;
 
@@ -32,7 +34,8 @@ public partial class ChatsViewPage {
 
     private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e) {
         var tappedItem = e.Item as User;
-        Navigation.PushAsync(new ChatPage(Authentication.CurrentUser, new User().GetUserFromDatabase(tappedItem.Email, Database.ReleaseConnection)));
+        ChatMessageController chatMessageController = DependencyService.Get<ChatMessageController>();
+        Navigation.PushAsync(new ChatPage(Authentication.CurrentUser, new User().GetUserFromDatabase(tappedItem.Email, Database.ReleaseConnection), chatMessageController));
     }
 
     /// <summary>

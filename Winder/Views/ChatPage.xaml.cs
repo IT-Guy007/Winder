@@ -13,13 +13,13 @@ public partial class ChatPage {
     private Grid grid;
 
     private readonly ChatModel ChatModel;
-
-    public ChatPage(User sendFromUser, User sendToUser) {
+    private readonly ChatMessageController _chatMessageController;
+    public ChatPage(User sendFromUser, User sendToUser, ChatMessageController chatMessageController) {
         ChatModel = new ChatModel(sendFromUser, sendToUser, Database.ReleaseConnection);
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
-        
         //Set content
         Initialize();
+        _chatMessageController = chatMessageController;
     }
 
     private void Initialize() {
@@ -156,6 +156,7 @@ public partial class ChatPage {
             if (!string.IsNullOrWhiteSpace(chatInput.Text)) {
                 chatInput.Text = char.ToUpper(chatInput.Text[0]) + chatInput.Text.Substring(1);
                 new ChatMessage(ChatModel.FromUser.Email, ChatModel.ToUser.Email, DateTime.Now, chatInput.Text, false).SendMessage(Database.ReleaseConnection);
+                _chatMessageController.SendMessage(chatInput.Text, "s1178208@student.windesheim.nl", "s1178208@student.windesheim.nl");
                 Initialize();
             }
         };

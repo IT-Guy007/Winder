@@ -10,6 +10,12 @@ namespace Winder.Repositories
     internal class InterestsRepository : IInterestsRepository
     {
         public List<string> GetInterests()
+            
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetInterestsFromUser(string email)
         {
             throw new NotImplementedException();
         }
