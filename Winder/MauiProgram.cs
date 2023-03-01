@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using Microsoft.Maui.Controls.Hosting;
@@ -7,42 +8,42 @@ using Winder.Repositories;
 using Winder.Repositories.Interfaces;
 using Controller;
 
-namespace Winder;
-
-public static class MauiProgram
+namespace Winder
 {
-    public static MauiApp CreateMauiApp() {
-        var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
-            .UseMauiCommunityToolkit()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            });
+    public static class MauiProgram
+    {
+        public static IServiceProvider ServiceProvider { get; private set; }
 
-        builder.Services.AddSingleton<IConfiguration>(new ConfigurationBuilder()
-            .AddJsonFile("configdatabase.test.json")
-            .Build());
+        public static MauiApp CreateMauiApp()
+        {
+            var builder = MauiApp.CreateBuilder();
+            builder
+                .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                });
 
-        // Add the repositories
-        builder.Services.AddSingleton<IChatMessageRepository, ChatMessageRepository>();
-        builder.Services.AddSingleton<ChatMessageController>(sp =>
-            new ChatMessageController(sp.GetService<IChatMessageRepository>()));
-        // Initialise the toolkit
-        builder.UseMauiApp<App>().UseMauiCommunityToolkit();
-    //    IConfigurationRoot configuration = new ConfigurationBuilder()
-    //.AddJsonFile("configdatabase.json")
-    //.Build();
+            builder.Services.AddSingleton<IConfiguration>(new ConfigurationBuilder()
+                .AddJsonFile("configdatabase.test.json")
+                .Build());
 
-    //    builder.Services.AddSingleton<IConfiguration>(configuration);
-    //    builder.Services.AddScoped<IChatMessageRepository, ChatMessageRepository>();
+            // Add the repositories
+            builder.Services.AddSingleton<IChatMessageRepository, ChatMessageRepository>();
+            builder.Services.AddSingleton<ChatMessageController>(sp => new ChatMessageController(sp.GetService<IChatMessageRepository>()));
+            // Initialise the toolkit
+            builder.UseMauiApp<App>().UseMauiCommunityToolkit();
 
 #if DEBUG
-        builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
-        return builder.Build();
+            var app = builder.Build();
+            ServiceProvider = app.Services;
+            return app;
+        }
     }
+
 }
