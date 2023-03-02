@@ -17,10 +17,23 @@ public class ChatMessageTest
             .Build();
         _chatMessageRepository = new ChatMessageRepository(configuration);
     }
+    
     [TestCase(ExpectedResult = true)]
     public bool TestSendingMessage()
     {
         return _chatMessageRepository.SendMessage("Test", "s1178208@student.windesheim.nl", "s1178208@student.windesheim.nl");
+    }
+
+    [Test]
+    public void TestGetMessages()
+    {
+        Assert.IsNotNull(_chatMessageRepository.GetChatMessages("s1178208@student.windesheim.nl", "s1178208@student.windesheim.nl"));
+    }
+
+    [Test]
+    public void SetRead()
+    {
+        Assert.IsTrue(_chatMessageRepository.SetRead("s1178208@student.windesheim.nl", "s1178208@student.windesheim.nl"));
     }
 }
 

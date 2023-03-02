@@ -22,6 +22,7 @@ namespace Winder.Repositories
             {
                 try
                 {
+                    connection.Open();
                     string query =
                         "SELECT [winder].[ChatMessage].[personFrom], [winder].[ChatMessage].[personTo], [winder].[ChatMessage].[sendDate], [winder].[ChatMessage].[chatMessage], [winder].[ChatMessage].[readMessage] " +
                         "FROM [winder].[ChatMessage] " +
@@ -67,12 +68,28 @@ namespace Winder.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand("INSERT INTO winder.ChatMessage (chatMessage, personTo, personFrom) VALUES (@message, @senderEmail, @receiverEmail)", connection);
-                command.Parameters.AddWithValue("@message", message);
-                command.Parameters.AddWithValue("@senderEmail", EmailFrom);
-                command.Parameters.AddWithValue("@receiverEmail", EmailTo);
-                command.ExecuteNonQuery();
+                try
+                {
+                    DateTime timeSend = DateTime.Now;
+                    connection.Open();
+                    SqlCommand command =
+                        new SqlCommand(
+                            "INSERT INTO winder.ChatMessage VALUES (@senderEmail, @receiverEmail, @sendDate, @message, @read)",
+                            connection);
+                    command.Parameters.AddWithValue("@senderEmail", EmailFrom);
+                    command.Parameters.AddWithValue("@receiverEmail", EmailTo);
+                    command.Parameters.AddWithValue("@message", message);
+                    command.Parameters.AddWithValue("@sendDate", timeSend);
+                    command.Parameters.AddWithValue("@read", 0);
+                    command.ExecuteNonQuery();
+                }
+                catch (SqlException se)
+                {
+                    Console.WriteLine("Error sending message");
+                    Console.WriteLine(se.ToString());
+                    Console.WriteLine(se.StackTrace);
+                }
+
                 return true;
             }
         }
@@ -83,9 +100,9 @@ namespace Winder.Repositories
             {
                 try
                 {
+                    connection.Open();
                     SqlCommand query = new SqlCommand("UPDATE winder.winder.[ChatMessage] SET [readMessage] = 1 WHERE personTo = '" + EmailFrom + "' AND personFrom = '" + EmailTo + "'", connection);
                     query.ExecuteNonQuery();
-
                 }
                 catch (SqlException se)
                 {
