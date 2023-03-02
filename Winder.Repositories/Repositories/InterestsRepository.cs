@@ -54,48 +54,5 @@ public class InterestsRepository : IInterestsRepository
             return interests;
         }
     }
-
-    /// <summary>
-    /// Gets all the interests an user has chosen, from the database
-    /// </summary>
-    /// <param name="email">The email of the user</param>
-    /// <returns>String list of the interests</returns>
-    public List<string> GetInterestsFromUser(string email)
-    {
-        using (SqlConnection connection =
-               new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-        {
-            string query = "SELECT * FROM Winder.Winder.[userHasInterest] WHERE UID = @Email;";
-            SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@Email", email);
-            List<string> interestList = new List<string>();
-
-            SqlDataReader reader = null;
-            try
-            {
-                reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    var item = reader["interest"] as string;
-                    interestList.Add(item);
-                }
-
-
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine("Error retrieving interests from database");
-                Console.WriteLine(e.ToString());
-                Console.WriteLine(e.StackTrace);
-
-            }
-            finally
-            {
-                if (reader != null) reader.Close();
-            }
-
-            return interestList;
-        }
-    }
 }
 
