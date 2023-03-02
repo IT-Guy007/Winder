@@ -11,7 +11,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb93d9f5-e65c-4a7c-a869-8be6a7255716" name="Changes" comment="Fixed currentUser">
-      <change beforePath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MatchPage.xaml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/25b8857f-81db-406f-b701-c5d2d1bbd8d5.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/79a301cc-fbd4-437a-af5e-caa224c651f6.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/8c4656e5-ddf9-44ce-9b60-352f41735608.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/92b970ed-2ffd-4329-874b-d0fe1ed066b3.vsidx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/16116eea-6d5d-4bd3-8704-4aa324e2a965.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/23594612-19af-42ba-ab9a-3727feffa2b1.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/3fe8cb8e-1298-4f67-8660-c56d338aa831.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/664c26de-954d-418b-b700-ac8784bec0ac.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/93d4ffb6-3a6a-4b32-aeb9-1184eeb632d7.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/a3a5bfe3-1993-454d-979b-0f416f16469d.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/ada0d977-19b9-43d6-8f79-41f0edc38c3e.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/d06f1df5-e762-4d79-8acd-613ea9ab4b03.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/d7e79e79-cef5-49cb-ac39-1cc93f1e11d3.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/e91a7593-09a2-4b4a-bbe5-666abe38edf1.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/ed30e149-3265-495c-a927-f26b49b25f75.vsidx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +42,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/DataModel/Database.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DataModel/User.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Winder/Platforms/Windows/App.xaml.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="InvalidFacetManager">
     <ignored-facets>
@@ -71,13 +86,13 @@
       &quot;sqlserver&quot;
     ],
     &quot;rider.external.source.directories&quot;: [
-      &quot;/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
-      &quot;/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
-      &quot;/Users/jeroendenotter/.local/share/Symbols/src&quot;
+      &quot;C:\\Users\\wesse\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\wesse\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\wesse\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
 }</component>
-  <component name="RunManager" selected="Xamarin.Mac.Winder">
+  <component name="RunManager" selected="UWP.Winder">
     <configuration name="Winder" type="UwpProject" factoryName="UWP">
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -104,7 +119,7 @@
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="" />
-      <option name="PASS_PARENT_ENVS" value="0" />
+      <option name="PASS_PARENT_ENVS_MAC" value="1" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -129,6 +144,7 @@
       <workItem from="1670578793215" duration="2918000" />
       <workItem from="1670585417117" duration="2630000" />
       <workItem from="1670589797915" duration="872000" />
+      <workItem from="1677759812771" duration="41000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>
@@ -170,10 +186,10 @@
           <line>87</line>
           <properties documentPath="$PROJECT_DIR$/DataModel/Database.cs" initialLine="87" containingFunctionPresentation="method 'CheckLogin'">
             <startOffsets>
-              <option value="2733" />
+              <option value="-1" />
             </startOffsets>
             <endOffsets>
-              <option value="2734" />
+              <option value="-1" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="1" />
@@ -183,10 +199,10 @@
           <line>760</line>
           <properties documentPath="$PROJECT_DIR$/DataModel/Database.cs" initialLine="760" containingFunctionPresentation="method 'deleteLikeOnMatch'">
             <startOffsets>
-              <option value="28564" />
+              <option value="-1" />
             </startOffsets>
             <endOffsets>
-              <option value="28565" />
+              <option value="-1" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />

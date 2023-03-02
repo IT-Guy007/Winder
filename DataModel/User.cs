@@ -1,6 +1,7 @@
 using System.Data.SqlClient;
 using Microsoft.Maui.Storage;
 
+
 namespace DataModel;
 
 public class User {
