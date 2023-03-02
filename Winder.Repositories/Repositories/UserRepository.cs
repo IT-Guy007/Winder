@@ -1,9 +1,16 @@
 ﻿using DataModel;
+using Microsoft.Extensions.Configuration;
 using Winder.Repositories.Interfaces;
 namespace Winder.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly IConfiguration _configuration;
+
+        public UserRepository(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public User CheckLogin(string email, string password)
         {
             throw new NotImplementedException();

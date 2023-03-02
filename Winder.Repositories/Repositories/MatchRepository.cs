@@ -1,4 +1,5 @@
 ﻿using DataModel;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,14 @@ using Winder.Repositories.Interfaces;
 
 namespace Winder.Repositories
 {
-    internal class MatchRepository : IMatchRepository
+    public class MatchRepository : IMatchRepository
     {
+        private readonly IConfiguration _configuration;
+
+        public MatchRepository(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public bool AddMatch(string emailLikedPerson, string emailCurrentUser)
         {
             throw new NotImplementedException();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +8,13 @@ using Winder.Repositories.Interfaces;
 
 namespace Winder.Repositories
 {
-    internal class InterestsRepository : IInterestsRepository
+    public class InterestsRepository : IInterestsRepository
     {
+        private readonly IConfiguration _configuration;
+        public InterestsRepository(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public List<string> GetInterests()
         {
             throw new NotImplementedException();

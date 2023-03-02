@@ -3,9 +3,9 @@ using NUnit.Framework;
 using Winder.Repositories;
 namespace Unittest.Repositories;
 
-public class PhotosTest
+public class InterestsTest
 {
-    private PhotosRepository _photosRepository;
+    private InterestsRepository _interestsRepository;
 
     [SetUp]
     public void Setup()
@@ -13,6 +13,10 @@ public class PhotosTest
         IConfigurationRoot configuration = new ConfigurationBuilder()
             .AddJsonFile("configdatabase.test.json")
             .Build();
-        _photosRepository = new PhotosRepository(configuration);  
+        _interestsRepository = new InterestsRepository(configuration);
+        
+        
     }
+    
+    
 }

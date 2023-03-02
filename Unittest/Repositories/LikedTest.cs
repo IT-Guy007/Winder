@@ -1,11 +1,11 @@
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using Winder.Repositories;
 namespace Unittest.Repositories;
 
-public class PhotosTest
+public class LikedTest
 {
-    private PhotosRepository _photosRepository;
+    private LikedRepository _likedRepository;
 
     [SetUp]
     public void Setup()
@@ -13,6 +13,8 @@ public class PhotosTest
         IConfigurationRoot configuration = new ConfigurationBuilder()
             .AddJsonFile("configdatabase.test.json")
             .Build();
-        _photosRepository = new PhotosRepository(configuration);  
+        _likedRepository = new LikedRepository(configuration);
     }
+
+
 }
