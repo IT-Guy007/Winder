@@ -12,14 +12,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f76b6aa-328d-4379-ada0-068e259b500b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/2e1afb85-9e57-4207-a137-6c2bdc920c6b.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/9e2bcbe8-80be-4080-972d-11b7f09173e7.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/a4d23abb-7cf0-4d36-a8c9-1634fc267f18.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/fe3c4d7f-b350-4ea1-ae30-67e06cb6f045.vsidx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/.name" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unittest/Repositories/InterestsTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/Repositories/InterestsTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/0730ac9d-8b78-44e6-b7ee-1d63cecd7b8b.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/0e5c735d-9b34-47c8-b467-697a14c06679.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/829d4d15-a306-43fe-81e5-12a86c8096e6.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/a9b00006-cc21-4007-ae4a-871bf287d107.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/ad70ddc9-8205-4e84-a4d0-620d938f74e2.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/ccefeff8-3472-4ddd-b2df-044e511b2e33.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/d844d505-90e1-4d4f-b65a-343fb11bf476.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/065.testlog" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/065.testlog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/testlog.manifest" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/testlog.manifest" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder.Repositories/Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Winder.Repositories/Data.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder.Repositories/Interfaces/IInterestsRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder.Repositories/Interfaces/IInterestsRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder.Repositories/Interfaces/IUserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder.Repositories/Interfaces/IUserRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder.Repositories/Repositories/InterestsRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder.Repositories/Repositories/InterestsRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder.Repositories/Repositories/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder.Repositories/Repositories/UserRepository.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,35 +69,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Device#class com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSSimulatorKind#com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSDevicesProvider#Xamarin.iOS: Winder": "iPhone 14",
-    "DeviceKind#com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSDevicesProvider": "Simulator",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "rider.run.widget.enabled.cache": "false",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Device#class com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSSimulatorKind#com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSDevicesProvider#Xamarin.iOS: Winder&quot;: &quot;iPhone 14&quot;,
+    &quot;DeviceKind#com.jetbrains.rider.run.xamarin.ios.devices.XamarinIOSDevicesProvider&quot;: &quot;Simulator&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;rider.run.widget.enabled.cache&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlserver"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlserver&quot;
     ],
-    "rider.external.source.directories": [
-      "/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache",
-      "/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache",
-      "/Users/jeroendenotter/.local/share/Symbols/src"
+    &quot;rider.external.source.directories&quot;: [
+      &quot;/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
+      &quot;/Users/jeroendenotter/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
+      &quot;/Users/jeroendenotter/.local/share/Symbols/src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Xamarin.Mac.Winder">
     <configuration name="Winder" type="UwpProject" factoryName="UWP">
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
@@ -113,7 +125,7 @@
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="" />
-      <option name="PASS_PARENT_ENVS_MAC" value="1" />
+      <option name="PASS_PARENT_ENVS" value="1" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -140,6 +152,7 @@
       <workItem from="1670589797915" duration="872000" />
       <workItem from="1677759812771" duration="41000" />
       <workItem from="1677761657478" duration="3159000" />
+      <workItem from="1677770983578" duration="455000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>
