@@ -30,6 +30,7 @@ namespace Winder.Repositories
                 command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
 
                 try {
+                    connection.Open();
                     command.ExecuteNonQuery();
                     return true;
                 } catch (SqlException se) {
@@ -53,7 +54,9 @@ namespace Winder.Repositories
                 List<Match> matches = new List<Match>();
                 List<string> emails = new List<string>();
                 SqlDataReader reader = null;
-                try {
+                try
+                {
+                    connection.Open();
                     string query = "SELECT person1, person2 FROM Winder.Winder.Match WHERE person1 = @Email OR person2 = @Email";
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@Email", user.Email);
