@@ -5,7 +5,7 @@ using Winder.Repositories.Interfaces;
 namespace Winder.Repositories {
     public class PhotosRepository : IPhotosRepository
     {
-        IConfiguration _configuration;
+        private IConfiguration _configuration;
         private const int MaxAmountOfPictures = 6;
 
         public PhotosRepository(IConfiguration configuration) {
