@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 
 namespace Controller;
 
-public static class Database {
+public static  class Database {
     
     //Constants
     private const string DataSourceReleaseConnection = "192.168.1.106,1433";

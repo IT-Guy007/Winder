@@ -2,7 +2,6 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Maui.Storage;
 
-
 namespace Controller;
 
 public class UserController {

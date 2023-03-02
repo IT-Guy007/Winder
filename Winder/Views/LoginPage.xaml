@@ -1,11 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MAUI.LoginPage"              
+             x:Class="Winder.LoginPage"              
              BackgroundImageSource="achtergrond.png">
     
-    <VerticalStackLayout VerticalOptions="Center" >
+    <Shell.BackButtonBehavior >
+        <BackButtonBehavior IsVisible="False" IsEnabled="False"></BackButtonBehavior>
+    </Shell.BackButtonBehavior>
 
+    <Grid>
+        <ImageButton
+                
+                x:Name="Backbutton"
+                Source="backbutton.png"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                HeightRequest="40"
+                WidthRequest="40"
+                Aspect="AspectFill"
+                Clicked="Backbutton_Clicked"
+                CornerRadius="50"
+                Grid.Row="0"
+                />
+        <VerticalStackLayout VerticalOptions="Center" >
+        
         <Image 
             Source="zwartvierkant.png"
             WidthRequest="300"
@@ -62,5 +80,6 @@
             BorderColor="Transparent"/>
             
     </VerticalStackLayout>
-    
+    </Grid>
+
 </ContentPage>
