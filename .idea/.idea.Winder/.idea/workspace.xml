@@ -83,7 +83,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="UWP.Winder">
+  <component name="RunManager" selected="Xamarin.Mac.Winder">
     <configuration name="Winder" type="UwpProject" factoryName="UWP">
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
       <option name="PROGRAM_PARAMETERS" value="" />
