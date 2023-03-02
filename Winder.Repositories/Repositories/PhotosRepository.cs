@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Winder.Repositories.Interfaces;
 
 namespace Winder.Repositories {
-    internal class PhotosRepository : IPhotosRepository
+    public class PhotosRepository : IPhotosRepository
     {
         IConfiguration _configuration;
         private const int MaxAmountOfPictures = 6;
