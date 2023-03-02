@@ -1,9 +1,5 @@
-using Controller;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using System;
-using System.Data.SqlClient;
 using Winder.Repositories;
 namespace Unittest.DataModelTests;
 
@@ -22,4 +18,5 @@ public class ChatMessageTest
     {
         return chatMessageRepository.SendMessage("Test", "s1178208@student.windesheim.nl", "s1178208@student.windesheim.nl");
     }
+    
 }

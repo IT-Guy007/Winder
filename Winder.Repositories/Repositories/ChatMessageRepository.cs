@@ -8,7 +8,7 @@ namespace Winder.Repositories
 {
     public class ChatMessageRepository : IChatMessageRepository
     {
-        private readonly IConfiguration _configuration;
+        IConfiguration _configuration;
         
         public ChatMessageRepository(IConfiguration configuration)
         {
