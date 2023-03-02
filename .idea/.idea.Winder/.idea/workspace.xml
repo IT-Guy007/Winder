@@ -10,8 +10,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7f76b6aa-328d-4379-ada0-068e259b500b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Unittest/DataModelTests/ChatMessageTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/DataModelTests/ChatMessageTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unittest/Repositories/PhotosTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/Repositories/PhotosTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder.Repositories/Interfaces/IPhotosRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder.Repositories/Interfaces/IPhotosRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Winder.Repositories/Repositories/PhotosRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder.Repositories/Repositories/PhotosRepository.cs" afterDir="false" />
     </list>
@@ -77,7 +76,7 @@
       <workItem from="1675340950089" duration="5285000" />
       <workItem from="1675354726445" duration="1066000" />
       <workItem from="1677493176617" duration="1100000" />
-      <workItem from="1677754474922" duration="1979000" />
+      <workItem from="1677754474922" duration="3383000" />
     </task>
     <servers />
   </component>
