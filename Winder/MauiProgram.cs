@@ -29,7 +29,6 @@ namespace Winder
             builder.Services.AddSingleton<IConfiguration>(new ConfigurationBuilder()
                 .AddJsonFile("configdatabase.test.json")
                 .Build());
-
             // Add the repositories
             builder.Services.AddSingleton<IChatMessageRepository, ChatMessageRepository>();
             builder.Services.AddSingleton<ChatMessageController>(sp => new ChatMessageController(sp.GetService<IChatMessageRepository>()));
