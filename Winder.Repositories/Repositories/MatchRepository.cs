@@ -1,23 +1,84 @@
-﻿using DataModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
+using DataModel;
+using Microsoft.Extensions.Configuration;
 using Winder.Repositories.Interfaces;
 
 namespace Winder.Repositories
 {
-    internal class MatchRepository : IMatchRepository
+    public class MatchRepository : IMatchRepository
     {
-        public bool AddMatch(string emailLikedPerson, string emailCurrentUser)
+        private readonly IConfiguration _configuration;
+
+        public MatchRepository(IConfiguration configuration)
         {
-            throw new NotImplementedException();
+            System.Diagnostics.Debug.WriteLine("MatchRepository constructor called");
+            _configuration = configuration;
         }
 
-        public List<Match> GetMatchedStudentsFromUser(string email)
+        /// <summary>
+        /// Adds match to user in the database
+        /// </summary>
+        /// <param name="emailLikedPerson">email address of person 1</param>
+        /// <param name="emailCurrentUser">email address of person 2</param>
+        /// <returns>Bool if succeeded</returns>
+        public bool AddMatch(string emailLikedPerson, string emailCurrentUser)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                SqlCommand command = new SqlCommand("INSERT INTO winder.winder.[Match] (person1, person2) VALUES (@currentUser, @likedUser)", connection);
+                command.Parameters.AddWithValue("@currentUser", emailCurrentUser);
+                command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
+
+                try {
+                    command.ExecuteNonQuery();
+                    return true;
+                } catch (SqlException se) {
+                    Console.WriteLine("Error inserting match in database");
+                    Console.WriteLine(se.ToString());
+                    Console.WriteLine(se.StackTrace);
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the matched of the given User
+        /// </summary>
+        /// <param name="user">The user of who the matches need to retrieved for</param>
+        /// <returns>List of matches</returns>
+        public List<Match> GetMatchedStudentsFromUser(User user)
+        {
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                List<Match> matches = new List<Match>();
+                List<string> emails = new List<string>();
+                SqlDataReader reader = null;
+                try {
+                    string query = "SELECT person1, person2 FROM Winder.Winder.Match WHERE person1 = @Email OR person2 = @Email";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@Email", user.Email);
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string person1 = reader["person1"] as string ?? "Unknown";
+                        string person2 = reader["person2"] as string ?? "Unknown";
+                        if (person1 == user.Email) {
+                            emails.Add(person2);
+                        } else {
+                            emails.Add(person1);
+                        } 
+                    }
+           
+                } catch (SqlException se) {
+                    Console.WriteLine("Error retrieving matches from database");
+                    Console.WriteLine(se.ToString());
+                    Console.WriteLine(se.StackTrace);
+                } finally  {
+                    if (reader != null) reader.Close();
+                    emails.ForEach(x => matches.Add(new Match(user, new User().GetUserFromDatabase(x, connection))));
+                }
+                return matches;
+            }
         }
     }
 }
