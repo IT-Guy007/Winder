@@ -15,10 +15,8 @@ namespace Winder.Repositories
         
         public ChatMessageRepository(IConfiguration configuration)
         {
-            System.Diagnostics.Debug.WriteLine("ChatMessageController constructor called.");
             _configuration = configuration;
         }
-
         public List<string> GetMessages(string senderEmail, string receiverEmail)
         {
             throw new NotImplementedException();

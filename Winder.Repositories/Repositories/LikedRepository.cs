@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,12 @@ namespace Winder.Repositories
 {
     internal class LikedRepository : ILikedRepository
     {
+        IConfiguration _configuration;
+
+        public LikedRepository(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public bool CheckMatch(string emailLikedPerson, string emailCurrentUser)
         {
             throw new NotImplementedException();

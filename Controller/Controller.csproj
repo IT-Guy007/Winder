@@ -15,7 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DataModel\DataModel.csproj" />
-      <ProjectReference Include="..\Winder.Repositories\Winder.Repositories.csproj" />
+      <ProjectReference Include="..\Winder.Repositories\Data.csproj" />
     </ItemGroup>
 
     <ItemGroup>

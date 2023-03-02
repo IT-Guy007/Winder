@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unittest", "Unittest\Unitte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controller", "Controller\Controller.csproj", "{2B635AD3-B769-4803-9E62-89B5E6CD247D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Winder.Repositories", "Winder.Repositories\Winder.Repositories.csproj", "{2C7E44B9-E948-4CC0-BFDE-3ABCE603ED62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Winder.Repositories\Data.csproj", "{2C7E44B9-E948-4CC0-BFDE-3ABCE603ED62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
