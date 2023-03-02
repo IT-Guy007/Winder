@@ -123,10 +123,10 @@ public partial class MatchPage {
 
         //Images
         if (ProfileQueueController.CurrentProfile == null) {
-            if (Authentication.CurrentUser.ProfilePicture.IsEmpty) {
+            if (Authentication.CurrentUser.ProfilePicture.Length < 0) {
 
                 var profileImage = new Image {
-                    Source = Authentication.CurrentUser.ProfilePicture,
+                    Source = ImageSource.FromStream(() => new MemoryStream(Authentication.CurrentUser.ProfilePicture)),
                     Aspect = Aspect.AspectFit,
                     WidthRequest = 800,
                     HeightRequest = 800,

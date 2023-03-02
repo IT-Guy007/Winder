@@ -101,6 +101,16 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DataModel\DataModel.csproj" />
+      <ProjectReference Include="..\Winder.Repositories\Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <MauiImage Remove="Resources\Images\dotnet_bot.svg" />
+    </ItemGroup>
+    <ItemGroup>
+      <BundleResource Include="Resources\Images\dotnet_bot.svg" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Controller\" />
+    </ItemGroup>
 </Project>

@@ -1,7 +1,5 @@
 using System.Data.SqlClient;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
-
 
 namespace DataModel;
 
@@ -13,14 +11,13 @@ public class User {
     public string Preference { get; set; }
     public string Email { get; set; }
     public string Gender { get; set; }
-    public ImageSource ProfilePicture { get; set; }
+    public byte[] ProfilePicture { get; set; }
     public string Bio { get; set; }
     public string School { get; set; }
     public string Major { get; set; }
     public string[] Interests { get; set; }
     public int MinAge { get; set; }
     public int MaxAge { get; set; }
-    
         
     private const int MinAgePreference = 18;
     private const int MaxAgePreference = 99;
@@ -55,9 +52,8 @@ public class User {
                 BirthDay = reader["birthday"] as DateTime? ?? MinDateTimeBirth;
                 Bio = reader["bio"] as string ?? string.Empty;
                 School = reader["location"] as string ?? string.Empty;
-                Major = reader["education"] as string ?? string.Empty;
-                byte[] pictureData = (byte[])reader["profilePicture"];
-                ProfilePicture = ImageSource.FromStream(() => new MemoryStream(pictureData));
+                Major = reader["education"] as string ?? string.Empty; 
+                ProfilePicture = (byte[])reader["profilePicture"];
                 var minAge = reader["min"] as int?;
                 var maxAge = reader["max"] as int?;
 
@@ -491,7 +487,7 @@ public class User {
         BirthDay = birthday;
         Gender = gender;
         Bio = bio;
-        ProfilePicture = ImageSource.FromStream(() => new MemoryStream(profilePicture));
+        ProfilePicture = profilePicture;
         School = school;
         Major = major;
 
