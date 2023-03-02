@@ -16,7 +16,8 @@ namespace Winder.Repositories.Interfaces
         public User GetUserFromDatabase(string email);
         public bool DeleteUser(string email);
         public bool IsEmailUnique(string email);
-        public bool SetInterest(string email);
+        public bool SetInterest(string email, string interest);
         public List<string> GetConditionBasedUsers(User user);
+        public List<string> GetInterestsFromUser(string email);
         }
     }
