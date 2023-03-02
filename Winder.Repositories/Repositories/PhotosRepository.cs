@@ -9,29 +9,36 @@ namespace Winder.Repositories {
         private const int MaxAmountOfPictures = 6;
 
         public PhotosRepository(IConfiguration configuration) {
-            System.Diagnostics.Debug.WriteLine("PhotosRepository contructor called");
+            System.Diagnostics.Debug.WriteLine("PhotosRepository constructor called");
             _configuration = configuration;
         }
         
-        public void AddPhoto(byte[] image, string email)
+        /// <summary>
+        /// Adds photo to user account in the database
+        /// </summary>
+        /// <param name="image">The image to add</param>
+        /// <param name="email">The email from the user</param>
+        /// <returns>bool if succeed</returns>
+        public bool AddPhoto(byte[] image, string email)
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 try
                 {
-                    string query =
-                        "INSERT INTO winder.winder.Photos (winder.[user], winder.photo) VALUES(@Email, @profilepicture)";
+                    string query = "INSERT INTO winder.winder.Photos (winder.[user], winder.photo) VALUES(@Email, @profilepicture)";
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@Email", email);
                     command.Parameters.AddWithValue("@profilepicture", image);
 
                     command.ExecuteNonQuery();
+                    return true;
                 }
                 catch (SqlException se)
                 {
                     Console.WriteLine("Error inserting picture in database");
                     Console.WriteLine(se.ToString());
                     Console.WriteLine(se.StackTrace);
+                    return false;
                 }
             }
         }
@@ -40,7 +47,8 @@ namespace Winder.Repositories {
         /// Delete all the photos from the database of the given user
         /// </summary>
         /// <param name="email">The email of the user</param>
-        public void DeleteAllPhotos(string email)
+        /// <returns>Bool if succeeded</returns>
+        public bool DeleteAllPhotos(string email)
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
@@ -51,16 +59,23 @@ namespace Winder.Repositories {
                     command.Parameters.AddWithValue("@Email", email);
 
                     command.ExecuteNonQuery();
+                    return true;
                 }
                 catch (SqlException se)
                 {
                     Console.WriteLine("Error deleting pictures from database");
                     Console.WriteLine(se.ToString());
                     Console.WriteLine(se.StackTrace);
+                    return false;
                 }
             }
         }
 
+        /// <summary>
+        /// Gets the photos for the user
+        /// </summary>
+        /// <param name="email">The email of the user</param>
+        /// <returns>Bool if succeeded</returns>
         public byte[][] GetPhotos(string email) {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) 
             {
