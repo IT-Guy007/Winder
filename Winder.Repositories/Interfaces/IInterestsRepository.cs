@@ -9,6 +9,5 @@ namespace Winder.Repositories.Interfaces
     internal interface IInterestsRepository
     {
         public List<string> GetInterests();
-        public List<string> GetInterestsFromUser(string email);
     }
 }

@@ -25,8 +25,25 @@ public class User {
     private static DateTime MinDateTimeBirth = new DateTime(1925, 01, 01, 0, 0, 0, 0);
 
     public User(){}
-    
-    
+
+    public User(string firstName, string middleName, string lastName, DateTime birthDay, string preference, string email, string gender, byte[] profilePicture, string bio, string school, string major, string[] interests, int minAge, int maxAge)
+    {
+        FirstName = firstName;
+        MiddleName = middleName;
+        LastName = lastName;
+        BirthDay = birthDay;
+        Preference = preference;
+        Email = email;
+        Gender = gender;
+        ProfilePicture = profilePicture;
+        Bio = bio;
+        School = school;
+        Major = major;
+        Interests = interests;
+        MinAge = minAge;
+        MaxAge = maxAge;
+    }
+
     /// <summary>
     /// Gets the user data from the database
     /// </summary>
@@ -76,7 +93,7 @@ public class User {
     }
     
     /// <summary>
-    /// Add's the interests of the user to the interests list
+    /// Adds the interests of the user to the interests list
     /// </summary>
     /// <param name="connection"></param>
     private void LoadInterestsFromDatabaseInForUser(SqlConnection connection) {

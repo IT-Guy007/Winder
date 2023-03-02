@@ -132,6 +132,7 @@ public class AlgorithmModel {
         } finally  {
             if (reader != null) reader.Close();
         }
+        
         return users;
     }
     
