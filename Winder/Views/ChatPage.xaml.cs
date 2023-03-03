@@ -13,13 +13,13 @@ public partial class ChatPage {
     private Grid grid;
 
     private readonly ChatModel ChatModel;
-    private readonly ChatMessageController _chatMessageController;
+    private readonly ChatController _chatMessageController;
     public ChatPage(User sendFromUser, User sendToUser) {
         ChatModel = new ChatModel(sendFromUser, sendToUser, Database.ReleaseConnection);
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         //Set content
         Initialize();
-        this._chatMessageController = MauiProgram.ServiceProvider.GetService<ChatMessageController>();
+        _chatMessageController = MauiProgram.ServiceProvider.GetService<ChatController>();
     }
 
     private void Initialize() {

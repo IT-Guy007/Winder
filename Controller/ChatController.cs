@@ -9,11 +9,11 @@ using Winder.Repositories.Interfaces;
 
 namespace Controller
 {
-    public class ChatMessageController
+    public class ChatController
     {
         private readonly IChatMessageRepository _chatMessageRepository;
 
-        public ChatMessageController(IChatMessageRepository chatMessageRepository)
+        public ChatController(IChatMessageRepository chatMessageRepository)
         {
             _chatMessageRepository = chatMessageRepository;
         }
