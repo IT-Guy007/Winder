@@ -25,6 +25,7 @@ namespace Winder.Repositories {
             {
                 try
                 {
+                    connection.Open();
                     string query = "INSERT INTO winder.winder.Photos (winder.[user], winder.photo) VALUES(@Email, @profilepicture)";
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@Email", email);
@@ -54,6 +55,7 @@ namespace Winder.Repositories {
             {
                 try
                 {
+                    connection.Open();
                     string query = "DELETE FROM winder.winder.Photos WHERE [user] = @Email";
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@Email", email);
@@ -88,6 +90,7 @@ namespace Winder.Repositories {
                 //Execute query
                 SqlDataReader reader = null;
                 try {
+                    connection.Open();
                     reader = query.ExecuteReader();
                     int i = 0;
                     while (reader.Read()) {

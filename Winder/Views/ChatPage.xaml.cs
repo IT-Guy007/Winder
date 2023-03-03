@@ -155,8 +155,7 @@ public partial class ChatPage {
         sendButton.Clicked += (_, _) => {
             if (!string.IsNullOrWhiteSpace(chatInput.Text)) {
                 chatInput.Text = char.ToUpper(chatInput.Text[0]) + chatInput.Text.Substring(1);
-                new ChatMessage(ChatModel.FromUser.Email, ChatModel.ToUser.Email, DateTime.Now, chatInput.Text, false).SendMessage(Database.ReleaseConnection);
-                _chatMessageController.SendMessage(chatInput.Text, "s1178208@student.windesheim.nl", "s1178208@student.windesheim.nl");
+                _chatMessageController.SendMessage(chatInput.Text, ChatModel.FromUser.Email, ChatModel.ToUser.Email);
                 Initialize();
             }
         };

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataModel;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace Winder.Repositories.Interfaces
         public bool NewLike(string emailLikedPerson, string emailCurrentUser);
         public bool NewDislike(string emailLikedPerson, string emailCurrentUser);
         public bool DeleteLike(string emailLikedPerson, string emailCurrentUser);
-        public List<string> GetLikes(string emailCurrentUser);
+        public Queue<string> GetUsersWhoLikedYou(string email);
     }
 }
