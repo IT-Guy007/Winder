@@ -29,7 +29,4 @@
       <HintPath>..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.Maui.Essentials.Ref.ios\7.0.49\ref\net7.0-ios13.6\Microsoft.Maui.Essentials.dll</HintPath>
     </Reference>
   </ItemGroup>
-
-  
-
 </Project>
