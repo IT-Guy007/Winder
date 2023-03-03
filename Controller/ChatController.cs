@@ -18,9 +18,9 @@ namespace Controller
             _chatMessageRepository = chatMessageRepository;
         }
 
-        public void SendMessage(string message, string senderEmail, string receiverEmail)
+        public void SendMessage(string message, string emailTo, string emailFrom)
         {
-            _chatMessageRepository.SendMessage(message, senderEmail, receiverEmail);
+            _chatMessageRepository.SendMessage(message, emailTo, emailFrom);
         }
         public List<ChatMessage> GetChatMessages(string emailTo, string emailFrom)
         {

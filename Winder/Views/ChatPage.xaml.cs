@@ -14,21 +14,22 @@ public partial class ChatPage {
     private readonly User EmailTo;
     private readonly User EmailFrom;
     private readonly ChatController _chatMessageController;
-    private readonly List<ChatMessage> ChatMessages;
+    private List<ChatMessage> ChatMessages;
     public ChatPage(User sendFromUser, User sendToUser) {
         ChatMessages = new List<ChatMessage>();
         EmailTo = sendToUser;
         EmailFrom = sendFromUser;
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         _chatMessageController = MauiProgram.ServiceProvider.GetService<ChatController>();
-        //Get chatmessages
-        ChatMessages = _chatMessageController.GetChatMessages(EmailTo.Email, EmailFrom.Email);
-        _chatMessageController.SetRead(EmailTo.Email, EmailFrom.Email);
         //Set content
         Initialize();
     }
 
     private void Initialize() {
+        //Get chatmessages
+        ChatMessages = _chatMessageController.GetChatMessages(EmailTo.Email, EmailFrom.Email);
+        _chatMessageController.SetRead(EmailTo.Email, EmailFrom.Email);
+
         //MAUI
         Title = "Chat with your match now!";
         scrollView = new ScrollView { 
@@ -161,7 +162,7 @@ public partial class ChatPage {
         sendButton.Clicked += (_, _) => {
             if (!string.IsNullOrWhiteSpace(chatInput.Text)) {
                 chatInput.Text = char.ToUpper(chatInput.Text[0]) + chatInput.Text.Substring(1);
-                _chatMessageController.SendMessage(chatInput.Text, EmailTo.Email, EmailFrom.Email);
+                _chatMessageController.SendMessage(chatInput.Text, EmailFrom.Email, EmailTo.Email);
                 Initialize();
             }
         };
