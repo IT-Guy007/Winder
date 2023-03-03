@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Winder.Repositories.Interfaces
 {
-    internal interface IUserRepository
+    public interface IUserRepository
     {
         public User Registration(string firstName, string middleName, string lastName, string email, string preference, DateTime birthday, string gender, string bio, string password, byte[] profilePicture, bool active, string school, string major);
         public User CheckLogin(string email, string password);
@@ -19,5 +19,6 @@ namespace Winder.Repositories.Interfaces
         public bool SetInterest(string email, string interest);
         public List<string> GetConditionBasedUsers(User user);
         public List<string> GetInterestsFromUser(string email);
-        }
+        public void UpdatePassword(string email, string password);
     }
+}

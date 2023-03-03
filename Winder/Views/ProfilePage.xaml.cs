@@ -22,8 +22,9 @@ public partial class ProfileChange {
     private readonly bool gender = true;
     private bool bio = true;
     private bool education = true;
-  
-    
+
+    private readonly InterestController _interestsController;
+    private readonly UserController _userController;
 
     /// <summary>
     /// Default constructor, loads the data
@@ -33,8 +34,10 @@ public partial class ProfileChange {
         interests = new List<string>();
         errorColor = new Color(255, 243, 5);
         ProfilePictures = new byte[6][];
-        UserController = new UserController();
-        
+
+        _interestsController = MauiProgram.ServiceProvider.GetService<InterestController>();
+        _userController = MauiProgram.ServiceProvider.GetService<UserController>();
+
         InitializeComponent();
         FillPlaceholders();
         
@@ -48,47 +51,52 @@ public partial class ProfileChange {
         Birthdate.Date = Authentication.CurrentUser.BirthDay;
         Bio.Placeholder = Authentication.CurrentUser.Bio;
         Education.Placeholder = Authentication.CurrentUser.Major;
-        Gender.SelectedIndex = UserController.GetPreferenceFromUser(Authentication.CurrentUser.Gender);
-        Preference.SelectedIndex = UserController.GetPreferenceFromUser(Authentication.CurrentUser.Preference);
-        InterestSelection.ItemsSource = new InterestsModel().GetInterestsFromDataBase(Database.ReleaseConnection);
+        Gender.SelectedIndex = _userController.GetPreferenceFromUser(Authentication.CurrentUser.Gender);
+        Preference.SelectedIndex = _userController.GetPreferenceFromUser(Authentication.CurrentUser.Preference);
+        // fill the interests picker
+        if (!(InterestsModel.InterestsList.Count > 0)) {
+            InterestSelection.ItemsSource = _interestsController.GetInterests();
+        } else {
+            InterestSelection.ItemsSource = InterestsModel.InterestsList;
+        }
         ListInterests.ItemsSource = Authentication.CurrentUser.Interests;
         SetAllImageButtons();
     }
     private void SetAllImageButtons() {
         if (ProfilePictures != null) {
             if (ProfilePictures[0] != null) {
-                byte[] scaledImage = UserController.ScaleImage(ProfilePictures[0],140,200);
+                byte[] scaledImage = _userController.ScaleImage(ProfilePictures[0],140,200);
                 ProfileImage1.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton1.IsVisible = true;
             } else ProfileImage1.Source = "plus.png";
             
             if (ProfilePictures[1] != null) {
-                byte[] scaledImage = UserController.ScaleImage(ProfilePictures[1], 140, 200);
+                byte[] scaledImage = _userController.ScaleImage(ProfilePictures[1], 140, 200);
                 ProfileImage2.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton2.IsVisible = true;
             } else ProfileImage2.Source = "plus.png";
             
             if (ProfilePictures[2] != null) {
-                byte[] scaledImage = UserController.ScaleImage(ProfilePictures[2], 140, 200);
+                byte[] scaledImage = _userController.ScaleImage(ProfilePictures[2], 140, 200);
                 ProfileImage3.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton3.IsVisible = true;
             }
             else ProfileImage3.Source = "plus.png";
             
             if (ProfilePictures[3] != null) {
-                byte[] scaledImage = UserController.ScaleImage(ProfilePictures[3], 140, 200);
+                byte[] scaledImage = _userController.ScaleImage(ProfilePictures[3], 140, 200);
                 ProfileImage4.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton4.IsVisible = true;
             } else ProfileImage4.Source = "plus.png";
             
             if (ProfilePictures[4] != null) {
-                byte[] scaledImage = UserController.ScaleImage(ProfilePictures[4], 140, 200);
+                byte[] scaledImage = _userController.ScaleImage(ProfilePictures[4], 140, 200);
                 ProfileImage5.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton5.IsVisible = true;
             } else ProfileImage5.Source = "plus.png";
             
             if (ProfilePictures[5] != null) {
-                byte[] scaledImage = UserController.ScaleImage(ProfilePictures[5], 140, 200);
+                byte[] scaledImage = _userController.ScaleImage(ProfilePictures[5], 140, 200);
                 ProfileImage6.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton6.IsVisible = true;
             } else ProfileImage6.Source = "plus.png";
@@ -102,7 +110,7 @@ public partial class ProfileChange {
             Authentication.CurrentUser.UpdateUserDataToDatabase(Database.ReleaseConnection);
             Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database.ReleaseConnection);
             Authentication.CurrentUser.InsertAllPhotosInDatabase(ProfilePictures,Database.ReleaseConnection);
-            UserController.RegisterInterestsInDatabase(interests);
+            _userController.RegisterInterestsInDatabase(interests);
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             ClearTextFromEntries();
             UpdatePlaceholders();
@@ -279,7 +287,7 @@ public partial class ProfileChange {
             string imageButtonId = clickedImageButton.AutomationId;
             TurnOnVisibilityCloseButton(imageButtonId);
             ProfilePictures[int.Parse(imageButtonId)] = imageArr;
-            byte[] scaledImage = UserController.ScaleImage(imageArr, 140, 200);
+            byte[] scaledImage = _userController.ScaleImage(imageArr, 140, 200);
             clickedImageButton.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
         } catch (Exception ex) {
             Console.WriteLine("Error picking profilefoto");

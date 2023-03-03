@@ -8,18 +8,18 @@ public partial class SettingsPage {
     private const string PageName = "settingspage";
     public string OriginPage;
 
-    private UserController UserController;
+    private readonly UserController _userController;
     public SettingsPage() {
+        _userController = MauiProgram.ServiceProvider.GetService<UserController>();
 
         InitializeComponent();
-        UserController = new UserController();
         
         Location.SelectedItem = Authentication.CurrentUser.GetSchool(Database.ReleaseConnection);
         minimaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge;
         maximaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge;
         
-        minimaleLeeftijd.ItemsSource = UserController.GetPickerData();
-        maximaleLeeftijd.ItemsSource = UserController.GetPickerData();
+        minimaleLeeftijd.ItemsSource = _userController.GetPickerData();
+        maximaleLeeftijd.ItemsSource = _userController.GetPickerData();
 
     }
 
@@ -30,7 +30,7 @@ public partial class SettingsPage {
     /// <param name="e">The event args</param>
     private async void DeleteAccountButton(object sender, EventArgs e) {
         if (!await DisplayAlert("", "Weet u zeker dat u uw account wilt verwijderen?", "Ja", "Nee")) return;
-        UserController.DeleteAccount();
+        _userController.DeleteAccount();
         await Navigation.PushAsync(new MainPage());
     }
 
@@ -41,7 +41,7 @@ public partial class SettingsPage {
     /// <param name="e">The event args</param>
     private async void LogoutButton(object sender, EventArgs e) {
         if (!await DisplayAlert("", "U wordt uitgelogd", "Ok", "Annuleren")) return;
-        UserController.Logout();
+        _userController.Logout();
         await Navigation.PushAsync(new StartPage());
     }
 
@@ -52,10 +52,11 @@ public partial class SettingsPage {
     /// <param name="sender">The sender</param>
     /// <param name="e">The event args</param>
     private void EditDataButton(object sender, EventArgs e) {
-        if ((int)minimaleLeeftijd.SelectedItem > (int)maximaleLeeftijd.SelectedItem) {
+        if (minimaleLeeftijd.SelectedItem == null || maximaleLeeftijd.SelectedItem == null || 
+            (int)minimaleLeeftijd.SelectedItem > (int)maximaleLeeftijd.SelectedItem) {
             foutLeeftijd.IsVisible = true;
         } else {
-            UserController.SetPreference((int)minimaleLeeftijd.SelectedItem, (int)maximaleLeeftijd.SelectedItem, Location.SelectedItem.ToString());
+            _userController.SetPreference((int)minimaleLeeftijd.SelectedItem, (int)maximaleLeeftijd.SelectedItem, Location.SelectedItem.ToString());
             foutLeeftijd.IsVisible = false;
             DisplayAlert("Melding", "Er zijn succesvol gegevens aangepast", "OK");
         }

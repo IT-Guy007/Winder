@@ -6,7 +6,12 @@ namespace Winder;
 public partial class LoginPage {
     private readonly Button loginButton = new Button();
     private readonly Button forgotPasswordButton = new Button();
+
+    private readonly UserController _userController;
+
     public LoginPage() {
+        _userController = MauiProgram.ServiceProvider.GetService<UserController>();
+
         InitializeComponent();
         
         loginButton.Clicked += Login;
@@ -19,7 +24,7 @@ public partial class LoginPage {
     }
 
     private void Login(object sender, EventArgs e) {
-        User loginUser = new User().CheckLogin(Emailadres.Text, Wachtwoord.Text, Database.ReleaseConnection);
+        User loginUser = _userController.CheckLogin(Emailadres.Text, Wachtwoord.Text);
         
         if (!string.IsNullOrEmpty(loginUser.Email)) {
 

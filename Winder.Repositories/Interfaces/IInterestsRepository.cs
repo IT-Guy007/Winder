@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Winder.Repositories.Interfaces
 {
-    internal interface IInterestsRepository
+    public interface IInterestsRepository
     {
         public List<string> GetInterests();
     }

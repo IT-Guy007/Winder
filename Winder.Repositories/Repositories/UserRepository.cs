@@ -1,6 +1,7 @@
 ﻿using System.Data.SqlClient;
 using DataModel;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Maui.ApplicationModel.Communication;
 using Microsoft.Maui.Storage;
 using Winder.Repositories.Interfaces;
 namespace Winder.Repositories
@@ -14,9 +15,11 @@ namespace Winder.Repositories
         private const int MaxAmountOfPictures = 6;
         private static DateTime MinDateTimeBirth = new DateTime(1925, 01, 01, 0, 0, 0, 0);
         
+        // booleans that can be turned off by a developer if wanted
         private const bool AgeAlgorithm = true;
         private const bool PreferenceAlgorithm = true;
         private const bool InterestsAlgorithm = true;
+
         public const int AmountOfProfilesInQueue = 5;
 
         public UserRepository(IConfiguration configuration)
@@ -35,19 +38,6 @@ namespace Winder.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                connection.Open();
-                UserModel userModel = new UserModel();
-                Console.WriteLine("Check login");
-                string hashed = new UserModel().HashPassword(password);
-
-                if (!email.EndsWith(userModel.EmailEndsWith)) {
-                    email = email + userModel.EmailEndsWith;
-                }
-
-                if (!email.StartsWith(userModel.EmailStartsWith)) {
-                    email = userModel.EmailStartsWith + email;
-                }
-
                 //Create query
                 SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email", connection);
                 query.Parameters.AddWithValue("@Email", email);
@@ -55,16 +45,14 @@ namespace Winder.Repositories
                 //Execute query
                 SqlDataReader reader = null;
                 try {
+                    connection.Open();
+
                     reader = query.ExecuteReader();
 
                     Console.WriteLine("Checking login");
                     while (reader.Read()) {
-
-                        if (hashed == reader["password"] as string) {
-
-                            /*userModel.SetLoginEmail(email);*/ // moet in controller
+                        if (password == reader["password"] as string) {
                             return GetUserFromDatabase(email);
-                                
                         }
                     }
                 } catch (SqlException se) {
@@ -91,7 +79,7 @@ namespace Winder.Repositories
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                if (new UserModel().EmailIsUnique(email, connection)) {
+                if (IsEmailUnique(email)) {
 
                     email = email.ToLower();
 
@@ -496,5 +484,34 @@ namespace Winder.Repositories
                 return interestList;
             }
         }
+
+        /// <summary>
+        /// Update password for current user
+        /// </summary>
+        /// <param name="password">New password for the user in plain</param>
+        public void UpdatePassword(string email, string password)
+        {
+            // connectieopzetten en query maken
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET password = @password WHERE Email = @Email", connection);
+                query.Parameters.AddWithValue("@Email", email);
+                query.Parameters.AddWithValue("@password", password);
+
+                //Execute query
+                try
+                {
+                    connection.Open();
+                    query.ExecuteNonQuery();
+                }
+                catch (SqlException se)
+                {
+                    Console.WriteLine("Error updating password");
+                    Console.WriteLine(se.ToString());
+                    Console.WriteLine(se.StackTrace);
+                }
+            }
+        }
+
     }
 }

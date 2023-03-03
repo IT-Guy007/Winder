@@ -1,4 +1,6 @@
 using System.Data.SqlClient;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.Maui.Storage;
 
 
@@ -25,6 +27,13 @@ public class User {
     private const int MaxAmountOfPictures = 6;
     private static DateTime MinDateTimeBirth = new DateTime(1925, 01, 01, 0, 0, 0, 0);
 
+    private const int RequiredMinimumPasswordLength = 8;
+
+    private const string ValidationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
+    private static int EmailVerificationCodeCharacters = 6;
+
+
+
     public User(){}
 
     public User(string firstName, string middleName, string lastName, DateTime birthDay, string preference, string email, string gender, byte[] profilePicture, string bio, string school, string major, string[] interests, int minAge, int maxAge)
@@ -43,6 +52,107 @@ public class User {
         Interests = interests;
         MinAge = minAge;
         MaxAge = maxAge;
+    }
+
+
+    /// <summary>
+    /// Checks if password is compliant with the requirements
+    /// </summary>
+    /// <param name="password">Plain string password</param>
+    /// <returns>Boolean if password meets requirements</returns>
+    public bool CheckPassword(string password)
+    {
+        if (PasswordLength(password) && PasswordContainsNumber(password) && PasswordContainsCapitalLetter(password))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Checks the password length
+    /// </summary>
+    /// <param name="password">The password in plain string</param>
+    /// <returns>Boolean if password meets length requirement</returns>
+    private bool PasswordLength(string password)
+    {
+
+        return password.Length >= RequiredMinimumPasswordLength;
+
+    }
+
+    /// <summary>
+    /// Checks the password for numbers
+    /// </summary>
+    /// <param name="password">The password in plain string</param>
+    /// <returns>Boolean if password the password contains numbers</returns>
+    private bool PasswordContainsNumber(string password)
+    {
+        return password.Any(char.IsDigit);
+    }
+
+    /// <summary>
+    /// Checks the password for capital letters
+    /// </summary>
+    /// <param name="password">The password in plain string</param>
+    /// <returns>Boolean if password contains capital letters</returns>
+    private bool PasswordContainsCapitalLetter(string password)
+    {
+        return password.Any(char.IsUpper);
+    }
+
+    /// <summary>
+    /// Creates a random string with the given length
+    /// </summary>
+    /// <param name="length">Required length</param>
+    /// <returns></returns>
+    public string RandomString(){
+
+        StringBuilder res = new StringBuilder();
+        using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+        {
+            byte[] uintBuffer = new byte[sizeof(uint)];
+
+            while (EmailVerificationCodeCharacters-- > 0)
+            {
+                rng.GetBytes(uintBuffer);
+                uint num = BitConverter.ToUInt32(uintBuffer, 0);
+                res.Append(ValidationCharacters[(int)(num % (uint)ValidationCharacters.Length)]);
+            }
+        }
+
+        return res.ToString();
+    }
+
+    /// <summary>
+    /// Calculates the age of a date
+    /// </summary>
+    /// <param name="birthDate">The birthday</param>
+    /// <returns>Integer of the age</returns>
+    public int CalculateAge(DateTime birthDate)
+    {
+        int age = DateTime.Now.Year - birthDate.Year;
+        if (DateTime.Now.DayOfYear < birthDate.DayOfYear)
+        {
+            age--;
+        }
+
+        return age;
+    }
+
+    /// <summary>
+    /// Hashed a plain string to a hashed string
+    /// </summary>
+    /// <param name="password">The plain string to hash</param>
+    /// <returns>The hashed string</returns>
+    public string HashPassword(string password)
+    {
+        if (!string.IsNullOrEmpty(password))
+        {
+            string result = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+            return result;
+        }
+        return "";
     }
 
     /// <summary>
@@ -186,128 +296,43 @@ public class User {
         }
 
     }
-    
-    /// <summary>
-    /// Update password for current user
-    /// </summary>
-    /// <param name="password">New password for the user in plain</param>
-    /// <param name="connection">The database connection</param>
-    public void UpdatePassword(string password, SqlConnection connection) {
 
-        // checken of Email in de database staat
-        if (new UserModel().EmailIsUnique(Email,connection) == false)  {
+    ///// <summary>
+    ///// Delete the user from database
+    ///// </summary>
+    ///// <param name="connection">The database connection</param>
+    //public void DeleteUser(SqlConnection connection) {
 
-            // connectieopzetten en query maken
+    //    if (new UserModel().EmailIsUnique(Email, connection)) {
 
-            string hashedPassword = new UserModel().HashPassword(password);
+    //        Email = Email.ToLower();
 
-            SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET password = @password WHERE Email = @Email", connection);
-            query.Parameters.AddWithValue("@Email", Email);
-            query.Parameters.AddWithValue("@password", hashedPassword);
+    //        //querys maken
+    //        SqlCommand queryDeleteUser = new SqlCommand(
+    //            "DELETE FROM winder.winder.Liked WHERE person = @Email;" +
+    //            "DELETE FROM winder.winder.Liked WHERE likedPerson = @Email;" +
+    //            "DELETE FROM winder.winder.Match WHERE person1 = @Email;" +
+    //            "DELETE FROM winder.winder.Match WHERE person2 = @Email;" +
+    //            "DELETE FROM winder.winder.userHasInterest WHERE UID = @Email;" +
+    //            "DELETE FROM winder.winder.[User] WHERE Email = @Email", connection);
+    //        queryDeleteUser.Parameters.AddWithValue("@Email", Email);
 
-            //Execute query
-            try {
-                query.ExecuteNonQuery();
-            } catch (SqlException se) {
-                Console.WriteLine("Error updating password");
-                Console.WriteLine(se.ToString());
-                Console.WriteLine(se.StackTrace);
-            }
-        }
-    }
-    
-    /// <summary>
-    /// Delete the user from database
-    /// </summary>
-    /// <param name="connection">The database connection</param>
-    public void DeleteUser(SqlConnection connection) {
+    //        //Execute querys
+    //        try {
+    //            queryDeleteUser.ExecuteNonQuery();
+    //        } catch (SqlException se) {
+    //            Console.WriteLine("Error deleting user");
+    //            Console.WriteLine(se.ToString());
+    //            Console.WriteLine(se.StackTrace);
+    //        }
 
-        if (new UserModel().EmailIsUnique(Email, connection)) {
+    //    }
 
-            Email = Email.ToLower();
+    //    SecureStorage.Default.Remove("Email");
+    //    SecureStorage.Remove("Email");
+    //    SecureStorage.RemoveAll();
 
-            //querys maken
-            SqlCommand queryDeleteUser = new SqlCommand(
-                "DELETE FROM winder.winder.Liked WHERE person = @Email;" +
-                "DELETE FROM winder.winder.Liked WHERE likedPerson = @Email;" +
-                "DELETE FROM winder.winder.Match WHERE person1 = @Email;" +
-                "DELETE FROM winder.winder.Match WHERE person2 = @Email;" +
-                "DELETE FROM winder.winder.userHasInterest WHERE UID = @Email;" +
-                "DELETE FROM winder.winder.[User] WHERE Email = @Email", connection);
-            queryDeleteUser.Parameters.AddWithValue("@Email", Email);
-
-            //Execute querys
-            try {
-                queryDeleteUser.ExecuteNonQuery();
-            } catch (SqlException se) {
-                Console.WriteLine("Error deleting user");
-                Console.WriteLine(se.ToString());
-                Console.WriteLine(se.StackTrace);
-            }
-            
-        }
-        
-        SecureStorage.Default.Remove("Email");
-        SecureStorage.Remove("Email");
-        SecureStorage.RemoveAll();
-
-    }
-    
-    /// <summary>
-    /// Checks if the given email and password are correct and returns a user object
-    /// </summary>
-    /// <param name="email">The email</param>
-    /// <param name="password">The password</param>
-    /// <param name="connection">The database connection</param>
-    /// <returns>Returns user if login is valid</returns>
-    public User CheckLogin(string email, string password, SqlConnection connection) {
-        UserModel userModel = new UserModel();
-        Console.WriteLine("Check login");
-        string hashed = new UserModel().HashPassword(password);
-
-        if (!email.EndsWith(userModel.EmailEndsWith)) {
-            email = email + userModel.EmailEndsWith;
-        }
-
-        if (!email.StartsWith(userModel.EmailStartsWith)) {
-            email = userModel.EmailStartsWith + email;
-        }
-
-        //Create query
-        SqlCommand query = new SqlCommand("SELECT * FROM winder.winder.[User] WHERE Email = @Email", connection);
-        query.Parameters.AddWithValue("@Email", email);
-
-        //Execute query
-        SqlDataReader reader = null;
-        try {
-            reader = query.ExecuteReader();
-
-            Console.WriteLine("Checking login");
-            while (reader.Read()) {
-
-                if (hashed == reader["password"] as string) {
-
-                    try {
-
-                        userModel.SetLoginEmail(email);
-
-                    } catch {
-                        Console.WriteLine("Error setting login Email");
-                    }
-                }
-            }
-        } catch (SqlException se) {
-            Console.WriteLine("Error logging in user");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-        } finally {
-            if (reader != null) reader.Close();
-        }
-        
-        GetUserFromDatabase(email, connection);
-        return this;
-
-    }
+    //}
 
     /// <summary>
     /// Gets all the users that are matched with the user

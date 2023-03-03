@@ -201,7 +201,7 @@ public partial class MatchPage {
             StackLayout ageStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             
             var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var birthday = new UserController().CalculateAge(ProfileQueueController.CurrentProfile.User.BirthDay);
+            var birthday = new User().CalculateAge(ProfileQueueController.CurrentProfile.User.BirthDay);
             var age = new Label { Text = birthday.ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to Stack

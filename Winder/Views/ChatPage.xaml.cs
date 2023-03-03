@@ -16,11 +16,13 @@ public partial class ChatPage {
     private readonly ChatController _chatMessageController;
     private List<ChatMessage> ChatMessages;
     public ChatPage(User sendFromUser, User sendToUser) {
-        ChatMessages = new List<ChatMessage>();
         EmailTo = sendToUser;
         EmailFrom = sendFromUser;
-        Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
+
+        ChatMessages = new List<ChatMessage>();
         _chatMessageController = MauiProgram.ServiceProvider.GetService<ChatController>();
+
+        Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         //Set content
         Initialize();
     }
