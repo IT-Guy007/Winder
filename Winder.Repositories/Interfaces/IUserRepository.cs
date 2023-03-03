@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Winder.Repositories.Interfaces
 {
-    public interface IUserRepository
+    internal interface IUserRepository
     {
         public User Registration(string firstName, string middleName, string lastName, string email, string preference, DateTime birthday, string gender, string bio, string password, byte[] profilePicture, bool active, string school, string major);
         public User CheckLogin(string email, string password);

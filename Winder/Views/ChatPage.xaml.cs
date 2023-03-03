@@ -1,8 +1,7 @@
 using Controller;
 using DataModel;
-using Microsoft.Extensions.Configuration;
+
 using Microsoft.Maui.Controls.Shapes;
-using Winder.Repositories;
 
 namespace Winder;
 
@@ -13,12 +12,10 @@ public partial class ChatPage {
     private StackLayout verticalStackLayout;
     private Grid grid;
 
-    private readonly ChatModel _chatModel;
-    private readonly ChatMessageController _chatMessageController;
+    private readonly ChatModel ChatModel;
+    private readonly ChatController _chatMessageController;
     public ChatPage(User sendFromUser, User sendToUser) {
-        _chatModel = new ChatModel(sendFromUser, sendToUser);
-        _chatMessageController = new ChatMessageController(new ChatMessageRepository(new ConfigurationManager()));
-
+        ChatModel = new ChatModel(sendFromUser, sendToUser, Database.ReleaseConnection);
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior { IsVisible = false });
         //Set content
         Initialize();
@@ -89,10 +86,7 @@ public partial class ChatPage {
         horizontalStackLayout.Add(refreshButton);
 
         //All the chatmessages
-        _chatMessageController.GetChatMessages(_chatModel.FromUser.Email, _chatModel.ToUser.Email);
-        List<ChatMessage> messages = ChatModel.chat.GetChatMessages();
-        
-        if (messages.Count == 0) {
+        if (ChatModel.Messages.Count == 0) {
             Label noMessagesFound = new Label {
                 Text = "No messages found", 
                 HorizontalOptions = LayoutOptions.Center, 
@@ -101,7 +95,7 @@ public partial class ChatPage {
             };
             verticalStackLayout.Add(noMessagesFound);
         } else  {
-            foreach (var message in messages) {
+            foreach (var message in ChatModel.Messages) {
                 Border chatBorder = new Border {
                     Padding = 10,
                     Margin = 10,
@@ -109,7 +103,7 @@ public partial class ChatPage {
                     VerticalOptions = LayoutOptions.Fill,
                 };
 
-                if (message.FromUser == User.currentUser.Email) {
+                if (message.FromUser == ChatModel.FromUser.Email) {
                     //From me
                     chatBorder.HorizontalOptions = LayoutOptions.End;
                     chatBorder.StrokeShape = new BoxView() {
@@ -161,9 +155,7 @@ public partial class ChatPage {
         sendButton.Clicked += (_, _) => {
             if (!string.IsNullOrWhiteSpace(chatInput.Text)) {
                 chatInput.Text = char.ToUpper(chatInput.Text[0]) + chatInput.Text.Substring(1);
-                _chatMessageController.SendMessage(chatInput.Text,
-                    User.currentUser.Email, 
-                    messages[0].FromUser != User.currentUser.Email ? messages[0].FromUser : messages[0].ToUser);
+                _chatMessageController.SendMessage(chatInput.Text, ChatModel.FromUser.Email, ChatModel.ToUser.Email);
                 Initialize();
             }
         };
