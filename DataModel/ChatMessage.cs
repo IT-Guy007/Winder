@@ -16,25 +16,5 @@ public class ChatMessage {
         Message = message;
         Read = read;
     }
-    
-    /// <summary>
-    /// Send chat message to database
-    /// </summary>
-    /// <param name="personFrom">Person who send the message</param>
-    /// <param name="personTo">Person who receives the message</param>
-    /// <param name="message">The message</param>
-    /// <param name="connection">The database connection</param>
-    public void SendMessage(SqlConnection connection) {
-        try {
-            SqlCommand query = new SqlCommand("INSERT INTO winder.winder.[ChatMessage] (personFrom, personTo,chatMessage,sendDate,[readMessage]) VALUES ('" + FromUser + "' , '" + ToUser + "','" + Message + "', @sendDate, 0)", connection);
-            query.Parameters.AddWithValue("@sendDate", SendTime);
-            query.ExecuteNonQuery();
-
-        } catch (SqlException se) {
-            Console.WriteLine("Error sending the message");
-            Console.WriteLine(se.ToString());
-            Console.WriteLine(se.StackTrace);
-        }
-    }
 
 }

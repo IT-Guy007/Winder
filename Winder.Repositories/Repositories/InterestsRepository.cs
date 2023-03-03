@@ -20,9 +20,9 @@ public class InterestsRepository : IInterestsRepository
     /// <returns>Returns the interests in the form of a string list</returns>
     public List<string> GetInterests()
     {
-        using (SqlConnection connection =
-               new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+        using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
         {
+            connection.Open();
             List<string> interests = new List<string>();
 
             string sql = "SELECT * FROM Winder.Winder.[Interests];";

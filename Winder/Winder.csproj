@@ -55,6 +55,13 @@
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
         <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="Controller\**" />
+      <EmbeddedResource Remove="Controller\**" />
+      <MauiCss Remove="Controller\**" />
+      <MauiXaml Remove="Controller\**" />
+      <None Remove="Controller\**" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Maui" Version="4.0.0" />
@@ -161,8 +168,5 @@
     </ItemGroup>
     <ItemGroup>
       <BundleResource Include="Resources\Images\dotnet_bot.svg" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Controller\" />
     </ItemGroup>
 </Project>

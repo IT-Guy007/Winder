@@ -27,11 +27,11 @@ namespace Winder
                 });
 
             builder.Services.AddSingleton<IConfiguration>(new ConfigurationBuilder()
-                .AddJsonFile("configdatabase.test.json")
+                .AddJsonFile("configdatabase.json")
                 .Build());
             // Add the repositories
             builder.Services.AddSingleton<IChatMessageRepository, ChatMessageRepository>();
-            builder.Services.AddSingleton<ChatMessageController>(sp => new ChatMessageController(sp.GetService<IChatMessageRepository>()));
+            builder.Services.AddSingleton<ChatController>(sp => new ChatController(sp.GetService<IChatMessageRepository>()));
             // Initialise the toolkit
             builder.UseMauiApp<App>().UseMauiCommunityToolkit();
 

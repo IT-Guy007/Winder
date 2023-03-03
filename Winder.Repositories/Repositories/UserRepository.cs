@@ -35,6 +35,7 @@ namespace Winder.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
+                connection.Open();
                 UserModel userModel = new UserModel();
                 Console.WriteLine("Check login");
                 string hashed = new UserModel().HashPassword(password);
@@ -61,7 +62,7 @@ namespace Winder.Repositories
 
                         if (hashed == reader["password"] as string) {
 
-                            userModel.SetLoginEmail(email);
+                            /*userModel.SetLoginEmail(email);*/ // moet in controller
                             return GetUserFromDatabase(email);
                                 
                         }
@@ -74,7 +75,7 @@ namespace Winder.Repositories
                 } finally {
                     if (reader != null) reader.Close();
                 }
-                return new User();
+                return null;
             }
 
         }
@@ -83,24 +84,25 @@ namespace Winder.Repositories
         /// Deletes the user from the database
         /// </summary>
         /// <param name="email">The email of the user to delete in the database</param>
-        /// <returns>Bool if succeeded</returns>
+        /// <returns>Bool if succeeded  </returns>
 
         public bool DeleteUser(string email)
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
+                connection.Open();
                 if (new UserModel().EmailIsUnique(email, connection)) {
 
                     email = email.ToLower();
 
                     //querys maken
                     SqlCommand queryDeleteUser = new SqlCommand(
-                        "DELETE FROM winder.winder.Liked WHERE person = @Email;" +
-                        "DELETE FROM winder.winder.Liked WHERE likedPerson = @Email;" +
-                        "DELETE FROM winder.winder.Match WHERE person1 = @Email;" +
-                        "DELETE FROM winder.winder.Match WHERE person2 = @Email;" +
-                        "DELETE FROM winder.winder.userHasInterest WHERE UID = @Email;" +
-                        "DELETE FROM winder.winder.[User] WHERE Email = @Email", connection);
+                        "DELETE FROM Winder.Winder.Liked WHERE person = @Email;" +
+                        "DELETE FROM Winder.Winder.Liked WHERE likedPerson = @Email;" +
+                        "DELETE FROM Winder.Winder.Match WHERE person1 = @Email;" +
+                        "DELETE FROM Winder.Winder.Match WHERE person2 = @Email;" +
+                        "DELETE FROM Winder.Winder.userHasInterest WHERE UID = @Email;" +
+                        "DELETE FROM Winder.Winder.[User] WHERE Email = @Email", connection);
                     queryDeleteUser.Parameters.AddWithValue("@Email", email);
 
                     //Execute querys
@@ -115,9 +117,9 @@ namespace Winder.Repositories
             
                 }
         
-                SecureStorage.Default.Remove("Email");
+                /*SecureStorage.Default.Remove("Email");    // moet in controller
                 SecureStorage.Remove("Email");
-                SecureStorage.RemoveAll();
+                SecureStorage.RemoveAll();*/
                 return false;
             }
         }
@@ -234,6 +236,7 @@ namespace Winder.Repositories
             using (SqlConnection connection =
                    new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
+                connection.Open();
                 string query = "SELECT * FROM Winder.Winder.[User] WHERE email = @Email";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Email", email);
@@ -290,6 +293,7 @@ namespace Winder.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
+                connection.Open();
                 List<string> emails = new List<string>();
         
                 string sql = "SELECT Email FROM Winder.Winder.[User];";
@@ -340,6 +344,7 @@ namespace Winder.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
+                connection.Open();
                 SqlCommand command = new SqlCommand(
                     "INSERT INTO Winder.Winder.[User](firstname, middlename, lastname, birthday, Preference, Email, password, Gender, ProfilePicture, bio, active, location, education)" +
                     "VALUES('" + firstName + "', '" + middleName + "', '" + lastName + "', @birthday, '" + preference + "', '" +
@@ -368,8 +373,10 @@ namespace Winder.Repositories
         /// <returns>Returns true if succeeded</returns>
         public bool SetInterest(string email, string interest)
         {
+            if (IsEmailUnique(email)) return false;
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
+                connection.Open();
                 try {
                     string query = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
                     SqlCommand command = new SqlCommand(query, connection);
@@ -406,34 +413,42 @@ namespace Winder.Repositories
         /// <returns>True if successful update to the database</returns>
         public bool UpdateUserData(string firstName, string middleName, string lastName, string email, string preference, DateTime birthday, string gender, string bio, string password, byte[] profilePicture, bool active, string school, string major)
         {
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            if (IsEmailUnique(email))
             {
-                try { 
-                    //Create query
-                    SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
-                                                      "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, education = @Education,birthday = @birthday, bio = @bio, Gender = @Gender, Preference = @Preference,ProfilePicture = @profilepicture " +
-                                                      "where Email = @Email", connection);
-                    query.Parameters.AddWithValue("@firstname", firstName);
-                    query.Parameters.AddWithValue("@middlename", middleName);
-                    query.Parameters.AddWithValue("@lastname", lastName);
-                    query.Parameters.AddWithValue("@birthday", birthday);
-                    query.Parameters.AddWithValue("@Gender", gender);
-                    query.Parameters.AddWithValue("@Preference", preference);
-                    query.Parameters.AddWithValue("@Email", email);
-                    query.Parameters.AddWithValue("@bio", bio);
-                    query.Parameters.AddWithValue("@Education", major);
-                    query.Parameters.AddWithValue("@ProfilePicture", profilePicture);
-           
-                    //Execute query
-                    query.ExecuteNonQuery();
-                    return true;
-                }
-                catch (SqlException se)
+                return false;
+            }
+            else {
+                using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
-                    Console.WriteLine("Error updating user in database");
-                    Console.WriteLine(se.ToString());
-                    Console.WriteLine(se.StackTrace);
-                    return false;
+                    connection.Open();
+                    try
+                    {
+                        //Create query
+                        SqlCommand query = new SqlCommand("UPDATE winder.[User]" +
+                                                          "SET firstname = @firstname, middlename = @middlename, lastname = @lastname, education = @Education,birthday = @birthday, bio = @bio, Gender = @Gender, Preference = @Preference,ProfilePicture = @profilepicture " +
+                                                          "where Email = @Email", connection);
+                        query.Parameters.AddWithValue("@firstname", firstName);
+                        query.Parameters.AddWithValue("@middlename", middleName);
+                        query.Parameters.AddWithValue("@lastname", lastName);
+                        query.Parameters.AddWithValue("@birthday", birthday);
+                        query.Parameters.AddWithValue("@Gender", gender);
+                        query.Parameters.AddWithValue("@Preference", preference);
+                        query.Parameters.AddWithValue("@Email", email);
+                        query.Parameters.AddWithValue("@bio", bio);
+                        query.Parameters.AddWithValue("@Education", major);
+                        query.Parameters.AddWithValue("@ProfilePicture", profilePicture);
+
+                        //Execute query
+                        query.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch (SqlException se)
+                    {
+                        Console.WriteLine("Error updating user in database");
+                        Console.WriteLine(se.ToString());
+                        Console.WriteLine(se.StackTrace);
+                        return false;
+                    }
                 }
             }
         }
@@ -448,6 +463,7 @@ namespace Winder.Repositories
             using (SqlConnection connection =
                    new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
+                connection.Open();
                 string query = "SELECT * FROM Winder.Winder.[userHasInterest] WHERE UID = @Email;";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Email", email);

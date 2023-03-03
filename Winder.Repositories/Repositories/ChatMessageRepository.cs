@@ -26,10 +26,13 @@ namespace Winder.Repositories
                     string query =
                         "SELECT [winder].[ChatMessage].[personFrom], [winder].[ChatMessage].[personTo], [winder].[ChatMessage].[sendDate], [winder].[ChatMessage].[chatMessage], [winder].[ChatMessage].[readMessage] " +
                         "FROM [winder].[ChatMessage] " +
-                        "WHERE ([winder].[ChatMessage].[personFrom] = '" + emailFrom +
-                        "' AND [winder].[ChatMessage].[personTo] = '" + emailTo + "') " +
-                        "OR ([winder].[ChatMessage].[personFrom] = '" + emailTo +
-                        "' AND [winder].[ChatMessage].[personTo] = '" + emailFrom + "') ORDER BY sendDate";
+                        "WHERE " +
+                            "([winder].[ChatMessage].[personFrom] = '" + emailFrom + "' " +
+                            "AND [winder].[ChatMessage].[personTo] = '" + emailTo + "') " +
+                            "OR " +
+                            "([winder].[ChatMessage].[personFrom] = '" + emailTo + "' " +
+                            "AND [winder].[ChatMessage].[personTo] = '" + emailFrom + "') " +
+                        "ORDER BY sendDate";
 
                     //Create command
                     SqlCommand sqlCommand = new SqlCommand(query, connection);
@@ -60,8 +63,8 @@ namespace Winder.Repositories
                     Console.WriteLine(se.ToString());
                     Console.WriteLine(se.StackTrace);
                 }
-                return chatMessages;
             }
+            return chatMessages;
         }
 
         public bool SendMessage(string message, string EmailFrom, string EmailTo)
@@ -88,10 +91,10 @@ namespace Winder.Repositories
                     Console.WriteLine("Error sending message");
                     Console.WriteLine(se.ToString());
                     Console.WriteLine(se.StackTrace);
+                    return false;
                 }
-
-                return true;
             }
+            return true;
         }
 
         public bool SetRead(string EmailFrom, string EmailTo)
@@ -101,7 +104,7 @@ namespace Winder.Repositories
                 try
                 {
                     connection.Open();
-                    SqlCommand query = new SqlCommand("UPDATE winder.winder.[ChatMessage] SET [readMessage] = 1 WHERE personTo = '" + EmailFrom + "' AND personFrom = '" + EmailTo + "'", connection);
+                    SqlCommand query = new SqlCommand("UPDATE winder.winder.[ChatMessage] SET [readMessage] = 1 WHERE personTo = '" + EmailTo + "' AND personFrom = '" + EmailFrom + "'", connection);
                     query.ExecuteNonQuery();
                 }
                 catch (SqlException se)
@@ -109,7 +112,7 @@ namespace Winder.Repositories
                     Console.WriteLine("Error updating read message");
                     Console.WriteLine(se.ToString());
                     Console.WriteLine(se.StackTrace);
-
+                    return false;
                 }
             }
             return true;
