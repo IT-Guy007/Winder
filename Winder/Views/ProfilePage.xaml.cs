@@ -22,8 +22,8 @@ public partial class ProfileChange {
     private readonly bool gender = true;
     private bool bio = true;
     private bool education = true;
-  
-    
+
+    private readonly InterestController _interestsController;
 
     /// <summary>
     /// Default constructor, loads the data
@@ -34,7 +34,9 @@ public partial class ProfileChange {
         errorColor = new Color(255, 243, 5);
         ProfilePictures = new byte[6][];
         UserController = new UserController();
-        
+
+        _interestsController = MauiProgram.ServiceProvider.GetService<InterestController>();
+
         InitializeComponent();
         FillPlaceholders();
         
@@ -50,7 +52,12 @@ public partial class ProfileChange {
         Education.Placeholder = Authentication.CurrentUser.Major;
         Gender.SelectedIndex = UserController.GetPreferenceFromUser(Authentication.CurrentUser.Gender);
         Preference.SelectedIndex = UserController.GetPreferenceFromUser(Authentication.CurrentUser.Preference);
-        InterestSelection.ItemsSource = new InterestsModel().GetInterestsFromDataBase(Database.ReleaseConnection);
+        // fill the interests picker
+        if (!(InterestsModel.InterestsList.Count > 0)) {
+            InterestSelection.ItemsSource = _interestsController.GetInterests();
+        } else {
+            InterestSelection.ItemsSource = InterestsModel.InterestsList;
+        }
         ListInterests.ItemsSource = Authentication.CurrentUser.Interests;
         SetAllImageButtons();
     }

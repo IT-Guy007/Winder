@@ -20,12 +20,23 @@ public partial class RegisterPage {
     private readonly List<string> interestsList;
     private readonly List<string> chosenInterestsList;
 
+    private readonly InterestController _interestsController;
+
+
     public RegisterPage() {
         interestsList = new List<string>();
         chosenInterestsList = new List<string>();
-        
+        _interestsController = MauiProgram.ServiceProvider.GetService<InterestController>();
+
         InitializeComponent();
-        interestsList = new InterestsModel().GetInterestsFromDataBase(Database.ReleaseConnection);
+
+        // fill the interests picker
+        if (!(InterestsModel.InterestsList.Count > 0)) {
+            interestsList = _interestsController.GetInterests();
+        } else {
+            interestsList = InterestsModel.InterestsList;
+        }
+
         foreach (string interest in interestsList) {
             Interesses.Items.Add(interest);
         }

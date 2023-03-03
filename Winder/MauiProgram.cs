@@ -32,6 +32,8 @@ namespace Winder
             // Add the repositories
             builder.Services.AddSingleton<IChatMessageRepository, ChatMessageRepository>();
             builder.Services.AddSingleton<ChatController>(sp => new ChatController(sp.GetService<IChatMessageRepository>()));
+            builder.Services.AddSingleton<IInterestsRepository, InterestsRepository>();
+            builder.Services.AddSingleton<InterestController>(sp => new InterestController(sp.GetService<IInterestsRepository>()));
             // Initialise the toolkit
             builder.UseMauiApp<App>().UseMauiCommunityToolkit();
 
