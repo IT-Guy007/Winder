@@ -1,175 +1,174 @@
+using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
+using DataModel;
+using Microsoft.Maui.ApplicationModel.Communication;
 using Microsoft.Maui.Storage;
+using Winder.Repositories;
+using Winder.Repositories.Interfaces;
 
+namespace Controller
+{
 
-namespace Controller;
-
-public class UserController {
-    
-    private const int RequiredMinimumPasswordLength =  8;
-    private const string ValidationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
-    private static int EmailVerificationCodeCharacters = 6;
-
-    /// <summary>
-    /// Calculates the age of a date
-    /// </summary>
-    /// <param name="birthDate">The birthday</param>
-    /// <returns>Integer of the age</returns>
-    public int CalculateAge(DateTime birthDate) {
-        int age = DateTime.Now.Year - birthDate.Year;
-        if (DateTime.Now.DayOfYear < birthDate.DayOfYear) {
-            age--;
-        }
-
-        return age;
-    }
-
-    /// <summary>
-    /// Checks if password is compliant with the requirements
-    /// </summary>
-    /// <param name="password">Plain string password</param>
-    /// <returns>Boolean if password meets requirements</returns>
-    public bool CheckPassword(string password)
+    public class UserController
     {
-        if (PasswordLength(password) && PasswordContainsNumber(password) && PasswordContainsCapitalLetter(password))
+        private readonly IUserRepository _userRepository;
+
+        private readonly string EmailStartsWith = "s";
+        private readonly string EmailEndsWith = "@student.windesheim.nl";
+
+        public UserController(IUserRepository userRepository)
         {
-            return true;
+            _userRepository = userRepository;
         }
-        return false;
-    }
 
-
-    /// <summary>
-    /// Checks the password length
-    /// </summary>
-    /// <param name="password">The password in plain string</param>
-    /// <returns>Boolean if password meets length requirement</returns>
-    private bool PasswordLength(string password) {
-
-        return password.Length >= RequiredMinimumPasswordLength;
-        
-    }
-
-    /// <summary>
-    /// Checks the password for numbers
-    /// </summary>
-    /// <param name="password">The password in plain string</param>
-    /// <returns>Boolean if password the password contains numbers</returns>
-    private bool PasswordContainsNumber(string password)
-    {
-        return password.Any(char.IsDigit);
-    }
-
-    /// <summary>
-    /// Checks the password for capital letters
-    /// </summary>
-    /// <param name="password">The password in plain string</param>
-    /// <returns>Boolean if password contains capital letters</returns>
-    private bool PasswordContainsCapitalLetter(string password)
-    {
-        return password.Any(char.IsUpper);
-    }
-
-    /// <summary>
-    /// Creates a random string with the given length
-    /// </summary>
-    /// <param name="length">Required length</param>
-    /// <returns></returns>
-    public string RandomString() {
-        
-        StringBuilder res = new StringBuilder();
-        using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider()) {
-            byte[] uintBuffer = new byte[sizeof(uint)];
-
-            while (EmailVerificationCodeCharacters-- > 0) {
-                rng.GetBytes(uintBuffer);
-                uint num = BitConverter.ToUInt32(uintBuffer, 0);
-                res.Append(ValidationCharacters[(int)(num % (uint)ValidationCharacters.Length)]);
+        /// <summary>
+        /// Adds all interests to users list of interests
+        /// </summary>
+        /// <param name="interests"></param>
+        public void RegisterInterestsInDatabase(List<string> interests)
+        {
+            foreach (var interest in interests)
+            {
+                Authentication.CurrentUser.SetInterestInDatabase(interest, Database.ReleaseConnection);
             }
         }
 
-        return res.ToString();
-    }
 
-    /// <summary>
-    /// Adds all interests to users list of interests
-    /// </summary>
-    /// <param name="interests"></param>
-    public void RegisterInterestsInDatabase(List<string> interests)
-    {
-        foreach (var interest in interests)
+        /// <summary>
+        /// Gets the picker data for the age picker
+        /// </summary>
+        /// <returns></returns>
+        public int[] GetPickerData()
         {
-            Authentication.CurrentUser.SetInterestInDatabase(interest, Database.ReleaseConnection);
-        }
-    }
+            int[] leeftijd = new int[82];
+            for (int i = 0; i < leeftijd.Length; i++)
+            {
+                leeftijd[i] = i + 18;
 
+            }
 
-    /// <summary>
-    /// Gets the picker data for the age picker
-    /// </summary>
-    /// <returns></returns>
-    public int[] GetPickerData() {
-        int[] leeftijd = new int[82];
-        for (int i = 0; i < leeftijd.Length; i++) {
-            leeftijd[i] = i + 18;
+            return leeftijd;
 
         }
 
-        return leeftijd;
+        public void SetPreference(int minAge, int maxAge, string school)
+        {
+            Authentication.CurrentUser.SetMinAge(minAge, Database.ReleaseConnection);
+            Authentication.CurrentUser.SetMaxAge(maxAge, Database.ReleaseConnection);
+            Authentication.CurrentUser.SetSchool(school, Database.ReleaseConnection);
+        }
 
-    }
+        public void DeleteAccount()
+        {
+            //Authentication.CurrentUser.DeleteUser(Database.ReleaseConnection);
+            Authentication.CurrentUser = null;
+            SecureStorage.Default.Remove("Email");
+            SecureStorage.Remove("Email");
+            SecureStorage.RemoveAll();
+        }
 
-    public void SetPreference(int minAge, int maxAge, string school) {
-        Authentication.CurrentUser.SetMinAge(minAge, Database.ReleaseConnection);
-        Authentication.CurrentUser.SetMaxAge(maxAge, Database.ReleaseConnection);
-        Authentication.CurrentUser.SetSchool(school, Database.ReleaseConnection);
-    }
+        public void Logout()
+        {
+            Authentication.CurrentUser = null;
+            SecureStorage.Default.Remove("Email");
+            SecureStorage.Remove("Email");
+            SecureStorage.RemoveAll();
 
-    public void DeleteAccount() {
-        Authentication.CurrentUser.DeleteUser(Database.ReleaseConnection);
-        Authentication.CurrentUser = null;
-        SecureStorage.Default.Remove("Email");
-        SecureStorage.Remove("Email");
-        SecureStorage.RemoveAll();
-    }
+        }
 
-    public void Logout() {
-        Authentication.CurrentUser = null;
-        SecureStorage.Default.Remove("Email");
-        SecureStorage.Remove("Email");
-        SecureStorage.RemoveAll();
-        
-    }
-    
-    public byte[] ScaleImage(byte[] bytes, int width, int height) {
+        public byte[] ScaleImage(byte[] bytes, int width, int height)
+        {
 #if WINDOWS
-    using (MemoryStream ms = new MemoryStream(bytes)) {
-        using (Bitmap image = new Bitmap(ms)) {
-            Bitmap resizedImage = new Bitmap(width, height);
-            using (Graphics gfx = Graphics.FromImage(resizedImage))
+            using (MemoryStream ms = new MemoryStream(bytes)) {
+                using (Bitmap image = new Bitmap(ms)) {
+                    Bitmap resizedImage = new Bitmap(width, height);
+                    using (Graphics gfx = Graphics.FromImage(resizedImage))
+                    {
+                        gfx.DrawImage(image, 0, 0, width, height);
+                    }
+
+                    using (MemoryStream output = new MemoryStream())
+                    {
+                        resizedImage.Save(output, image.RawFormat);
+                        return output.ToArray();
+                    }
+                }
+            }
+#else
+            return bytes;
+#endif
+        }
+
+        /// <summary>
+        /// Man of vrouw converter naar integer
+        /// </summary>
+        /// <returns>Integer of man of vrouw</returns>
+        public int GetPreferenceFromUser(string preference)
+        {
+            return preference == "Man" ? 1 : 2;
+        }
+
+
+        /// <summary>
+        /// Sets the login email in the secure storage
+        /// </summary>
+        /// <param name="email">The email to set</param>
+        public async Task SetLoginEmail(string email)
+        {
+            Console.WriteLine("Setting login Email");
+            await SecureStorage.SetAsync("Email", email);
+
+        }
+
+
+        /// <summary>
+        /// Checks if the email is from Windesheim student
+        /// </summary>
+        /// <param name="email">The given email</param>
+        /// <returns></returns>
+        public bool CheckEmail(string email)
+        {
+            return email.EndsWith(EmailEndsWith) && email.StartsWith(EmailStartsWith);
+        }
+
+        public User CheckLogin(string email, string password)
+        {
+            Console.WriteLine("Check login");
+            string hashed = new User().HashPassword(password);
+
+            if (!email.EndsWith(EmailEndsWith))
             {
-                gfx.DrawImage(image, 0, 0, width, height);
+                email = email + EmailEndsWith;
             }
 
-            using (MemoryStream output = new MemoryStream())
+            if (!email.StartsWith(EmailStartsWith))
             {
-                resizedImage.Save(output, image.RawFormat);
-                return output.ToArray();
+                email = EmailStartsWith + email;
             }
+
+            User user = _userRepository.CheckLogin(email, hashed);
+
+            SetLoginEmail(email);
+
+            return user;
+        }
+
+        public void UpdatePassword(string email, string password)
+        {
+            // checken of Email in de database staat
+            if (EmailIsUnique(email) == false)
+            {
+                string hashedPassword = new User().HashPassword(password);
+                _userRepository.UpdatePassword(email, hashedPassword);
+
+            }
+
+        }
+
+        public bool EmailIsUnique(string email)
+        {
+            return _userRepository.IsEmailUnique(email);
         }
     }
-#else
-        return bytes;
-#endif
-    }
-    
-    /// <summary>
-    /// Man of vrouw converter naar integer
-    /// </summary>
-    /// <returns>Integer of man of vrouw</returns>
-    public int GetPreferenceFromUser(string preference) {
-        return preference == "Man" ? 1 : 2;
-    }
-
 }

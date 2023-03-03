@@ -21,12 +21,15 @@ public partial class RegisterPage {
     private readonly List<string> chosenInterestsList;
 
     private readonly InterestController _interestsController;
+    private readonly UserController _userController;
 
 
     public RegisterPage() {
         interestsList = new List<string>();
         chosenInterestsList = new List<string>();
         _interestsController = MauiProgram.ServiceProvider.GetService<InterestController>();
+        _userController = MauiProgram.ServiceProvider.GetService<UserController>();
+
 
         InitializeComponent();
 
@@ -192,7 +195,7 @@ public partial class RegisterPage {
         }
         else
         {
-            if (new UserModel().EmailIsUnique(Email.Text, Database.ReleaseConnection))
+            if (_userController.EmailIsUnique(Email.Text))
             {
                 FoutEmail.IsVisible = false;
                 email = Email.Text;
@@ -204,7 +207,7 @@ public partial class RegisterPage {
                 FoutEmail.IsVisible = true;
                 aantalchecks -= 1;
             }
-            if (new UserModel().CheckEmail(Email.Text))
+            if (_userController.CheckEmail(Email.Text))
             {
                 email = Email.Text;
                 aantalchecks += 1;
@@ -269,7 +272,7 @@ public partial class RegisterPage {
         }
         else
         {
-            if (new UserController().CheckPassword(Wachtwoord.Text) == false)
+            if (new User().CheckPassword(Wachtwoord.Text) == false)
             {
                 FoutWachtwoord.Text = "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten";
                 FoutWachtwoord.IsVisible = true;
@@ -278,7 +281,7 @@ public partial class RegisterPage {
             else
             {
                 FoutWachtwoord.IsVisible = false;
-                password = new UserModel().HashPassword(Wachtwoord.Text);
+                password = new User().HashPassword(Wachtwoord.Text);
                 aantalchecks += 1;
             }
 
@@ -289,7 +292,7 @@ public partial class RegisterPage {
 
         #region geboortedatum checks
 
-        if (new UserController().CalculateAge(geboortedatumtijdelijk) < 18)
+        if (new User().CalculateAge(geboortedatumtijdelijk) < 18)
         {
             FoutLeeftijd.IsVisible = true;
             aantalchecks -= 1;

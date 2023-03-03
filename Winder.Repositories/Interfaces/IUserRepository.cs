@@ -19,5 +19,6 @@ namespace Winder.Repositories.Interfaces
         public bool SetInterest(string email, string interest);
         public List<string> GetConditionBasedUsers(User user);
         public List<string> GetInterestsFromUser(string email);
-        }
+        public void UpdatePassword(string email, string password);
     }
+}

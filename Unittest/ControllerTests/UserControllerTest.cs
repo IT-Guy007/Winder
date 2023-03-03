@@ -9,7 +9,7 @@ public class UserControllerTest {
 
     [SetUp]
     public void Setup() {
-        UserController = new UserController();
+        //UserController = new UserController();
     }
     
     [TestCase("Man", ExpectedResult = 1)]
