@@ -1,9 +1,4 @@
 ﻿using DataModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Winder.Repositories.Interfaces;
 
 
@@ -24,7 +19,12 @@ namespace Controller
         }
         public List<ChatMessage> GetChatMessages(string emailTo, string emailFrom)
         {
-            return _chatMessageRepository.GetChatMessages(emailTo, emailFrom);
+            foreach(ChatMessage message in _chatMessageRepository.GetChatMessages(emailTo, emailFrom))
+            {
+                ChatModel.chat.AddChatMessagesToList(message);
+            }
+            
+            return ChatModel.chat.GetChatMessages();
         }
         public void SetRead(string emailTo, string emailFrom) {
             _chatMessageRepository.SetRead(emailTo, emailFrom);

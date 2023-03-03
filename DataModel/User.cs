@@ -3,7 +3,9 @@ using Microsoft.Maui.Storage;
 
 namespace DataModel;
 
-public class User {
+public class User
+{
+    public static User currentUser;
     public string FirstName { get; set; }
     public string MiddleName { get; set; }
     public string LastName { get; set; }

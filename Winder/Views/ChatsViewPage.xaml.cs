@@ -11,10 +11,14 @@ public partial class ChatsViewPage {
     public string OriginPage;
     private const string pageName = "Chatpage";
 
+    private readonly UserController _userController;
+
     private MatchModel MatchModel;
     
     public ChatsViewPage() {
         InitializeComponent();
+        this._userController = MauiProgram.ServiceProvider.GetService<UserController>();
+
         MatchModel = new MatchModel(Authentication.CurrentUser.GetMatchedStudentsFromUser(Database.ReleaseConnection));
         ListOfMatches.ItemsSource = MatchModel.Matches.GetUsers();
     }
@@ -36,7 +40,7 @@ public partial class ChatsViewPage {
 
     private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e) {
         var tappedItem = e.Item as User;
-        Navigation.PushAsync(new ChatPage(Authentication.CurrentUser, new User().GetUserFromDatabase(tappedItem.Email, Database.ReleaseConnection)));
+        Navigation.PushAsync(new ChatPage(Authentication.CurrentUser, tappedItem));
     }
 
     /// <summary>
