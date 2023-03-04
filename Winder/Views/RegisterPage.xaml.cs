@@ -21,14 +21,14 @@ public partial class RegisterPage {
     private readonly List<string> chosenInterestsList;
 
     private readonly InterestController _interestsController;
-    private readonly UserController _userController;
+    private readonly ValidationController _validationController;
 
 
     public RegisterPage() {
         interestsList = new List<string>();
         chosenInterestsList = new List<string>();
         _interestsController = MauiProgram.ServiceProvider.GetService<InterestController>();
-        _userController = MauiProgram.ServiceProvider.GetService<UserController>();
+        _validationController = MauiProgram.ServiceProvider.GetService<ValidationController>();
 
 
         InitializeComponent();
@@ -195,7 +195,7 @@ public partial class RegisterPage {
         }
         else
         {
-            if (_userController.EmailIsUnique(Email.Text))
+            if (_validationController.EmailIsUnique(Email.Text))
             {
                 FoutEmail.IsVisible = false;
                 email = Email.Text;
@@ -207,7 +207,7 @@ public partial class RegisterPage {
                 FoutEmail.IsVisible = true;
                 aantalchecks -= 1;
             }
-            if (_userController.CheckEmail(Email.Text))
+            if (_validationController.CheckEmail(Email.Text))
             {
                 email = Email.Text;
                 aantalchecks += 1;

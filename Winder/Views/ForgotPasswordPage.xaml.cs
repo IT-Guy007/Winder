@@ -6,10 +6,13 @@ namespace Winder;
 public partial class ForgotPasswordPage {
 
 
-    private readonly UserController _userController;
+    private readonly ValidationController _validationController;
+    private readonly SettingsController _settingsController;
 
     public ForgotPasswordPage() {
-        _userController = MauiProgram.ServiceProvider.GetService<UserController>();
+        _validationController = MauiProgram.ServiceProvider.GetService<ValidationController>();
+        _settingsController = MauiProgram.ServiceProvider.GetService<SettingsController>();
+
 
         InitializeComponent();
     }
@@ -22,7 +25,7 @@ public partial class ForgotPasswordPage {
         string email = Emailadres.Text;
         
         //Check if Email exists
-        if (_userController.EmailIsUnique(email.ToLower())) {
+        if (_validationController.EmailIsUnique(email.ToLower())) {
             DisplayAlert("", "Dit emailadres is niet bekend bij ons", "OK"); // popup
             
         } else {
@@ -73,7 +76,7 @@ public partial class ForgotPasswordPage {
                     User user = new User() {
                         Email = email
                     };
-                    _userController.UpdatePassword(email, newPassword); 
+                    _settingsController.UpdatePassword(email, newPassword); 
                     
                     DisplayAlert("", "Wachtwoord is succesvol gewijzigd", "OK"); // popup
                     Navigation.PushAsync(new LoginPage()); // terug naar het loginscherm

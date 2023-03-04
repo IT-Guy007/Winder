@@ -35,7 +35,15 @@ namespace Winder
             builder.Services.AddSingleton<IInterestsRepository, InterestsRepository>();
             builder.Services.AddSingleton<InterestController>(sp => new InterestController(sp.GetService<IInterestsRepository>()));
             builder.Services.AddSingleton<IUserRepository, UserRepository>();
-            builder.Services.AddSingleton<UserController>(sp => new UserController(sp.GetService<IUserRepository>()));
+            builder.Services.AddSingleton<ValidationController>(sp => new ValidationController(sp.GetService<IUserRepository>()));
+            builder.Services.AddSingleton<ResetPasswordController>(sp => new ResetPasswordController(sp.GetService<IUserRepository>()));
+            builder.Services.AddSingleton<SettingsController>(sp => new SettingsController(sp.GetService<IUserRepository>()));
+            builder.Services.AddSingleton<SignInController>(sp => new SignInController(sp.GetService<IUserRepository>()));
+            builder.Services.AddSingleton<RegistrationController>(sp => new RegistrationController(sp.GetService<IUserRepository>()));
+            builder.Services.AddSingleton<ILikedRepository, LikedRepository>();
+            builder.Services.AddSingleton<LikeDislikeController>(sp => new LikeDislikeController(sp.GetService<ILikedRepository>()));
+
+            builder.Services.AddSingleton<MatchmakingController>(sp => new MatchmakingController(sp.GetService<IUserRepository>(), sp.GetService<ILikedRepository>()));
             // Initialise the toolkit
             builder.UseMauiApp<App>().UseMauiCommunityToolkit();
 
