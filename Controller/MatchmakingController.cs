@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DataModel;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,16 +11,26 @@ namespace Controller
 {
     public class MatchmakingController
     {
-        private readonly IUserRepository _userRepository; 
-        private readonly ILikedRepository _likeRepository;
+        private ProfileQueue ProfileQueue { get; }
+        private MatchModel MatchModel { get; }
+
+        public Profile CurrentProfile { get; private set; }
 
 
-        public MatchmakingController(IUserRepository userRepository, ILikedRepository likedRepository)
+        private readonly IMatchRepository _matchRepository;
+
+        public MatchmakingController(IMatchRepository matchRepository)
         {
-            _userRepository = userRepository;
-            _likeRepository = likedRepository;
+            _matchRepository = matchRepository;
+
+            ProfileQueue = new ProfileQueue();
+            MatchModel = new MatchModel(_matchRepository.GetMatchedStudentsFromUser(Authentication.CurrentUser));
         }
 
+        public List<Match> GetMatchedStudentsFromUser(User user)
+        {
+            return _matchRepository.GetMatchedStudentsFromUser(user);
+        }
 
 
     }

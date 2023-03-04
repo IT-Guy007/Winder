@@ -175,13 +175,14 @@ namespace Winder.Repositories
                 //Randomize the result
                 query = query + " ORDER BY NEWID()";
 
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@Email", user.Email);
-
                 //Get the users emails
                 SqlDataReader reader = null;
                 try
                 {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@Email", user.Email);
+
                     reader = command.ExecuteReader(); // execute het command
                     if (reader.HasRows)
                     {

@@ -1,7 +1,7 @@
 namespace DataModel;
 
 public class ProfileQueue {
-    private Queue<Profile> ProfileItems { get; set; }
+    public static Queue<Profile> ProfileItems { get; private set; }
     
     public ProfileQueue() {
         ProfileItems = new Queue<Profile>();

@@ -186,35 +186,5 @@ public class AlgorithmModel {
 
         return result;
     }
-    /// <summary>
-    /// Gets the profiles from the database async
-    /// </summary>
-    /// <param name="email"></param>
-    /// <returns>Array of profiles</returns>
-    public Profile[] GetProfiles(User user, SqlConnection connection) {
-        
-        //The users(Email) to get
-        List<string> usersToRetrief = new List<string>();
-
-        usersToRetrief = new AlgorithmModel().AlgorithmForSwiping(user,connection);
-
-        //Results
-        Profile[] profiles = new Profile[usersToRetrief.Count()];
-
-        //Retrieving
-        for (int i = 0; i < usersToRetrief.Count(); i++) {
-
-            //Get the user
-            User userItem = new User().GetUserFromDatabase(usersToRetrief[i],connection);
-
-            //Get the images of the user
-            byte[][] images = userItem.GetPicturesFromDatabase(connection);
-            var profile = new Profile(userItem, images);
-
-            profiles[i] = profile;
-        }
-
-        return profiles;
-    }
     
 }

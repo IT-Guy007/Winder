@@ -14,24 +14,25 @@ public partial class MatchPage {
 
     private int SelectedImage;
     private readonly int swipes = 0;
-
-    private ProfileQueueController ProfileQueueController;
     
     private MatchModel MatchModel;
 
     private readonly ValidationController _validationController;
+    private readonly MatchmakingController _matchmakingController;
+    private readonly LikeDislikeController _likeDislikeController;
 
     public MatchPage() {
-        //Gets the controller
-        ProfileQueueController = new ProfileQueueController(Authentication.CurrentUser,Database.ReleaseConnection);
-
-        //Set first profile
-        ProfileQueueController.NextProfile(Database.ReleaseConnection);
         
         //Set the match model
         MatchModel = new MatchModel(Authentication.CurrentUser.GetMatchedStudentsFromUser(Database.ReleaseConnection));
 
         _validationController = MauiProgram.ServiceProvider.GetService<ValidationController>();
+        _matchmakingController = MauiProgram.ServiceProvider.GetService<MatchmakingController>();
+        _likeDislikeController = MauiProgram.ServiceProvider.GetService<LikeDislikeController>();
+
+
+        //Set first profile
+        _likeDislikeController.NextProfile();
 
         //Set content
         Initialize();
@@ -83,8 +84,6 @@ public partial class MatchPage {
         chatButton.Clicked += ChatButton_Clicked;
         chatButton.HorizontalOptions = LayoutOptions.End;
 
-       
-
         //my profile button
         var myProfile = new Button {
             Text = "Mijn profiel",
@@ -125,7 +124,7 @@ public partial class MatchPage {
         };
 
         //Images
-        if (ProfileQueueController.CurrentProfile == null) {
+        if (_matchmakingController.CurrentProfile == null) {
             if (Authentication.CurrentUser.ProfilePicture.Length < 0) {
 
                 var profileImage = new Image {
@@ -162,10 +161,10 @@ public partial class MatchPage {
             currentImage.WidthRequest = 600;
             currentImage.HeightRequest = 600;
 
-            currentImage.Source = ImageSource.FromStream(() => new MemoryStream(ProfileQueueController.CurrentProfile.ProfileImages[SelectedImage]));
+            currentImage.Source = ImageSource.FromStream(() => new MemoryStream(_matchmakingController.CurrentProfile.ProfileImages[SelectedImage]));
 
             currentImage.Clicked += (_, _) => {
-                if (SelectedImage < ProfileQueueController.CurrentProfile.ProfileImages.Count(x => x != null) - 1) {
+                if (SelectedImage < _matchmakingController.CurrentProfile.ProfileImages.Count(x => x != null) - 1) {
                     SelectedImage++;
                     Initialize();
                 } else {
@@ -180,7 +179,7 @@ public partial class MatchPage {
             StackLayout nameStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             
             var namelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var name = new Label { Text = ProfileQueueController.CurrentProfile.User.FirstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var name = new Label { Text = _matchmakingController.CurrentProfile.User.FirstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to stack
             nameStackLayout.Add(namelbl);
@@ -192,7 +191,7 @@ public partial class MatchPage {
             StackLayout genderStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             
             var genderlbl = new Label { Text = "Geslacht: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var gender = new Label { Text = ProfileQueueController.CurrentProfile.User.Gender, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var gender = new Label { Text = _matchmakingController.CurrentProfile.User.Gender, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to Stack
             genderStackLayout.Add(genderlbl);
@@ -204,7 +203,7 @@ public partial class MatchPage {
             StackLayout ageStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             
             var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var birthday = _validationController.CalculateAge(ProfileQueueController.CurrentProfile.User.BirthDay);
+            var birthday = _validationController.CalculateAge(_matchmakingController.CurrentProfile.User.BirthDay);
             var age = new Label { Text = birthday.ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to Stack
@@ -217,7 +216,7 @@ public partial class MatchPage {
             StackLayout locationStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             
             var locationlbl = new Label { Text = "Windesheim locatie: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var location = new Label { Text = ProfileQueueController.CurrentProfile.User.School, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var location = new Label { Text = _matchmakingController.CurrentProfile.User.School, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             
             //Add to Stack
             locationStackLayout.Add(locationlbl);
@@ -229,7 +228,7 @@ public partial class MatchPage {
             StackLayout educationStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             
             var educationlbl = new Label { Text = "Opleiding: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var education = new Label { Text = ProfileQueueController.CurrentProfile.User.Major, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var education = new Label { Text = _matchmakingController.CurrentProfile.User.Major, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to stack
             educationStackLayout.Add(educationlbl);
@@ -239,7 +238,7 @@ public partial class MatchPage {
             //Bio
             StackLayout bioStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             var biolbl = new Label { Text = "Bio: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var bio = new Label { Text = ProfileQueueController.CurrentProfile.User.Bio ,FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var bio = new Label { Text = _matchmakingController.CurrentProfile.User.Bio ,FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
 
             //Add to stack
@@ -253,13 +252,13 @@ public partial class MatchPage {
 
             InterestsStackLayout.Add(interestslbl);
 
-            for (int i = 0; i < ProfileQueueController.CurrentProfile.User.Interests.Length; i++) {
+            for (int i = 0; i < _matchmakingController.CurrentProfile.User.Interests.Length; i++) {
                 if (i != 0) {
                     var spacecommavar = new Label { FontSize = 20, HorizontalOptions = LayoutOptions.Start, Text = ", " };
                     InterestsStackLayout.Add(spacecommavar);
                 }
                 
-                var interestvar = new Label { Text = ProfileQueueController.CurrentProfile.User.Interests[i], FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+                var interestvar = new Label { Text = _matchmakingController.CurrentProfile.User.Interests[i], FontSize = 20, HorizontalOptions = LayoutOptions.Start };
                 InterestsStackLayout.Add(interestvar);
 
             }
@@ -383,10 +382,10 @@ public partial class MatchPage {
     /// <param name="sender">The sender</param>
     /// <param name="e">The event args</param>
     private void OnLike(object sender, EventArgs e) {
-        if (MatchModel.CheckMatch(Authentication.CurrentUser.Email, ProfileQueueController.CurrentProfile.User.Email, Database.ReleaseConnection)) {
+        if (MatchModel.CheckMatch(Authentication.CurrentUser.Email, _matchmakingController.CurrentProfile.User.Email, Database.ReleaseConnection)) {
             MatchPopup();
         }
-        ProfileQueueController.OnLike(Database.ReleaseConnection);
+        _likeDislikeController.OnLike();
         SelectedImage = 0;
         Initialize();
     }
@@ -397,7 +396,7 @@ public partial class MatchPage {
     /// <param name="sender">The sender</param>
     /// <param name="e">The event args</param>
     private void OnDislike(object sender, EventArgs e) {
-        ProfileQueueController.OnDislike(Database.ReleaseConnection);
+        _likeDislikeController.OnDislike();
         SelectedImage = 0;
         Initialize();
     }
