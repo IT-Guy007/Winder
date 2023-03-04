@@ -27,13 +27,6 @@ public class User {
     private const int MaxAmountOfPictures = 6;
     private static DateTime MinDateTimeBirth = new DateTime(1925, 01, 01, 0, 0, 0, 0);
 
-    private const int RequiredMinimumPasswordLength = 8;
-
-    private const string ValidationCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
-    private static int EmailVerificationCodeCharacters = 6;
-
-
-
     public User(){}
 
     public User(string firstName, string middleName, string lastName, DateTime birthDay, string preference, string email, string gender, byte[] profilePicture, string bio, string school, string major, string[] interests, int minAge, int maxAge)
@@ -52,107 +45,6 @@ public class User {
         Interests = interests;
         MinAge = minAge;
         MaxAge = maxAge;
-    }
-
-
-    /// <summary>
-    /// Checks if password is compliant with the requirements
-    /// </summary>
-    /// <param name="password">Plain string password</param>
-    /// <returns>Boolean if password meets requirements</returns>
-    public bool CheckPassword(string password)
-    {
-        if (PasswordLength(password) && PasswordContainsNumber(password) && PasswordContainsCapitalLetter(password))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// Checks the password length
-    /// </summary>
-    /// <param name="password">The password in plain string</param>
-    /// <returns>Boolean if password meets length requirement</returns>
-    private bool PasswordLength(string password)
-    {
-
-        return password.Length >= RequiredMinimumPasswordLength;
-
-    }
-
-    /// <summary>
-    /// Checks the password for numbers
-    /// </summary>
-    /// <param name="password">The password in plain string</param>
-    /// <returns>Boolean if password the password contains numbers</returns>
-    private bool PasswordContainsNumber(string password)
-    {
-        return password.Any(char.IsDigit);
-    }
-
-    /// <summary>
-    /// Checks the password for capital letters
-    /// </summary>
-    /// <param name="password">The password in plain string</param>
-    /// <returns>Boolean if password contains capital letters</returns>
-    private bool PasswordContainsCapitalLetter(string password)
-    {
-        return password.Any(char.IsUpper);
-    }
-
-    /// <summary>
-    /// Creates a random string with the given length
-    /// </summary>
-    /// <param name="length">Required length</param>
-    /// <returns></returns>
-    public string RandomString(){
-
-        StringBuilder res = new StringBuilder();
-        using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
-        {
-            byte[] uintBuffer = new byte[sizeof(uint)];
-
-            while (EmailVerificationCodeCharacters-- > 0)
-            {
-                rng.GetBytes(uintBuffer);
-                uint num = BitConverter.ToUInt32(uintBuffer, 0);
-                res.Append(ValidationCharacters[(int)(num % (uint)ValidationCharacters.Length)]);
-            }
-        }
-
-        return res.ToString();
-    }
-
-    /// <summary>
-    /// Calculates the age of a date
-    /// </summary>
-    /// <param name="birthDate">The birthday</param>
-    /// <returns>Integer of the age</returns>
-    public int CalculateAge(DateTime birthDate)
-    {
-        int age = DateTime.Now.Year - birthDate.Year;
-        if (DateTime.Now.DayOfYear < birthDate.DayOfYear)
-        {
-            age--;
-        }
-
-        return age;
-    }
-
-    /// <summary>
-    /// Hashed a plain string to a hashed string
-    /// </summary>
-    /// <param name="password">The plain string to hash</param>
-    /// <returns>The hashed string</returns>
-    public string HashPassword(string password)
-    {
-        if (!string.IsNullOrEmpty(password))
-        {
-            string result = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
-            return result;
-        }
-        return "";
     }
 
     /// <summary>

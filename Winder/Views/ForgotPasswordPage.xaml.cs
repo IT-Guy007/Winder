@@ -31,7 +31,7 @@ public partial class ForgotPasswordPage {
         } else {
 
             //Send forgotten password Email
-            string code = new User().RandomString();
+            string code = _validationController.RandomString();
         
             string body = "<h1>Authenticatie-code voor Winder</h1>" + 
                           "De authenthenticatie-code voor het resetten van het wachtwoord van uw Winder account is: <b>" + $"{code}</b>" +
@@ -69,7 +69,7 @@ public partial class ForgotPasswordPage {
             } else if (newPassword.Equals(repeatedPassword)) {
                 
                 //Checks for different requirements
-                if (new User().CheckPassword(newPassword) == false) {
+                if (_validationController.CheckPassword(newPassword) == false) {
                         DisplayAlert("", "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten", "OK"); // popup
                         
                 } else {

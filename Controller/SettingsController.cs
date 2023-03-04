@@ -13,19 +13,21 @@ namespace Controller
     public class SettingsController
     {
         private readonly IUserRepository _userRepository;
+        private ValidationController validationController;
 
 
         public SettingsController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+            validationController = new ValidationController(_userRepository);
         }
 
         public void UpdatePassword(string email, string password)
         {
             // checken of Email in de database staat
-            if (new ValidationController(_userRepository).EmailIsUnique(email) == false)
+            if (validationController.EmailIsUnique(email) == false)
             {
-                string hashedPassword = new User().HashPassword(password);
+                string hashedPassword = validationController.HashPassword(password);
                 _userRepository.UpdatePassword(email, hashedPassword);
 
             }
