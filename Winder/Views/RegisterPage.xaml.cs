@@ -272,7 +272,7 @@ public partial class RegisterPage {
         }
         else
         {
-            if (new User().CheckPassword(Wachtwoord.Text) == false)
+            if (_validationController.CheckPassword(Wachtwoord.Text) == false)
             {
                 FoutWachtwoord.Text = "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten";
                 FoutWachtwoord.IsVisible = true;
@@ -281,7 +281,7 @@ public partial class RegisterPage {
             else
             {
                 FoutWachtwoord.IsVisible = false;
-                password = new User().HashPassword(Wachtwoord.Text);
+                password = _validationController.HashPassword(Wachtwoord.Text);
                 aantalchecks += 1;
             }
 
@@ -292,7 +292,7 @@ public partial class RegisterPage {
 
         #region geboortedatum checks
 
-        if (new User().CalculateAge(geboortedatumtijdelijk) < 18)
+        if (_validationController.CalculateAge(geboortedatumtijdelijk) < 18)
         {
             FoutLeeftijd.IsVisible = true;
             aantalchecks -= 1;

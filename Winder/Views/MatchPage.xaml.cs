@@ -19,6 +19,7 @@ public partial class MatchPage {
     
     private MatchModel MatchModel;
 
+    private readonly ValidationController _validationController;
 
     public MatchPage() {
         //Gets the controller
@@ -29,6 +30,8 @@ public partial class MatchPage {
         
         //Set the match model
         MatchModel = new MatchModel(Authentication.CurrentUser.GetMatchedStudentsFromUser(Database.ReleaseConnection));
+
+        _validationController = MauiProgram.ServiceProvider.GetService<ValidationController>();
 
         //Set content
         Initialize();
@@ -201,7 +204,7 @@ public partial class MatchPage {
             StackLayout ageStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             
             var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var birthday = new User().CalculateAge(ProfileQueueController.CurrentProfile.User.BirthDay);
+            var birthday = _validationController.CalculateAge(ProfileQueueController.CurrentProfile.User.BirthDay);
             var age = new Label { Text = birthday.ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to Stack
