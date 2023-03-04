@@ -7,10 +7,10 @@ public partial class LoginPage {
     private readonly Button loginButton = new Button();
     private readonly Button forgotPasswordButton = new Button();
 
-    private readonly UserController _userController;
+    private readonly ValidationController _validationController;
 
     public LoginPage() {
-        _userController = MauiProgram.ServiceProvider.GetService<UserController>();
+        _validationController = MauiProgram.ServiceProvider.GetService<ValidationController>();
 
         InitializeComponent();
         
@@ -24,7 +24,7 @@ public partial class LoginPage {
     }
 
     private void Login(object sender, EventArgs e) {
-        User loginUser = _userController.CheckLogin(Emailadres.Text, Wachtwoord.Text);
+        User loginUser = _validationController.CheckLogin(Emailadres.Text, Wachtwoord.Text);
         
         if (!string.IsNullOrEmpty(loginUser.Email)) {
 

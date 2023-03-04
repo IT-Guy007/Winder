@@ -5,10 +5,10 @@ namespace Winder;
 
 public partial class EditPasswordPopUp {
 
-    private readonly UserController _userController;
+    private readonly SettingsController _settingsController;
 
     public EditPasswordPopUp() {
-        _userController = MauiProgram.ServiceProvider.GetService<UserController>();
+        _settingsController = MauiProgram.ServiceProvider.GetService<SettingsController>();
 
         InitializeComponent();
 	}
@@ -35,7 +35,7 @@ public partial class EditPasswordPopUp {
                 foutMelding.Text = "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten!";
                 foutMelding.IsVisible = true;
             } else {
-                _userController.UpdatePassword(email, newPassword);
+                _settingsController.UpdatePassword(email, newPassword);
 
                 Close();
             }

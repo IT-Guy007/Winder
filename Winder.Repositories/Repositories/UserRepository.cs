@@ -354,35 +354,6 @@ namespace Winder.Repositories
         }
 
         /// <summary>
-        /// Sets interest of the user in the database
-        /// </summary>
-        /// <param name="email">The email of the user</param>
-        /// <param name="interest">Interest to add</param>
-        /// <returns>Returns true if succeeded</returns>
-        public bool SetInterest(string email, string interest)
-        {
-            if (IsEmailUnique(email)) return false;
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-            {
-                connection.Open();
-                try {
-                    string query = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@Email", email);
-                    command.Parameters.AddWithValue("@Interest", interest);
-                    command.ExecuteNonQuery();
-                    return true;
-
-                } catch (SqlException e) {
-                    Console.WriteLine("Error registering interest in database");
-                    Console.WriteLine(e.ToString());
-                    Console.WriteLine(e.StackTrace);
-                    return false;
-                }
-            }
-        }
-
-        /// <summary>
         /// Updates the users profile data in the database
         /// </summary>
         /// <param name="firstName">The first name of the user</param>
@@ -440,7 +411,39 @@ namespace Winder.Repositories
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Sets interest of the user in the database
+        /// </summary>
+        /// <param name="email">The email of the user</param>
+        /// <param name="interest">Interest to add</param>
+        /// <returns>Returns true if succeeded</returns>
+        public bool SetInterest(string email, string interest)
+        {
+            if (IsEmailUnique(email)) return false;
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+                try
+                {
+                    string query = "INSERT INTO winder.winder.userHasInterest (winder.UID, winder.interest) VALUES(@Email, @Interest)";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@Email", email);
+                    command.Parameters.AddWithValue("@Interest", interest);
+                    command.ExecuteNonQuery();
+                    return true;
+
+                }
+                catch (SqlException e)
+                {
+                    Console.WriteLine("Error registering interest in database");
+                    Console.WriteLine(e.ToString());
+                    Console.WriteLine(e.StackTrace);
+                    return false;
+                }
+            }
+        }
+
         /// <summary>
         /// Gets all the interests an user has chosen, from the database
         /// </summary>
