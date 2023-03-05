@@ -2,6 +2,8 @@ using System.Data.SqlClient;
 using Controller;
 using DataModel;
 using MAUI;
+using Microsoft.Extensions.Configuration;
+using Winder.Repositories;
 
 namespace Winder;
 
@@ -10,9 +12,20 @@ public partial class MainPage {
 
     private bool connectionsucceeded = true;
     private bool displayresult;
+
+    private UserRepository _userRepository;
+    private IConfigurationRoot _configuration;
     public MainPage() {
         InitializeComponent();
         
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .AddJsonFile("configdatabase.test.json")
+            .Build();
+        _userRepository = new UserRepository(configuration);
+        
+        _configuration = new ConfigurationBuilder()
+            .AddJsonFile("configdatabase.test.json")
+            .Build();
     }
 
     protected override async void OnAppearing() {
@@ -21,7 +34,9 @@ public partial class MainPage {
 
         try{
             Console.WriteLine("Testing database connection");
-            Database.InitializeReleaseConnection();
+            
+            SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            connection.Open();
             Console.WriteLine("Successful connection");
         }
         catch (SqlException se) {
@@ -44,14 +59,14 @@ public partial class MainPage {
             if (!String.IsNullOrWhiteSpace(userEmail))
             {
                 Console.WriteLine("Found user who was logged in, restoring session");
-                Authentication.CurrentUser = new User().GetUserFromDatabase(userEmail, Database.ReleaseConnection);
+                User.CurrentUser = _userRepository.GetUserFromDatabase(userEmail);
                 Console.WriteLine("Restored");
             } else {
                 Console.WriteLine("No user found");
                 await Navigation.PushAsync(new StartPage());
             }
 
-            if (!(Authentication.CurrentUser == null)) {
+            if (!(User.CurrentUser == null)) {
                 Console.WriteLine("Pushing new MatchPage");
                 await Navigation.PushAsync(new MatchPage());
             }

@@ -1,25 +1,30 @@
 using CommunityToolkit.Maui.Views;
 using Controller;
+using DataModel;
 using MAUI;
 
 namespace Winder;
 
-public partial class SettingsPage {
+public partial class SettingsPage
+{
     private const string PageName = "settingspage";
     public string OriginPage;
 
-    private UserController UserController;
-    public SettingsPage() {
+    private readonly SettingsController _settingsController;
+
+    public SettingsPage()
+    {
+        _settingsController = MauiProgram.ServiceProvider.GetService<SettingsController>();
 
         InitializeComponent();
-        UserController = new UserController();
-        
-        Location.SelectedItem = Authentication.CurrentUser.GetSchool(Database.ReleaseConnection);
-        minimaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge;
-        maximaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge;
-        
-        minimaleLeeftijd.ItemsSource = UserController.GetPickerData();
-        maximaleLeeftijd.ItemsSource = UserController.GetPickerData();
+
+        Location.SelectedItem = User.CurrentUser.School;   //aa
+        minimaleLeeftijd.SelectedItem = User.CurrentUser.MaxAge; // aa
+        maximaleLeeftijd.SelectedItem = User.CurrentUser.MaxAge; // aa
+
+
+        minimaleLeeftijd.ItemsSource = _settingsController.GetPickerData();
+        maximaleLeeftijd.ItemsSource = _settingsController.GetPickerData();
 
     }
 
@@ -28,9 +33,10 @@ public partial class SettingsPage {
     /// </summary>
     /// <param name="sender">The sender</param>
     /// <param name="e">The event args</param>
-    private async void DeleteAccountButton(object sender, EventArgs e) {
+    private async void DeleteAccountButton(object sender, EventArgs e)
+    {
         if (!await DisplayAlert("", "Weet u zeker dat u uw account wilt verwijderen?", "Ja", "Nee")) return;
-        UserController.DeleteAccount();
+        _settingsController.DeleteAccount();
         await Navigation.PushAsync(new MainPage());
     }
 
@@ -39,27 +45,33 @@ public partial class SettingsPage {
     /// </summary>
     /// <param name="sender">The sender</param>
     /// <param name="e">The event args</param>
-    private async void LogoutButton(object sender, EventArgs e) {
+    private async void LogoutButton(object sender, EventArgs e)
+    {
         if (!await DisplayAlert("", "U wordt uitgelogd", "Ok", "Annuleren")) return;
-        UserController.Logout();
+        _settingsController.Logout();
         await Navigation.PushAsync(new StartPage());
     }
 
-    
+
     /// <summary>
     /// Edit data button, this will set the preferences the data of the user
     /// </summary>
     /// <param name="sender">The sender</param>
     /// <param name="e">The event args</param>
-    private void EditDataButton(object sender, EventArgs e) {
-        if ((int)minimaleLeeftijd.SelectedItem > (int)maximaleLeeftijd.SelectedItem) {
+    private void EditDataButton(object sender, EventArgs e)
+    {
+        if (minimaleLeeftijd.SelectedItem == null || maximaleLeeftijd.SelectedItem == null ||
+            (int)minimaleLeeftijd.SelectedItem > (int)maximaleLeeftijd.SelectedItem)
+        {
             foutLeeftijd.IsVisible = true;
-        } else {
-            UserController.SetPreference((int)minimaleLeeftijd.SelectedItem, (int)maximaleLeeftijd.SelectedItem, Location.SelectedItem.ToString());
+        }
+        else
+        {
+            _settingsController.SetPreference((int)minimaleLeeftijd.SelectedItem, (int)maximaleLeeftijd.SelectedItem, Location.SelectedItem.ToString());
             foutLeeftijd.IsVisible = false;
             DisplayAlert("Melding", "Er zijn succesvol gegevens aangepast", "OK");
         }
-            
+
     }
 
     /// <summary>
@@ -67,7 +79,8 @@ public partial class SettingsPage {
     /// </summary>
     /// <param name="sender">The sender</param>
     /// <param name="e">The event args</param>
-    private void EditPasswordBtn(object sender, EventArgs e) {
+    private void EditPasswordBtn(object sender, EventArgs e)
+    {
         this.ShowPopup(new EditPasswordPopUp());
     }
 
@@ -76,9 +89,10 @@ public partial class SettingsPage {
     /// </summary>
     /// <param name="sender">The sender</param>
     /// <param name="e">The eventargs</param>
-    private void MyProfile_Clicked(object sender, EventArgs e) {
+    private void MyProfile_Clicked(object sender, EventArgs e)
+    {
         ProfileChange myProfile = new ProfileChange();
-        
+
         myProfile.OriginPage = PageName;
         Navigation.PushAsync(myProfile);
 
@@ -89,10 +103,13 @@ public partial class SettingsPage {
     /// </summary>
     /// <param name="sender">The sender</param>
     /// <param name="e">The event args</param>
-    private void Backbutton_Clicked(object sender, EventArgs e) {
-        switch (OriginPage) {
+    private void Backbutton_Clicked(object sender, EventArgs e)
+    {
+        switch (OriginPage)
+        {
             case "matchpage":
-                MatchPage page = new MatchPage {
+                MatchPage page = new MatchPage
+                {
                     BackButtonVisible = true
                 };
                 Navigation.PushAsync(page);
@@ -112,8 +129,10 @@ public partial class SettingsPage {
     /// </summary>
     /// <param name="sender">The sender</param>
     /// <param name="e">The eventargs</param>
-    private void ChatButton_Clicked(object sender, EventArgs e) {
-        ChatsViewPage chatsViews = new ChatsViewPage {
+    private void ChatButton_Clicked(object sender, EventArgs e)
+    {
+        ChatsViewPage chatsViews = new ChatsViewPage
+        {
             OriginPage = PageName
         };
         Navigation.PushAsync(chatsViews);
@@ -125,12 +144,14 @@ public partial class SettingsPage {
     /// </summary>
     /// <param name="sender">The sender</param>
     /// <param name="e">The object</param>
-    private void matchPage_Clicked(object sender, EventArgs e) {
-        MatchPage page = new MatchPage {
+    private void matchPage_Clicked(object sender, EventArgs e)
+    {
+        MatchPage page = new MatchPage
+        {
             OriginPage = PageName
         };
         Navigation.PushAsync(page);
 
     }
-   
+
 }

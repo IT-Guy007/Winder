@@ -55,9 +55,17 @@
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
         <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="Controller\**" />
+      <EmbeddedResource Remove="Controller\**" />
+      <MauiCss Remove="Controller\**" />
+      <MauiXaml Remove="Controller\**" />
+      <None Remove="Controller\**" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Maui" Version="4.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
         <PackageReference Include="Microsoft.QualityTools.Testing.Fakes" Version="17.5.0-beta.23060.1" />
         <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
@@ -152,6 +160,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Controller\Controller.csproj" />
       <ProjectReference Include="..\DataModel\DataModel.csproj" />
+      <ProjectReference Include="..\Winder.Repositories\Data.csproj" />
     </ItemGroup>
 
     <ItemGroup>
