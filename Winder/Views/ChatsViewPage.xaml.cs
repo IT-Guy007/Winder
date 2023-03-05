@@ -15,7 +15,7 @@ public partial class ChatsViewPage {
     
     public ChatsViewPage() {
         InitializeComponent();
-        MatchModel = new MatchModel(Authentication.CurrentUser.GetMatchedStudentsFromUser(Database.ReleaseConnection));
+        MatchModel = new MatchModel(User.CurrentUser.GetMatchedStudentsFromUser(Database.ReleaseConnection));
         ListOfMatches.ItemsSource = MatchModel.Matches.GetUsers();
     }
     
@@ -36,7 +36,7 @@ public partial class ChatsViewPage {
 
     private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e) {
         var tappedItem = e.Item as User;
-        Navigation.PushAsync(new ChatPage(Authentication.CurrentUser, new User().GetUserFromDatabase(tappedItem.Email, Database.ReleaseConnection)));
+        Navigation.PushAsync(new ChatPage(User.CurrentUser, new User().GetUserFromDatabase(tappedItem.Email, Database.ReleaseConnection)));
     }
 
     /// <summary>
