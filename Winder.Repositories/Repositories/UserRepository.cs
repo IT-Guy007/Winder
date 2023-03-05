@@ -295,7 +295,7 @@ namespace Winder.Repositories
             using (SqlConnection connection =
                    new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                connection.Open();
+                
                 string query = "SELECT * FROM Winder.Winder.[User] WHERE email = @Email";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Email", email);
@@ -303,6 +303,7 @@ namespace Winder.Repositories
                 SqlDataReader reader = null;
                 try
                 {
+                    connection.Open();
                     reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -441,7 +442,7 @@ namespace Winder.Repositories
         /// <param name="school">The school of the user</param>
         /// <param name="major">The major of the user</param>
         /// <returns>True if successful update to the database</returns>
-        public bool UpdateUserData(string firstName, string middleName, string lastName, string email, string preference, DateTime birthday, string gender, string bio, string password, byte[] profilePicture, bool active, string school, string major)
+        public bool UpdateUserData(string firstName, string middleName, string lastName, string email, string preference, DateTime birthday, string gender, string bio, byte[] profilePicture, string major)
         {
             if (IsEmailUnique(email))
             {
@@ -599,6 +600,7 @@ namespace Winder.Repositories
                 SqlDataReader reader = null;
                 try
                 {
+                    connection.Open();
                     reader = query.ExecuteReader();
                     if (reader.Read())
                     {

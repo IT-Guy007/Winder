@@ -42,7 +42,7 @@ public partial class ChatsViewPage {
 
     private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e) {
         var tappedItem = e.Item as User;
-        Navigation.PushAsync(new ChatPage(User.CurrentUser, new User().GetUserFromDatabase(tappedItem.Email, Database.ReleaseConnection)));
+        Navigation.PushAsync(new ChatPage(User.CurrentUser, tappedItem));
     }
 
     /// <summary>

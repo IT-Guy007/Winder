@@ -16,7 +16,7 @@ public partial class MatchPage {
     private readonly int _swipes = 0;
 
     private readonly ValidationController _validationController;
-
+    private readonly MatchmakingController _matchmakingController;
 
     public MatchPage() {
         

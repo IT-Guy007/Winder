@@ -47,11 +47,10 @@ namespace Winder.Repositories
         /// </summary>
         /// <param name="user">The user of who the matches need to retrieved for</param>
         /// <returns>List of matches</returns>
-        public List<Match> GetMatchedStudentsFromUser(User user)
+        public List<string> GetMatchedStudentsFromUser(User user)
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                List<Match> matches = new List<Match>();
                 List<string> emails = new List<string>();
                 SqlDataReader reader = null;
                 try
@@ -78,9 +77,8 @@ namespace Winder.Repositories
                     Console.WriteLine(se.StackTrace);
                 } finally  {
                     if (reader != null) reader.Close();
-                    emails.ForEach(x => matches.Add(new Match(user, new User().GetUserFromDatabase(x, connection))));
                 }
-                return matches;
+                return emails;
             }
         }
     }

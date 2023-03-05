@@ -33,9 +33,12 @@ namespace Controller
 
         public List<Match> GetMatches(string email)
         {
-            User GottenUser = _userRepository.GetUserFromDatabase(email);
+            User user = _userRepository.GetUserFromDatabase(email);
 
-            return _matchRepository.GetMatchedStudentsFromUser(GottenUser);
+            List<string> emails = _matchRepository.GetMatchedStudentsFromUser(user);
+            List<Match> matches = new List<Match>();
+            emails.ForEach(x => matches.Add(new Match(user, _userRepository.GetUserFromDatabase(x))));
+            return matches;
         }
     }
 }
