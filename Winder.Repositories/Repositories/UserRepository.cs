@@ -548,11 +548,9 @@ namespace Winder.Repositories
         /// <returns>String list of the interests</returns>
         public List<string> GetInterestsFromUser(string email)
         {
-            using (SqlConnection connection =
-                   new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                connection.Open();
-                string query = "SELECT * FROM Winder.Winder.[userHasInterest] WHERE UID = @Email;";
+                string query = "SELECT * FROM winder.userHasInterest WHERE UID = @Email";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Email", email);
                 List<string> interestList = new List<string>();
@@ -560,6 +558,7 @@ namespace Winder.Repositories
                 SqlDataReader reader = null;
                 try
                 {
+                    connection.Open();
                     reader = command.ExecuteReader();
                     while (reader.Read())
                     {

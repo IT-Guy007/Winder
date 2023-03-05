@@ -107,7 +107,7 @@ public class UserTest
     [TestCase("Testup", "", "Testa", "sstaatnietindatabase@student.windesheim.nl", "Man", "Vrouw", "ab", "ab", new byte[0], false, "ab", "ab", ExpectedResult = false)]
     public bool UpdateUserDataTest(string firstName, string middleName, string lastName, string email, string preference, string gender, string bio, string password, byte[] profilePicture, bool active, string school, string major)
     {
-        return _userRepository.UpdateUserData(firstName, middleName, lastName, email, preference, new DateTime(1925, 01, 01, 0, 0, 0, 0), gender, bio, password, profilePicture, active, school, major);
+        return _userRepository.UpdateUserData(firstName, middleName, lastName, email, preference, new DateTime(1925, 01, 01, 0, 0, 0, 0), gender, bio, profilePicture, major);
     }
 
 

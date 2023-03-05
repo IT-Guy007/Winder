@@ -110,6 +110,7 @@ namespace Controller
             User.CurrentUser = null;
             SecureStorage.Remove("Email");
         }
+
         public void UpdateUser()
         {
             _userRepository.UpdateUserData(User.CurrentUser.FirstName,
