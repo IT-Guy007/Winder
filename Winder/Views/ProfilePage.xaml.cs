@@ -43,22 +43,22 @@ public partial class ProfileChange {
     }
     //Fills the form inputs placeholders with the user data
     private void FillPlaceholders() {
-        ProfilePictures = Authentication.CurrentUser.GetPicturesFromDatabase(Database.ReleaseConnection);
-        Firstname.Placeholder = Authentication.CurrentUser.FirstName;
-        Middlename.Placeholder = Authentication.CurrentUser.MiddleName;
-        Lastname.Placeholder = Authentication.CurrentUser.LastName;
-        Birthdate.Date = Authentication.CurrentUser.BirthDay;
-        Bio.Placeholder = Authentication.CurrentUser.Bio;
-        Education.Placeholder = Authentication.CurrentUser.Major;
-        Gender.SelectedIndex = _settingsController.GetPreferenceFromUser(Authentication.CurrentUser.Gender);
-        Preference.SelectedIndex = _settingsController.GetPreferenceFromUser(Authentication.CurrentUser.Preference);
+        ProfilePictures = User.CurrentUser.GetPicturesFromDatabase(Database.ReleaseConnection);
+        Firstname.Placeholder = User.CurrentUser.FirstName;
+        Middlename.Placeholder = User.CurrentUser.MiddleName;
+        Lastname.Placeholder = User.CurrentUser.LastName;
+        Birthdate.Date = User.CurrentUser.BirthDay;
+        Bio.Placeholder = User.CurrentUser.Bio;
+        Education.Placeholder = User.CurrentUser.Major;
+        Gender.SelectedIndex = _settingsController.GetPreferenceFromUser(User.CurrentUser.Gender);
+        Preference.SelectedIndex = _settingsController.GetPreferenceFromUser(User.CurrentUser.Preference);
         // fill the interests picker
         if (!(InterestsModel.InterestsList.Count > 0)) {
             InterestSelection.ItemsSource = _interestsController.GetInterests();
         } else {
             InterestSelection.ItemsSource = InterestsModel.InterestsList;
         }
-        ListInterests.ItemsSource = Authentication.CurrentUser.Interests;
+        ListInterests.ItemsSource = User.CurrentUser.Interests;
         SetAllImageButtons();
     }
     private void SetAllImageButtons() {
@@ -106,10 +106,10 @@ public partial class ProfileChange {
     private void ChangeUserData(object sender, EventArgs e) {
         if (firstname && middleName && lastname && birthday  && preference && gender && bio && education ) {
             UpdateUserPropertiesPrepareForUpdateQuery();
-            Authentication.CurrentUser.UpdateUserDataToDatabase(Database.ReleaseConnection);
-            Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database.ReleaseConnection);
-            Authentication.CurrentUser.InsertAllPhotosInDatabase(ProfilePictures,Database.ReleaseConnection);
-            _settingsController.RegisterInterestsInDatabase(Authentication.CurrentUser.Email, interests);
+            User.CurrentUser.UpdateUserDataToDatabase(Database.ReleaseConnection);
+            User.CurrentUser.DeleteAllPhotosFromDatabase(Database.ReleaseConnection);
+            User.CurrentUser.InsertAllPhotosInDatabase(ProfilePictures,Database.ReleaseConnection);
+            _settingsController.RegisterInterestsInDatabase(User.CurrentUser.Email, interests);
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             ClearTextFromEntries();
             UpdatePlaceholders();
@@ -121,12 +121,12 @@ public partial class ProfileChange {
     //Updates the placeholders value after a change has been made
     private void UpdatePlaceholders() {
 
-        Firstname.Placeholder = Authentication.CurrentUser.FirstName;
-        Middlename.Placeholder = Authentication.CurrentUser.MiddleName;
-        Lastname.Placeholder = Authentication.CurrentUser.LastName;
-        Birthdate.Date = Authentication.CurrentUser.BirthDay;
-        Bio.Placeholder = Authentication.CurrentUser.Bio;
-        Education.Placeholder = Authentication.CurrentUser.Major;
+        Firstname.Placeholder = User.CurrentUser.FirstName;
+        Middlename.Placeholder = User.CurrentUser.MiddleName;
+        Lastname.Placeholder = User.CurrentUser.LastName;
+        Birthdate.Date = User.CurrentUser.BirthDay;
+        Bio.Placeholder = User.CurrentUser.Bio;
+        Education.Placeholder = User.CurrentUser.Major;
     }
     //Clears all text from input after profile change
     private void ClearTextFromEntries()
@@ -141,14 +141,14 @@ public partial class ProfileChange {
 
     //Update the users data 
     private void UpdateUserPropertiesPrepareForUpdateQuery() {
-        if (Authentication.CurrentUser.FirstName != Firstname.Text && !string.IsNullOrEmpty(Firstname.Text)) Authentication.CurrentUser.FirstName = Firstname.Text;
-        if (Authentication.CurrentUser.MiddleName != Middlename.Text && !string.IsNullOrEmpty(Middlename.Text)) Authentication.CurrentUser.MiddleName = Middlename.Text;
-        if (Authentication.CurrentUser.LastName != Lastname.Text && !string.IsNullOrEmpty(Lastname.Text)) Authentication.CurrentUser.LastName = Lastname.Text;
-        if (Authentication.CurrentUser.Major != Education.Text && !string.IsNullOrEmpty(Education.Text)) Authentication.CurrentUser.Major = Education.Text;
-        if (Authentication.CurrentUser.BirthDay != Birthdate.Date) Authentication.CurrentUser.BirthDay = Birthdate.Date;
-        if (Authentication.CurrentUser.Bio != Bio.Text && !string.IsNullOrEmpty(Bio.Text)) Authentication.CurrentUser.Bio = Bio.Text;
-        if (Authentication.CurrentUser.Gender != Gender.SelectedItem.ToString()) Authentication.CurrentUser.Gender = Gender.SelectedItem.ToString() ?? string.Empty;
-        if (Authentication.CurrentUser.Preference != Preference.SelectedItem.ToString()) Authentication.CurrentUser.Preference = Preference.SelectedItem.ToString() ?? string.Empty;
+        if (User.CurrentUser.FirstName != Firstname.Text && !string.IsNullOrEmpty(Firstname.Text)) User.CurrentUser.FirstName = Firstname.Text;
+        if (User.CurrentUser.MiddleName != Middlename.Text && !string.IsNullOrEmpty(Middlename.Text)) User.CurrentUser.MiddleName = Middlename.Text;
+        if (User.CurrentUser.LastName != Lastname.Text && !string.IsNullOrEmpty(Lastname.Text)) User.CurrentUser.LastName = Lastname.Text;
+        if (User.CurrentUser.Major != Education.Text && !string.IsNullOrEmpty(Education.Text)) User.CurrentUser.Major = Education.Text;
+        if (User.CurrentUser.BirthDay != Birthdate.Date) User.CurrentUser.BirthDay = Birthdate.Date;
+        if (User.CurrentUser.Bio != Bio.Text && !string.IsNullOrEmpty(Bio.Text)) User.CurrentUser.Bio = Bio.Text;
+        if (User.CurrentUser.Gender != Gender.SelectedItem.ToString()) User.CurrentUser.Gender = Gender.SelectedItem.ToString() ?? string.Empty;
+        if (User.CurrentUser.Preference != Preference.SelectedItem.ToString()) User.CurrentUser.Preference = Preference.SelectedItem.ToString() ?? string.Empty;
     }
     //Checks if the firstname input is valid
     private void FirstnameTextChanged(object sender, TextChangedEventArgs e) {
@@ -367,7 +367,7 @@ public partial class ProfileChange {
         InterestSelection.TitleColor = default;
         var interest = ListInterests.SelectedItem.ToString();
         if (interest != null) {
-            Authentication.CurrentUser.DeleteInterestInDatabase(interest,Database.ReleaseConnection);
+            User.CurrentUser.DeleteInterestInDatabase(interest,Database.ReleaseConnection);
             interests.Remove(interest);
         }
 

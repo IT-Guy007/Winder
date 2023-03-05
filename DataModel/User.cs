@@ -4,6 +4,9 @@ using System.Data.SqlClient;
 namespace DataModel;
 
 public class User {
+    
+    public static User CurrentUser { get; set; }
+    
     public string FirstName { get; set; }
     public string MiddleName { get; set; }
     public string LastName { get; set; }

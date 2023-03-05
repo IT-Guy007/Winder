@@ -1,6 +1,5 @@
 ﻿using Controller;
-using Microsoft.Extensions.Configuration;
-using Winder.Repositories;
+using DataModel;
 
 namespace Winder;
 
@@ -17,7 +16,6 @@ public partial class MatchPage {
     private readonly int _swipes = 0;
 
     private readonly ValidationController _validationController;
-    private readonly MatchmakingController _matchmakingController;
 
 
     public MatchPage() {
@@ -121,10 +119,10 @@ public partial class MatchPage {
 
         //Images
         if (_matchmakingController.CurrentProfile == null) {
-            if (Authentication.CurrentUser.ProfilePicture != null && Authentication.CurrentUser.ProfilePicture.Length < 0) {
+            if (User.CurrentUser.ProfilePicture != null && User.CurrentUser.ProfilePicture.Length < 0) {
 
                 var profileImage = new Image {
-                    Source = ImageSource.FromStream(() => new MemoryStream(Authentication.CurrentUser.ProfilePicture)),
+                    Source = ImageSource.FromStream(() => new MemoryStream(User.CurrentUser.ProfilePicture)),
                     Aspect = Aspect.AspectFit,
                     WidthRequest = 800,
                     HeightRequest = 800,
@@ -199,7 +197,7 @@ public partial class MatchPage {
             StackLayout ageStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             
             var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            var birthday = _validationController.CalculateAge(_matchmakingController.CurrentProfile.User.BirthDay);
+            int birthday = _validationController.CalculateAge(_matchmakingController.CurrentProfile.User.BirthDay);
             var age = new Label { Text = birthday.ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to Stack
@@ -213,7 +211,7 @@ public partial class MatchPage {
             
             var locationlbl = new Label { Text = "Windesheim locatie: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             var location = new Label { Text = _matchmakingController.CurrentProfile.User.School, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-            
+
             //Add to Stack
             locationStackLayout.Add(locationlbl);
             locationStackLayout.Add(location);
@@ -235,7 +233,6 @@ public partial class MatchPage {
             StackLayout bioStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             var biolbl = new Label { Text = "Bio: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             var bio = new Label { Text = _matchmakingController.CurrentProfile.User.Bio ,FontSize = 20, HorizontalOptions = LayoutOptions.Start };
-
 
             //Add to stack
             bioStackLayout.Add(biolbl);
@@ -378,7 +375,7 @@ public partial class MatchPage {
     /// <param name="sender">The sender</param>
     /// <param name="e">The event args</param>
     private void OnLike(object sender, EventArgs e) {
-        if (_matchmakingController.CheckMatch(Authentication.CurrentUser.Email,_matchmakingController.CurrentProfile.User.Email)) {
+        if (_matchmakingController.CheckMatch(User.CurrentUser.Email,_matchmakingController.CurrentProfile.User.Email)) {
             MatchPopup();
         }
         _matchmakingController.OnLike();

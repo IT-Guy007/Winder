@@ -23,7 +23,7 @@ public partial class EditPasswordPopUp {
 
     private void SaveBtn(object sender, EventArgs e)
     {
-        string email = Authentication.CurrentUser.Email;
+        string email = User.CurrentUser.Email;
         string newPassword = NieuwWachtwoord.Text;
         string repeatPassword = HerhaalWachtwoord.Text;
 

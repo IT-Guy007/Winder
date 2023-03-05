@@ -34,7 +34,7 @@ public class MatchmakingController
         if (GetCount() < 5 && !IsGettingProfiles)
         {
             IsGettingProfiles = true;
-            GetProfilesTask(Authentication.CurrentUser);
+            GetProfilesTask(User.CurrentUser);
             IsGettingProfiles = false;
         }
 
@@ -115,14 +115,14 @@ public class MatchmakingController
     public void OnLike()
     {
 
-        if (_likeRepository.CheckMatch(Authentication.CurrentUser.Email, CurrentProfile.User.Email))
+        if (_likeRepository.CheckMatch(User.CurrentUser.Email, CurrentProfile.User.Email))
         {
-            _likeRepository.CreateMatch(Authentication.CurrentUser.Email, CurrentProfile.User.Email);
-            _likeRepository.DeleteLike(Authentication.CurrentUser.Email, CurrentProfile.User.Email);
+            _likeRepository.CreateMatch(User.CurrentUser.Email, CurrentProfile.User.Email);
+            _likeRepository.DeleteLike(User.CurrentUser.Email, CurrentProfile.User.Email);
         }
         else
         {
-            _likeRepository.NewLike(Authentication.CurrentUser.Email, CurrentProfile.User.Email);
+            _likeRepository.NewLike(User.CurrentUser.Email, CurrentProfile.User.Email);
         }
 
         NextProfile();
@@ -146,7 +146,7 @@ public class MatchmakingController
     public void OnDislike()
     {
 
-        _likeRepository.NewDislike(Authentication.CurrentUser.Email, CurrentProfile.User.Email);
+        _likeRepository.NewDislike(User.CurrentUser.Email, CurrentProfile.User.Email);
         NextProfile();
         
     }

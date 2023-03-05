@@ -20,7 +20,7 @@ public partial class ChatsViewPage {
         _chatController = MauiProgram.ServiceProvider.GetService<ChatController>();
 
         InitializeComponent();
-        MatchModel = new MatchModel(_chatController.GetMatches(Authentication.CurrentUser.Email));
+        MatchModel = new MatchModel(_chatController.GetMatches(User.CurrentUser.Email));
         
         ListOfMatches.ItemsSource = MatchModel.Matches.GetUsers();
     }
@@ -42,7 +42,7 @@ public partial class ChatsViewPage {
 
     private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e) {
         var tappedItem = e.Item as User;
-        Navigation.PushAsync(new ChatPage(Authentication.CurrentUser, new User().GetUserFromDatabase(tappedItem.Email, Database.ReleaseConnection)));
+        Navigation.PushAsync(new ChatPage(User.CurrentUser, new User().GetUserFromDatabase(tappedItem.Email, Database.ReleaseConnection)));
     }
 
     /// <summary>

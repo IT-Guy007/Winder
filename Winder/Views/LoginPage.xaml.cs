@@ -32,7 +32,7 @@ public partial class LoginPage {
             FoutmeldingInloggen.IsVisible = false;
 
             //Set the CurrentUser to the user who logged in
-            Authentication.CurrentUser = loginUser;
+            User.CurrentUser = loginUser;
 
             //Bring the user to the swipe screen
             Navigation.PushAsync(new MatchPage());
