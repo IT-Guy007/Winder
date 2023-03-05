@@ -15,5 +15,6 @@ namespace Winder.Repositories.Interfaces
         public bool NewDislike(string emailLikedPerson, string emailCurrentUser);
         public bool DeleteLike(string emailLikedPerson, string emailCurrentUser);
         public Queue<string> GetUsersWhoLikedYou(string email);
+        public bool CreateMatch(string emailFirstPerson, string emailSecondPerson);
     }
 }
