@@ -16,9 +16,10 @@ public partial class SettingsPage {
 
         InitializeComponent();
 
-        Location.SelectedItem = _settingsController.GetSchool(User.CurrentUser.Email); //aa
+        Location.SelectedItem = User.CurrentUser.School;   //aa
         minimaleLeeftijd.SelectedItem = User.CurrentUser.MaxAge; // aa
         maximaleLeeftijd.SelectedItem = User.CurrentUser.MaxAge; // aa
+
         
         minimaleLeeftijd.ItemsSource = _settingsController.GetPickerData();
         maximaleLeeftijd.ItemsSource = _settingsController.GetPickerData();

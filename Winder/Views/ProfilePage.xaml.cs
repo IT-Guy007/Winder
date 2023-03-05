@@ -366,7 +366,7 @@ public partial class ProfileChange {
         InterestSelection.TitleColor = default;
         var interest = ListInterests.SelectedItem.ToString();
         if (interest != null) {
-            User.CurrentUser.DeleteInterestInDatabase(interest,Database.ReleaseConnection);
+            _settingsController.DeleteInterest(User.CurrentUser.Email, interest);
             interests.Remove(interest);
         }
 

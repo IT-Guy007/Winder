@@ -16,12 +16,16 @@ public partial class RegisterPage {
     private string major;
     private string school;
     private byte[] profilePicture;
+    private const int minAge = 18;
+    private const int maxAge = 99;
     
     private readonly List<string> interestsList;
     private readonly List<string> chosenInterestsList;
 
     private readonly InterestController _interestsController;
     private readonly ValidationController _validationController;
+    private readonly RegistrationController _registrationController;
+    private readonly SettingsController _settingsController;
 
 
     public RegisterPage() {
@@ -29,7 +33,8 @@ public partial class RegisterPage {
         chosenInterestsList = new List<string>();
         _interestsController = MauiProgram.ServiceProvider.GetService<InterestController>();
         _validationController = MauiProgram.ServiceProvider.GetService<ValidationController>();
-
+        _registrationController = MauiProgram.ServiceProvider.GetService<RegistrationController>();
+        _settingsController = MauiProgram.ServiceProvider.GetService<SettingsController>();
 
         InitializeComponent();
 
@@ -165,12 +170,10 @@ public partial class RegisterPage {
         if (SaveEventChecks()) {
             middleName ??= "";
 
-            
-            User.CurrentUser = new User().Registration(firstname,middleName,lastname,email,preference,dateOfBirth,gender," ",password,profilePicture,true,school,major,Database.ReleaseConnection);
+            User.CurrentUser = new User(firstname, middleName, lastname, dateOfBirth, preference, email, gender, profilePicture, " ", school, major, chosenInterestsList.ToArray(), minAge, maxAge);
+            _registrationController.RegisterUser(firstname,middleName,lastname,email,preference,dateOfBirth,gender," ",password,profilePicture,true,school,major);
 
-            foreach (string interesse in chosenInterestsList) {
-                User.CurrentUser.SetInterestInDatabase(interesse,Database.ReleaseConnection);
-            }
+            _settingsController.SetInterests(chosenInterestsList);
 
             Navigation.PushAsync(new StartPage());
 

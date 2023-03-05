@@ -46,7 +46,7 @@ namespace Winder.Repositories
         /// Gets the matched of the given User
         /// </summary>
         /// <param name="user">The user of who the matches need to retrieved for</param>
-        /// <returns>List of matches</returns>
+        /// <returns>List of emails from with who a match is</returns>
         public List<string> GetMatchedStudentsFromUser(User user)
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
