@@ -1,8 +1,6 @@
-﻿using System.Data.SqlClient;
+using System.Data.SqlClient;
 using DataModel;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Maui.ApplicationModel.Communication;
-using Microsoft.Maui.Storage;
 using Winder.Repositories.Interfaces;
 namespace Winder.Repositories
 {
@@ -13,14 +11,13 @@ namespace Winder.Repositories
         private const int MinAgePreference = 18;
         private const int MaxAgePreference = 99;
         private const int MaxAmountOfPictures = 6;
+        public const int AmountOfProfilesInQueue = 5;
         private static DateTime MinDateTimeBirth = new DateTime(1925, 01, 01, 0, 0, 0, 0);
         
         // booleans that can be turned off by a developer if wanted
         private const bool AgeAlgorithm = true;
         private const bool PreferenceAlgorithm = true;
         private const bool InterestsAlgorithm = true;
-
-        public const int AmountOfProfilesInQueue = 5;
 
         public UserRepository(IConfiguration configuration)
         {
@@ -187,11 +184,10 @@ namespace Winder.Repositories
         }
 
         /// <summary>
-        /// 
+        ///  Gets the list of users to get for the algorithm
         /// </summary>
         /// <param name="user"></param>
-        /// <returns></returns>
-
+        /// <returns>List of emails</returns>
         public List<string> GetConditionBasedUsers(User user)
         {
             using (SqlConnection connection =
@@ -590,6 +586,7 @@ namespace Winder.Repositories
             }
         }
 
+
         public string GetSchool(string email)
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
@@ -625,6 +622,7 @@ namespace Winder.Repositories
                 return "";
             }
         }
+
 
 
     }

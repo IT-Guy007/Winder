@@ -15,7 +15,6 @@ namespace Controller
         private readonly IUserRepository _userRepository;
         private ValidationController validationController;
 
-
         public SettingsController(IUserRepository userRepository)
         {
             _userRepository = userRepository;

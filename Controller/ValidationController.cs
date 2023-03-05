@@ -187,5 +187,43 @@ namespace Controller
             }
             return "";
         }
+        
+        /// <summary>
+        /// Checks if input has spaces, letters or dashes
+        /// </summary>
+        /// <param name="text">The needed to check text</param>
+        /// <returns></returns>
+        public bool CheckIfTextIsOnlyLettersAndSpaces(string text)
+        {
+            foreach (char c in text)
+            {
+                if (!char.IsLetter(c) && c != ' ' && c != '-' && c != '\n' && c != '\r')
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        /// <summary>
+        /// Check if input only consists of letters
+        /// </summary>
+        /// <param name="text">The needed to check text</param>
+        /// <returns></returns>
+        public bool CheckIfTextIsOnlyLetters(string text)
+        {
+            if (text.All(char.IsLetter))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
+
+        
     }
+    
 }

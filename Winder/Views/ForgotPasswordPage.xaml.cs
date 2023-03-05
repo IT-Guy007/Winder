@@ -8,10 +8,12 @@ public partial class ForgotPasswordPage {
 
     private readonly ValidationController _validationController;
     private readonly SettingsController _settingsController;
+    private readonly EmailController _emailController;
 
     public ForgotPasswordPage() {
         _validationController = MauiProgram.ServiceProvider.GetService<ValidationController>();
         _settingsController = MauiProgram.ServiceProvider.GetService<SettingsController>();
+        _emailController = MauiProgram.ServiceProvider.GetService<EmailController>();
 
 
         InitializeComponent();
@@ -38,7 +40,8 @@ public partial class ForgotPasswordPage {
                           "<br>Met vriendelijke groet, <br> Het Winder team";
         
             string subject = "Authenticatie-code";
-            new EmailMessage(email, body, subject).SendEmail();
+            EmailMessage message = new EmailMessage(email, body, subject);
+            _emailController.SendEmail(message);
 
             //Enables the rest of the page
             Emailadres.IsVisible = false;
