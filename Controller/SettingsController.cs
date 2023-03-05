@@ -15,6 +15,7 @@ namespace Controller
         private readonly IUserRepository _userRepository;
         private ValidationController validationController;
 
+
         public SettingsController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
@@ -31,6 +32,11 @@ namespace Controller
 
             }
 
+        }
+
+        public string GetSchool(string email)
+        {
+            return _userRepository.GetSchool(email);
         }
 
         /// <summary>
@@ -69,27 +75,29 @@ namespace Controller
 
         public void DeleteAccount()
         {
-            //Authentication.CurrentUser.DeleteUser(Database.ReleaseConnection);
+            
+            _userRepository.DeleteUser(Authentication.CurrentUser.Email);
             Authentication.CurrentUser = null;
-            SecureStorage.Default.Remove("Email");
+          
             SecureStorage.Remove("Email");
-            SecureStorage.RemoveAll();
+            
         }
 
         public void Logout()
         {
             Authentication.CurrentUser = null;
-            SecureStorage.Default.Remove("Email");
+           
             SecureStorage.Remove("Email");
-            SecureStorage.RemoveAll();
+        
 
         }
 
         public void SetPreference(int minAge, int maxAge, string school)
         {
-            Authentication.CurrentUser.SetMinAge(minAge, Database.ReleaseConnection);
-            Authentication.CurrentUser.SetMaxAge(maxAge, Database.ReleaseConnection);
-            Authentication.CurrentUser.SetSchool(school, Database.ReleaseConnection);
+            _userRepository.SetMinAge(minAge, Authentication.CurrentUser.Email);
+            _userRepository.SetMaxAge(maxAge, Authentication.CurrentUser.Email);
+            _userRepository.SetSchool(school, Authentication.CurrentUser.Email);
+           
         }
 
 

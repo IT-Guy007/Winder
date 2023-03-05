@@ -14,10 +14,10 @@ public partial class SettingsPage {
         _settingsController = MauiProgram.ServiceProvider.GetService<SettingsController>();
 
         InitializeComponent();
-        
-        Location.SelectedItem = Authentication.CurrentUser.GetSchool(Database.ReleaseConnection);
-        minimaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge;
-        maximaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge;
+
+        Location.SelectedItem = _settingsController.GetSchool(Authentication.CurrentUser.Email); //aa
+        minimaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge; // aa
+        maximaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge; // aa
         
         minimaleLeeftijd.ItemsSource = _settingsController.GetPickerData();
         maximaleLeeftijd.ItemsSource = _settingsController.GetPickerData();
