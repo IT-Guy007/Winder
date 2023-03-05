@@ -1,24 +1,38 @@
 ﻿using DataModel;
-using Microsoft.Maui.Storage;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Maui.Storage;
 using Winder.Repositories;
 using Winder.Repositories.Interfaces;
+using Microsoft.Maui.ApplicationModel.Communication;
+using static Microsoft.QualityTools.Testing.Fakes.FakesDelegates;
+using System.Reflection;
 
 namespace Controller
 {
     public class SettingsController
     {
         private readonly IUserRepository _userRepository;
+        private readonly IPhotosRepository _photosRepository;
         private ValidationController validationController;
 
+
+        public SettingsController(IUserRepository userRepository, IPhotosRepository photosRepository)
+        {
+            _userRepository = userRepository;
+            _photosRepository = photosRepository;
+
+            validationController = new ValidationController(_userRepository);
+        }
 
         public SettingsController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+
             validationController = new ValidationController(_userRepository);
         }
 
@@ -53,6 +67,7 @@ namespace Controller
         public async Task SetLoginEmail(string email)
         {
             Console.WriteLine("Setting login Email");
+            User.CurrentUser = _userRepository.GetUserFromDatabase(email);
             await SecureStorage.SetAsync("Email", email);
 
         }
@@ -93,24 +108,45 @@ namespace Controller
         public void Logout()
         {
             User.CurrentUser = null;
-           
             SecureStorage.Remove("Email");
-        
-
         }
-
+        public void UpdateUser()
+        {
+            _userRepository.UpdateUserData(User.CurrentUser.FirstName,
+                User.CurrentUser.MiddleName,
+                User.CurrentUser.LastName,
+                User.CurrentUser.Email,
+                User.CurrentUser.Preference,
+                User.CurrentUser.BirthDay,
+                User.CurrentUser.Gender,
+                User.CurrentUser.Bio,
+                User.CurrentUser.ProfilePicture,
+                User.CurrentUser.Major);
+        }
         public void SetPreference(int minAge, int maxAge, string school)
         {
-            _userRepository.SetMinAge(minAge, Authentication.CurrentUser.Email);
-            _userRepository.SetMaxAge(maxAge, Authentication.CurrentUser.Email);
-            _userRepository.SetSchool(school, Authentication.CurrentUser.Email);
-            Authentication.currentuser.school = school;
-
-
+            _userRepository.SetMinAge(minAge, User.CurrentUser.Email);
+            _userRepository.SetMaxAge(maxAge, User.CurrentUser.Email);
+            _userRepository.SetSchool(school, User.CurrentUser.Email);
         }
 
+        public byte[][] GetPhotos(string email)
+        {
+            return _photosRepository.GetPhotos(email);
+        }
 
+        public void DeletePhotos(string email)
+        {
+            _photosRepository.DeleteAllPhotos(email);
+        }
 
+        public void InsertPhotos(string email, byte[][] profilePictures)
+        {
+            foreach (byte[] profilePicture in profilePictures)
+            {
+                _photosRepository.AddPhoto(profilePicture, email);
+            }
+        }
 
         /// <summary>
         /// Gets the picker data for the age picker

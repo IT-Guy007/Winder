@@ -15,10 +15,8 @@ public partial class MatchPage {
     private int _selectedImage;
     private readonly int _swipes = 0;
 
-    private readonly MatchmakingController _matchmakingController;
-
     private readonly ValidationController _validationController;
-
+    private readonly MatchmakingController _matchmakingController;
 
     public MatchPage() {
         
@@ -121,7 +119,7 @@ public partial class MatchPage {
 
         //Images
         if (_matchmakingController.CurrentProfile == null) {
-            if (User.CurrentUser.ProfilePicture.Length < 0) {
+            if (User.CurrentUser.ProfilePicture != null && User.CurrentUser.ProfilePicture.Length < 0) {
 
                 var profileImage = new Image {
                     Source = ImageSource.FromStream(() => new MemoryStream(User.CurrentUser.ProfilePicture)),
@@ -247,7 +245,6 @@ public partial class MatchPage {
 
             interestsStackLayout.Add(interestslbl);
 
-
             for (int i = 0; i < _matchmakingController.CurrentProfile.User.Interests.Length; i++) {
                 if (i != 0) {
                     var spacecommavar = new Label { FontSize = 20, HorizontalOptions = LayoutOptions.Start, Text = ", " };
@@ -291,7 +288,7 @@ public partial class MatchPage {
         
     }
     
-    private void BackButton_Clicked(object sender, EventArgs e) {
+    public void BackButton_Clicked(object sender, EventArgs e) {
         switch (OriginPage) {
             case "profilepage":
                 Navigation.PushAsync(new ProfileChange());

@@ -198,6 +198,5 @@ public class MatchmakingController
         return _profileQueue.ProfileItems.Any(p => p.User.Email == email);
     }
 
-
 }
 

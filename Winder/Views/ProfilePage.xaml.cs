@@ -24,7 +24,6 @@ public partial class ProfileChange {
     private readonly SettingsController _settingsController;
     private readonly ValidationController _validationController;
 
-
     /// <summary>
     /// Default constructor, loads the data
     /// </summary>
@@ -43,7 +42,7 @@ public partial class ProfileChange {
     }
     //Fills the form inputs placeholders with the user data
     private void FillPlaceholders() {
-        ProfilePictures = User.CurrentUser.GetPicturesFromDatabase(Database.ReleaseConnection);
+        ProfilePictures = _settingsController.GetPhotos(User.CurrentUser.Email);
         Firstname.Placeholder = User.CurrentUser.FirstName;
         Middlename.Placeholder = User.CurrentUser.MiddleName;
         Lastname.Placeholder = User.CurrentUser.LastName;
@@ -106,14 +105,10 @@ public partial class ProfileChange {
     private void ChangeUserData(object sender, EventArgs e) {
         if (firstname && middleName && lastname && birthday  && preference && gender && bio && education ) {
             UpdateUserPropertiesPrepareForUpdateQuery();
-
-            _settingsController.UpdateUserData(Authentication.CurrentUser.FirstName, Authentication.CurrentUser.MiddleName, Authentication.CurrentUser.LastName, Authentication.CurrentUser.Email, Authentication.CurrentUser.Preference, Authentication.CurrentUser.BirthDay, Authentication.CurrentUser.Gender, Authentication.CurrentUser.Bio, Authentication.CurrentUser.ProfilePicture, Authentication.CurrentUser.School,Authentication.CurrentUser.Major)
-
-
-            Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database.ReleaseConnection);
-            Authentication.CurrentUser.InsertAllPhotosInDatabase(ProfilePictures,Database.ReleaseConnection);
-            _settingsController.RegisterInterestsInDatabase(Authentication.CurrentUser.Email, interests);
-
+            _settingsController.UpdateUser();
+            _settingsController.DeletePhotos(User.CurrentUser.Email);
+            _settingsController.InsertPhotos(User.CurrentUser.Email, ProfilePictures);
+            _settingsController.RegisterInterestsInDatabase(User.CurrentUser.Email, interests);
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             ClearTextFromEntries();
             UpdatePlaceholders();

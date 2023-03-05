@@ -77,7 +77,6 @@ namespace Winder.Repositories
                     Console.WriteLine(se.StackTrace);
                 } finally  {
                     if (reader != null) reader.Close();
-                    
                 }
                 return emails;
             }
