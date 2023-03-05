@@ -1,20 +1,19 @@
-using System.Data.SqlClient;
 using DataModel;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Maui.ApplicationModel.Communication;
+using System.Data.SqlClient;
 using Winder.Repositories.Interfaces;
 namespace Winder.Repositories
 {
     public class UserRepository : IUserRepository
     {
         private readonly IConfiguration _configuration;
-        
+
         private const int MinAgePreference = 18;
         private const int MaxAgePreference = 99;
         private const int MaxAmountOfPictures = 6;
         public const int AmountOfProfilesInQueue = 5;
         private static DateTime MinDateTimeBirth = new DateTime(1925, 01, 01, 0, 0, 0, 0);
-        
+
         // booleans that can be turned off by a developer if wanted
         private const bool AgeAlgorithm = true;
         private const bool PreferenceAlgorithm = true;
@@ -24,7 +23,7 @@ namespace Winder.Repositories
         {
             _configuration = configuration;
         }
-        
+
         /// <summary>
         /// Checks if the given email and password are correct and returns a user object
         /// </summary>
@@ -42,23 +41,30 @@ namespace Winder.Repositories
 
                 //Execute query
                 SqlDataReader reader = null;
-                try {
+                try
+                {
                     connection.Open();
 
                     reader = query.ExecuteReader();
 
                     Console.WriteLine("Checking login");
-                    while (reader.Read()) {
-                        if (password == reader["password"] as string) {
+                    while (reader.Read())
+                    {
+                        if (password == reader["password"] as string)
+                        {
                             return GetUserFromDatabase(email);
                         }
                     }
-                } catch (SqlException se) {
+                }
+                catch (SqlException se)
+                {
                     Console.WriteLine("Error logging in user");
                     Console.WriteLine(se.ToString());
                     Console.WriteLine(se.StackTrace);
 
-                } finally {
+                }
+                finally
+                {
                     if (reader != null) reader.Close();
                 }
                 return null;
@@ -77,7 +83,8 @@ namespace Winder.Repositories
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                if (IsEmailUnique(email)) {
+                if (IsEmailUnique(email))
+                {
 
                     email = email.ToLower();
 
@@ -92,18 +99,21 @@ namespace Winder.Repositories
                     queryDeleteUser.Parameters.AddWithValue("@Email", email);
 
                     //Execute querys
-                    try {
+                    try
+                    {
                         queryDeleteUser.ExecuteNonQuery();
                         return true;
-                    } catch (SqlException se) {
+                    }
+                    catch (SqlException se)
+                    {
                         Console.WriteLine("Error deleting user");
                         Console.WriteLine(se.ToString());
                         Console.WriteLine(se.StackTrace);
                     }
-            
+
                 }
-        
-                
+
+
                 return false;
             }
         }
@@ -146,7 +156,7 @@ namespace Winder.Repositories
                 try
                 {
                     query.ExecuteNonQuery();
-                    
+
                 }
                 catch (SqlException se)
                 {
@@ -164,7 +174,7 @@ namespace Winder.Repositories
                 connection.Open();
                 if (maxAge > MinAgePreference && maxAge < MaxAgePreference)
                 {
-                    
+
                     SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET max = @maxAge WHERE Email = @Email", connection);
                     query.Parameters.AddWithValue("@Email", email);
                     query.Parameters.AddWithValue("@maxAge", maxAge);
@@ -172,7 +182,7 @@ namespace Winder.Repositories
                     try
                     {
                         query.ExecuteNonQuery();
-                        
+
                     }
                     catch (SqlException se)
                     {
@@ -296,7 +306,7 @@ namespace Winder.Repositories
             using (SqlConnection connection =
                    new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                
+
                 string query = "SELECT * FROM Winder.Winder.[User] WHERE email = @Email";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Email", email);
@@ -356,28 +366,35 @@ namespace Winder.Repositories
             {
                 connection.Open();
                 List<string> emails = new List<string>();
-        
+
                 string sql = "SELECT Email FROM Winder.Winder.[User];";
                 SqlCommand command = new SqlCommand(sql, connection);
-        
+
                 SqlDataReader reader = null;
-                try {
+                try
+                {
                     reader = command.ExecuteReader();
-                    while (reader.Read()) {
+                    while (reader.Read())
+                    {
                         var item = reader["Email"] as string;
                         emails.Add(item);
                     }
 
-                } catch (SqlException e) {
+                }
+                catch (SqlException e)
+                {
                     Console.WriteLine("Error getting emails from database");
                     Console.WriteLine(e.ToString());
                     Console.WriteLine(e.StackTrace);
 
-                } finally  {
+                }
+                finally
+                {
                     if (reader != null) reader.Close();
                 }
 
-                if (emails.Contains(email)) {
+                if (emails.Contains(email))
+                {
                     return false;
                 }
                 return true;
@@ -414,15 +431,18 @@ namespace Winder.Repositories
                 command.Parameters.AddWithValue("@img", profilePicture);
                 command.Parameters.AddWithValue("@active", active);
                 command.Parameters.AddWithValue("@birthday", birthday);
-                try {
+                try
+                {
                     command.ExecuteNonQuery();
-                } catch (SqlException se) {
+                }
+                catch (SqlException se)
+                {
                     Console.WriteLine("Error registering user in database");
                     Console.WriteLine(se.ToString());
                     Console.WriteLine(se.StackTrace);
                 }
-        
-                return new User(firstName,middleName,lastName,birthday,preference,email,gender,profilePicture,bio,school,major,new string[0],MinAgePreference,MaxAgePreference);
+
+                return new User(firstName, middleName, lastName, birthday, preference, email, gender, profilePicture, bio, school, major, new string[0], MinAgePreference, MaxAgePreference);
             }
         }
 
@@ -449,7 +469,8 @@ namespace Winder.Repositories
             {
                 return false;
             }
-            else {
+            else
+            {
                 using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
                     connection.Open();
@@ -629,7 +650,7 @@ namespace Winder.Repositories
                     if (reader.Read())
                     {
                         var location = reader["location"] as string;
-                        
+
                         reader.Close();
                         return location;
                     }

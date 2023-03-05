@@ -1,5 +1,4 @@
-﻿using DataModel;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using Winder.Repositories;
 namespace Unittest.Repositories;
@@ -45,4 +44,4 @@ public class LikedTest
         // Assert
         Assert.IsNotNull(likedUsers, "doesnt work");
     }
-    }
+}

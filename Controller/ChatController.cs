@@ -27,7 +27,8 @@ namespace Controller
             return _chatMessageRepository.GetChatMessages(emailTo, emailFrom);
         }
 
-        public void SetRead(string emailTo, string emailFrom) {
+        public void SetRead(string emailTo, string emailFrom)
+        {
             _chatMessageRepository.SetRead(emailTo, emailFrom);
         }
 

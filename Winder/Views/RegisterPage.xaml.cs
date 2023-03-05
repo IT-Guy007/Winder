@@ -4,8 +4,9 @@ using MAUI;
 
 namespace Winder;
 
-public partial class RegisterPage {
-	private string email;
+public partial class RegisterPage
+{
+    private string email;
     private string firstname;
     private string middleName;
     private string lastname;
@@ -18,7 +19,7 @@ public partial class RegisterPage {
     private byte[] profilePicture;
     private const int minAge = 18;
     private const int maxAge = 99;
-    
+
     private readonly List<string> interestsList;
     private readonly List<string> chosenInterestsList;
 
@@ -28,7 +29,8 @@ public partial class RegisterPage {
     private readonly SettingsController _settingsController;
 
 
-    public RegisterPage() {
+    public RegisterPage()
+    {
         interestsList = new List<string>();
         chosenInterestsList = new List<string>();
         _interestsController = MauiProgram.ServiceProvider.GetService<InterestController>();
@@ -39,27 +41,34 @@ public partial class RegisterPage {
         InitializeComponent();
 
         // fill the interests picker
-        if (!(InterestsModel.InterestsList.Count > 0)) {
+        if (!(InterestsModel.InterestsList.Count > 0))
+        {
             interestsList = _interestsController.GetInterests();
-        } else {
+        }
+        else
+        {
             interestsList = InterestsModel.InterestsList;
         }
 
-        foreach (string interest in interestsList) {
+        foreach (string interest in interestsList)
+        {
             Interesses.Items.Add(interest);
         }
     }
 
 
     //user deletes a interest from list by clicking on it
-    private void SelectedItemsOfInterests(object sender, EventArgs e) {
-        if (Gekozeninteresses.SelectedItem != null) {
+    private void SelectedItemsOfInterests(object sender, EventArgs e)
+    {
+        if (Gekozeninteresses.SelectedItem != null)
+        {
             chosenInterestsList.Remove(Gekozeninteresses.SelectedItem.ToString());
 
         }
         Gekozeninteresses.ItemsSource = null;
         Gekozeninteresses.IsVisible = false;
-        if (chosenInterestsList.Count > 0) {
+        if (chosenInterestsList.Count > 0)
+        {
             Gekozeninteresses.IsVisible = true;
             Gekozeninteresses.ItemsSource = chosenInterestsList;
         }
@@ -69,13 +78,17 @@ public partial class RegisterPage {
     }
 
     // adds selected items to list
-    private void OnSelectedItems(object sender, EventArgs e) {
-        if (chosenInterestsList.Count() < 5 && Interesses.SelectedItem != null) {
-            if (chosenInterestsList.Contains(Interesses.SelectedItem.ToString())) {
+    private void OnSelectedItems(object sender, EventArgs e)
+    {
+        if (chosenInterestsList.Count() < 5 && Interesses.SelectedItem != null)
+        {
+            if (chosenInterestsList.Contains(Interesses.SelectedItem.ToString()))
+            {
                 Foutinteresses.Text = "interesse is al toegevoegd";
                 Foutinteresses.IsVisible = true;
             }
-            else {
+            else
+            {
                 Foutinteresses.IsVisible = false;
                 chosenInterestsList.Add(Interesses.SelectedItem.ToString());
                 Gekozeninteresses.ItemsSource = null;
@@ -90,9 +103,10 @@ public partial class RegisterPage {
     }
     //Declaring objects by "Opslaan" button
     // checks
-    private bool SaveEventChecks() {
+    private bool SaveEventChecks()
+    {
         int aantalchecks = 0;
-        
+
         #region voorkeur check
         if (Voorkeur.SelectedItem == null)
         {
@@ -158,20 +172,25 @@ public partial class RegisterPage {
         }
         #endregion
 
-        if (aantalchecks == 5) {
+        if (aantalchecks == 5)
+        {
             return true;
-        }else {
+        }
+        else
+        {
             return false;
         }
 
     }
 
-    private void SaveEvent (object sender, EventArgs e) {
-        if (SaveEventChecks()) {
+    private void SaveEvent(object sender, EventArgs e)
+    {
+        if (SaveEventChecks())
+        {
             middleName ??= "";
 
             User.CurrentUser = new User(firstname, middleName, lastname, dateOfBirth, preference, email, gender, profilePicture, " ", school, major, chosenInterestsList.ToArray(), minAge, maxAge);
-            _registrationController.RegisterUser(firstname,middleName,lastname,email,preference,dateOfBirth,gender," ",password,profilePicture,true,school,major);
+            _registrationController.RegisterUser(firstname, middleName, lastname, email, preference, dateOfBirth, gender, " ", password, profilePicture, true, school, major);
 
             _settingsController.SetInterests(chosenInterestsList);
 
@@ -182,7 +201,8 @@ public partial class RegisterPage {
 
 
     //Checks if values are allowed
-    private bool RegisterBtnEventCheck() {
+    private bool RegisterBtnEventCheck()
+    {
         int aantalchecks = 0;
 
         DateTime geboortedatumtijdelijk;
@@ -323,18 +343,22 @@ public partial class RegisterPage {
         }
         #endregion
 
-        if (aantalchecks == 7) {
+        if (aantalchecks == 7)
+        {
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
     }
 
     // Proceeds the registerform
-    private void RegisterBtnEvent(object sender, EventArgs e) {
+    private void RegisterBtnEvent(object sender, EventArgs e)
+    {
 
-        if (RegisterBtnEventCheck()) {
+        if (RegisterBtnEventCheck())
+        {
             //setting objects visible to proceed the registerform
             LblVoorkeur.IsVisible = true;
             Voorkeur.IsVisible = true;
@@ -370,14 +394,18 @@ public partial class RegisterPage {
         }
     }
 
-    private async void OnProfilePictureClicked(object sender, EventArgs e) {
-        try {
-            var image = await FilePicker.PickAsync(new PickOptions {
+    private async void OnProfilePictureClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var image = await FilePicker.PickAsync(new PickOptions
+            {
                 PickerTitle = "Kies een profielfoto",
                 FileTypes = FilePickerFileType.Images
             });
 
-            if (image == null) {
+            if (image == null)
+            {
                 return;
             }
             string imgLocation = image.FullPath;
@@ -388,13 +416,16 @@ public partial class RegisterPage {
             profilePicture = imageArr;
             ProfileImage.Source = ImageSource.FromStream(() => stream);
 
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             FoutProfielfoto.Text = ex.Message;
             FoutProfielfoto.IsVisible = true;
         }
     }
 
-    private void Backbutton_Clicked(object sender, EventArgs e) {
+    private void Backbutton_Clicked(object sender, EventArgs e)
+    {
         Navigation.PushAsync(new MainPage());
     }
 }

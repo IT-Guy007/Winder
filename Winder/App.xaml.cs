@@ -1,11 +1,12 @@
 ﻿namespace Winder;
 
-public partial class App {
+public partial class App
+{
     public App()
     {
         InitializeComponent();
 
         MainPage = new AppShell();
-        
+
     }
 }

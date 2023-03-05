@@ -1,12 +1,9 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
-using Microsoft.Maui.Controls.Hosting;
-using Microsoft.Maui.Hosting;
+using Controller;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Winder.Repositories;
 using Winder.Repositories.Interfaces;
-using Controller;
 
 namespace Winder
 {

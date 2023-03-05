@@ -1,11 +1,6 @@
 ﻿using DataModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using Winder.Repositories;
 using Winder.Repositories.Interfaces;
 
 namespace Controller
@@ -66,7 +61,7 @@ namespace Controller
 
         public byte[] ScaleImage(byte[] bytes, int width, int height)
         {
-        #if WINDOWS
+#if WINDOWS
             using (MemoryStream ms = new MemoryStream(bytes)) {
                 using (Bitmap image = new Bitmap(ms)) {
                     Bitmap resizedImage = new Bitmap(width, height);
@@ -82,9 +77,9 @@ namespace Controller
                     }
                 }
             }
-        #else
+#else
             return bytes;
-        #endif
+#endif
         }
 
         /// <summary>
@@ -187,7 +182,7 @@ namespace Controller
             }
             return "";
         }
-        
+
         /// <summary>
         /// Checks if input has spaces, letters or dashes
         /// </summary>
@@ -204,7 +199,7 @@ namespace Controller
             }
             return true;
         }
-        
+
         /// <summary>
         /// Check if input only consists of letters
         /// </summary>
@@ -221,9 +216,9 @@ namespace Controller
                 return false;
             }
         }
-        
 
-        
+
+
     }
-    
+
 }

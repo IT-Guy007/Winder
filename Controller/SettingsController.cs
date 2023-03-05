@@ -1,16 +1,6 @@
 ﻿using DataModel;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Maui.Storage;
-using Winder.Repositories;
 using Winder.Repositories.Interfaces;
-using Microsoft.Maui.ApplicationModel.Communication;
-using static Microsoft.QualityTools.Testing.Fakes.FakesDelegates;
-using System.Reflection;
 
 namespace Controller
 {
@@ -52,8 +42,8 @@ namespace Controller
         {
             return _userRepository.UpdateUserData(firstName, middleName, lastName, email, preference, birthday, gender, bio, profilePicture, major);
         }
-        
-        
+
+
 
         public string GetSchool(string email)
         {
@@ -97,12 +87,12 @@ namespace Controller
 
         public void DeleteAccount()
         {
-            
+
             _userRepository.DeleteUser(User.CurrentUser.Email);
             User.CurrentUser = null;
-          
+
             SecureStorage.Remove("Email");
-            
+
         }
 
         public void Logout()
@@ -159,7 +149,7 @@ namespace Controller
 
         public void DeleteInterest(string email, string interest)
         {
-            _userRepository.DeleteInterest(email,interest);
+            _userRepository.DeleteInterest(email, interest);
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
-﻿using System.Data.SqlClient;
-using DataModel;
+﻿using DataModel;
 using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
 using Winder.Repositories.Interfaces;
 
 namespace Winder.Repositories
@@ -29,11 +29,14 @@ namespace Winder.Repositories
                 command.Parameters.AddWithValue("@currentUser", emailCurrentUser);
                 command.Parameters.AddWithValue("@likedUser", emailLikedPerson);
 
-                try {
+                try
+                {
                     connection.Open();
                     command.ExecuteNonQuery();
                     return true;
-                } catch (SqlException se) {
+                }
+                catch (SqlException se)
+                {
                     Console.WriteLine("Error inserting match in database");
                     Console.WriteLine(se.ToString());
                     Console.WriteLine(se.StackTrace);
@@ -64,18 +67,25 @@ namespace Winder.Repositories
                     {
                         string person1 = reader["person1"] as string ?? "Unknown";
                         string person2 = reader["person2"] as string ?? "Unknown";
-                        if (person1 == user.Email) {
+                        if (person1 == user.Email)
+                        {
                             emails.Add(person2);
-                        } else {
+                        }
+                        else
+                        {
                             emails.Add(person1);
-                        } 
+                        }
                     }
-           
-                } catch (SqlException se) {
+
+                }
+                catch (SqlException se)
+                {
                     Console.WriteLine("Error retrieving matches from database");
                     Console.WriteLine(se.ToString());
                     Console.WriteLine(se.StackTrace);
-                } finally  {
+                }
+                finally
+                {
                     if (reader != null) reader.Close();
                 }
                 return emails;

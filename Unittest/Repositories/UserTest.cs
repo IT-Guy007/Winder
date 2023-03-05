@@ -1,4 +1,3 @@
-using DataModel;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using Winder.Repositories;
@@ -28,11 +27,11 @@ public class UserTest
         }
         return false;
     }
-    
+
     [TestCase("s2000@student.windesheim.nl", ExpectedResult = true)]
     [TestCase("s30000@student.windesheim.nl", ExpectedResult = true)]
     [TestCase("ja", ExpectedResult = false)]
-    public bool DeleteUserTest(string email) 
+    public bool DeleteUserTest(string email)
     {
         _userRepository.Registration("Testdel", "", "Test", "s2000@student.windesheim.nl", "Man", DateTime.Now, "Vrouw", "a", "a", new byte[0], true, "a", "a");
 
@@ -58,7 +57,7 @@ public class UserTest
     [TestCase("", ExpectedResult = false)]
     public bool GetUserFromDatabaseTest(string email)
     {
-       if ((_userRepository.GetUserFromDatabase(email).FirstName ?? "a") != "a")
+        if ((_userRepository.GetUserFromDatabase(email).FirstName ?? "a") != "a")
         {
             return true;
         }

@@ -1,18 +1,20 @@
-﻿using System.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
 using Winder.Repositories.Interfaces;
 
-namespace Winder.Repositories {
+namespace Winder.Repositories
+{
     public class PhotosRepository : IPhotosRepository
     {
         private readonly IConfiguration _configuration;
         private const int MaxAmountOfPictures = 6;
 
-        public PhotosRepository(IConfiguration configuration) {
+        public PhotosRepository(IConfiguration configuration)
+        {
             System.Diagnostics.Debug.WriteLine("PhotosRepository constructor called");
             _configuration = configuration;
         }
-        
+
         /// <summary>
         /// Adds photo to user account in the database
         /// </summary>
@@ -78,8 +80,9 @@ namespace Winder.Repositories {
         /// </summary>
         /// <param name="email">The email of the user</param>
         /// <returns>Bool if succeeded</returns>
-        public byte[][] GetPhotos(string email) {
-            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) 
+        public byte[][] GetPhotos(string email)
+        {
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 byte[][] result = new byte[MaxAmountOfPictures][];
 
@@ -89,22 +92,28 @@ namespace Winder.Repositories {
 
                 //Execute query
                 SqlDataReader reader = null;
-                try {
+                try
+                {
                     connection.Open();
                     reader = query.ExecuteReader();
                     int i = 0;
-                    while (reader.Read()) {
+                    while (reader.Read())
+                    {
                         var profilePicture = reader["photo"] as byte[];
                         result[i] = profilePicture;
                         i++;
                     }
 
-                } catch (SqlException se) {
+                }
+                catch (SqlException se)
+                {
                     Console.WriteLine("Error retrieving pictures from database");
                     Console.WriteLine(se.ToString());
                     Console.WriteLine(se.StackTrace);
 
-                } finally  {
+                }
+                finally
+                {
                     if (reader != null) reader.Close();
                 }
 

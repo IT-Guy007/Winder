@@ -1,12 +1,10 @@
-using System.Data.SqlClient;
-
-
 namespace DataModel;
 
-public class User {
-    
+public class User
+{
+
     public static User CurrentUser { get; set; }
-    
+
     public string FirstName { get; set; }
     public string MiddleName { get; set; }
     public string LastName { get; set; }
@@ -23,7 +21,7 @@ public class User {
     public int MaxAge { get; set; }
 
 
-    public User(){}
+    public User() { }
 
     public User(string firstName, string middleName, string lastName, DateTime birthDay, string preference, string email, string gender, byte[] profilePicture, string bio, string school, string major, string[] interests, int minAge, int maxAge)
     {
