@@ -166,10 +166,10 @@ public partial class RegisterPage {
             middleName ??= "";
 
             
-            Authentication.CurrentUser = new User().Registration(firstname,middleName,lastname,email,preference,dateOfBirth,gender," ",password,profilePicture,true,school,major,Database.ReleaseConnection);
+            User.CurrentUser = new User().Registration(firstname,middleName,lastname,email,preference,dateOfBirth,gender," ",password,profilePicture,true,school,major,Database.ReleaseConnection);
 
             foreach (string interesse in chosenInterestsList) {
-                Authentication.CurrentUser.SetInterestInDatabase(interesse,Database.ReleaseConnection);
+                User.CurrentUser.SetInterestInDatabase(interesse,Database.ReleaseConnection);
             }
 
             Navigation.PushAsync(new StartPage());

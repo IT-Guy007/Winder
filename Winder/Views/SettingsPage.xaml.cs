@@ -1,5 +1,6 @@
 using CommunityToolkit.Maui.Views;
 using Controller;
+using DataModel;
 using MAUI;
 
 namespace Winder;
@@ -15,9 +16,9 @@ public partial class SettingsPage {
 
         InitializeComponent();
 
-        Location.SelectedItem = _settingsController.GetSchool(Authentication.CurrentUser.Email); //aa
-        minimaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge; // aa
-        maximaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge; // aa
+        Location.SelectedItem = _settingsController.GetSchool(User.CurrentUser.Email); //aa
+        minimaleLeeftijd.SelectedItem = User.CurrentUser.MaxAge; // aa
+        maximaleLeeftijd.SelectedItem = User.CurrentUser.MaxAge; // aa
         
         minimaleLeeftijd.ItemsSource = _settingsController.GetPickerData();
         maximaleLeeftijd.ItemsSource = _settingsController.GetPickerData();

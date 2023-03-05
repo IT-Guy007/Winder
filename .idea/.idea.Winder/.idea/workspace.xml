@@ -12,9 +12,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f76b6aa-328d-4379-ada0-068e259b500b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Controller/EmailController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataModel/EmailMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/EmailMessage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder/Views/ForgotPasswordPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ForgotPasswordPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/MatchmakingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/MatchmakingController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/OldControllers/Authentication.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/SettingsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/SettingsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unittest/ControllerTests/AuthenticationTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Unittest/ControllerTests/AuthenticationTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/ChatsViewPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ChatsViewPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/LoginPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/LoginPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/RegisterPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/RegisterPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/SettingsPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/SettingsPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/editPasswordPopUp.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/editPasswordPopUp.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

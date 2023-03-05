@@ -10,7 +10,7 @@ public class AuthenticationTest {
     [Test]
     public void SetterCurrentUser() {
         var user = new User();
-        Authentication.CurrentUser = user;
-        Assert.AreEqual(user, Authentication.CurrentUser);
+        User.CurrentUser = user;
+        Assert.AreEqual(user, User.CurrentUser);
     }
 }

@@ -76,8 +76,8 @@ namespace Controller
         public void DeleteAccount()
         {
             
-            _userRepository.DeleteUser(Authentication.CurrentUser.Email);
-            Authentication.CurrentUser = null;
+            _userRepository.DeleteUser(User.CurrentUser.Email);
+            User.CurrentUser = null;
           
             SecureStorage.Remove("Email");
             
@@ -85,7 +85,7 @@ namespace Controller
 
         public void Logout()
         {
-            Authentication.CurrentUser = null;
+            User.CurrentUser = null;
            
             SecureStorage.Remove("Email");
         
@@ -94,9 +94,9 @@ namespace Controller
 
         public void SetPreference(int minAge, int maxAge, string school)
         {
-            _userRepository.SetMinAge(minAge, Authentication.CurrentUser.Email);
-            _userRepository.SetMaxAge(maxAge, Authentication.CurrentUser.Email);
-            _userRepository.SetSchool(school, Authentication.CurrentUser.Email);
+            _userRepository.SetMinAge(minAge, User.CurrentUser.Email);
+            _userRepository.SetMaxAge(maxAge, User.CurrentUser.Email);
+            _userRepository.SetSchool(school, User.CurrentUser.Email);
            
         }
 

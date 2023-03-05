@@ -59,14 +59,14 @@ public partial class MainPage {
             if (!String.IsNullOrWhiteSpace(userEmail))
             {
                 Console.WriteLine("Found user who was logged in, restoring session");
-                Authentication.CurrentUser = _userRepository.GetUserFromDatabase(userEmail);
+                User.CurrentUser = _userRepository.GetUserFromDatabase(userEmail);
                 Console.WriteLine("Restored");
             } else {
                 Console.WriteLine("No user found");
                 await Navigation.PushAsync(new StartPage());
             }
 
-            if (!(Authentication.CurrentUser == null)) {
+            if (!(User.CurrentUser == null)) {
                 Console.WriteLine("Pushing new MatchPage");
                 await Navigation.PushAsync(new MatchPage());
             }
