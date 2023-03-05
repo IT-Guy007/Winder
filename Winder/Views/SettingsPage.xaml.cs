@@ -16,9 +16,9 @@ public partial class SettingsPage {
 
         InitializeComponent();
 
-        Location.SelectedItem = Authentication.CurrentUser.School;   //aa
-        minimaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge; // aa
-        maximaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge; // aa
+        Location.SelectedItem = User.CurrentUser.School;   //aa
+        minimaleLeeftijd.SelectedItem = User.CurrentUser.MaxAge; // aa
+        maximaleLeeftijd.SelectedItem = User.CurrentUser.MaxAge; // aa
 
         
         minimaleLeeftijd.ItemsSource = _settingsController.GetPickerData();

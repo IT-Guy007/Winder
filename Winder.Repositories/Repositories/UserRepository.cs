@@ -1,6 +1,7 @@
 using System.Data.SqlClient;
 using DataModel;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Maui.ApplicationModel.Communication;
 using Winder.Repositories.Interfaces;
 namespace Winder.Repositories
 {
@@ -512,6 +513,30 @@ namespace Winder.Repositories
                     Console.WriteLine(e.ToString());
                     Console.WriteLine(e.StackTrace);
                     return false;
+                }
+            }
+        }
+
+        public void DeleteInterest(string email, string interest)
+        {
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "Delete From winder.userHasInterest Where UID = @Email and interest = @Interest";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@Email", email);
+                    command.Parameters.AddWithValue("@Interest", interest);
+                    command.ExecuteNonQuery();
+                    User.CurrentUser.Interests.Select(x => x == interest).ToList().RemoveAll(x => x);
+
+                }
+                catch (SqlException e)
+                {
+                    Console.WriteLine("Error removing interest from user in database");
+                    Console.WriteLine(e.ToString());
+                    Console.WriteLine(e.StackTrace);
                 }
             }
         }

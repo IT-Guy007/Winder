@@ -50,7 +50,7 @@ namespace Controller
 
         public bool UpdateUserData(string firstName, string middleName, string lastName, string email, string preference, DateTime birthday, string gender, string bio, byte[] profilePicture, string school, string major)
         {
-            return _userRepository.UpdateUserData(firstName, middleName, lastName, email, preference, birthday, gender, bio, profilePicture, school, major);
+            return _userRepository.UpdateUserData(firstName, middleName, lastName, email, preference, birthday, gender, bio, profilePicture, major);
         }
         
         
@@ -146,6 +146,19 @@ namespace Controller
             {
                 _photosRepository.AddPhoto(profilePicture, email);
             }
+        }
+
+        public void SetInterests(List<string> interests)
+        {
+            foreach (string interest in interests)
+            {
+                _userRepository.SetInterest(User.CurrentUser.Email, interest);
+            }
+        }
+
+        public void DeleteInterest(string email, string interest)
+        {
+            _userRepository.DeleteInterest(email,interest);
         }
 
         /// <summary>
