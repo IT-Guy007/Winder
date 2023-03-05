@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using Winder.Repositories;
+using DataModel;
 namespace Unittest.Repositories;
 
 public class UserTest
@@ -41,15 +42,24 @@ public class UserTest
     }
 
 
-    /* [TestCase("s2000@student.windesheim.nl", ExpectedResult = true)]
-     [TestCase("s3000@student.windesheim.nl", ExpectedResult = true)]
-     [TestCase("", ExpectedResult = false)]
-     public bool GetConditionBasedUsersTest(User user)
-     {
+    [TestCase("s1000@student.windesheim.nl", ExpectedResult = "s1001@student.windesheim.nl")]
+    [TestCase("s1001@student.windesheim.nl", ExpectedResult = "s1000@student.windesheim.nl")]
+    [TestCase("", ExpectedResult = null)]
+    public string GetConditionBasedUsersTest(string email)
+    {
+        User currentUser = _userRepository.GetUserFromDatabase(email);
+        
+        List<string> users = _userRepository.GetConditionBasedUsers(currentUser);
 
-     }
+        if (users.Count > 0)
+        {
+            return users[0];
+        }
+        return null;
+        
+    }
 
-     */
+
 
 
     [TestCase("s1000@student.windesheim.nl", ExpectedResult = true)]

@@ -17,8 +17,12 @@ public partial class RegisterPage
     private string major;
     private string school;
     private byte[] profilePicture;
+
     private const int minAge = 18;
     private const int maxAge = 99;
+    private const int allChecksDoneSecondPage = 5;
+    private const int allChecksDoneFirstPage = 7;
+    private const int maxInterests = 5;
 
     private readonly List<string> interestsList;
     private readonly List<string> chosenInterestsList;
@@ -80,7 +84,7 @@ public partial class RegisterPage
     // adds selected items to list
     private void OnSelectedItems(object sender, EventArgs e)
     {
-        if (chosenInterestsList.Count() < 5 && Interesses.SelectedItem != null)
+        if (chosenInterestsList.Count() < maxInterests && Interesses.SelectedItem != null)
         {
             if (chosenInterestsList.Contains(Interesses.SelectedItem.ToString()))
             {
@@ -103,76 +107,76 @@ public partial class RegisterPage
     }
     //Declaring objects by "Opslaan" button
     // checks
-    private bool SaveEventChecks()
+    private bool SetPersonPageTwo()
     {
-        int aantalchecks = 0;
+        int checkAmount = 0;
 
-        #region voorkeur check
+        #region Preference check
         if (Voorkeur.SelectedItem == null)
         {
             FoutVoorkeur.IsVisible = true;
-            aantalchecks -= 1;
+            checkAmount -= 1;
         }
         else
         {
             FoutVoorkeur.IsVisible = false;
             preference = Voorkeur.SelectedItem.ToString();
-            aantalchecks += 1;
+            checkAmount += 1;
         }
         #endregion
-        #region Profielfotocheck
+        #region Profile picture check
         if (ProfileImage.Source == null)
         {
             FoutProfielfoto.IsVisible = true;
-            aantalchecks -= 1;
+            checkAmount -= 1;
         }
         else
         {
             FoutProfielfoto.IsVisible = false;
-            aantalchecks += 1;
+            checkAmount += 1;
         }
         #endregion
-        #region Opleiding check
+        #region Major check
         if (Opleiding.Text == null)
         {
             FoutOpleiding.IsVisible = true;
-            aantalchecks -= 1;
+            checkAmount -= 1;
         }
         else
         {
             FoutOpleiding.IsVisible = false;
             major = Opleiding.Text;
-            aantalchecks += 1;
+            checkAmount += 1;
         }
         #endregion
-        #region Locatie check
+        #region Location check
         if (Locatie.SelectedItem == null)
         {
             FoutLocatie.IsVisible = true;
-            aantalchecks -= 1;
+            checkAmount -= 1;
         }
         else
         {
             FoutLocatie.IsVisible = false;
             school = Locatie.SelectedItem.ToString();
-            aantalchecks += 1;
+            checkAmount += 1;
         }
         #endregion
-        #region interesses check
+        #region Interests check
         if (Interesses.SelectedItem == null)
         {
             Foutinteresses.IsVisible = true;
-            aantalchecks -= 1;
+            checkAmount -= 1;
         }
         else
         {
             Foutinteresses.IsVisible = false;
             Interesses.ItemsSource = interestsList;
-            aantalchecks += 1;
+            checkAmount += 1;
         }
         #endregion
 
-        if (aantalchecks == 5)
+        if (checkAmount == allChecksDoneSecondPage)
         {
             return true;
         }
@@ -185,7 +189,7 @@ public partial class RegisterPage
 
     private void SaveEvent(object sender, EventArgs e)
     {
-        if (SaveEventChecks())
+        if (SetPersonPageTwo())
         {
             middleName ??= "";
 
@@ -201,12 +205,12 @@ public partial class RegisterPage
 
 
     //Checks if values are allowed
-    private bool RegisterBtnEventCheck()
+    private bool SetPersonaPageOne()
     {
-        int aantalchecks = 0;
+        int checkAmount = 0;
 
-        DateTime geboortedatumtijdelijk;
-        geboortedatumtijdelijk = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
+        DateTime tempBirthday;
+        tempBirthday = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
 
 
         #region Email checks
@@ -214,7 +218,7 @@ public partial class RegisterPage
         {
             FoutEmail.Text = "Email mag niet leeg zijn";
             FoutEmail.IsVisible = true;
-            aantalchecks -= 1;
+            checkAmount -= 1;
         }
         else
         {
@@ -222,45 +226,45 @@ public partial class RegisterPage
             {
                 FoutEmail.IsVisible = false;
                 email = Email.Text;
-                aantalchecks += 1;
+                checkAmount += 1;
             }
             else
             {
                 FoutEmail.Text = "Email is al in gebruik";
                 FoutEmail.IsVisible = true;
-                aantalchecks -= 1;
+                checkAmount -= 1;
             }
             if (_validationController.CheckEmail(Email.Text))
             {
                 email = Email.Text;
-                aantalchecks += 1;
+                checkAmount += 1;
             }
             else
             {
                 FoutEmail.IsVisible = true;
                 FoutEmail.Text = "Email is niet van Windesheim";
-                aantalchecks -= 1;
+                checkAmount -= 1;
             }
         }
 
 
         #endregion
 
-        #region voornaam check
+        #region First name check
         if (Voornaam.Text == null)
         {
             Foutvoornaam.IsVisible = true;
-            aantalchecks -= 1;
+            checkAmount -= 1;
         }
         else
         {
             Foutvoornaam.IsVisible = false;
             firstname = Voornaam.Text;
-            aantalchecks += 1;
+            checkAmount += 1;
         }
         #endregion
 
-        #region tussenvoegsel
+        #region Middel name check
 
         if (Tussenvoegsel.Text != null)
         {
@@ -269,29 +273,29 @@ public partial class RegisterPage
 
         #endregion
 
-        #region achernaam check
+        #region Last name check
 
         if (Achternaam.Text == null)
         {
 
             FoutAchternaam.IsVisible = true;
-            aantalchecks -= 1;
+            checkAmount -= 1;
         }
         else
         {
             FoutAchternaam.IsVisible = false;
             lastname = Achternaam.Text;
-            aantalchecks += 1;
+            checkAmount += 1;
         }
 
         #endregion
 
-        #region wachtwoord check
+        #region Password check
         if (Wachtwoord.Text == null)
         {
             FoutWachtwoord.Text = "Wachtwoord mag niet leeg zijn";
             FoutWachtwoord.IsVisible = true;
-            aantalchecks -= 1;
+            checkAmount -= 1;
         }
         else
         {
@@ -299,13 +303,13 @@ public partial class RegisterPage
             {
                 FoutWachtwoord.Text = "Wachtwoord moet minimaal 8 karakters, 1 getal en 1 hoofdletter bevatten";
                 FoutWachtwoord.IsVisible = true;
-                aantalchecks -= 1;
+                checkAmount -= 1;
             }
             else
             {
                 FoutWachtwoord.IsVisible = false;
                 password = _validationController.HashPassword(Wachtwoord.Text);
-                aantalchecks += 1;
+                checkAmount += 1;
             }
 
 
@@ -313,37 +317,37 @@ public partial class RegisterPage
         }
         #endregion
 
-        #region geboortedatum checks
+        #region Birthday checks
 
-        if (_validationController.CalculateAge(geboortedatumtijdelijk) < 18)
+        if (_validationController.CalculateAge(tempBirthday) < 18)
         {
             FoutLeeftijd.IsVisible = true;
-            aantalchecks -= 1;
+            checkAmount -= 1;
         }
         else
         {
             FoutLeeftijd.IsVisible = false;
             dateOfBirth = new DateTime(Geboortedatum.Date.Year, Geboortedatum.Date.Month, Geboortedatum.Date.Day);
-            aantalchecks += 1;
+            checkAmount += 1;
         }
         #endregion
 
-        #region geslacht check
+        #region Gender check
 
         if (Geslacht.SelectedItem == null)
         {
             FoutGeslacht.IsVisible = true;
-            aantalchecks -= 1;
+            checkAmount -= 1;
         }
         else
         {
             FoutGeslacht.IsVisible = false;
             gender = Geslacht.SelectedItem.ToString();
-            aantalchecks += 1;
+            checkAmount += 1;
         }
         #endregion
 
-        if (aantalchecks == 7)
+        if (checkAmount == allChecksDoneFirstPage)
         {
             return true;
         }
@@ -357,7 +361,7 @@ public partial class RegisterPage
     private void RegisterBtnEvent(object sender, EventArgs e)
     {
 
-        if (RegisterBtnEventCheck())
+        if (SetPersonaPageOne())
         {
             //setting objects visible to proceed the registerform
             LblVoorkeur.IsVisible = true;
