@@ -15,7 +15,7 @@ public partial class SettingsPage {
 
         InitializeComponent();
 
-        Location.SelectedItem = _settingsController.GetSchool(Authentication.CurrentUser.Email); //aa
+        Location.SelectedItem = Authentication.CurrentUser.School;   //aa
         minimaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge; // aa
         maximaleLeeftijd.SelectedItem = Authentication.CurrentUser.MaxAge; // aa
         

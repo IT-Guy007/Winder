@@ -106,7 +106,10 @@ public partial class ProfileChange {
     private void ChangeUserData(object sender, EventArgs e) {
         if (firstname && middleName && lastname && birthday  && preference && gender && bio && education ) {
             UpdateUserPropertiesPrepareForUpdateQuery();
-            Authentication.CurrentUser.UpdateUserDataToDatabase(Database.ReleaseConnection);
+
+            _settingsController.UpdateUserData(Authentication.CurrentUser.FirstName, Authentication.CurrentUser.MiddleName, Authentication.CurrentUser.LastName, Authentication.CurrentUser.Email, Authentication.CurrentUser.Preference, Authentication.CurrentUser.BirthDay, Authentication.CurrentUser.Gender, Authentication.CurrentUser.Bio, Authentication.CurrentUser.ProfilePicture, Authentication.CurrentUser.School,Authentication.CurrentUser.Major)
+
+
             Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database.ReleaseConnection);
             Authentication.CurrentUser.InsertAllPhotosInDatabase(ProfilePictures,Database.ReleaseConnection);
             _settingsController.RegisterInterestsInDatabase(Authentication.CurrentUser.Email, interests);

@@ -34,6 +34,13 @@ namespace Controller
 
         }
 
+        public bool UpdateUserData(string firstName, string middleName, string lastName, string email, string preference, DateTime birthday, string gender, string bio, byte[] profilePicture, string school, string major)
+        {
+            return _userRepository.UpdateUserData(firstName, middleName, lastName, email, preference, birthday, gender, bio, profilePicture, school, major);
+        }
+        
+        
+
         public string GetSchool(string email)
         {
             return _userRepository.GetSchool(email);
@@ -97,7 +104,8 @@ namespace Controller
             _userRepository.SetMinAge(minAge, Authentication.CurrentUser.Email);
             _userRepository.SetMaxAge(maxAge, Authentication.CurrentUser.Email);
             _userRepository.SetSchool(school, Authentication.CurrentUser.Email);
-           
+            Authentication.currentuser.school = school;
+
         }
 
 
