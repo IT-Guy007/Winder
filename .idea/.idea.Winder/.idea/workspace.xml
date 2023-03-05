@@ -12,26 +12,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f76b6aa-328d-4379-ada0-068e259b500b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/2e1afb85-9e57-4207-a137-6c2bdc920c6b.vsidx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/9e2bcbe8-80be-4080-972d-11b7f09173e7.vsidx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/a4d23abb-7cf0-4d36-a8c9-1634fc267f18.vsidx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/fe3c4d7f-b350-4ea1-ae30-67e06cb6f045.vsidx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/.name" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/483a1d0d-8840-47ef-939f-20cfa1e02f6d.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/4e582707-9328-4862-9707-6eacd013a6e8.vsidx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/b38f0eb4-af8d-4a1f-ba3a-f98e0232f555.vsidx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Winder/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.metadata.v5.2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/winder.projects.v5.2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/0730ac9d-8b78-44e6-b7ee-1d63cecd7b8b.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/0e5c735d-9b34-47c8-b467-697a14c06679.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/829d4d15-a306-43fe-81e5-12a86c8096e6.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/a9b00006-cc21-4007-ae4a-871bf287d107.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/ad70ddc9-8205-4e84-a4d0-620d938f74e2.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/ccefeff8-3472-4ddd-b2df-044e511b2e33.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/d844d505-90e1-4d4f-b65a-343fb11bf476.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/.futdcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/065.testlog" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/065.testlog" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/testlog.manifest" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/testlog.manifest" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Winder.Repositories/Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Winder.Repositories/Data.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/2441e38f-332e-4dc0-afb9-bde6f4b9c72f.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/2eabd806-7acb-43cd-bf6b-47b6124be8ef.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/503ae96a-c201-4999-a6d2-ab9e64989e29.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/5dcf35db-2a39-4e45-b3c1-9b969c3f0459.vsidx" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/09c57718-d047-4e98-aea3-0a8372558e4f.vsidx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/65f58a30-730d-4e5b-acee-d96a3819ec9c.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/77c31d8b-4d0e-4ffe-a4d4-6234e8d43f4e.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/80c7ee52-f402-4433-ad3d-2a596ff40e9e.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/FileContentIndex/b6c3445e-69da-4817-9205-5a5c654910df.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/066.testlog" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/066.testlog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Winder/v17/TestStore/0/075.testlog" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/Controller.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Controller.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/LikeDislikeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/LikeDislikeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/MatchmakingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/MatchmakingController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/OldControllers/DataCheckController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/OldControllers/ProfileQueueController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/SettingsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/SettingsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/AlgorithmModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/MatchList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/MatchList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/ProfileQueue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/ProfileQueue.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataModel/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataModel/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Unittest/ControllerTests/DatabaseTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder.Repositories/Interfaces/ILikedRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder.Repositories/Interfaces/ILikedRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder.Repositories/Interfaces/IUserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder.Repositories/Interfaces/IUserRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder.Repositories/Repositories/LikedRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder.Repositories/Repositories/LikedRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder.Repositories/Repositories/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder.Repositories/Repositories/UserRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder.Repositories/configdatabase.json" beforeDir="false" afterPath="$PROJECT_DIR$/Winder.Repositories/configdatabase.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MainPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/MauiProgram.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/MauiProgram.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/MatchPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Winder/Views/ProfilePage.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +140,7 @@
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Winder/Winder.csproj" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="" />
-      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="PASS_PARENT_ENVS_MAC" value="1" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -153,6 +168,8 @@
       <workItem from="1677759812771" duration="41000" />
       <workItem from="1677761657478" duration="3159000" />
       <workItem from="1677770983578" duration="455000" />
+      <workItem from="1678009492777" duration="3634000" />
+      <workItem from="1678023278634" duration="3240000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed currentUser">
       <created>1670416017951</created>

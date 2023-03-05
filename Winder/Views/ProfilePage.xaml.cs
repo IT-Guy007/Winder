@@ -7,8 +7,6 @@ public partial class ProfileChange {
     public string OriginPage;
     private const string PageName = "profilepage";
 
-    private DataCheckController DataCheck;
-
     private readonly List<string> interests;
     private readonly Color errorColor;
     
@@ -31,7 +29,6 @@ public partial class ProfileChange {
     /// Default constructor, loads the data
     /// </summary>
     public ProfileChange() {
-        DataCheck = new DataCheckController();
         interests = new List<string>();
         errorColor = new Color(255, 243, 5);
         ProfilePictures = new byte[6][];
@@ -156,7 +153,7 @@ public partial class ProfileChange {
     //Checks if the firstname input is valid
     private void FirstnameTextChanged(object sender, TextChangedEventArgs e) {
         if (!string.IsNullOrWhiteSpace(Firstname.Text)) {
-            if (!DataCheck.CheckIfTextIsOnlyLetters(Firstname.Text)) {
+            if (!_validationController.CheckIfTextIsOnlyLetters(Firstname.Text)) {
                 firstname = false;
                 lblFirstname.Text = "Voornaam mag alleen letters bevatten";
                 lblFirstname.TextColor = errorColor;
@@ -173,7 +170,7 @@ public partial class ProfileChange {
     {
         if (Middlename.Text != "")
         {
-            if (!DataCheck.CheckIfTextIsOnlyLetters(Middlename.Text))
+            if (!_validationController.CheckIfTextIsOnlyLetters(Middlename.Text))
             {
                 middleName = false;
                 lblMiddlename.Text = "Tussenvoegsel mag alleen letters bevatten";
@@ -193,7 +190,7 @@ public partial class ProfileChange {
     {
         if (Lastname.Text != "")
         {
-            if (!DataCheck.CheckIfTextIsOnlyLetters(Lastname.Text))
+            if (!_validationController.CheckIfTextIsOnlyLetters(Lastname.Text))
             {
                 lastname = false;
                 lblLastname.Text = "Achternaam mag alleen letters bevatten";
@@ -213,7 +210,7 @@ public partial class ProfileChange {
     {
         if (Education.Text != "")
         {
-            if (!DataCheck.CheckIfTextIsOnlyLettersAndSpaces(Education.Text))
+            if (!_validationController.CheckIfTextIsOnlyLettersAndSpaces(Education.Text))
             {
                 education = false;
                 lblEducation.Text = "Opleiding mag alleen letters bevatten";
@@ -352,7 +349,7 @@ public partial class ProfileChange {
 
     //Checks if selected birthdate is a birthdate that is 18 years or older
     private void DateOfBirthSelectedDate(object sender, DateChangedEventArgs e) {
-        int age = DataCheck.CalculateAge(Birthdate.Date);
+        int age = _validationController.CalculateAge(Birthdate.Date);
         if (age >= 18) { 
             birthday = true;
             lblBirthdate.Text = "Leeftijd : " + age;
@@ -383,7 +380,7 @@ public partial class ProfileChange {
     {
         if (Bio.Text != "")
         {
-            if (!DataCheck.CheckIfTextIsOnlyLettersAndSpaces(Bio.Text))
+            if (!_validationController.CheckIfTextIsOnlyLettersAndSpaces(Bio.Text))
             {
                 bio = false;
                 lblBio.Text = "Bio mag alleen letters bevatten";
