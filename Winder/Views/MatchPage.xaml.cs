@@ -19,6 +19,8 @@ public partial class MatchPage {
     private readonly MatchmakingController _matchmakingController;
 
     private readonly ValidationController _validationController;
+    private readonly MatchmakingController _matchmakingController;
+
 
     public MatchPage() {
         
@@ -79,8 +81,6 @@ public partial class MatchPage {
         };
         chatButton.Clicked += ChatButton_Clicked;
         chatButton.HorizontalOptions = LayoutOptions.End;
-
-       
 
         //my profile button
         var myProfile = new Button {
@@ -178,6 +178,7 @@ public partial class MatchPage {
             
             var namelbl = new Label { Text = "Naam: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             var name = new Label { Text = _matchmakingController.CurrentProfile.User.FirstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var name = new Label { Text = _matchmakingController.CurrentProfile.User.FirstName, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to stack
             nameStackLayout.Add(namelbl);
@@ -190,6 +191,7 @@ public partial class MatchPage {
             
             var genderlbl = new Label { Text = "Geslacht: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             var gender = new Label { Text = _matchmakingController.CurrentProfile.User.Gender, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var gender = new Label { Text = _matchmakingController.CurrentProfile.User.Gender, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to Stack
             genderStackLayout.Add(genderlbl);
@@ -201,6 +203,7 @@ public partial class MatchPage {
             StackLayout ageStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             
             var agelbl = new Label { Text = "Leeftijd: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var birthday = _validationController.CalculateAge(_matchmakingController.CurrentProfile.User.BirthDay);
             var birthday = _validationController.CalculateAge(_matchmakingController.CurrentProfile.User.BirthDay);
             var age = new Label { Text = birthday.ToString(), FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
@@ -215,6 +218,7 @@ public partial class MatchPage {
             
             var locationlbl = new Label { Text = "Windesheim locatie: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             var location = new Label { Text = _matchmakingController.CurrentProfile.User.School, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var location = new Label { Text = _matchmakingController.CurrentProfile.User.School, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             
             //Add to Stack
             locationStackLayout.Add(locationlbl);
@@ -227,6 +231,7 @@ public partial class MatchPage {
             
             var educationlbl = new Label { Text = "Opleiding: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             var education = new Label { Text = _matchmakingController.CurrentProfile.User.Major, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var education = new Label { Text = _matchmakingController.CurrentProfile.User.Major, FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
             //Add to stack
             educationStackLayout.Add(educationlbl);
@@ -236,6 +241,7 @@ public partial class MatchPage {
             //Bio
             StackLayout bioStackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
             var biolbl = new Label { Text = "Bio: ", FontSize = 20, HorizontalOptions = LayoutOptions.Start };
+            var bio = new Label { Text = _matchmakingController.CurrentProfile.User.Bio ,FontSize = 20, HorizontalOptions = LayoutOptions.Start };
             var bio = new Label { Text = _matchmakingController.CurrentProfile.User.Bio ,FontSize = 20, HorizontalOptions = LayoutOptions.Start };
 
 
@@ -250,6 +256,7 @@ public partial class MatchPage {
 
             interestsStackLayout.Add(interestslbl);
 
+            for (int i = 0; i < _matchmakingController.CurrentProfile.User.Interests.Length; i++) {
             for (int i = 0; i < _matchmakingController.CurrentProfile.User.Interests.Length; i++) {
                 if (i != 0) {
                     var spacecommavar = new Label { FontSize = 20, HorizontalOptions = LayoutOptions.Start, Text = ", " };
