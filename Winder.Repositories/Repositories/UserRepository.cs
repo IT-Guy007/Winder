@@ -105,10 +105,84 @@ namespace Winder.Repositories
             
                 }
         
-                /*SecureStorage.Default.Remove("Email");    // moet in controller
-                SecureStorage.Remove("Email");
-                SecureStorage.RemoveAll();*/
+                
                 return false;
+            }
+        }
+
+        public void SetMinAge(int minAge, string email)
+        {
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+                if (minAge > MinAgePreference && minAge < MaxAgePreference)
+                {
+
+                    SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET min = @minAge WHERE Email = @Email", connection);
+                    query.Parameters.AddWithValue("@Email", email);
+                    query.Parameters.AddWithValue("@minAge", minAge);
+
+                    try
+                    {
+                        query.ExecuteNonQuery();
+                    }
+                    catch (SqlException se)
+                    {
+                        Console.WriteLine("Error inserting minAge in database");
+                        Console.WriteLine(se.ToString());
+                        Console.WriteLine(se.StackTrace);
+                    }
+                }
+            }
+        }
+
+        public void SetSchool(string school, string email)
+        {
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+                SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET location = @Location WHERE Email = @Email", connection);
+                query.Parameters.AddWithValue("@Email", email);
+                query.Parameters.AddWithValue("@Location", school);
+
+                try
+                {
+                    query.ExecuteNonQuery();
+                    
+                }
+                catch (SqlException se)
+                {
+                    Console.WriteLine("Error inserting location in database");
+                    Console.WriteLine(se.ToString());
+                    Console.WriteLine(se.StackTrace);
+                }
+            }
+        }
+
+        public void SetMaxAge(int maxAge, string email)
+        {
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+                if (maxAge > MinAgePreference && maxAge < MaxAgePreference)
+                {
+                    
+                    SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET max = @maxAge WHERE Email = @Email", connection);
+                    query.Parameters.AddWithValue("@Email", email);
+                    query.Parameters.AddWithValue("@maxAge", maxAge);
+
+                    try
+                    {
+                        query.ExecuteNonQuery();
+                        
+                    }
+                    catch (SqlException se)
+                    {
+                        Console.WriteLine("Error inserting maxAge in database");
+                        Console.WriteLine(se.ToString());
+                        Console.WriteLine(se.StackTrace);
+                    }
+                }
             }
         }
 
@@ -515,6 +589,43 @@ namespace Winder.Repositories
                 }
             }
         }
+
+        public string GetSchool(string email)
+        {
+            using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+
+                SqlCommand query = new SqlCommand("SELECT location FROM winder.winder.[User] WHERE Email = @Email", connection);
+                query.Parameters.AddWithValue("@Email", email);
+
+                SqlDataReader reader = null;
+                try
+                {
+                    reader = query.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        var location = reader["location"] as string;
+                        
+                        reader.Close();
+                        return location;
+                    }
+                }
+                catch (SqlException se)
+                {
+                    Console.WriteLine("Error inserting location in database");
+                    Console.WriteLine(se.ToString());
+                    Console.WriteLine(se.StackTrace);
+
+                    return "";
+                }
+                finally
+                {
+                    if (reader != null) reader.Close();
+                }
+                return "";
+            }
+        }
+
 
     }
 }
