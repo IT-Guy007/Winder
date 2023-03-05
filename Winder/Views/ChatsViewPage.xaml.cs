@@ -12,10 +12,16 @@ public partial class ChatsViewPage {
     private const string pageName = "Chatpage";
 
     private MatchModel MatchModel;
-    
+
+    private readonly ChatController _chatController;
+
     public ChatsViewPage() {
+
+        _chatController = MauiProgram.ServiceProvider.GetService<ChatController>();
+
         InitializeComponent();
-        MatchModel = new MatchModel(Authentication.CurrentUser.GetMatchedStudentsFromUser(Database.ReleaseConnection));
+        MatchModel = new MatchModel(_chatController.GetMatches(Authentication.CurrentUser.Email));
+        
         ListOfMatches.ItemsSource = MatchModel.Matches.GetUsers();
     }
     

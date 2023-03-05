@@ -153,7 +153,7 @@ namespace Winder.Repositories
 
                 if (InterestsAlgorithm)
                 {
-                    if (user.Interests.Length > 0)
+                    if (user.Interests != null && user.Interests.Length > 0)
                     {
                         //Add interests
                         query = query +
