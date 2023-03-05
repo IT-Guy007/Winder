@@ -1,5 +1,6 @@
-# OOSD
+# Windesheim semester: Object-Oriented Software Development
 
-The Tinder application for Windesheim, for this project we need to create a Tinder application in C# witch stores data in Microsoft SQL Server.
+For this semester we needed to create a Tinder like application in C# with Microsoft SQL server.
 
-We host the database in Docker on the datacenter at Windesheim.
+We chose to use MAUI instead of WPF for the crossplatform part and because of how it will be the new standard rather then WPF in the comming years.
+sele

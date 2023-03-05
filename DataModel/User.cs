@@ -1,37 +1,45 @@
-using Microsoft.Maui.Controls;
-
 namespace DataModel;
 
-public class User {
-    public string firstName { get; set; }
-    public string middleName { get; set; }
-    public string lastName { get; set; }
-    public DateTime birthDay { get; set; }
-    public string preference { get; set; }
-    public string email { get; set; }
-    private string password { get; set; }
-    public string gender { get; set; }
-    public byte[] profilePicture { get; set; }
-    public string bio { get; set; }
-    public string school { get; set; }
-    public string major { get; set; }
-    public string[] interests { get; set; }
-    public User(string firstName, string middleName, string lastName, DateTime birthDay,
-        string preference, string email, string password, string gender, byte[] profilePicture, string bio, string school, string major)
+public class User
+{
+
+    public static User CurrentUser { get; set; }
+
+    public string FirstName { get; set; }
+    public string MiddleName { get; set; }
+    public string LastName { get; set; }
+    public DateTime BirthDay { get; set; }
+    public string Preference { get; set; }
+    public string Email { get; set; }
+    public string Gender { get; set; }
+    public byte[] ProfilePicture { get; set; }
+    public string Bio { get; set; }
+    public string School { get; set; }
+    public string Major { get; set; }
+    public string[] Interests { get; set; }
+    public int MinAge { get; set; }
+    public int MaxAge { get; set; }
+
+
+    public User() { }
+
+    public User(string firstName, string middleName, string lastName, DateTime birthDay, string preference, string email, string gender, byte[] profilePicture, string bio, string school, string major, string[] interests, int minAge, int maxAge)
     {
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.birthDay = birthDay;
-        this.preference = preference;
-        this.email = email;
-        this.password = password;
-        this.gender = gender;
-        this.profilePicture = profilePicture;
-        this.bio = bio;
-        this.school = school;
-        this.major = major;
+        FirstName = firstName;
+        MiddleName = middleName;
+        LastName = lastName;
+        BirthDay = birthDay;
+        Preference = preference;
+        Email = email;
+        Gender = gender;
+        ProfilePicture = profilePicture;
+        Bio = bio;
+        School = school;
+        Major = major;
+        Interests = interests;
+        MinAge = minAge;
+        MaxAge = maxAge;
     }
-    public User(){}
-    
+
 }
+

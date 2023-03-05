@@ -31,8 +31,16 @@
 
     <PropertyGroup>
       <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+      <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+      <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+      <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+      <GenerateTestArtifacts>True</GenerateTestArtifacts>
+      <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+      <CreatePackage>false</CreatePackage>
+    </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
@@ -42,45 +50,60 @@
 
         <!-- Images -->
         <MauiImage Include="Resources\Images\*" />
-        <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
-
-        <!-- Custom Fonts -->
         <MauiFont Include="Resources\Fonts\*" />
 
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
         <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="Controller\**" />
+      <EmbeddedResource Remove="Controller\**" />
+      <MauiCss Remove="Controller\**" />
+      <MauiXaml Remove="Controller\**" />
+      <None Remove="Controller\**" />
+    </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommunityToolkit.Maui" Version="3.0.0" />
+        <PackageReference Include="CommunityToolkit.Maui" Version="4.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+        <PackageReference Include="Microsoft.QualityTools.Testing.Fakes" Version="17.5.0-beta.23060.1" />
         <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <MauiXaml Update="editPasswordPopUp.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </MauiXaml>
-
-      <MauiXaml Update="LoginPage.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
       <MauiXaml Update="ChatPage.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
-      <MauiXaml Update="MatchPage.xaml">
+      <MauiXaml Update="Views\ProfilePage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="VideoTemplate.xaml">
+      <MauiXaml Update="Views\RegisterPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\SettingsPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\StartPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\LoginPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\MatchPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\ChatsViewPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\ChatPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\EditPasswordPopUp.xaml">
+        <SubType>Designer</SubType>
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
-      <MauiXaml Update="ProfileChangePage.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
-      <MauiXaml Update="RegisterPage.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
-      <MauiXaml Update="ForgotPassword.xaml">
+      <MauiXaml Update="Views\ForgotPasswordPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
     </ItemGroup>
@@ -89,40 +112,61 @@
       <Compile Update="MainPage.xaml.cs">
         <DependentUpon>MainPage.xaml</DependentUpon>
       </Compile>
-      <Compile Update="LoginPage.xaml.cs">
-        <DependentUpon>LoginPage.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-
       <Compile Update="ChatPage.xaml.cs">
         <DependentUpon>ChatPage.xaml</DependentUpon>
       </Compile>
-      <Compile Update="StartPage.xaml.cs">
-        <DependentUpon>StartPage.xaml</DependentUpon>
-      </Compile>
-      <Compile Update="MatchPage.xaml.cs">
-        <DependentUpon>MatchPage.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="VideoTemplate.xaml.cs">
-        <DependentUpon>VideoTemplate.xaml</DependentUpon>
-      </Compile>
-      <Compile Update="ProfileChangePage.xaml.cs">
+      <Compile Update="Views\ProfilePage.xaml.cs">
         <DependentUpon>ProfileChangePage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="RegisterPage.xaml.cs">
+      <Compile Update="Views\RegisterPage.xaml.cs">
         <DependentUpon>RegisterPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="ForgotPassword.xaml.cs">
-        <DependentUpon>ForgotPassword.xaml</DependentUpon>
+      <Compile Update="Views\SettingsPage.xaml.cs">
+        <DependentUpon>SettingsPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\StartPage.xaml.cs">
+        <DependentUpon>StartPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\LoginPage.xaml.cs">
+        <DependentUpon>LoginPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\MatchPage.xaml.cs">
+        <DependentUpon>MatchPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\ChatsViewPage.xaml.cs">
+        <DependentUpon>ChatsViewPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\ChatPage.xaml.cs">
+        <DependentUpon>ChatView.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\EditPasswordPopUp.xaml.cs">
+        <DependentUpon>editPasswordPopUp.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\ForgotPasswordPage.xaml.cs">
+        <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Controller\Controller.csproj" />
       <ProjectReference Include="..\DataModel\DataModel.csproj" />
+      <ProjectReference Include="..\Winder.Repositories\Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <MauiImage Remove="Resources\Images\dotnet_bot.svg" />
+    </ItemGroup>
+    <ItemGroup>
+      <BundleResource Include="Resources\Images\dotnet_bot.svg" />
+    </ItemGroup>
 </Project>

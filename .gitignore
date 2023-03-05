@@ -131,3 +131,5 @@ $RECYCLE.BIN/
 .DS_Store
 
 _NCrunch*
+DataModel/DataModel.csproj
+Controller/Controller.csproj
