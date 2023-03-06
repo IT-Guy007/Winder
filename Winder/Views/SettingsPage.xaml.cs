@@ -68,6 +68,10 @@ public partial class SettingsPage
         else
         {
             _settingsController.SetPreference((int)minimaleLeeftijd.SelectedItem, (int)maximaleLeeftijd.SelectedItem, Location.SelectedItem.ToString());
+            User.CurrentUser.MinAge = (int)minimaleLeeftijd.SelectedItem;
+            User.CurrentUser.MaxAge = (int)maximaleLeeftijd.SelectedItem;
+            User.CurrentUser.School = Location.SelectedItem.ToString();
+
             foutLeeftijd.IsVisible = false;
             DisplayAlert("Melding", "Er zijn succesvol gegevens aangepast", "OK");
         }

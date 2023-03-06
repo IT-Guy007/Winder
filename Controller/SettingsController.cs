@@ -26,6 +26,12 @@ namespace Controller
             validationController = new ValidationController(_userRepository);
         }
 
+        public void SetCurrentUser(string email)
+        {
+            User.CurrentUser = _userRepository.GetUserFromDatabase(email);
+            User.CurrentUser.Interests = _userRepository.GetInterestsFromUser(email).ToArray();
+        }
+
         public void UpdatePassword(string email, string password)
         {
             // checken of Email in de database staat
@@ -67,20 +73,6 @@ namespace Controller
         public int GetPreferenceFromUser(string preference)
         {
             return preference == "Man" ? 1 : 2;
-        }
-
-
-
-        /// <summary>
-        /// Adds all interests to users list of interests
-        /// </summary>
-        /// <param name="interests"></param>
-        public void RegisterInterestsInDatabase(string email, List<string> interests)
-        {
-            foreach (var interest in interests)
-            {
-                _userRepository.SetInterest(email, interest);
-            }
         }
 
         public void DeleteAccount()
@@ -139,11 +131,15 @@ namespace Controller
             }
         }
 
-        public void SetInterests(List<string> interests)
+        /// <summary>
+        /// Adds all interests to users list of interests
+        /// </summary>
+        /// <param name="interests"></param>
+        public void InsertInterests(string email, List<string> interests)
         {
-            foreach (string interest in interests)
+            foreach (var interest in interests)
             {
-                _userRepository.SetInterest(User.CurrentUser.Email, interest);
+                _userRepository.SetInterest(email, interest);
             }
         }
 

@@ -27,7 +27,7 @@
 
                 <Button 
                     x:Name="chatbutton"
-                Text="Matches"
+                Text="Chats"
                 VerticalOptions="Start" 
                 HorizontalOptions="Start"
                 WidthRequest="120"

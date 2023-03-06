@@ -196,7 +196,7 @@ public partial class RegisterPage
             User.CurrentUser = new User(firstname, middleName, lastname, dateOfBirth, preference, email, gender, profilePicture, " ", school, major, chosenInterestsList.ToArray(), minAge, maxAge);
             _registrationController.RegisterUser(firstname, middleName, lastname, email, preference, dateOfBirth, gender, " ", password, profilePicture, true, school, major);
 
-            _settingsController.SetInterests(chosenInterestsList);
+            _settingsController.InsertInterests(User.CurrentUser.Email, chosenInterestsList);
 
             Navigation.PushAsync(new StartPage());
 

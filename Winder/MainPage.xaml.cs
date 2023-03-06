@@ -3,6 +3,7 @@ using Controller;
 using DataModel;
 using MAUI;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Maui.Controls;
 using Winder.Repositories;
 
 namespace Winder;
@@ -13,16 +14,14 @@ public partial class MainPage {
     private bool connectionsucceeded = true;
     private bool displayresult;
 
-    private UserRepository _userRepository;
+    private readonly SettingsController _settingsController;
     private IConfigurationRoot _configuration;
+
     public MainPage() {
+        _settingsController = MauiProgram.ServiceProvider.GetService<SettingsController>();
+
         InitializeComponent();
-        
-        IConfigurationRoot configuration = new ConfigurationBuilder()
-            .AddJsonFile("configdatabase.test.json")
-            .Build();
-        _userRepository = new UserRepository(configuration);
-        
+                
         _configuration = new ConfigurationBuilder()
             .AddJsonFile("configdatabase.test.json")
             .Build();
@@ -59,7 +58,7 @@ public partial class MainPage {
             if (!String.IsNullOrWhiteSpace(userEmail))
             {
                 Console.WriteLine("Found user who was logged in, restoring session");
-                User.CurrentUser = _userRepository.GetUserFromDatabase(userEmail);
+                _settingsController.SetCurrentUser(userEmail);
                 Console.WriteLine("Restored");
             } else {
                 Console.WriteLine("No user found");

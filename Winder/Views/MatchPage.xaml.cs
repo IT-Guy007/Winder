@@ -21,8 +21,6 @@ public partial class MatchPage
 
     public MatchPage()
     {
-
-
         //Creating controller
         _matchmakingController = MauiProgram.ServiceProvider.GetService<MatchmakingController>();
         _validationController = MauiProgram.ServiceProvider.GetService<ValidationController>();
