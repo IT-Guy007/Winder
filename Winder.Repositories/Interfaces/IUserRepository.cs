@@ -11,13 +11,13 @@ namespace Winder.Repositories.Interfaces
         public bool DeleteUser(string email);
         public bool IsEmailUnique(string email);
         public bool SetInterest(string email, string interest);
-        public void DeleteInterest(string email, string interest);
+        public bool DeleteInterest(string email, string interest);
         public List<string> GetConditionBasedUsers(User user);
         public List<string> GetInterestsFromUser(string email);
-        public void UpdatePassword(string email, string password);
+        public bool UpdatePassword(string email, string password);
         public string GetSchool(string email);
-        public void SetMinAge(int minAge, string email);
-        public void SetSchool(string school, string email);
-        public void SetMaxAge(int maxAge, string email);
+        public bool SetMinAge(int minAge, string email);
+        public bool SetSchool(string school, string email);
+        public bool SetMaxAge(int maxAge, string email);
     }
 }

@@ -1,6 +1,7 @@
 using DataModel;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
+using System.Runtime.CompilerServices;
 using Winder.Repositories.Interfaces;
 namespace Winder.Repositories
 {
@@ -119,7 +120,7 @@ namespace Winder.Repositories
             }
         }
 
-        public void SetMinAge(int minAge, string email)
+        public bool SetMinAge(int minAge, string email)
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
@@ -134,18 +135,21 @@ namespace Winder.Repositories
                     try
                     {
                         query.ExecuteNonQuery();
+                        return true;
                     }
                     catch (SqlException se)
                     {
                         Console.WriteLine("Error inserting minAge in database");
                         Console.WriteLine(se.ToString());
                         Console.WriteLine(se.StackTrace);
+                        return false;
                     }
                 }
+                return false;
             }
         }
 
-        public void SetSchool(string school, string email)
+        public bool SetSchool(string school, string email)
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
@@ -157,41 +161,42 @@ namespace Winder.Repositories
                 try
                 {
                     query.ExecuteNonQuery();
-
+                    return true;
                 }
                 catch (SqlException se)
                 {
                     Console.WriteLine("Error inserting location in database");
                     Console.WriteLine(se.ToString());
                     Console.WriteLine(se.StackTrace);
+                    return false;
                 }
             }
         }
 
-        public void SetMaxAge(int maxAge, string email)
+        public bool SetMaxAge(int maxAge, string email)
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
                 if (maxAge > MinAgePreference && maxAge <= MaxAgePreference)
                 {
-
-                    SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET max = @maxAge WHERE Email = @Email", connection);
-                    query.Parameters.AddWithValue("@Email", email);
-                    query.Parameters.AddWithValue("@maxAge", maxAge);
-
                     try
                     {
+                        SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET max = @maxAge WHERE Email = @Email", connection);
+                        query.Parameters.AddWithValue("@Email", email);
+                        query.Parameters.AddWithValue("@maxAge", maxAge);
                         query.ExecuteNonQuery();
-
+                        return true;
                     }
                     catch (SqlException se)
                     {
                         Console.WriteLine("Error inserting maxAge in database");
                         Console.WriteLine(se.ToString());
                         Console.WriteLine(se.StackTrace);
+                        return false;
                     }
                 }
+                return false;
             }
         }
 
@@ -539,7 +544,7 @@ namespace Winder.Repositories
             }
         }
 
-        public void DeleteInterest(string email, string interest)
+        public bool DeleteInterest(string email, string interest)
         {
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
@@ -551,14 +556,14 @@ namespace Winder.Repositories
                     command.Parameters.AddWithValue("@Email", email);
                     command.Parameters.AddWithValue("@Interest", interest);
                     command.ExecuteNonQuery();
-                    User.CurrentUser.Interests.Select(x => x == interest).ToList().RemoveAll(x => x);
-
+                    return true;
                 }
                 catch (SqlException e)
                 {
                     Console.WriteLine("Error removing interest from user in database");
                     Console.WriteLine(e.ToString());
                     Console.WriteLine(e.StackTrace);
+                    return false;
                 }
             }
         }
@@ -610,26 +615,27 @@ namespace Winder.Repositories
         /// Update password for current user
         /// </summary>
         /// <param name="password">New password for the user in plain</param>
-        public void UpdatePassword(string email, string password)
+        public bool UpdatePassword(string email, string password)
         {
             // connectieopzetten en query maken
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET password = @password WHERE Email = @Email", connection);
-                query.Parameters.AddWithValue("@Email", email);
-                query.Parameters.AddWithValue("@password", password);
-
-                //Execute query
                 try
                 {
-                    connection.Open();
+                    SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET password = @password WHERE Email = @Email", connection);
+                    query.Parameters.AddWithValue("@Email", email);
+                    query.Parameters.AddWithValue("@password", password);
+                    connection.Open();                
+                    //Execute query
                     query.ExecuteNonQuery();
+                    return true;
                 }
                 catch (SqlException se)
                 {
                     Console.WriteLine("Error updating password");
                     Console.WriteLine(se.ToString());
                     Console.WriteLine(se.StackTrace);
+                    return false;
                 }
             }
         }

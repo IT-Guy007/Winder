@@ -145,6 +145,7 @@ namespace Controller
 
         public void DeleteInterest(string email, string interest)
         {
+            User.CurrentUser.Interests.Select(x => x == interest).ToList().RemoveAll(x => x);
             _userRepository.DeleteInterest(email, interest);
         }
 
@@ -162,8 +163,7 @@ namespace Controller
             }
 
             return leeftijd;
-
         }
-
+        
     }
 }

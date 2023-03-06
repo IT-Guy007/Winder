@@ -104,6 +104,7 @@ public class UserTest
 
 
     [TestCase("s1000@student.windesheim.nl", "Astrologie", ExpectedResult = true)]
+    [TestCase("s1000@student.windesheim.nl", "Lezen", ExpectedResult = true)]
     [TestCase("s1000@student.windesheim.nl", "eadefasdf", ExpectedResult = false)]
     [TestCase("sstaatnietindatabase@student.windesheim.nl", "eadefasdf", ExpectedResult = false)]
     public bool SetInterestTest(string email, string interest)
@@ -111,8 +112,6 @@ public class UserTest
         var result = _userRepository.SetInterest(email, interest);
         return result;
     }
-
-
     [TestCase("Testup", "", "Testa", "s1000@student.windesheim.nl", "Man", "Vrouw", "ab", "ab", new byte[0], false, "ab", "ab", ExpectedResult = true)]
     [TestCase("Testup", "", "Testa", "sstaatnietindatabase@student.windesheim.nl", "Man", "Vrouw", "ab", "ab", new byte[0], false, "ab", "ab", ExpectedResult = false)]
     public bool UpdateUserDataTest(string firstName, string middleName, string lastName, string email, string preference, string gender, string bio, string password, byte[] profilePicture, bool active, string school, string major)
@@ -141,6 +140,32 @@ public class UserTest
     {
         return _userRepository.GetSchool(email);
     }
-
-
+    [TestCase("s1000@student.windesheim.nl", "Lezen", ExpectedResult = true)]
+    public bool DeleteInterestTest(string email, string interest)
+    {
+        return _userRepository.DeleteInterest(email, interest);
+    }
+    [TestCase("s1000@student.windesheim.nl", "Qwerty12@@@@", ExpectedResult = true)]
+    [TestCase("s1000@student.windesheim.nl", "Qwerty1@", ExpectedResult = true)]
+    public bool UpdatePasswordTest(string email, string password)
+    {
+        return _userRepository.UpdatePassword(email, password);
+    }
+    [TestCase(20, "s1000@student.windesheim.nl", ExpectedResult = true)]
+    public bool SetMinAgeTest(int minAge, string email)
+    {
+        return _userRepository.SetMinAge(minAge, email);
+    }
+    [TestCase(25, "s1000@student.windesheim.nl", ExpectedResult = true)]
+    public bool SetMaxAgeTest(int maxAge, string email)
+    {
+        return _userRepository.SetMinAge(maxAge, email);
+    }
+    [TestCase("Almere", "s1000@student.windesheim.nl", ExpectedResult = true)]
+    [TestCase("Zwolle", "s1000@student.windesheim.nl", ExpectedResult = true)]
+    public bool SetSchoolTest(string school, string email)
+    {
+        return _userRepository.SetSchool(school, email);
+    }
+    
 }
