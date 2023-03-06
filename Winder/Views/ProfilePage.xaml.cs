@@ -239,7 +239,7 @@ public partial class ProfileChange
     {
         if (Education.Text != "")
         {
-            if (!_validationController.CheckIfTextIsOnlyLettersAndSpaces(Education.Text))
+            if (!_validationController.CheckBioFormat(Education.Text))
             {
                 education = false;
                 lblEducation.Text = "Opleiding mag alleen letters bevatten";
@@ -422,7 +422,7 @@ public partial class ProfileChange
     {
         if (Bio.Text != "")
         {
-            if (!_validationController.CheckIfTextIsOnlyLettersAndSpaces(Bio.Text))
+            if (!_validationController.CheckBioFormat(Bio.Text))
             {
                 bio = false;
                 lblBio.Text = "Bio mag alleen letters bevatten";

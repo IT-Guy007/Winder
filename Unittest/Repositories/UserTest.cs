@@ -18,7 +18,7 @@ public class UserTest
     }
 
     [TestCase("s1000@student.windesheim.nl", "hoi", ExpectedResult = false)]
-    [TestCase("s1000@student.windesheim.nl", "hallo", ExpectedResult = true)]
+    [TestCase("s1000@student.windesheim.nl", "Qwerty1@", ExpectedResult = true)]
     [TestCase("", "hallo", ExpectedResult = false)]
     public bool CheckLoginTest(string email, string password)
     {
@@ -29,8 +29,8 @@ public class UserTest
         return false;
     }
 
-    [TestCase("s2000@student.windesheim.nl", ExpectedResult = true)]
-    [TestCase("s30000@student.windesheim.nl", ExpectedResult = true)]
+    [TestCase("s2000@student.windesheim.nl", ExpectedResult = true)] // in database
+    [TestCase("s30000@student.windesheim.nl", ExpectedResult = false)] // not in database
     [TestCase("ja", ExpectedResult = false)]
     public bool DeleteUserTest(string email)
     {
@@ -108,7 +108,8 @@ public class UserTest
     [TestCase("sstaatnietindatabase@student.windesheim.nl", "eadefasdf", ExpectedResult = false)]
     public bool SetInterestTest(string email, string interest)
     {
-        return _userRepository.SetInterest(email, interest);
+        var result = _userRepository.SetInterest(email, interest);
+        return result;
     }
 
 

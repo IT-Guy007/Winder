@@ -188,7 +188,7 @@ namespace Controller
         /// </summary>
         /// <param name="text">The needed to check text</param>
         /// <returns></returns>
-        public bool CheckIfTextIsOnlyLettersAndSpaces(string text)
+        public bool CheckBioFormat(string text)
         {
             foreach (char c in text)
             {
@@ -216,8 +216,6 @@ namespace Controller
                 return false;
             }
         }
-
-
 
     }
 
