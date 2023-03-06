@@ -21,7 +21,7 @@ public class MatchmakingController
         _likeRepository = likedRepository;
         _photosRepository = photosRepository;
         _profileQueue = new ProfileQueue();
-        
+
         CheckIfQueueNeedsMoreProfiles();
     }
 
@@ -39,7 +39,7 @@ public class MatchmakingController
         }
 
     }
-    
+
     /// <summary>
     /// Get profile to validate
     /// </summary>
@@ -56,7 +56,8 @@ public class MatchmakingController
         Profile[] profiles = new Profile[usersToRetrief.Count()];
 
         //Retrieving
-        for (int i = 0; i < usersToRetrief.Count(); i++) {
+        for (int i = 0; i < usersToRetrief.Count(); i++)
+        {
 
             //Get the user
             User userItem = _userRepository.GetUserFromDatabase(usersToRetrief[i]);
@@ -100,7 +101,7 @@ public class MatchmakingController
         {
             CurrentProfile = GetNextProfile();
 
-        } 
+        }
         else
         {
             CurrentProfile = null;
@@ -148,43 +149,50 @@ public class MatchmakingController
 
         _likeRepository.NewDislike(User.CurrentUser.Email, CurrentProfile.User.Email);
         NextProfile();
-        
+
     }
-    
+
     /// <summary>
     /// Add profile to queue
     /// </summary>
     /// <param name="profile">The profile to add</param>
-    private void Add(Profile profile) {
+    private void Add(Profile profile)
+    {
         _profileQueue.ProfileItems.Enqueue(profile);
     }
-    
+
     /// <summary>
     /// Get the next profile in the queue
     /// </summary>
     /// <returns>Profile or null</returns>
-    private Profile GetNextProfile() {
-        try {
+    private Profile GetNextProfile()
+    {
+        try
+        {
             return _profileQueue.ProfileItems.Dequeue();
-        } catch(Exception) {
+        }
+        catch (Exception)
+        {
             Console.WriteLine("No more profiles in queue");
             return null;
         }
     }
-    
+
     /// <summary>
     /// Checks if the queue is empty
     /// </summary>
     /// <returns>Boolean if the queue is empty</returns>
-    public bool IsEmpty() {
+    public bool IsEmpty()
+    {
         return _profileQueue.ProfileItems.Count == 0;
     }
-    
+
     /// <summary>
     /// Get the count of the queue
     /// </summary>
     /// <returns>Integer with amount of items</returns>
-    private int GetCount() {
+    private int GetCount()
+    {
         return _profileQueue.ProfileItems.Count;
     }
 
@@ -194,10 +202,10 @@ public class MatchmakingController
     /// </summary>
     /// <param name="email"></param>
     /// <returns>Bool if true</returns>
-    public bool CurrentQueueContainsTheGivenEmail(string email) {
+    public bool CurrentQueueContainsTheGivenEmail(string email)
+    {
         return _profileQueue.ProfileItems.Any(p => p.User.Email == email);
     }
-
 
 }
 

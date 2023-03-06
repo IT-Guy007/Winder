@@ -17,7 +17,8 @@ public class InterestsTest
     }
 
     [Test]
-    public void GetInterestsTest() {
+    public void GetInterestsTest()
+    {
         Assert.IsNotNull(_interestsRepository.GetInterests());
     }
 }

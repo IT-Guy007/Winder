@@ -16,13 +16,13 @@ public class MatchTest
             .AddJsonFile("configdatabase.test.json")
             .Build();
         _matchRepository = new MatchRepository(configuration);
-        
+
     }
-    
-    [TestCase("s1165707@student.windesheim.nl","", ExpectedResult = true)]
+
+    [TestCase("s1165707@student.windesheim.nl", "", ExpectedResult = true)]
     public bool AddMatchTest(string emailLikedPerson, string emailCurrentUser)
     {
-        
+
         return _matchRepository.AddMatch(emailLikedPerson, emailCurrentUser);
     }
 

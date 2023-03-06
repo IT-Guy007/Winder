@@ -1,8 +1,7 @@
+using DataModel;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using Winder.Repositories;
-using Winder.Repositories.Interfaces;
-using DataModel;
 
 namespace Unittest.Repositories;
 
@@ -21,7 +20,7 @@ public class ChatMessageTest
             .Build();
         _chatMessageRepository = new ChatMessageRepository(configuration);
     }
-    
+
     [TestCase(emailFrom, emailTo, ExpectedResult = true)]
     [TestCase(emailTo, emailFrom, ExpectedResult = true)]
     public bool TestSendingMessage(string EmailTo, string EmailFrom)
@@ -45,7 +44,7 @@ public class ChatMessageTest
         _chatMessageRepository.SetRead(emailFrom, emailTo);
 
         List<ChatMessage> messages = _chatMessageRepository.GetChatMessages(emailTo, emailFrom);
-        foreach (ChatMessage message in messages) 
+        foreach (ChatMessage message in messages)
         {
             if (message.FromUser == emailFrom && message.ToUser == emailTo) // Check to see if only the messages that are not send from the user are set to read for the other.
             {

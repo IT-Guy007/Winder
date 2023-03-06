@@ -1,26 +1,33 @@
 using Controller;
 using DataModel;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using Winder.Repositories;
-using Winder.Repositories.Interfaces;
 
 namespace Winder;
 
-public partial class ChatsViewPage {
+public partial class ChatsViewPage
+{
     public string OriginPage;
     private const string pageName = "Chatpage";
 
     private MatchModel MatchModel;
-    
-    public ChatsViewPage() {
+
+    private readonly ChatController _chatController;
+
+    public ChatsViewPage()
+    {
+
+        _chatController = MauiProgram.ServiceProvider.GetService<ChatController>();
+
         InitializeComponent();
-        MatchModel = new MatchModel(User.CurrentUser.GetMatchedStudentsFromUser(Database.ReleaseConnection));
+
+        MatchModel = new MatchModel(_chatController.GetMatches(User.CurrentUser.Email));
+
         ListOfMatches.ItemsSource = MatchModel.Matches.GetUsers();
     }
-    
-    private void Backbutton_Clicked(object sender, EventArgs e) {
-        switch (OriginPage) {
+
+    private void Backbutton_Clicked(object sender, EventArgs e)
+    {
+        switch (OriginPage)
+        {
             case "matchpage":
                 Navigation.PushAsync(new MatchPage());
                 break;
@@ -34,9 +41,10 @@ public partial class ChatsViewPage {
 
     }
 
-    private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e) {
+    private void ListOfMatches_ItemTapped(object sender, ItemTappedEventArgs e)
+    {
         var tappedItem = e.Item as User;
-        Navigation.PushAsync(new ChatPage(User.CurrentUser, new User().GetUserFromDatabase(tappedItem.Email, Database.ReleaseConnection)));
+        Navigation.PushAsync(new ChatPage(User.CurrentUser, tappedItem));
     }
 
     /// <summary>
@@ -44,7 +52,8 @@ public partial class ChatsViewPage {
     /// </summary>
     /// <param name="sender">The sender</param>
     /// <param name="e">The event args</param>
-    private void MyProfile_Clicked(object sender, EventArgs e) {
+    private void MyProfile_Clicked(object sender, EventArgs e)
+    {
         ProfileChange myProfile = new ProfileChange();
         myProfile.OriginPage = pageName;
         Navigation.PushAsync(myProfile);
@@ -55,7 +64,8 @@ public partial class ChatsViewPage {
     /// </summary>
     /// <param name="sender">The sender</param>
     /// <param name="e">The event args</param>
-    private void Settings_Clicked(object sender, EventArgs e) {
+    private void Settings_Clicked(object sender, EventArgs e)
+    {
         SettingsPage settings = new SettingsPage();
         settings.OriginPage = pageName;
         Navigation.PushAsync(settings);
@@ -66,7 +76,8 @@ public partial class ChatsViewPage {
     /// </summary>
     /// <param name="sender">The sender</param>
     /// <param name="e">The event args</param>
-    private void MatchPage_Clicked(object sender, EventArgs e) {
+    private void MatchPage_Clicked(object sender, EventArgs e)
+    {
         MatchPage matchPage = new MatchPage();
         matchPage.OriginPage = pageName;
         Navigation.PushAsync(matchPage);

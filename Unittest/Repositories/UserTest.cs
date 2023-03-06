@@ -1,7 +1,7 @@
-using DataModel;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using Winder.Repositories;
+using DataModel;
 namespace Unittest.Repositories;
 
 public class UserTest
@@ -18,7 +18,7 @@ public class UserTest
     }
 
     [TestCase("s1000@student.windesheim.nl", "hoi", ExpectedResult = false)]
-    [TestCase("s1000@student.windesheim.nl", "hallo", ExpectedResult = true)]
+    [TestCase("s1000@student.windesheim.nl", "Qwerty1@", ExpectedResult = true)]
     [TestCase("", "hallo", ExpectedResult = false)]
     public bool CheckLoginTest(string email, string password)
     {
@@ -28,11 +28,11 @@ public class UserTest
         }
         return false;
     }
-    
-    [TestCase("s2000@student.windesheim.nl", ExpectedResult = true)]
-    [TestCase("s30000@student.windesheim.nl", ExpectedResult = true)]
+
+    [TestCase("s2000@student.windesheim.nl", ExpectedResult = true)] // in database
+    [TestCase("s30000@student.windesheim.nl", ExpectedResult = false)] // not in database
     [TestCase("ja", ExpectedResult = false)]
-    public bool DeleteUserTest(string email) 
+    public bool DeleteUserTest(string email)
     {
         _userRepository.Registration("Testdel", "", "Test", "s2000@student.windesheim.nl", "Man", DateTime.Now, "Vrouw", "a", "a", new byte[0], true, "a", "a");
 
@@ -42,15 +42,24 @@ public class UserTest
     }
 
 
-    /* [TestCase("s2000@student.windesheim.nl", ExpectedResult = true)]
-     [TestCase("s3000@student.windesheim.nl", ExpectedResult = true)]
-     [TestCase("", ExpectedResult = false)]
-     public bool GetConditionBasedUsersTest(User user)
-     {
+    [TestCase("s1000@student.windesheim.nl", ExpectedResult = "s1001@student.windesheim.nl")]
+    [TestCase("s1001@student.windesheim.nl", ExpectedResult = "s1000@student.windesheim.nl")]
+    [TestCase("", ExpectedResult = null)]
+    public string GetConditionBasedUsersTest(string email)
+    {
+        User currentUser = _userRepository.GetUserFromDatabase(email);
+        
+        List<string> users = _userRepository.GetConditionBasedUsers(currentUser);
 
-     }
+        if (users.Count > 0)
+        {
+            return users[0];
+        }
+        return null;
+        
+    }
 
-     */
+
 
 
     [TestCase("s1000@student.windesheim.nl", ExpectedResult = true)]
@@ -58,7 +67,7 @@ public class UserTest
     [TestCase("", ExpectedResult = false)]
     public bool GetUserFromDatabaseTest(string email)
     {
-       if ((_userRepository.GetUserFromDatabase(email).FirstName ?? "a") != "a")
+        if ((_userRepository.GetUserFromDatabase(email).FirstName ?? "a") != "a")
         {
             return true;
         }
@@ -99,7 +108,8 @@ public class UserTest
     [TestCase("sstaatnietindatabase@student.windesheim.nl", "eadefasdf", ExpectedResult = false)]
     public bool SetInterestTest(string email, string interest)
     {
-        return _userRepository.SetInterest(email, interest);
+        var result = _userRepository.SetInterest(email, interest);
+        return result;
     }
 
 
@@ -107,7 +117,7 @@ public class UserTest
     [TestCase("Testup", "", "Testa", "sstaatnietindatabase@student.windesheim.nl", "Man", "Vrouw", "ab", "ab", new byte[0], false, "ab", "ab", ExpectedResult = false)]
     public bool UpdateUserDataTest(string firstName, string middleName, string lastName, string email, string preference, string gender, string bio, string password, byte[] profilePicture, bool active, string school, string major)
     {
-        return _userRepository.UpdateUserData(firstName, middleName, lastName, email, preference, new DateTime(1925, 01, 01, 0, 0, 0, 0), gender, bio, password, profilePicture, active, school, major);
+        return _userRepository.UpdateUserData(firstName, middleName, lastName, email, preference, new DateTime(1925, 01, 01, 0, 0, 0, 0), gender, bio, profilePicture, major);
     }
 
 

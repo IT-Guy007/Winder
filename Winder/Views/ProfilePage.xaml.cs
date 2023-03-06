@@ -3,14 +3,15 @@ using DataModel;
 
 namespace Winder;
 
-public partial class ProfileChange {
+public partial class ProfileChange
+{
     public string OriginPage;
     private const string PageName = "profilepage";
 
     private readonly List<string> interests;
     private readonly Color errorColor;
-    
-    private byte[][] ProfilePictures { get; set;}
+
+    private byte[][] ProfilePictures { get; set; }
     private bool firstname = true;
     private bool middleName = true;
     private bool lastname = true;
@@ -24,11 +25,11 @@ public partial class ProfileChange {
     private readonly SettingsController _settingsController;
     private readonly ValidationController _validationController;
 
-
     /// <summary>
     /// Default constructor, loads the data
     /// </summary>
-    public ProfileChange() {
+    public ProfileChange()
+    {
         interests = new List<string>();
         errorColor = new Color(255, 243, 5);
         ProfilePictures = new byte[6][];
@@ -39,11 +40,12 @@ public partial class ProfileChange {
 
         InitializeComponent();
         FillPlaceholders();
-        
+
     }
     //Fills the form inputs placeholders with the user data
-    private void FillPlaceholders() {
-        ProfilePictures = User.CurrentUser.GetPicturesFromDatabase(Database.ReleaseConnection);
+    private void FillPlaceholders()
+    {
+        ProfilePictures = _settingsController.GetPhotos(User.CurrentUser.Email);
         Firstname.Placeholder = User.CurrentUser.FirstName;
         Middlename.Placeholder = User.CurrentUser.MiddleName;
         Lastname.Placeholder = User.CurrentUser.LastName;
@@ -53,77 +55,94 @@ public partial class ProfileChange {
         Gender.SelectedIndex = _settingsController.GetPreferenceFromUser(User.CurrentUser.Gender);
         Preference.SelectedIndex = _settingsController.GetPreferenceFromUser(User.CurrentUser.Preference);
         // fill the interests picker
-        if (!(InterestsModel.InterestsList.Count > 0)) {
+        if (!(InterestsModel.InterestsList.Count > 0))
+        {
             InterestSelection.ItemsSource = _interestsController.GetInterests();
-        } else {
+        }
+        else
+        {
             InterestSelection.ItemsSource = InterestsModel.InterestsList;
         }
         ListInterests.ItemsSource = User.CurrentUser.Interests;
         SetAllImageButtons();
     }
-    private void SetAllImageButtons() {
-        if (ProfilePictures != null) {
-            if (ProfilePictures[0] != null) {
-                byte[] scaledImage = _validationController.ScaleImage(ProfilePictures[0],140,200);
+    private void SetAllImageButtons()
+    {
+        if (ProfilePictures != null)
+        {
+            if (ProfilePictures[0] != null)
+            {
+                byte[] scaledImage = _validationController.ScaleImage(ProfilePictures[0], 140, 200);
                 ProfileImage1.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton1.IsVisible = true;
-            } else ProfileImage1.Source = "plus.png";
-            
-            if (ProfilePictures[1] != null) {
+            }
+            else ProfileImage1.Source = "plus.png";
+
+            if (ProfilePictures[1] != null)
+            {
                 byte[] scaledImage = _validationController.ScaleImage(ProfilePictures[1], 140, 200);
                 ProfileImage2.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton2.IsVisible = true;
-            } else ProfileImage2.Source = "plus.png";
-            
-            if (ProfilePictures[2] != null) {
+            }
+            else ProfileImage2.Source = "plus.png";
+
+            if (ProfilePictures[2] != null)
+            {
                 byte[] scaledImage = _validationController.ScaleImage(ProfilePictures[2], 140, 200);
                 ProfileImage3.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton3.IsVisible = true;
             }
             else ProfileImage3.Source = "plus.png";
-            
-            if (ProfilePictures[3] != null) {
+
+            if (ProfilePictures[3] != null)
+            {
                 byte[] scaledImage = _validationController.ScaleImage(ProfilePictures[3], 140, 200);
                 ProfileImage4.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton4.IsVisible = true;
-            } else ProfileImage4.Source = "plus.png";
-            
-            if (ProfilePictures[4] != null) {
+            }
+            else ProfileImage4.Source = "plus.png";
+
+            if (ProfilePictures[4] != null)
+            {
                 byte[] scaledImage = _validationController.ScaleImage(ProfilePictures[4], 140, 200);
                 ProfileImage5.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton5.IsVisible = true;
-            } else ProfileImage5.Source = "plus.png";
-            
-            if (ProfilePictures[5] != null) {
+            }
+            else ProfileImage5.Source = "plus.png";
+
+            if (ProfilePictures[5] != null)
+            {
                 byte[] scaledImage = _validationController.ScaleImage(ProfilePictures[5], 140, 200);
                 ProfileImage6.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
                 CloseButton6.IsVisible = true;
-            } else ProfileImage6.Source = "plus.png";
+            }
+            else ProfileImage6.Source = "plus.png";
         }
     }
-    
+
     //Changes the userdata en updates the form
-    private void ChangeUserData(object sender, EventArgs e) {
-        if (firstname && middleName && lastname && birthday  && preference && gender && bio && education ) {
+    private void ChangeUserData(object sender, EventArgs e)
+    {
+        if (firstname && middleName && lastname && birthday && preference && gender && bio && education)
+        {
             UpdateUserPropertiesPrepareForUpdateQuery();
-
-            _settingsController.UpdateUserData(Authentication.CurrentUser.FirstName, Authentication.CurrentUser.MiddleName, Authentication.CurrentUser.LastName, Authentication.CurrentUser.Email, Authentication.CurrentUser.Preference, Authentication.CurrentUser.BirthDay, Authentication.CurrentUser.Gender, Authentication.CurrentUser.Bio, Authentication.CurrentUser.ProfilePicture, Authentication.CurrentUser.School,Authentication.CurrentUser.Major)
-
-
-            Authentication.CurrentUser.DeleteAllPhotosFromDatabase(Database.ReleaseConnection);
-            Authentication.CurrentUser.InsertAllPhotosInDatabase(ProfilePictures,Database.ReleaseConnection);
-            _settingsController.RegisterInterestsInDatabase(Authentication.CurrentUser.Email, interests);
-
+            _settingsController.UpdateUser();
+            _settingsController.DeletePhotos(User.CurrentUser.Email);
+            _settingsController.InsertPhotos(User.CurrentUser.Email, ProfilePictures);
+            _settingsController.RegisterInterestsInDatabase(User.CurrentUser.Email, interests);
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             ClearTextFromEntries();
             UpdatePlaceholders();
-        } else {
+        }
+        else
+        {
             DisplayAlert("Er is iets verkeerd gegaan...", "Vul alle gegevens in", "OK");
         }
     }
-    
+
     //Updates the placeholders value after a change has been made
-    private void UpdatePlaceholders() {
+    private void UpdatePlaceholders()
+    {
 
         Firstname.Placeholder = User.CurrentUser.FirstName;
         Middlename.Placeholder = User.CurrentUser.MiddleName;
@@ -144,7 +163,8 @@ public partial class ProfileChange {
 
 
     //Update the users data 
-    private void UpdateUserPropertiesPrepareForUpdateQuery() {
+    private void UpdateUserPropertiesPrepareForUpdateQuery()
+    {
         if (User.CurrentUser.FirstName != Firstname.Text && !string.IsNullOrEmpty(Firstname.Text)) User.CurrentUser.FirstName = Firstname.Text;
         if (User.CurrentUser.MiddleName != Middlename.Text && !string.IsNullOrEmpty(Middlename.Text)) User.CurrentUser.MiddleName = Middlename.Text;
         if (User.CurrentUser.LastName != Lastname.Text && !string.IsNullOrEmpty(Lastname.Text)) User.CurrentUser.LastName = Lastname.Text;
@@ -155,13 +175,18 @@ public partial class ProfileChange {
         if (User.CurrentUser.Preference != Preference.SelectedItem.ToString()) User.CurrentUser.Preference = Preference.SelectedItem.ToString() ?? string.Empty;
     }
     //Checks if the firstname input is valid
-    private void FirstnameTextChanged(object sender, TextChangedEventArgs e) {
-        if (!string.IsNullOrWhiteSpace(Firstname.Text)) {
-            if (!_validationController.CheckIfTextIsOnlyLetters(Firstname.Text)) {
+    private void FirstnameTextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (!string.IsNullOrWhiteSpace(Firstname.Text))
+        {
+            if (!_validationController.CheckIfTextIsOnlyLetters(Firstname.Text))
+            {
                 firstname = false;
                 lblFirstname.Text = "Voornaam mag alleen letters bevatten";
                 lblFirstname.TextColor = errorColor;
-            } else {
+            }
+            else
+            {
                 firstname = true;
                 lblFirstname.Text = "Voornaam";
                 lblFirstname.TextColor = default;
@@ -214,7 +239,7 @@ public partial class ProfileChange {
     {
         if (Education.Text != "")
         {
-            if (!_validationController.CheckIfTextIsOnlyLettersAndSpaces(Education.Text))
+            if (!_validationController.CheckBioFormat(Education.Text))
             {
                 education = false;
                 lblEducation.Text = "Opleiding mag alleen letters bevatten";
@@ -241,13 +266,15 @@ public partial class ProfileChange {
                 Navigation.PushAsync(new SettingsPage());
                 break;
             case "chatpage":
-            Navigation.PushAsync(new ChatsViewPage());
+                Navigation.PushAsync(new ChatsViewPage());
                 break;
         }
     }
 
-    private void ChatButton_Clicked(object sender, EventArgs e) {
-        ChatsViewPage chatsViews = new ChatsViewPage {
+    private void ChatButton_Clicked(object sender, EventArgs e)
+    {
+        ChatsViewPage chatsViews = new ChatsViewPage
+        {
             OriginPage = PageName
         };
         Navigation.PushAsync(chatsViews);
@@ -255,17 +282,20 @@ public partial class ProfileChange {
 
     private void matchButton_Clicked(object sender, EventArgs e)
     {
-        MatchPage matchpage = new MatchPage {
+        MatchPage matchpage = new MatchPage
+        {
             OriginPage = PageName
         };
         Navigation.PushAsync(matchpage);
     }
 
-    private void Settings_Clicked(object sender, EventArgs e) {
-        SettingsPage settings = new SettingsPage {
+    private void Settings_Clicked(object sender, EventArgs e)
+    {
+        SettingsPage settings = new SettingsPage
+        {
             OriginPage = PageName
         };
-        Navigation.PushAsync(settings); 
+        Navigation.PushAsync(settings);
     }
 
 
@@ -292,7 +322,9 @@ public partial class ProfileChange {
             ProfilePictures[int.Parse(imageButtonId)] = imageArr;
             byte[] scaledImage = _validationController.ScaleImage(imageArr, 140, 200);
             clickedImageButton.Source = ImageSource.FromStream(() => new MemoryStream(scaledImage));
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             Console.WriteLine("Error picking profilefoto");
             Console.WriteLine(ex.ToString());
             Console.WriteLine(ex.StackTrace);
@@ -352,26 +384,32 @@ public partial class ProfileChange {
     }
 
     //Checks if selected birthdate is a birthdate that is 18 years or older
-    private void DateOfBirthSelectedDate(object sender, DateChangedEventArgs e) {
+    private void DateOfBirthSelectedDate(object sender, DateChangedEventArgs e)
+    {
         int age = _validationController.CalculateAge(Birthdate.Date);
-        if (age >= 18) { 
+        if (age >= 18)
+        {
             birthday = true;
             lblBirthdate.Text = "Leeftijd : " + age;
             lblBirthdate.BackgroundColor = default;
-        } else {
+        }
+        else
+        {
             birthday = false;
             lblBirthdate.Text = "Je moet minimaal 18 jaar zijn";
             lblBirthdate.BackgroundColor = errorColor;
         }
     }
     //Check if an item has been selected and delete the selected item of ListInterests
-    private void ListInterestsItemSelected(object sender, SelectedItemChangedEventArgs e) {
+    private void ListInterestsItemSelected(object sender, SelectedItemChangedEventArgs e)
+    {
         if (ListInterests.SelectedItem == null) return;
         InterestSelection.Title = "Interesse";
         InterestSelection.TitleColor = default;
         var interest = ListInterests.SelectedItem.ToString();
-        if (interest != null) {
-            User.CurrentUser.DeleteInterestInDatabase(interest,Database.ReleaseConnection);
+        if (interest != null)
+        {
+            _settingsController.DeleteInterest(User.CurrentUser.Email, interest);
             interests.Remove(interest);
         }
 
@@ -384,7 +422,7 @@ public partial class ProfileChange {
     {
         if (Bio.Text != "")
         {
-            if (!_validationController.CheckIfTextIsOnlyLettersAndSpaces(Bio.Text))
+            if (!_validationController.CheckBioFormat(Bio.Text))
             {
                 bio = false;
                 lblBio.Text = "Bio mag alleen letters bevatten";
