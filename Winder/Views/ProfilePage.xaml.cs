@@ -8,7 +8,7 @@ public partial class ProfileChange
     public string OriginPage;
     private const string PageName = "profilepage";
 
-    private readonly List<string> interests;
+    private List<string> interests;
     private readonly Color errorColor;
 
     private byte[][] ProfilePictures { get; set; }
@@ -64,6 +64,7 @@ public partial class ProfileChange
             InterestSelection.ItemsSource = InterestsModel.InterestsList;
         }
         ListInterests.ItemsSource = User.CurrentUser.Interests;
+        interests = User.CurrentUser.Interests.ToList();
         SetAllImageButtons();
     }
     private void SetAllImageButtons()
@@ -129,7 +130,8 @@ public partial class ProfileChange
             _settingsController.UpdateUser();
             _settingsController.DeletePhotos(User.CurrentUser.Email);
             _settingsController.InsertPhotos(User.CurrentUser.Email, ProfilePictures);
-            _settingsController.RegisterInterestsInDatabase(User.CurrentUser.Email, interests);
+            _settingsController.InsertInterests(User.CurrentUser.Email, interests);
+            _settingsController.SetCurrentUser(User.CurrentUser.Email);
             DisplayAlert("Melding", "Je gegevens zijn aangepast", "OK");
             ClearTextFromEntries();
             UpdatePlaceholders();
@@ -403,19 +405,19 @@ public partial class ProfileChange
     //Check if an item has been selected and delete the selected item of ListInterests
     private void ListInterestsItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-        if (ListInterests.SelectedItem == null) return;
-        InterestSelection.Title = "Interesse";
-        InterestSelection.TitleColor = default;
-        var interest = ListInterests.SelectedItem.ToString();
-        if (interest != null)
+        if (ListInterests.SelectedItem != null)
         {
+            InterestSelection.Title = "Interesse";
+            InterestSelection.TitleColor = default;
+            var interest = ListInterests.SelectedItem.ToString();
+
             _settingsController.DeleteInterest(User.CurrentUser.Email, interest);
             interests.Remove(interest);
-        }
 
-        ListInterests.ItemsSource = null;
-        ListInterests.ItemsSource = interests;
-        ListInterests.SelectedItem = null;
+            ListInterests.ItemsSource = null;
+            ListInterests.ItemsSource = interests;
+            ListInterests.SelectedItem = null;
+        }
     }
 
     private void BioTextChanged(object sender, TextChangedEventArgs e)
