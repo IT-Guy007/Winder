@@ -124,7 +124,7 @@ namespace Winder.Repositories
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                if (minAge > MinAgePreference && minAge < MaxAgePreference)
+                if (minAge >= MinAgePreference && minAge < MaxAgePreference)
                 {
 
                     SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET min = @minAge WHERE Email = @Email", connection);
@@ -173,7 +173,7 @@ namespace Winder.Repositories
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                if (maxAge > MinAgePreference && maxAge < MaxAgePreference)
+                if (maxAge > MinAgePreference && maxAge <= MaxAgePreference)
                 {
 
                     SqlCommand query = new SqlCommand("UPDATE winder.winder.[User] SET max = @maxAge WHERE Email = @Email", connection);
