@@ -135,5 +135,12 @@ public class UserTest
         return false;
     }
 
+    [TestCase("s1000@student.windesheim.nl", ExpectedResult = "Zwolle")]
+    [TestCase("s1001@student.windesheim.nl", ExpectedResult = "Zwolle")]
+    public string GetSchoolTest(string email)
+    {
+        return _userRepository.GetSchool(email);
+    }
+
 
 }
