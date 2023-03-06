@@ -43,8 +43,6 @@ namespace Controller
             return _userRepository.UpdateUserData(firstName, middleName, lastName, email, preference, birthday, gender, bio, profilePicture, major);
         }
 
-
-
         public string GetSchool(string email)
         {
             return _userRepository.GetSchool(email);
@@ -103,7 +101,8 @@ namespace Controller
 
         public void UpdateUser()
         {
-            _userRepository.UpdateUserData(User.CurrentUser.FirstName,
+            _userRepository.UpdateUserData(
+                User.CurrentUser.FirstName,
                 User.CurrentUser.MiddleName,
                 User.CurrentUser.LastName,
                 User.CurrentUser.Email,
@@ -114,6 +113,7 @@ namespace Controller
                 User.CurrentUser.ProfilePicture,
                 User.CurrentUser.Major);
         }
+
         public void SetPreference(int minAge, int maxAge, string school)
         {
             _userRepository.SetMinAge(minAge, User.CurrentUser.Email);

@@ -34,7 +34,6 @@ namespace Winder
             builder.Services.AddSingleton<IUserRepository, UserRepository>();
             builder.Services.AddSingleton<ValidationController>(sp => new ValidationController(sp.GetService<IUserRepository>()));
             builder.Services.AddSingleton<SettingsController>(sp => new SettingsController(sp.GetService<IUserRepository>(), sp.GetService<IPhotosRepository>()));
-            builder.Services.AddSingleton<SignInController>(sp => new SignInController(sp.GetService<IUserRepository>()));
             builder.Services.AddSingleton<RegistrationController>(sp => new RegistrationController(sp.GetService<IUserRepository>()));
             builder.Services.AddSingleton<ILikedRepository, LikedRepository>();
             builder.Services.AddSingleton<IPhotosRepository, PhotosRepository>();
