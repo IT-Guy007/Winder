@@ -14,7 +14,7 @@ namespace Controller
 
         public List<string> GetInterests()
         {
-            InterestsModel interestsListModel = new InterestsModel(_interestsRepository.GetInterests());
+            new InterestsModel(_interestsRepository.GetInterests());
             return InterestsModel.InterestsList;
         }
     }

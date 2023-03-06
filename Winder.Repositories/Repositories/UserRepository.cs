@@ -50,7 +50,8 @@ namespace Winder.Repositories
                     Console.WriteLine("Checking login");
                     while (reader.Read())
                     {
-                        if (password == reader["password"] as string)
+                        string passwordToCheck = reader["password"] as string;
+                        if (password == passwordToCheck)
                         {
                             return GetUserFromDatabase(email);
                         }
@@ -83,7 +84,7 @@ namespace Winder.Repositories
             using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                if (IsEmailUnique(email))
+                if (!IsEmailUnique(email))
                 {
 
                     email = email.ToLower();
